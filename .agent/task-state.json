@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "branch": "phase/p00-governance",
+  "tasks": [
+    {
+      "id": "DOOM-P0-001",
+      "status": "done",
+      "card": "docs/tasks/P00/DOOM-P0-001.md",
+      "branch": "none yet",
+      "dependencies": [],
+      "allowed_paths": [
+        "planning artifacts outside the repository"
+      ],
+      "result": "docs/results/P00/DOOM-P0-001.md",
+      "commit": "EXTERNAL"
+    },
+    {
+      "id": "DOOM-P0-010",
+      "status": "done",
+      "card": "docs/tasks/P00/DOOM-P0-010.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-001"
+      ],
+      "allowed_paths": [
+        "Git metadata in the authorized workspace",
+        "docs/bootstrap/REPOSITORY_BASELINE.md",
+        "docs/results/P00/DOOM-P0-010.md"
+      ],
+      "result": "docs/results/P00/DOOM-P0-010.md",
+      "commit": "69375a29555d2523f8ae435900dc35245c9c0b58"
+    },
+    {
+      "id": "DOOM-P0-020",
+      "status": "done",
+      "card": "docs/tasks/P00/DOOM-P0-020.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-010"
+      ],
+      "allowed_paths": [
+        "docs/PROJECT_SPEC.md",
+        "docs/DECISIONS.md",
+        "docs/CURRENT_STATE.md",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/ISSUE_LOG.md",
+        "docs/phases/P00/**",
+        "docs/tasks/P00/**",
+        "docs/results/P00/DOOM-P0-001.md",
+        "docs/results/P00/DOOM-P0-020.md"
+      ],
+      "result": "docs/results/P00/DOOM-P0-020.md",
+      "commit": "cf1c0117a4cad9bb4c6f0dc4983adb7390b99be1"
+    },
+    {
+      "id": "DOOM-P0-030",
+      "status": "done",
+      "card": "docs/tasks/P00/DOOM-P0-030.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-020"
+      ],
+      "allowed_paths": [
+        "AGENTS.md",
+        "docs/results/P00/DOOM-P0-030.md"
+      ],
+      "result": "docs/results/P00/DOOM-P0-030.md",
+      "commit": "aadc2cd9cb08780afb0beb990ebb674b061bb28a"
+    },
+    {
+      "id": "DOOM-P0-040",
+      "status": "done",
+      "card": "docs/tasks/P00/DOOM-P0-040.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-030"
+      ],
+      "allowed_paths": [
+        ".agent/PLANS.md",
+        "docs/templates/**",
+        "tools/validate_project_docs.py",
+        "tests/test_project_docs.py",
+        "docs/results/P00/DOOM-P0-040.md"
+      ],
+      "result": "docs/results/P00/DOOM-P0-040.md",
+      "commit": "579467ca0b74676584cdc0687c6d0822fc249bd0"
+    },
+    {
+      "id": "DOOM-P0-050",
+      "status": "done",
+      "card": "docs/tasks/P00/DOOM-P0-050.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-040"
+      ],
+      "allowed_paths": [
+        "tools/taskctl.py",
+        ".agent/task-state.json",
+        "tests/test_taskctl.py",
+        "tests/fixtures/taskctl/**",
+        "docs/results/P00/DOOM-P0-050.md"
+      ],
+      "result": "docs/results/P00/DOOM-P0-050.md",
+      "commit": "SELF",
+      "started_at": "2026-08-03T10:52:43Z",
+      "base_head": "579467ca0b74676584cdc0687c6d0822fc249bd0",
+      "finished_at": "2026-08-03T10:53:38Z"
+    },
+    {
+      "id": "DOOM-P0-060",
+      "status": "pending",
+      "card": "docs/tasks/P00/DOOM-P0-060.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-050"
+      ],
+      "allowed_paths": [
+        "docs/licenses/**",
+        "docs/results/P00/DOOM-P0-060.md",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P00/DOOM-P0-060.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P0-070",
+      "status": "pending",
+      "card": "docs/tasks/P00/DOOM-P0-070.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-060"
+      ],
+      "allowed_paths": [
+        "docs/EVIDENCE_POLICY.md",
+        "docs/BUILD_IDENTITY.md",
+        "evidence/**",
+        "tools/validate_artifact_manifest.py",
+        "tests/test_artifact_manifest.py",
+        "docs/results/P00/DOOM-P0-070.md",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P00/DOOM-P0-070.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P0-080",
+      "status": "pending",
+      "card": "docs/tasks/P00/DOOM-P0-080.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-070"
+      ],
+      "allowed_paths": [
+        "docs/phases/P00/PHASE_RESULT.md",
+        "docs/CURRENT_STATE.md",
+        "docs/results/P00/DOOM-P0-080.md",
+        "evidence/phase-gates/P00/**",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P00/DOOM-P0-080.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P0-090",
+      "status": "pending",
+      "card": "docs/tasks/P00/DOOM-P0-090.md",
+      "branch": "phase/p00-governance",
+      "dependencies": [
+        "DOOM-P0-080"
+      ],
+      "allowed_paths": [
+        "read-only repository/PR inspection",
+        "gate-verdict Markdown output outside branch unless separately authorized"
+      ],
+      "result": "docs/results/P00/DOOM-P0-090.md",
+      "commit": null
+    }
+  ]
+}

@@ -109,7 +109,7 @@
     },
     {
       "id": "DOOM-P0-060",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P00/DOOM-P0-060.md",
       "branch": "phase/p00-governance",
       "dependencies": [
@@ -121,7 +121,10 @@
         ".agent/task-state.json"
       ],
       "result": "docs/results/P00/DOOM-P0-060.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T12:24:05Z",
+      "base_head": "ec5693a20266f75bf9e4f46df041f6b1f2389d2a",
+      "finished_at": "2026-08-03T12:28:17Z"
     },
     {
       "id": "DOOM-P0-070",

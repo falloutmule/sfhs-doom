@@ -1,0 +1,2 @@
+Internal ctest changing into directory: /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/native/debug
+Test project /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/native/debug

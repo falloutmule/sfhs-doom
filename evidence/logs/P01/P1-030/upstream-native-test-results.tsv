@@ -1,0 +1,9 @@
+check	classification	exit_code	evidence
+cmake-ctest-debug	NOT_PRESENT	0	evidence/task-runs/P01-DOOM-P1-030/ctest-debug.combined.txt
+cmake-ctest-release	NOT_PRESENT	0	evidence/task-runs/P01-DOOM-P1-030/ctest-release.combined.txt
+check-extern	PASS	0	evidence/task-runs/P01-DOOM-P1-030/check-extern.stdout.txt;evidence/task-runs/P01-DOOM-P1-030/check-extern.stderr.txt
+debug-build-smoke	PASS	0	evidence/task-runs/P01-DOOM-P1-030/debug-build-smoke.stdout.txt;evidence/task-runs/P01-DOOM-P1-030/debug-build-smoke.stderr.txt
+release-build-smoke	PASS	0	evidence/task-runs/P01-DOOM-P1-030/release-build-smoke.stdout.txt;evidence/task-runs/P01-DOOM-P1-030/release-build-smoke.stderr.txt
+autotools-quickcheck	BLOCKED	-	quickcheck gitlink ef816accb377a5be05c5debf096dd038eee98aa8 is not initialized; remote action is forbidden
+cppcheck-workflow	NOT_APPLICABLE	-	CI static analysis is not a native behavioral test and cppcheck is not selected by P1-010
+cpp-linter-workflow	NOT_APPLICABLE	-	CI lint is not a native behavioral test

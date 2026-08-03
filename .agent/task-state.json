@@ -271,7 +271,7 @@
     },
     {
       "id": "DOOM-P1-030",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-030.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -287,7 +287,10 @@
         "tools/run-upstream-native-tests.sh"
       ],
       "result": "docs/results/P01/DOOM-P1-030.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T15:57:39Z",
+      "base_head": "2376b4341d67e872222f7edc56dbcef6756bff37",
+      "finished_at": "2026-08-03T16:00:54Z"
     },
     {
       "id": "DOOM-P1-040",

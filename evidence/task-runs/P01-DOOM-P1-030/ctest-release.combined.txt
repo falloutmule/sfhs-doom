@@ -1,0 +1,3 @@
+Internal ctest changing into directory: /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/native/release
+Test project /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/native/release
+No tests were found!!!

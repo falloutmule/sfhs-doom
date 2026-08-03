@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2",
+  "phase": "P01",
+  "task": "DOOM-P1-040",
+  "source": {
+    "commit": "44cc36377e0db83709428cc8ec6f9c28d783fdb4",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {
+        "name": "Freedoom release",
+        "version": "v0.13.0",
+        "source": "https://github.com/freedoom/freedoom/releases/tag/v0.13.0"
+      }
+    ],
+    "inputs": [
+      {
+        "path": "vendor-cache/freedoom/0.13.0/freedoom-0.13.0.zip",
+        "size_bytes": 24143781,
+        "sha256": "3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2024-01-29T23:32:37Z",
+    "id": "P01-DOOM-P1-040-freedoom-phase2-v0.13.0",
+    "commands": [
+      {
+        "argv": [
+          "bash",
+          "tools/fetch-freedoom.sh"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P01-DOOM-P1-040/fetch.stdout.txt",
+        "stderr_path": "evidence/task-runs/P01-DOOM-P1-040/fetch.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "vendor-cache/freedoom/0.13.0/data/freedoom2.wad",
+      "size_bytes": 28787748,
+      "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+      "kind": "open-freedoom-iwad"
+    }
+  ],
+  "verification": {
+    "run_ids": [
+      "P01-DOOM-P1-040-freedoom-phase2-v0.13.0"
+    ],
+    "result": "PASS",
+    "checks": [
+      "official archive SHA-256",
+      "expected-file-only extraction",
+      "WAD byte size and SHA-256",
+      "BSD-3-Clause license identity"
+    ]
+  },
+  "notes": [
+    "Open Freedoom data only; no commercial Doom data was downloaded or inspected.",
+    "WAD and archive bytes remain under ignored vendor-cache/freedoom/."
+  ]
+}

@@ -50,3 +50,7 @@ Directly inspected local evidence includes:
 3. SDL2, SDL2_mixer, and SDL2_net are the actual SDL families visible in the current build metadata. Their official repositories identify the zlib license, but no versions or package closure are selected yet.
 4. Emscripten output is not automatically “just the project’s GPL.” The future emitted JavaScript/Wasm/runtime and toolchain closure require a pinned build and notice audit.
 5. The SFHS project license, final trademark wording, exact optional dependency closure, and commercial-data test procedure remain explicit legal/release questions. This inventory makes no permissive assumption about them.
+
+## P01 Freedoom pin update
+
+DOOM-P1-040 directly inspected and pinned official Freedoom release `v0.13.0`, release ID `139025240`, commit `cfb8644b1a8dc7d7d2177e6a892ccaa2922bdaae`, official archive checksum, and release-local `COPYING.txt`. The release-local text verifies BSD-3-Clause conditions for the separate Freedoom content. Exact archive, Phase 1/2 WAD, and license hashes are recorded in `docs/test-data/FREEDOOM_LOCK.md` and `tools/freedoom-lock.json`. The bytes remain in the ignored cache and are not bundled or tracked by this task.

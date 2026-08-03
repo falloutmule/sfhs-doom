@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "project": "freedoom",
+  "release": {
+    "id": 139025240,
+    "tag": "v0.13.0",
+    "name": "Freedoom 0.13.0",
+    "draft": false,
+    "prerelease": false,
+    "published_at": "2024-01-29T23:32:37Z",
+    "html_url": "https://github.com/freedoom/freedoom/releases/tag/v0.13.0",
+    "tag_object_sha": "8cecc3642861dfb71839984c886d5576fa120d49",
+    "commit_sha": "cfb8644b1a8dc7d7d2177e6a892ccaa2922bdaae"
+  },
+  "archive": {
+    "asset_id": 148625434,
+    "name": "freedoom-0.13.0.zip",
+    "url": "https://github.com/freedoom/freedoom/releases/download/v0.13.0/freedoom-0.13.0.zip",
+    "size_bytes": 24143781,
+    "sha256": "3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59",
+    "official_checksum_asset": "https://github.com/freedoom/freedoom/releases/download/v0.13.0/freedoom-0.13.0-CHECKSUM"
+  },
+  "license": {
+    "archive_path": "freedoom-0.13.0/COPYING.txt",
+    "spdx": "BSD-3-Clause",
+    "size_bytes": 1644,
+    "sha256": "7c62f2c520769c798774f416637eec4921e5f0aafdac1245ae7c8a8cf65fe102"
+  },
+  "wads": [
+    {
+      "edition": "freedoom-phase1",
+      "name": "freedoom1.wad",
+      "archive_path": "freedoom-0.13.0/freedoom1.wad",
+      "size_bytes": 28795076,
+      "sha256": "7323bcc168c5a45ff10749b339960e98314740a734c30d4b9f3337001f9e703d"
+    },
+    {
+      "edition": "freedoom-phase2",
+      "name": "freedoom2.wad",
+      "archive_path": "freedoom-0.13.0/freedoom2.wad",
+      "size_bytes": 28787748,
+      "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+    }
+  ]
+}

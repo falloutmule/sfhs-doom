@@ -294,7 +294,7 @@
     },
     {
       "id": "DOOM-P1-040",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-040.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -314,7 +314,10 @@
         "tools/freedoom-lock.json"
       ],
       "result": "docs/results/P01/DOOM-P1-040.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T16:01:15Z",
+      "base_head": "44cc36377e0db83709428cc8ec6f9c28d783fdb4",
+      "finished_at": "2026-08-03T16:05:41Z"
     },
     {
       "id": "DOOM-P1-050",

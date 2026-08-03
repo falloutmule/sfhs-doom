@@ -1,0 +1,7 @@
+release_id=139025240
+release_tag=v0.13.0
+release_commit=cfb8644b1a8dc7d7d2177e6a892ccaa2922bdaae
+archive_sha256=3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59
+7323bcc168c5a45ff10749b339960e98314740a734c30d4b9f3337001f9e703d  /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/freedoom/0.13.0/data/freedoom1.wad
+a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b  /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/freedoom/0.13.0/data/freedoom2.wad
+mode=verify

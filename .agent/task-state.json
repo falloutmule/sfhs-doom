@@ -346,7 +346,7 @@
     },
     {
       "id": "DOOM-P1-060",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-060.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -369,7 +369,10 @@
         "tools/verify-oracle-fixtures.py"
       ],
       "result": "docs/results/P01/DOOM-P1-060.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T20:03:59Z",
+      "base_head": "591a89eed883abc61ce32fac47b22503fea8091f",
+      "finished_at": "2026-08-03T22:23:30Z"
     },
     {
       "id": "DOOM-P1-070",

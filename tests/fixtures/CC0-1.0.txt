@@ -1,0 +1,9 @@
+SPDX-License-Identifier: CC0-1.0
+
+This CC0-1.0 dedication applies only to the project-created fixture data and
+metadata identified by tests/fixtures/expected/manifest.json. It does not apply
+to Chocolate Doom, Freedoom, commercial Doom material, third-party material,
+software scripts, the overall project, or any file not listed in that manifest.
+
+The CC0-1.0 legal code is available from Creative Commons:
+https://creativecommons.org/publicdomain/zero/1.0/

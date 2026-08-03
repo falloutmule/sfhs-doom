@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "fixture_set": "sfhs-native-oracle-v1",
+  "fixture_data_license": "CC0-1.0",
+  "provenance_confirmed": true,
+  "files": [
+    {
+      "path": "CC0-1.0.txt",
+      "purpose": "SPDX license notice for the identified project-created fixture set.",
+      "originating_task": "DOOM-P1-060",
+      "generator_command": "python tools/generate-oracle-fixtures.py --output <fixture-output>",
+      "size_bytes": 459,
+      "sha256": "b7442af653086371d3f0acc928c6174c91ce268cb1c426d1315c863dbf5cf9a7",
+      "spdx_identifier": "CC0-1.0",
+      "contains_third_party_material": false,
+      "contains_commercial_game_data": false,
+      "provenance_confirmed": true
+    },
+    {
+      "path": "config/oracle.cfg",
+      "purpose": "Deterministic configuration input for native-oracle startup.",
+      "originating_task": "DOOM-P1-060",
+      "generator_command": "python tools/generate-oracle-fixtures.py --output <fixture-output>",
+      "size_bytes": 36,
+      "sha256": "97a282690a170f1cb0b9b70c6cd034cf13e766fe24d9efdb4505778587a76d9d",
+      "spdx_identifier": "CC0-1.0",
+      "contains_third_party_material": false,
+      "contains_commercial_game_data": false,
+      "provenance_confirmed": true
+    },
+    {
+      "path": "open-deh/oracle.deh",
+      "purpose": "Minimal DeHackEd parser input for the native-oracle probe.",
+      "originating_task": "DOOM-P1-060",
+      "generator_command": "python tools/generate-oracle-fixtures.py --output <fixture-output>",
+      "size_bytes": 29,
+      "sha256": "cb74a444d21cc46c8db7728cf2c3f777469b34b8e3da1e19286c18c4e8acf9f4",
+      "spdx_identifier": "CC0-1.0",
+      "contains_third_party_material": false,
+      "contains_commercial_game_data": false,
+      "provenance_confirmed": true
+    },
+    {
+      "path": "open-demos/oracle.lmp",
+      "purpose": "Project-recorded deterministic demo input containing only generated commands.",
+      "originating_task": "DOOM-P1-060",
+      "generator_command": "python tools/generate-oracle-fixtures.py --output <fixture-output>",
+      "size_bytes": 18,
+      "sha256": "45f9177a339e21c8a6459dcf3d1d678e1cc777ddf71d7065c9e8f15fb5c58adb",
+      "spdx_identifier": "CC0-1.0",
+      "contains_third_party_material": false,
+      "contains_commercial_game_data": false,
+      "provenance_confirmed": true
+    },
+    {
+      "path": "open-pwads/order-a.wad",
+      "purpose": "Minimal project-created PWAD with a deterministic first lump order.",
+      "originating_task": "DOOM-P1-060",
+      "generator_command": "python tools/generate-oracle-fixtures.py --output <fixture-output>",
+      "size_bytes": 81,
+      "sha256": "217ca8dd04bc202e2fe1e61f3f9cdca08e0a43c51dfec3018552d942692b2b48",
+      "spdx_identifier": "CC0-1.0",
+      "contains_third_party_material": false,
+      "contains_commercial_game_data": false,
+      "provenance_confirmed": true
+    },
+    {
+      "path": "open-pwads/order-b.wad",
+      "purpose": "Minimal project-created PWAD with a deterministic second lump order.",
+      "originating_task": "DOOM-P1-060",
+      "generator_command": "python tools/generate-oracle-fixtures.py --output <fixture-output>",
+      "size_bytes": 81,
+      "sha256": "6fee80fd502e67305d9104ed74eb8bf18abf9618870b1ffc2c0c4a5fa4c39e1f",
+      "spdx_identifier": "CC0-1.0",
+      "contains_third_party_material": false,
+      "contains_commercial_game_data": false,
+      "provenance_confirmed": true
+    },
+    {
+      "path": "README.md",
+      "purpose": "License and provenance notice for the project-created fixture set.",
+      "originating_task": "DOOM-P1-060",
+      "generator_command": "python tools/generate-oracle-fixtures.py --output <fixture-output>",
+      "size_bytes": 691,
+      "sha256": "dd92ada0a2613569ecda94cb012f9a6a1286ed7d75a5a6bfa5dc2fa44bcafa96",
+      "spdx_identifier": "CC0-1.0",
+      "contains_third_party_material": false,
+      "contains_commercial_game_data": false,
+      "provenance_confirmed": true
+    }
+  ]
+}

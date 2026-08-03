@@ -1,0 +1,15 @@
+-- The C compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for strcasecmp
+-- Looking for strcasecmp - found
+-- Looking for strncasecmp
+-- Looking for strncasecmp - found
+-- Looking for dirent.h
+-- Looking for dirent.h - found
+-- Configuring done (9.3s)
+-- Generating done (4.1s)
+-- Build files have been written to: /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/native/release

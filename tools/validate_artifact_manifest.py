@@ -20,7 +20,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 SHA256_RE = re.compile(r"[0-9a-f]{64}\Z")
 COMMIT_RE = re.compile(r"[0-9a-f]{40}\Z")
-TASK_RE = re.compile(r"DOOM-P\d+-\d{3}\Z")
+PHASE_RE = re.compile(r"P(?P<number>\d{2})\Z")
+TASK_RE = re.compile(r"DOOM-P(?P<phase>\d+)-\d{3}\Z")
 
 
 class ManifestValidationError(Exception):
@@ -154,11 +155,16 @@ class ManifestValidator:
         if manifest.get("project") != "sfhs-doom":
             raise ManifestValidationError("project must be 'sfhs-doom'")
         _nonempty_string(_required(manifest, "edition", "manifest"), "edition")
-        if manifest.get("phase") != "P00":
-            raise ManifestValidationError("phase must be 'P00' for this fixture contract")
+        phase = manifest.get("phase")
+        phase_match = PHASE_RE.fullmatch(phase) if isinstance(phase, str) else None
+        if phase_match is None:
+            raise ManifestValidationError("phase must be a conventional P## identifier")
         task = _required(manifest, "task", "manifest")
-        if not isinstance(task, str) or not TASK_RE.fullmatch(task):
+        task_match = TASK_RE.fullmatch(task) if isinstance(task, str) else None
+        if task_match is None:
             raise ManifestValidationError("task must be a DOOM-Px-yyy identifier")
+        if int(phase_match.group("number")) != int(task_match.group("phase")):
+            raise ManifestValidationError(f"task {task} does not belong to phase {phase}")
 
         source = _require_object(_required(manifest, "source", "manifest"), "source")
         _strict_keys(source, {"commit", "upstream_tag", "upstream_sha", "dirty", "toolchains", "inputs"}, "source")

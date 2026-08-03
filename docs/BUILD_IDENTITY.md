@@ -44,3 +44,18 @@ Verification run IDs link the manifest to command stdout/stderr and reports. Rep
 ## P00 fixture identity
 
 The P00 fixture is bound to the clean DOOM-P0-060 base commit `53d903d0f368a251d0c4f110e384953c4a49b3c3`, upstream tag `chocolate-doom-3.1.1`, and upstream commit `410d96855b5df5410ff591a90efeafa889119224`. It is a small text mechanism fixture. It deliberately does not claim a product build, toolchain selection, game-data inclusion, or runtime verification.
+
+## P01 native build identity
+
+P01 manifests use the same schema with a conventional `P##` phase identifier whose numeric value must match the task ID. The native build identity includes the current source commit, pinned upstream tag/SHA, GCC/CMake/Ninja versions, CMake configuration, explicit optional-dependency controls, executable size and SHA-256, command logs, CMake cache, `file` output, and `ldd` output.
+
+For P1-020, `source.dirty: false` means the upstream engine and build-system input paths were unchanged from the recorded source commit. In-task documentation, tests, tools, manifests, and logs do not alter the compiled source input. The build driver refuses substantive engine/build-system changes while tolerating Windows/WSL end-of-line normalization.
+
+The canonical native parity options are:
+
+    -DENABLE_SDL2_NET=OFF
+    -DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE
+    -DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE
+    -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE
+
+`ldd` can still show FluidSynth and libsamplerate as transitive runtime dependencies of the Ubuntu SDL2_mixer package. That does not mean Chocolate Doom's optional direct CMake integrations were enabled; the CMake cache and link evidence distinguish those cases.

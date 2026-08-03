@@ -1,0 +1,10 @@
+source_commit=a70068ffc8aac5a93ffe281461f2967bc7ff71d2
+upstream_tag=chocolate-doom-3.1.1
+upstream_sha=410d96855b5df5410ff591a90efeafa889119224
+generator=Ninja
+compiler=13.3.0
+cmake=3.28.3
+ninja=1.11.1
+sdl2=2.30.0
+sdl2_mixer=2.8.0
+options=ENABLE_SDL2_NET=OFF;FluidSynth=OFF;SampleRate=OFF;PNG=OFF;generator=Ninja

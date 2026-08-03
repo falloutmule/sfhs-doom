@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "native-chocolate-doom-release",
+  "phase": "P01",
+  "task": "DOOM-P1-020",
+  "source": {
+    "commit": "a70068ffc8aac5a93ffe281461f2967bc7ff71d2",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {
+        "name": "gcc",
+        "version": "13.3.0",
+        "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"
+      },
+      {
+        "name": "cmake",
+        "version": "cmake version 3.28.3",
+        "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"
+      },
+      {
+        "name": "ninja",
+        "version": "1.11.1",
+        "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"
+      }
+    ],
+    "inputs": [
+      {
+        "path": "CMakeLists.txt",
+        "size_bytes": 3233,
+        "sha256": "6cabc11e7f8b48589f5a4a0755774fdc9f9d19aa5f5db905ed16dad6b96641c8"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-03T15:51:21.042636Z",
+    "id": "P01-DOOM-P1-020-release-20260803T155058Z-142033",
+    "commands": [
+      {
+        "argv": [
+          "cmake",
+          "-S",
+          ".",
+          "-B",
+          "build/native/release",
+          "-G",
+          "Ninja",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DENABLE_SDL2_NET=OFF",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P01-DOOM-P1-020/P01-DOOM-P1-020-release-20260803T155058Z-142033/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P01-DOOM-P1-020/P01-DOOM-P1-020-release-20260803T155058Z-142033/configure.stderr.txt"
+      },
+      {
+        "argv": [
+          "cmake",
+          "--build",
+          "build/native/release",
+          "--target",
+          "chocolate-doom"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P01-DOOM-P1-020/P01-DOOM-P1-020-release-20260803T155058Z-142033/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P01-DOOM-P1-020/P01-DOOM-P1-020-release-20260803T155058Z-142033/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "build/native/release/src/chocolate-doom",
+      "size_bytes": 1101144,
+      "sha256": "55d776c3e9d7905922852a84b1de568dd81e2b731a3918954964c2dabe9234fb",
+      "kind": "native-linux-elf-executable"
+    }
+  ],
+  "verification": {
+    "run_ids": [
+      "P01-DOOM-P1-020-release-20260803T155058Z-142033"
+    ],
+    "result": "PASS",
+    "checks": [
+      "clean guarded build directory",
+      "executable exists and is executable",
+      "file identity captured",
+      "dynamic dependencies captured",
+      "optional dependency parity flags applied"
+    ]
+  },
+  "notes": [
+    "Configuration: Release",
+    "Build duration seconds: 22",
+    "SDL2_net, FluidSynth, SampleRate, and PNG discovery were disabled explicitly."
+  ]
+}

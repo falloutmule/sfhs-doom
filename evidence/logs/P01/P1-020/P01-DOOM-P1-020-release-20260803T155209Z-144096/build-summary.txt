@@ -1,0 +1,2 @@
+duration_seconds=22
+executable=build/native/release/src/chocolate-doom

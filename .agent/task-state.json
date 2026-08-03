@@ -245,7 +245,7 @@
     },
     {
       "id": "DOOM-P1-020",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-020.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -264,7 +264,10 @@
         "tools/hash-artifact.py"
       ],
       "result": "docs/results/P01/DOOM-P1-020.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T15:40:57Z",
+      "base_head": "a70068ffc8aac5a93ffe281461f2967bc7ff71d2",
+      "finished_at": "2026-08-03T15:57:17Z"
     },
     {
       "id": "DOOM-P1-030",

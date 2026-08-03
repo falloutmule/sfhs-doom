@@ -37,6 +37,28 @@ class ArtifactManifestTests(unittest.TestCase):
     def test_valid_fixture_passes(self):
         self.checker.validate_file(MANIFEST_PATH)
 
+    def test_phase_one_manifest_passes(self):
+        data = copy.deepcopy(self.valid)
+        data["phase"] = "P01"
+        data["task"] = "DOOM-P1-020"
+        self.checker.validate_data(data)
+
+    def test_future_conventional_phase_manifest_passes(self):
+        data = copy.deepcopy(self.valid)
+        data["phase"] = "P12"
+        data["task"] = "DOOM-P12-345"
+        self.checker.validate_data(data)
+
+    def test_malformed_phase_rejected(self):
+        data = copy.deepcopy(self.valid)
+        data["phase"] = "P1"
+        self.assert_invalid(data, "conventional P## identifier")
+
+    def test_task_phase_mismatch_rejected(self):
+        data = copy.deepcopy(self.valid)
+        data["phase"] = "P01"
+        self.assert_invalid(data, "does not belong to phase P01")
+
     def test_missing_critical_field_rejected(self):
         data = copy.deepcopy(self.valid)
         del data["source"]

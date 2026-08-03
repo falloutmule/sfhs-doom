@@ -1,0 +1,2 @@
+SFHS Doom P00 evidence fixture input.
+This is mechanism data, not game content.

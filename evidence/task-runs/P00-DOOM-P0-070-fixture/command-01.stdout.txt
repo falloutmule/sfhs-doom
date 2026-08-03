@@ -1,0 +1,1 @@
+MANIFEST PASS: evidence\manifests\fixture-artifact-manifest.json

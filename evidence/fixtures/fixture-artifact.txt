@@ -1,0 +1,2 @@
+SFHS Doom P00 artifact identity fixture.
+This text file is not an engine, Wasm, HTML, IWAD, or release artifact.

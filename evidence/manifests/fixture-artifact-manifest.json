@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "p00-evidence-fixture",
+  "phase": "P00",
+  "task": "DOOM-P0-070",
+  "source": {
+    "commit": "53d903d0f368a251d0c4f110e384953c4a49b3c3",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {
+        "name": "product build toolchain",
+        "version": "not-run in P00",
+        "source": "No engine or release toolchain was used for this text fixture."
+      }
+    ],
+    "inputs": [
+      {
+        "path": "evidence/fixtures/fixture-input.txt",
+        "size_bytes": 80,
+        "sha256": "9028ca6699ad114df0c0ecc0e10dbc0ad47d549eaf446719a5ff17154892ae0a"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-03T13:07:22Z",
+    "id": "P00-DOOM-P0-070-fixture-20260803T130722Z",
+    "commands": [
+      {
+        "argv": [
+          "python",
+          "tools/validate_artifact_manifest.py",
+          "evidence/manifests/fixture-artifact-manifest.json"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P00-DOOM-P0-070-fixture/command-01.stdout.txt",
+        "stderr_path": "evidence/task-runs/P00-DOOM-P0-070-fixture/command-01.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "evidence/fixtures/fixture-artifact.txt",
+      "size_bytes": 113,
+      "sha256": "02b4c2229fa711d653cfd8fc8c9d4ac2b6f47dffb17a6b6ba2ed4fa0aca1ef54",
+      "kind": "text-fixture"
+    }
+  ],
+  "verification": {
+    "run_ids": [
+      "P00-DOOM-P0-070-fixture-20260803T130722Z"
+    ],
+    "result": "PASS",
+    "checks": [
+      "manifest critical fields and path boundaries",
+      "input and artifact size/hash recomputation",
+      "tampered artifact hash rejection",
+      "no engine, WAD, browser, or release build"
+    ]
+  },
+  "notes": [
+    "Mechanism fixture only; not a game, Wasm, HTML, IWAD, or release artifact.",
+    "The source commit is the clean P0-060 base recorded before this task's files were created.",
+    "Manifest command metadata is declarative and is never executed by the validator."
+  ]
+}

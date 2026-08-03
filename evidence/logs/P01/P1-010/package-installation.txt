@@ -1,0 +1,30 @@
+DOOM-P1-010 package installation record
+
+Initial inventory:
+- present: build-essential, python3, xauth, curl, unzip, ca-certificates
+- missing: cmake, ninja-build, pkg-config, libsdl2-dev, libsdl2-mixer-dev, xvfb, imagemagick, xdotool
+
+Attempt 1:
+wsl.exe bash -lc 'sudo -n apt-get update && sudo -n env DEBIAN_FRONTEND=noninteractive apt-get install ...'
+Exit: 1
+Observed stderr: sudo: a password is required
+
+Read-only alternative check:
+wsl.exe -d Ubuntu -u root bash -lc 'id -u; id -un'
+Exit: 0
+Output:
+0
+root
+
+Successful authorized command:
+wsl.exe -d Ubuntu -u root bash -lc 'apt-get update && env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends cmake ninja-build pkg-config libsdl2-dev libsdl2-mixer-dev xvfb imagemagick xdotool'
+Exit: 0
+Requested packages: 8
+Transitive packages installed by Ubuntu: 109
+Additional disk reported by apt: 147 MB
+
+Notable transitive optional dependencies:
+- libfluidsynth-dev 2.3.4-1build3
+- libsamplerate0-dev 0.2.2-4build1
+
+These are recorded as PRESENT_DISABLED and must be disabled by the P1 build flags. SDL2_net and libpng development/pkg-config identities remain absent.

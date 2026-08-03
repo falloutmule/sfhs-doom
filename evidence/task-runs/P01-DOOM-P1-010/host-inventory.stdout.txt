@@ -1,0 +1,10 @@
+Default Distribution: Ubuntu
+Default Version: 2
+Ubuntu state: Running
+Ubuntu WSL version: 2
+Kernel: 6.6.87.2-microsoft-standard-WSL2
+Distribution: Ubuntu 24.04.4 LTS (Noble Numbat)
+Architecture: x86_64 / amd64
+Repository path: /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom
+DISPLAY=:0
+WAYLAND_DISPLAY=wayland-0

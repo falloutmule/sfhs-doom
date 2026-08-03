@@ -1,0 +1,3 @@
+python -m unittest -v tests.test_native_toolchain
+Ran 5 tests
+OK

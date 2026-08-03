@@ -220,7 +220,7 @@
     },
     {
       "id": "DOOM-P1-010",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-010.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -238,7 +238,10 @@
         "tools/native-toolchain-doctor.sh"
       ],
       "result": "docs/results/P01/DOOM-P1-010.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T15:31:48Z",
+      "base_head": "840fac0287f89810d346b72ac5977221fab97b57",
+      "finished_at": "2026-08-03T15:40:42Z"
     },
     {
       "id": "DOOM-P1-020",

@@ -1,19 +1,19 @@
 # Compatibility Matrix
 
-**Document status:** Planning skeleton; no runtime claims  
-**Date:** 2026-08-02
+**Document status:** P01 native rows verified; later runtime rows remain planning only
+**Date:** 2026-08-03
 
 Every runtime row remains `UNTESTED` until the named artifact, environment, and evidence are available.
 
 | Runtime or target | Version/device | Scope | Status | Evidence |
 |---|---|---|---|---|
-| Native Chocolate Doom behavioral oracle | Not selected beyond the pinned source base | Future P01 oracle build and behavior comparison | UNTESTED | None |
+| Native Chocolate Doom behavioral oracle | Chocolate Doom 3.1.1; Ubuntu 24.04.4 WSL2; Release artifact from P1-020 | Native build and open-data gameplay entry | VERIFIED | `docs/results/P01/DOOM-P1-020.md`; `evidence/task-runs/P01-DOOM-P1-050/` |
 | Emscripten/WebAssembly build | SDK not selected; owned by P02 | Future Wasm engine build | UNTESTED | None |
 | Desktop Chromium | Version not recorded | Future packaged artifact launch and gameplay checks | UNTESTED | None |
 | Desktop Firefox | Version not recorded | Future packaged artifact launch and gameplay checks | UNTESTED | None |
 | Android Chrome on Samsung device | Exact model/version not recorded | Future physical mobile release gate | UNTESTED | None |
 | iOS Safari | Version/device not recorded | Best-effort compatibility target | UNTESTED | None |
-| Freedoom Phase 1 edition | Version not selected; owned by later phase | Future legal playable edition | UNTESTED | None |
-| Freedoom Phase 2 edition | Version not selected; owned by later phase | Future legal playable edition | UNTESTED | None |
+| Freedoom Phase 1 edition | Freedoom v0.13.0 `freedoom1.wad` | E1M1 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase1-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase1/` |
+| Freedoom Phase 2 edition | Freedoom v0.13.0 `freedoom2.wad` | MAP01 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase2-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase2/` |
 
-No row is a claim of support, build success, or physical acceptance.
+VERIFIED rows make only the stated native evidence claim. No browser, WebAssembly, mobile, physical-device, broad compatibility, or release-support claim follows from them.

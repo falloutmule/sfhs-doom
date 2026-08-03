@@ -1,0 +1,3 @@
+DISPLAY=:102
+SDL_AUDIODRIVER=dummy
+HOME=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P01/P1-050/phase2/home

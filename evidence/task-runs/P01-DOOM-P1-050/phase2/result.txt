@@ -1,0 +1,9 @@
+edition=phase2
+iwad=freedoom2.wad
+warp=1
+width=640
+height=480
+standard_deviation=0.11137
+colors=8844
+process_healthy_at_capture=true
+real_mixer_setup_observed=true

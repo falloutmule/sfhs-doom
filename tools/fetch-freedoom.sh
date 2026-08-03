@@ -38,7 +38,9 @@ ARCHIVE_URL="$(python3 -c 'import json; print(json.load(open("tools/freedoom-loc
 ARCHIVE_HASH="$(python3 -c 'import json; print(json.load(open("tools/freedoom-lock.json"))["archive"]["sha256"])')"
 
 case "$CACHE" in "$ROOT"/vendor-cache/freedoom/*) ;; *) echo "unsafe cache path" >&2; exit 1 ;; esac
-mkdir -p "$CACHE" evidence/logs/P01/P1-040 evidence/task-runs/P01-DOOM-P1-040 evidence/manifests/P01
+if [[ "$MODE" == fetch ]]; then
+    mkdir -p "$CACHE" evidence/logs/P01/P1-040 evidence/task-runs/P01-DOOM-P1-040 evidence/manifests/P01
+fi
 
 if ! verify_file "$ARCHIVE" "$ARCHIVE_HASH" 2>/dev/null; then
     [[ "$MODE" == fetch ]] || { verify_file "$ARCHIVE" "$ARCHIVE_HASH"; exit 1; }
@@ -96,18 +98,24 @@ for path, size, digest in checks:
     print(f"VERIFIED path={path} size={size} sha256={digest}")
 PY
 
-SUMMARY="evidence/task-runs/P01-DOOM-P1-040/fetch.stdout.txt"
-: >"evidence/task-runs/P01-DOOM-P1-040/fetch.stderr.txt"
-{
-    echo "release_id=139025240"
-    echo "release_tag=v0.13.0"
-    echo "release_commit=cfb8644b1a8dc7d7d2177e6a892ccaa2922bdaae"
-    echo "archive_sha256=$ARCHIVE_HASH"
-    for wad in freedoom1.wad freedoom2.wad; do sha256sum "$DATA/$wad"; done
-    echo "mode=$MODE"
-} >"$SUMMARY"
+if [[ "$MODE" == verify ]]; then
+    for manifest in evidence/manifests/P01/freedoom-phase1-v0.13.0.json evidence/manifests/P01/freedoom-phase2-v0.13.0.json; do
+        [[ -f "$manifest" ]] || { echo "manifest missing: $manifest" >&2; exit 1; }
+        python3 tools/validate_artifact_manifest.py "$manifest" >/dev/null
+    done
+else
+    SUMMARY="evidence/task-runs/P01-DOOM-P1-040/fetch.stdout.txt"
+    : >"evidence/task-runs/P01-DOOM-P1-040/fetch.stderr.txt"
+    {
+        echo "release_id=139025240"
+        echo "release_tag=v0.13.0"
+        echo "release_commit=cfb8644b1a8dc7d7d2177e6a892ccaa2922bdaae"
+        echo "archive_sha256=$ARCHIVE_HASH"
+        for wad in freedoom1.wad freedoom2.wad; do sha256sum "$DATA/$wad"; done
+        echo "mode=$MODE"
+    } >"$SUMMARY"
 
-python3 - "$DATA" "$ARCHIVE" <<'PY'
+    python3 - "$DATA" "$ARCHIVE" <<'PY'
 import hashlib
 import json
 from pathlib import Path
@@ -143,5 +151,6 @@ for wad in lock["wads"]:
     target = root / "evidence/manifests/P01" / f"{wad['edition']}-v0.13.0.json"
     target.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 PY
+fi
 
 echo "FREEDOOM_FETCH=PASS mode=$MODE cache=${CACHE#$ROOT/}"

@@ -1,0 +1,21 @@
+DOOM-P1-050 authorized repair evidence
+
+Command:
+  bash tools/fetch-freedoom.sh --verify-only
+
+Result:
+  FREEDOOM_FETCH=PASS mode=verify
+
+Read-only checks:
+  phase1 manifest blob = 91c947f9513554f151d7a10431cbbf3f455fb2a7
+  phase1 HEAD blob     = 91c947f9513554f151d7a10431cbbf3f455fb2a7
+  phase2 manifest blob = 48e25be135e7768ddeea5b21549cfd488751ad05
+  phase2 HEAD blob     = 48e25be135e7768ddeea5b21549cfd488751ad05
+  archive mtime unchanged = true
+  freedoom1.wad mtime unchanged = true
+  freedoom2.wad mtime unchanged = true
+  working-tree status unchanged = true
+
+Regression tests:
+  python -m unittest tests.test_fetch_freedoom tests.test_native_smoke
+  15 tests, OK

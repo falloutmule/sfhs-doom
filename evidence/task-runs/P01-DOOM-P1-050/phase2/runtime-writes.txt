@@ -1,0 +1,4 @@
+home/.cache/mesa_shader_cache/index
+home/.cache/mesa_shader_cache/marker
+home/.config/pulse/cookie
+home/.local/share/chocolate-doom/music-packs/README.txt

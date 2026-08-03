@@ -321,7 +321,7 @@
     },
     {
       "id": "DOOM-P1-050",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-050.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -339,7 +339,10 @@
         "tools/capture-native-frame.sh"
       ],
       "result": "docs/results/P01/DOOM-P1-050.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T16:06:12Z",
+      "base_head": "df474c7270ed193f3062e81f3febff2794e6d292",
+      "finished_at": "2026-08-03T20:01:52Z"
     },
     {
       "id": "DOOM-P1-060",

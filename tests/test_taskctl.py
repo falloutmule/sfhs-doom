@@ -26,13 +26,18 @@ class TaskCtlTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
+    def phase(self, task_id):
+        number = int(task_id.split("-")[1][1:])
+        return f"P{number:02d}"
+
     def card(self, task_id, dependencies=None, branch="phase/p00-governance", allowed=None):
         dependencies = dependencies or []
-        allowed = allowed or [".agent/task-state.json", "work.txt", f"docs/results/P00/{task_id}.md"]
-        self.root.joinpath("docs/tasks/P00").mkdir(parents=True, exist_ok=True)
+        phase = self.phase(task_id)
+        allowed = allowed or [".agent/task-state.json", "work.txt", f"docs/results/{phase}/{task_id}.md"]
+        self.root.joinpath("docs/tasks", phase).mkdir(parents=True, exist_ok=True)
         dependency_text = ", ".join(dependencies) or "None"
         allowed_text = "; ".join(f"`{path}`" for path in allowed)
-        self.root.joinpath("docs/tasks/P00", f"{task_id}.md").write_text(
+        self.root.joinpath("docs/tasks", phase, f"{task_id}.md").write_text(
             "\n".join(
                 [
                     f"# {task_id} test card",
@@ -46,10 +51,10 @@ class TaskCtlTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-    def state_for(self, records, extra=None):
+    def state_for(self, records, extra=None, branch="phase/p00-governance"):
         state = {
             "schema_version": 1,
-            "branch": "phase/p00-governance",
+            "branch": branch,
             "tasks": records,
         }
         if extra:
@@ -59,16 +64,17 @@ class TaskCtlTests(unittest.TestCase):
 
     def record(self, task_id, status="pending", dependencies=None, branch="phase/p00-governance", allowed=None):
         dependencies = dependencies or []
-        allowed = allowed or [".agent/task-state.json", "work.txt", f"docs/results/P00/{task_id}.md"]
+        phase = self.phase(task_id)
+        allowed = allowed or [".agent/task-state.json", "work.txt", f"docs/results/{phase}/{task_id}.md"]
         self.card(task_id, dependencies, branch, allowed)
         return {
             "id": task_id,
             "status": status,
-            "card": f"docs/tasks/P00/{task_id}.md",
+            "card": f"docs/tasks/{phase}/{task_id}.md",
             "branch": branch,
             "dependencies": dependencies,
             "allowed_paths": allowed,
-            "result": f"docs/results/P00/{task_id}.md",
+            "result": f"docs/results/{phase}/{task_id}.md",
             "commit": None,
         }
 
@@ -96,6 +102,48 @@ class TaskCtlTests(unittest.TestCase):
         saved = json.loads(self.ctl.state_path.read_text(encoding="utf-8"))
         self.assertEqual(saved["preserve_me"], "yes")
         self.assertEqual(saved["tasks"][1]["mystery"], {"keep": True})
+
+    def test_p01_task_validates_and_uses_matching_result_directory(self):
+        record = self.record("DOOM-P1-010", branch="phase/p01-native-oracle")
+        self.baseline([record])
+        state = self.ctl.require_valid()
+        card = self.ctl._card_for(state["tasks"][0])
+        self.assertEqual(card["card"], "docs/tasks/P01/DOOM-P1-010.md")
+        self.assertEqual(card["result"], "docs/results/P01/DOOM-P1-010.md")
+
+    def test_mixed_p00_and_p01_state_validates(self):
+        first = self.record("DOOM-P0-070", status="done")
+        first["commit"] = "EXTERNAL"
+        second = self.record(
+            "DOOM-P1-000",
+            dependencies=["DOOM-P0-070"],
+            branch="phase/p01-native-oracle",
+        )
+        self.baseline([first, second])
+        state = self.ctl.require_valid()
+        self.assertTrue(self.ctl.ready(state["tasks"][1], self.ctl._task_map(state)))
+
+    def test_duplicate_task_card_identity_is_rejected(self):
+        record = self.record("DOOM-P0-001")
+        duplicate = self.root / "docs/tasks/P01/duplicate.md"
+        duplicate.parent.mkdir(parents=True, exist_ok=True)
+        duplicate.write_text(
+            "# DOOM-P0-001 duplicate card\n\n"
+            "**Branch:** phase/p00-governance\n"
+            "**Depends on:** None\n"
+            "**Allowed files/directories:** work.txt\n",
+            encoding="utf-8",
+        )
+        self.baseline([record])
+        with self.assertRaisesRegex(taskctl.TaskCtlError, "duplicate task-card identity"):
+            self.ctl.require_valid()
+
+    def test_missing_task_card_is_rejected(self):
+        record = self.record("DOOM-P1-010", branch="phase/p01-native-oracle")
+        self.root.joinpath(record["card"]).unlink()
+        self.state_for([record], branch="phase/p01-native-oracle")
+        with self.assertRaisesRegex(taskctl.TaskCtlError, "task card is missing"):
+            self.ctl.require_valid()
 
     def test_start_refuses_unmet_dependency(self):
         first = self.record("DOOM-P0-001")
@@ -178,6 +226,21 @@ class TaskCtlTests(unittest.TestCase):
         self.stage(".agent/task-state.json")
         self.ctl._git("commit", "-qm", "DOOM-P0-001 test task commit")
         self.ctl.verify_head("DOOM-P0-001")
+
+    def test_p01_self_finish_and_verify_head(self):
+        record = self.record("DOOM-P1-010", branch="phase/p01-native-oracle")
+        self.baseline([record])
+        self.ctl._git("checkout", "-q", "-b", "phase/p01-native-oracle")
+        self.ctl.start("DOOM-P1-010")
+        self.root.joinpath("work.txt").write_text("bounded P1 change\n", encoding="utf-8")
+        result = self.root / "docs/results/P01/DOOM-P1-010.md"
+        result.parent.mkdir(parents=True, exist_ok=True)
+        result.write_text("Result commit: SELF\n", encoding="utf-8")
+        self.stage("work.txt", "docs/results/P01/DOOM-P1-010.md", ".agent/task-state.json")
+        self.ctl.finish("DOOM-P1-010", "SELF")
+        self.stage(".agent/task-state.json")
+        self.ctl._git("commit", "-qm", "DOOM-P1-010 test task commit")
+        self.ctl.verify_head("DOOM-P1-010")
 
 
 if __name__ == "__main__":

@@ -22,11 +22,13 @@ from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE_RELATIVE = Path(".agent/task-state.json")
-TASK_ROOT = Path("docs/tasks/P00")
-RESULT_ROOT = Path("docs/results/P00")
+TASKS_ROOT = Path("docs/tasks")
+RESULTS_ROOT = Path("docs/results")
 KNOWN_STATUSES = {"pending", "running", "done", "blocked", "failed"}
 COMMIT_SELF = "SELF"
 TASK_ID_PATTERN = re.compile(r"DOOM-P\d+-\d{3}")
+TASK_HEADING_PATTERN = re.compile(r"^#+\s+(DOOM-P\d+-\d{3})\b", re.MULTILINE)
+PHASE_DIRECTORY_PATTERN = re.compile(r"P\d{2}")
 SHA_PATTERN = re.compile(r"[0-9a-fA-F]{40}")
 
 
@@ -79,18 +81,54 @@ def _field(text: str, label: str) -> str:
     return match.group(1).strip() if match else ""
 
 
-def _parse_card(root: Path, task_id: str, card_value: str | None = None) -> dict[str, Any]:
-    card_rel = card_value or _path_string(TASK_ROOT / f"{task_id}.md")
-    card_rel = card_rel.replace("\\", "/")
-    card_path = root / Path(card_rel)
-    if not card_path.is_file():
-        raise TaskCtlError(f"task card is missing: {card_rel}")
-    try:
-        text = card_path.read_text(encoding="utf-8")
-    except OSError as exc:
-        raise TaskCtlError(f"cannot read task card {card_rel}: {exc}") from exc
+def _phase_directory(task_id: str) -> str:
+    match = re.fullmatch(r"DOOM-P(\d+)-\d{3}", task_id)
+    if match is None:
+        raise TaskCtlError(f"invalid task ID: {task_id}")
+    return f"P{int(match.group(1)):02d}"
 
-    heading = re.search(r"^#+\s+(DOOM-[A-Z0-9]+-\d{3})\b", text, re.MULTILINE)
+
+def _result_path(task_id: str) -> str:
+    return _path_string(RESULTS_ROOT / _phase_directory(task_id) / f"{task_id}.md")
+
+
+def _discover_card(root: Path, task_id: str) -> tuple[str, str]:
+    tasks_root = root / TASKS_ROOT
+    expected_phase = _phase_directory(task_id)
+    matches: list[tuple[Path, str]] = []
+    if tasks_root.is_dir():
+        for phase_dir in sorted(tasks_root.iterdir()):
+            if not phase_dir.is_dir() or not PHASE_DIRECTORY_PATTERN.fullmatch(phase_dir.name):
+                continue
+            for card_path in sorted(phase_dir.glob("*.md")):
+                try:
+                    text = card_path.read_text(encoding="utf-8")
+                except OSError as exc:
+                    raise TaskCtlError(f"cannot read task card {_path_string(card_path.relative_to(root))}: {exc}") from exc
+                heading = TASK_HEADING_PATTERN.search(text)
+                if heading is not None and heading.group(1) == task_id:
+                    matches.append((card_path, text))
+    if not matches:
+        expected = _path_string(TASKS_ROOT / expected_phase / f"{task_id}.md")
+        raise TaskCtlError(f"task card is missing: {expected}")
+    if len(matches) > 1:
+        paths = ", ".join(_path_string(path.relative_to(root)) for path, _ in matches)
+        raise TaskCtlError(f"duplicate task-card identity {task_id}: {paths}")
+    card_path, text = matches[0]
+    if card_path.parent.name != expected_phase:
+        actual = _path_string(card_path.relative_to(root))
+        raise TaskCtlError(f"task card is in the wrong phase directory: {actual}; expected {expected_phase}")
+    return _path_string(card_path.relative_to(root)), text
+
+
+def _parse_card(root: Path, task_id: str, card_value: str | None = None) -> dict[str, Any]:
+    card_rel, text = _discover_card(root, task_id)
+    if card_value is not None:
+        recorded_rel = _safe_relative_path(root, card_value)
+        if recorded_rel != card_rel:
+            raise TaskCtlError(f"recorded card path {recorded_rel} does not match discovered card {card_rel}")
+
+    heading = TASK_HEADING_PATTERN.search(text)
     card_id = heading.group(1) if heading else ""
     branch_raw = _field(text, "Branch")
     branch_match = re.search(r"(phase/p\d{2}-[a-z0-9-]+)", branch_raw, re.IGNORECASE)
@@ -111,7 +149,7 @@ def _parse_card(root: Path, task_id: str, card_value: str | None = None) -> dict
         "branch": branch,
         "dependencies": dependencies,
         "allowed_paths": allowed,
-        "result": _path_string(RESULT_ROOT / f"{task_id}.md"),
+        "result": _result_path(task_id),
     }
 
 

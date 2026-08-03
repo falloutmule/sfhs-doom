@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "branch": "phase/p00-governance",
+  "branch": "phase/p01-native-oracle",
   "tasks": [
     {
       "id": "DOOM-P0-001",
@@ -180,6 +180,278 @@
         "gate-verdict Markdown output outside branch unless separately authorized"
       ],
       "result": "docs/results/P00/DOOM-P0-090.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-000",
+      "status": "done",
+      "card": "docs/tasks/P01/DOOM-P1-000.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P0-070"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/phases/P01/PHASE_PLAN.md",
+        "docs/tasks/P01/DOOM-P1-000.md",
+        "docs/tasks/P01/DOOM-P1-010.md",
+        "docs/tasks/P01/DOOM-P1-020.md",
+        "docs/tasks/P01/DOOM-P1-030.md",
+        "docs/tasks/P01/DOOM-P1-040.md",
+        "docs/tasks/P01/DOOM-P1-050.md",
+        "docs/tasks/P01/DOOM-P1-060.md",
+        "docs/tasks/P01/DOOM-P1-070.md",
+        "docs/tasks/P01/DOOM-P1-080.md",
+        "docs/tasks/P01/DOOM-P1-085.md",
+        "docs/tasks/P01/DOOM-P1-090.md",
+        "docs/results/P01/DOOM-P1-000.md",
+        "tools/taskctl.py",
+        "tests/test_taskctl.py",
+        "tools/validate_project_docs.py",
+        "tests/test_project_docs.py"
+      ],
+      "result": "docs/results/P01/DOOM-P1-000.md",
+      "commit": "SELF",
+      "started_at": "2026-08-03T15:29:36Z",
+      "base_head": "804ddb9ae855b65aeec922cd5f531c672b9b2c5f",
+      "finished_at": "2026-08-03T15:31:21Z"
+    },
+    {
+      "id": "DOOM-P1-010",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-010.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-000"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        ".gitignore",
+        "docs/toolchains/NATIVE_TOOLCHAIN.md",
+        "docs/results/P01/DOOM-P1-010.md",
+        "evidence/logs/P01/P1-010/**",
+        "evidence/task-runs/P01-DOOM-P1-010/**",
+        "tests/test_native_toolchain.py",
+        "tools/native-env.sh",
+        "tools/native-toolchain-doctor.sh"
+      ],
+      "result": "docs/results/P01/DOOM-P1-010.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-020",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-020.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-010"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        ".gitignore",
+        "docs/BUILD_IDENTITY.md",
+        "docs/results/P01/DOOM-P1-020.md",
+        "evidence/logs/P01/P1-020/**",
+        "evidence/manifests/P01/**",
+        "evidence/task-runs/P01-DOOM-P1-020/**",
+        "tests/test_build_native.py",
+        "tools/build-native.sh",
+        "tools/hash-artifact.py"
+      ],
+      "result": "docs/results/P01/DOOM-P1-020.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-030",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-030.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-020"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/reports/UPSTREAM_NATIVE_TEST_BASELINE.md",
+        "docs/results/P01/DOOM-P1-030.md",
+        "evidence/logs/P01/P1-030/**",
+        "evidence/task-runs/P01-DOOM-P1-030/**",
+        "tests/test_upstream_test_runner.py",
+        "tools/run-upstream-native-tests.sh"
+      ],
+      "result": "docs/results/P01/DOOM-P1-030.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-040",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-040.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-030"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        ".gitignore",
+        "docs/licenses/THIRD_PARTY_INVENTORY.md",
+        "docs/test-data/FREEDOOM_LOCK.md",
+        "docs/results/P01/DOOM-P1-040.md",
+        "evidence/logs/P01/P1-040/**",
+        "evidence/manifests/P01/**",
+        "evidence/task-runs/P01-DOOM-P1-040/**",
+        "tests/test_fetch_freedoom.py",
+        "tools/fetch-freedoom.sh",
+        "tools/freedoom-lock.json"
+      ],
+      "result": "docs/results/P01/DOOM-P1-040.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-050",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-050.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-040"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/results/P01/DOOM-P1-050.md",
+        "evidence/logs/P01/P1-050/**",
+        "evidence/screenshots/P01/P1-050/**",
+        "evidence/task-runs/P01-DOOM-P1-050/**",
+        "tests/test_native_smoke.py",
+        "tools/run-native-smoke.sh",
+        "tools/capture-native-frame.sh"
+      ],
+      "result": "docs/results/P01/DOOM-P1-050.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-060",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-060.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-050"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/test-data/NATIVE_ORACLE_FIXTURES.md",
+        "docs/licenses/THIRD_PARTY_INVENTORY.md",
+        "docs/results/P01/DOOM-P1-060.md",
+        "evidence/logs/P01/P1-060/**",
+        "evidence/task-runs/P01-DOOM-P1-060/**",
+        "tests/fixtures/config/**",
+        "tests/fixtures/open-deh/**",
+        "tests/fixtures/open-demos/**",
+        "tests/fixtures/open-pwads/**",
+        "tests/fixtures/expected/**",
+        "tests/test_oracle_fixtures.py",
+        "tools/generate-oracle-fixtures.py",
+        "tools/verify-oracle-fixtures.py"
+      ],
+      "result": "docs/results/P01/DOOM-P1-060.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-070",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-070.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-060"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/reports/NATIVE_DEMO_BASELINE.md",
+        "docs/results/P01/DOOM-P1-070.md",
+        "evidence/logs/P01/P1-070/**",
+        "evidence/task-runs/P01-DOOM-P1-070/**",
+        "tests/fixtures/open-demos/**",
+        "tests/native/**",
+        "tests/test_native_demo_harness.py",
+        "tools/record-native-demo.sh",
+        "tools/run-native-demo.sh",
+        "tools/run-native-timedemo.sh",
+        "tools/demo-result.py"
+      ],
+      "result": "docs/results/P01/DOOM-P1-070.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-080",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-080.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-070"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "CMakeLists.txt",
+        "cmake/**",
+        "src/**",
+        "src/sfhs_oracle/**",
+        "tests/native/**",
+        "tools/oracle/**",
+        "docs/DECISIONS.md",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/reports/NATIVE_ORACLE_INSTRUMENTATION.md",
+        "docs/results/P01/DOOM-P1-080.md",
+        "evidence/logs/P01/P1-080/**",
+        "evidence/task-runs/P01-DOOM-P1-080/**",
+        "tests/test_native_oracle.py",
+        "tools/build-native.sh",
+        "tools/run-native-oracle.sh"
+      ],
+      "result": "docs/results/P01/DOOM-P1-080.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-085",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-085.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-080"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/BUILD_IDENTITY.md",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/phases/P01/PHASE_RESULT.md",
+        "docs/reports/NATIVE_ORACLE_BASELINE.md",
+        "docs/results/P01/DOOM-P1-085.md",
+        "evidence/phase-gates/P01/**",
+        "evidence/reports/P01/**",
+        "evidence/manifests/P01/**",
+        "evidence/logs/P01/P1-085/**",
+        "evidence/task-runs/P01-DOOM-P1-085/**",
+        "tests/test_p1_gate.py",
+        "tools/verify-p1-gate.py"
+      ],
+      "result": "docs/results/P01/DOOM-P1-085.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P1-090",
+      "status": "pending",
+      "card": "docs/tasks/P01/DOOM-P1-090.md",
+      "branch": "phase/p01-native-oracle",
+      "dependencies": [
+        "DOOM-P1-085"
+      ],
+      "allowed_paths": [
+        "read-only repository inspection",
+        "evidence/phase-gates/P01/SOL_GATE_PACKET.md review"
+      ],
+      "result": "docs/results/P01/DOOM-P1-090.md",
       "commit": null
     }
   ]

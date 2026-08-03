@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the machine-readable Markdown contracts used by SFHS Doom P00."""
+"""Validate the machine-readable Markdown contracts used by SFHS Doom."""
 
 from __future__ import annotations
 
@@ -11,8 +11,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATES = ROOT / "docs" / "templates"
-TASKS = ROOT / "docs" / "tasks" / "P00"
-PHASE_PLAN = ROOT / "docs" / "phases" / "P00" / "PHASE_PLAN.md"
+PHASES_ROOT = Path("docs/phases")
+TASKS_ROOT = Path("docs/tasks")
+PHASE_DIRECTORY_RE = re.compile(r"P\d{2}")
+TASK_ID_RE = re.compile(r"^##\s+(DOOM-P(\d+)-\d{3})\b", re.MULTILINE)
 
 
 class ValidationFailure(Exception):
@@ -41,6 +43,29 @@ def require_file(path: Path, issues: list[str]) -> str:
     except UnicodeDecodeError:
         issues.append(f"{path}: invalid UTF-8")
         return ""
+
+
+def phase_directory_for_task(task_id: str) -> str:
+    match = re.fullmatch(r"DOOM-P(\d+)-\d{3}", task_id)
+    if match is None:
+        raise ValidationFailure(f"invalid task ID: {task_id}")
+    return f"P{int(match.group(1)):02d}"
+
+
+def discover_phase_directories(root: Path, relative: Path, issues: list[str]) -> dict[str, Path]:
+    base = root / relative
+    if not base.is_dir():
+        issues.append(f"{base}: missing directory")
+        return {}
+    discovered: dict[str, Path] = {}
+    for child in sorted(base.iterdir()):
+        if not child.is_dir():
+            continue
+        if not PHASE_DIRECTORY_RE.fullmatch(child.name):
+            issues.append(f"{child}: malformed phase directory name")
+            continue
+        discovered[child.name] = child
+    return discovered
 
 
 def validate_plans_contract() -> list[str]:
@@ -150,22 +175,38 @@ def validate_templates() -> list[str]:
 def validate_phase(path: Path) -> list[str]:
     issues: list[str] = []
     text = require_file(path, issues)
-    markers = [
-        "Task graph",
-        "Task cards",
-        "Required result format",
-        "Exit gate",
-        "DOOM-P0-001",
-        "DOOM-P0-090",
-        "Remote operations:",
-        "05bba8c84cb3618882e334c406ddce67f3356154ebc41bb37f38d33de9c6fa6c",
-    ]
+    phase_name = path.parent.name
+    if not PHASE_DIRECTORY_RE.fullmatch(phase_name):
+        issues.append(f"{path.parent}: malformed phase directory name")
+        return issues
+    phase_number = int(phase_name[1:])
+    if phase_number == 0:
+        markers = [
+            "Task graph",
+            "Task cards",
+            "Required result format",
+            "Exit gate",
+            "DOOM-P0-001",
+            "DOOM-P0-090",
+            "Remote operations:",
+            "05bba8c84cb3618882e334c406ddce67f3356154ebc41bb37f38d33de9c6fa6c",
+        ]
+    else:
+        markers = [
+            "## Goal",
+            "## Task graph",
+            "## Exact verification",
+            "## Evidence and result locations",
+            "## Current state",
+            "## Blockers and stop conditions",
+            "## Exit gate",
+            f"DOOM-P{phase_number}-000",
+            f"DOOM-P{phase_number}-090",
+            "Remote boundary:",
+        ]
     for marker in missing_markers(path, text, markers):
         issues.append(f"{path}: missing marker {marker!r}")
     return issues
-
-
-TASK_ID_RE = re.compile(r"^##\s+(DOOM-[A-Z0-9]+-\d{3})\b", re.MULTILINE)
 
 
 def validate_task(path: Path) -> list[str]:
@@ -180,6 +221,9 @@ def validate_task(path: Path) -> list[str]:
         task_id = ""
     else:
         task_id = match.group(1)
+        expected_phase = phase_directory_for_task(task_id)
+        if PHASE_DIRECTORY_RE.fullmatch(path.parent.name) and path.parent.name != expected_phase:
+            issues.append(f"{path}: task ID belongs in {expected_phase}, not {path.parent.name}")
         expected_name = f"{task_id}.md"
         if path.name != expected_name:
             issues.append(f"{path}: filename does not match task heading {task_id}")
@@ -197,7 +241,8 @@ def validate_task(path: Path) -> list[str]:
     for marker in missing_markers(path, text, common_markers):
         issues.append(f"{path}: missing marker {marker!r}")
 
-    if task_id == "DOOM-P0-090":
+    is_gate = bool(re.fullmatch(r"DOOM-P\d+-090", task_id))
+    if is_gate:
         if "### Review duties" not in text:
             issues.append(f"{path}: missing marker '### Review duties'")
         if "### Gate acceptance" not in text:
@@ -208,7 +253,7 @@ def validate_task(path: Path) -> list[str]:
         if "### Evidence output" not in text:
             issues.append(f"{path}: missing marker '### Evidence output'")
 
-    if task_id == "DOOM-P0-090":
+    if is_gate:
         has_work = "### Review duties" in text
     else:
         has_work = "### Work" in text or "### Work completed" in text
@@ -219,7 +264,7 @@ def validate_task(path: Path) -> list[str]:
 
     # P0-001 is the planning-only exception and predates the repository task
     # contract. Later cards must state these operational boundaries explicitly.
-    if task_id not in ("DOOM-P0-001", "DOOM-P0-090"):
+    if task_id != "DOOM-P0-001" and not is_gate:
         for marker in (
             "**Remote authorization:**",
             "### Constraints",
@@ -230,14 +275,48 @@ def validate_task(path: Path) -> list[str]:
     return issues
 
 
+def validate_phase_tree(root: Path = ROOT) -> list[str]:
+    issues: list[str] = []
+    phase_dirs = discover_phase_directories(root, PHASES_ROOT, issues)
+    task_dirs = discover_phase_directories(root, TASKS_ROOT, issues)
+    phase_names = sorted(set(phase_dirs) | set(task_dirs))
+    seen_tasks: dict[str, Path] = {}
+
+    for phase_name in phase_names:
+        phase_dir = phase_dirs.get(phase_name)
+        task_dir = task_dirs.get(phase_name)
+        if phase_dir is None:
+            issues.append(f"{root / PHASES_ROOT / phase_name}: missing matching phase directory")
+        else:
+            phase_plan = phase_dir / "PHASE_PLAN.md"
+            issues.extend(validate_phase(phase_plan))
+        if task_dir is None:
+            issues.append(f"{root / TASKS_ROOT / phase_name}: missing matching task directory")
+            continue
+        task_paths = sorted(task_dir.glob("*.md"))
+        if not task_paths:
+            issues.append(f"{task_dir}: no task cards found")
+        for path in task_paths:
+            issues.extend(validate_task(path))
+            try:
+                text = path.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError):
+                continue
+            match = TASK_ID_RE.search(text)
+            if match is None:
+                continue
+            task_id = match.group(1)
+            prior = seen_tasks.get(task_id)
+            if prior is not None:
+                issues.append(f"duplicate task ID {task_id}: {prior} and {path}")
+            else:
+                seen_tasks[task_id] = path
+    return sorted(set(issues))
+
+
 def validate_all() -> list[str]:
     issues = validate_templates()
-    issues.extend(validate_phase(PHASE_PLAN))
-    task_paths = sorted(TASKS.glob("DOOM-P0-*.md"))
-    if not task_paths:
-        issues.append(f"{TASKS}: no P00 task cards found")
-    for path in task_paths:
-        issues.extend(validate_task(path))
+    issues.extend(validate_phase_tree(ROOT))
     return issues
 
 
@@ -251,11 +330,11 @@ def report(issues: list[str]) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    selection = parser.add_mutually_exclusive_group(required=True)
+    selection = parser.add_mutually_exclusive_group(required=False)
     selection.add_argument("--templates", action="store_true", help="validate planning templates")
     selection.add_argument("--task", type=Path, help="validate one task card")
     selection.add_argument("--phase", type=Path, help="validate one phase plan")
-    selection.add_argument("--all", action="store_true", help="validate templates, phase plan, and P00 cards")
+    selection.add_argument("--all", action="store_true", help="validate templates and every discovered phase/card tree")
     args = parser.parse_args(argv)
 
     if args.templates:

@@ -680,7 +680,7 @@
     },
     {
       "id": "DOOM-P2-070",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-070.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -700,7 +700,10 @@
         "tests/test_browser_input_contract.py"
       ],
       "result": "docs/results/P02/DOOM-P2-070.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T11:34:42Z",
+      "base_head": "ce107d936109154fe66a91fa722376760e7e452f",
+      "finished_at": "2026-08-04T13:18:01Z"
     },
     {
       "id": "DOOM-P2-080",

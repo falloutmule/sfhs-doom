@@ -14,11 +14,13 @@
   };
   window.setInterval(markCanvas, 100);
   markCanvas();
-  const pauseWhenReady = window.setInterval(() => {
-    if (document.body.dataset.sfhsP2Runtime === 'ready' && window.Module && typeof window.Module.pauseMainLoop === 'function') {
-      window.Module.pauseMainLoop();
-      window.clearInterval(pauseWhenReady);
-      document.body.dataset.sfhsP2Loop = 'paused-after-proof';
-    }
-  }, 1000);
+  if (new URLSearchParams(window.location.search).get('input') !== '1') {
+    const pauseWhenReady = window.setInterval(() => {
+      if (document.body.dataset.sfhsP2Runtime === 'ready' && window.Module && typeof window.Module.pauseMainLoop === 'function') {
+        window.Module.pauseMainLoop();
+        window.clearInterval(pauseWhenReady);
+        document.body.dataset.sfhsP2Loop = 'paused-after-proof';
+      }
+    }, 1000);
+  }
 }());

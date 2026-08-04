@@ -3,10 +3,13 @@
   const phase = window.SFHS_P2_PHASE || 'phase2';
   const wad = phase === 'phase1' ? 'freedoom1.wad' : 'freedoom2.wad';
   const wadUrl = `/p2-data/${wad}`;
+  const menuOnly = new URLSearchParams(window.location.search).get('menu') === '1';
   const allowed = new URL('./', window.location.href).origin;
   window.SFHS_P2_MODULE = {
     canvas: document.getElementById('canvas'),
-    arguments: ['-iwad', wad, '-warp', '1', '1', '-skill', '3', '-window', '-width', '640', '-height', '400', '-nosound', '-nomusic'],
+    arguments: menuOnly
+      ? ['-iwad', wad, '-window', '-width', '640', '-height', '400', '-nosound', '-nomusic']
+      : ['-iwad', wad, '-warp', '1', '1', '-skill', '3', '-window', '-width', '640', '-height', '400', '-nosound', '-nomusic'],
     locateFile: (name) => new URL(`/engine/src/${name}`, window.location.origin).toString(),
     print: (text) => console.log(String(text)),
     printErr: (text) => console.error(String(text)),

@@ -1,0 +1,67 @@
+{
+  "menuSha256": "9ea118922a7941b718ccf9039a81d0d869f758e1f98b6dc977609ed71a0effd6",
+  "gameSha256": "7361d1839c87ab37f30a94b82584c37dfebb3aabc2f586458a6ce10d0ddee983",
+  "keys": [
+    {
+      "type": "down",
+      "key": "Escape",
+      "target": "canvas"
+    },
+    {
+      "type": "up",
+      "key": "Escape",
+      "target": "canvas"
+    },
+    {
+      "type": "down",
+      "key": "ArrowDown",
+      "target": "canvas"
+    },
+    {
+      "type": "up",
+      "key": "ArrowDown",
+      "target": "canvas"
+    },
+    {
+      "type": "down",
+      "key": "ArrowUp",
+      "target": "canvas"
+    },
+    {
+      "type": "up",
+      "key": "ArrowUp",
+      "target": "canvas"
+    },
+    {
+      "type": "down",
+      "key": "Enter",
+      "target": "canvas"
+    },
+    {
+      "type": "up",
+      "key": "Enter",
+      "target": "canvas"
+    },
+    {
+      "type": "down",
+      "key": "Enter",
+      "target": "canvas"
+    },
+    {
+      "type": "up",
+      "key": "Enter",
+      "target": "canvas"
+    },
+    {
+      "type": "down",
+      "key": "Enter",
+      "target": "canvas"
+    },
+    {
+      "type": "up",
+      "key": "Enter",
+      "target": "canvas"
+    }
+  ],
+  "errors": []
+}

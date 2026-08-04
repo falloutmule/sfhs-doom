@@ -41,3 +41,9 @@ Stop for stuck keys, direct state injection, focus leakage, missing real menu/ga
 ### Commit
 
 DOOM-P2-070 prove browser keyboard input semantics
+
+### Owner-authorized acceptance amendment — 2026-08-04
+
+Classification D from the bounded heartbeat and browser-level screenshot diagnostic is accepted as a browser/test-capture limitation. The heartbeat advanced from 19 to 90, real canvas-targeted ArrowUp keydown and keyup were observed, Chromium and Firefox menu navigation passed, page errors were empty, and pre-input gameplay was captured.
+
+The already-built `phase2-oracle` artifact was inspected read-only for `window.SFHS_WASM_TEST`. The interface is absent. Exposing it would require an unauthorized engine or build change, so P2-070 may finish as `PASS_WITH_RECORDED_LIMITATION` based on the preserved D diagnostic and menu/input evidence. Direct visual gameplay movement remains unproven because the Playwright post-input capture hangs. Do not investigate or repair browser screenshots further under this task.

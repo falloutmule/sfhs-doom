@@ -1,0 +1,8 @@
+{
+  "classification": "PASS_WITH_RECORDED_LIMITATION",
+  "oracle_interface": "unavailable",
+  "oracle_path": "build/wasm/P2-050/phase2-oracle/src/chocolate-doom.js",
+  "inspection": "Built P2 Oracle JavaScript contains no SFHS_WASM_TEST interface.",
+  "preserved_diagnostic": "gameplay-arrowup.json",
+  "note": "Direct visual gameplay movement remains unproven because Playwright post-input capture hangs; accepted by project-owner amendment."
+}

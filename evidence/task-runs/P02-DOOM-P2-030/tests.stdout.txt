@@ -1,0 +1,8 @@
+test_clean_scope_is_exact_and_source_is_not_touched (tests.test_configure_wasm.ConfigureWasmTests.test_clean_scope_is_exact_and_source_is_not_touched) ... ok
+test_configure_evidence_records_pinned_boundary (tests.test_configure_wasm.ConfigureWasmTests.test_configure_evidence_records_pinned_boundary) ... ok
+test_unknown_argument_is_rejected (tests.test_configure_wasm.ConfigureWasmTests.test_unknown_argument_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 4.482s
+
+OK

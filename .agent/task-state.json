@@ -564,7 +564,7 @@
     },
     {
       "id": "DOOM-P2-030",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-030.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -580,7 +580,10 @@
         "tools/configure-wasm.sh"
       ],
       "result": "docs/results/P02/DOOM-P2-030.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T10:30:33Z",
+      "base_head": "7defabe24f9e55607c2d54ce74c3fa9bc5320275",
+      "finished_at": "2026-08-04T10:35:10Z"
     },
     {
       "id": "DOOM-P2-040",

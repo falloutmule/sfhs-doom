@@ -1,0 +1,6 @@
+SOURCE_COMMIT=7defabe24f9e55607c2d54ce74c3fa9bc5320275
+BUILD_DIR=build/wasm/upstream-configure
+CC=emcc
+SDL2_MIXER=ON
+SDL2_NET=OFF
+ORACLE=OFF

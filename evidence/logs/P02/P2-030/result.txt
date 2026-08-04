@@ -1,0 +1,7 @@
+configure_exit=0
+target_help_exit=0
+compiler=emcc
+toolchain=CMAKE_TOOLCHAIN_FILE:FILEPATH=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
+emscripten=EMSCRIPTEN_FORCE_COMPILERS:BOOL=ON
+EMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES:BOOL=OFF
+EMSCRIPTEN:INTERNAL=1

@@ -1,0 +1,15 @@
+emcmake cmake -S . -B /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/wasm/upstream-configure -G Ninja -DCMAKE_BUILD_TYPE=Debug -DENABLE_SDL2_MIXER=ON -DENABLE_SDL2_NET=OFF -DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE -DSFHS_ORACLE_TEST=OFF SOURCE_COMMIT=7defabe24f9e55607c2d54ce74c3fa9bc5320275
+BUILD_DIR=build/wasm/upstream-configure
+CC=emcc
+SDL2_MIXER=ON
+SDL2_NET=OFF
+ORACLE=OFF
+TARGET chocolate-doom PASS
+configure_exit=0
+target_help_exit=0
+compiler=emcc
+toolchain=CMAKE_TOOLCHAIN_FILE:FILEPATH=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake
+emscripten=EMSCRIPTEN_FORCE_COMPILERS:BOOL=ON
+EMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES:BOOL=OFF
+EMSCRIPTEN:INTERNAL=1
+CONFIGURE_WASM=PASS

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "branch": "phase/p01-native-oracle",
+  "branch": "phase/p02-wasm-feasibility",
   "tasks": [
     {
       "id": "DOOM-P0-001",
@@ -468,7 +468,7 @@
     },
     {
       "id": "DOOM-P1-090",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-090.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -479,6 +479,313 @@
         "evidence/phase-gates/P01/SOL_GATE_PACKET.md review"
       ],
       "result": "docs/results/P01/DOOM-P1-090.md",
+      "commit": "SELF",
+      "finished_at": "2026-08-04T00:00:00Z"
+    },
+    {
+      "id": "DOOM-P2-000",
+      "status": "done",
+      "card": "docs/tasks/P02/DOOM-P2-000.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P1-085"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/reviews/P01/DOOM-P1-090.md",
+        "docs/results/P01/DOOM-P1-090.md",
+        "docs/phases/P02/PHASE_PLAN.md",
+        "docs/tasks/P02/**",
+        "docs/results/P02/DOOM-P2-000.md"
+      ],
+      "result": "docs/results/P02/DOOM-P2-000.md",
+      "commit": "SELF",
+      "started_at": "2026-08-04T09:51:41Z",
+      "base_head": "0c8e1288a23e7306fa5760c1aadbf54de8d0b85c",
+      "finished_at": "2026-08-04T09:54:21Z"
+    },
+    {
+      "id": "DOOM-P2-010",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-010.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-000"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        ".gitignore",
+        "browser-tests/package.json",
+        "browser-tests/package-lock.json",
+        "browser-tests/playwright.config.mjs",
+        "docs/licenses/THIRD_PARTY_INVENTORY.md",
+        "docs/toolchains/WASM_TOOLCHAIN_LOCK.md",
+        "docs/results/P02/DOOM-P2-010.md",
+        "evidence/logs/P02/P2-010/**",
+        "evidence/task-runs/P02-DOOM-P2-010/**",
+        "tests/test_bootstrap_emsdk.py",
+        "tools/bootstrap-emsdk.sh",
+        "tools/emsdk-lock.json"
+      ],
+      "result": "docs/results/P02/DOOM-P2-010.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-020",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-020.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-010"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/toolchains/WASM_TOOLCHAIN.md",
+        "docs/results/P02/DOOM-P2-020.md",
+        "evidence/logs/P02/P2-020/**",
+        "evidence/task-runs/P02-DOOM-P2-020/**",
+        "tests/fixtures/wasm/sdl-smoke.c",
+        "tests/test_wasm_toolchain.py",
+        "tools/wasm-env.sh",
+        "tools/wasm-toolchain-doctor.sh",
+        "browser-tests/tests/toolchain.spec.mjs"
+      ],
+      "result": "docs/results/P02/DOOM-P2-020.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-030",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-030.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-020"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/reports/WASM_UPSTREAM_CONFIGURE_PROBE.md",
+        "docs/results/P02/DOOM-P2-030.md",
+        "evidence/logs/P02/P2-030/**",
+        "evidence/task-runs/P02-DOOM-P2-030/**",
+        "tests/test_configure_wasm.py",
+        "tools/configure-wasm.sh"
+      ],
+      "result": "docs/results/P02/DOOM-P2-030.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-040",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-040.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-030"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/reports/WASM_UPSTREAM_LINK_PROBE.md",
+        "docs/results/P02/DOOM-P2-040.md",
+        "evidence/logs/P02/P2-040/**",
+        "evidence/task-runs/P02-DOOM-P2-040/**",
+        "tests/test_wasm_link_probe.py",
+        "tools/probe-wasm-link.sh"
+      ],
+      "result": "docs/results/P02/DOOM-P2-040.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-050",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-050.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-040"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        ".gitignore",
+        "CMakeLists.txt",
+        "src/CMakeLists.txt",
+        "cmake/SFHSWasm.cmake",
+        "src/sfhs_wasm/**",
+        "web/p2/**",
+        "tools/build-wasm.sh",
+        "tools/hash-wasm-build.py",
+        "tests/test_build_wasm.py",
+        "docs/BUILD_IDENTITY.md",
+        "docs/DECISIONS.md",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/reports/WASM_PLATFORM_ADAPTER.md",
+        "docs/results/P02/DOOM-P2-050.md",
+        "evidence/logs/P02/P2-050/**",
+        "evidence/manifests/P02/**",
+        "evidence/task-runs/P02-DOOM-P2-050/**",
+        "src/i_timer.c",
+        "src/i_system.c",
+        "src/i_video.c",
+        "src/i_input.c",
+        "src/i_sound.c",
+        "src/i_sdlsound.c",
+        "src/i_sdlmusic.c"
+      ],
+      "result": "docs/results/P02/DOOM-P2-050.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-060",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-060.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-050"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "browser-tests/tests/boot.spec.mjs",
+        "browser-tests/support/**",
+        "tools/serve-wasm.py",
+        "tests/test_wasm_server.py",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/results/P02/DOOM-P2-060.md",
+        "evidence/logs/P02/P2-060/**",
+        "evidence/screenshots/P02/P2-060/**",
+        "evidence/task-runs/P02-DOOM-P2-060/**",
+        "web/p2/shell.html",
+        "web/p2/pre.js",
+        "web/p2/post.js"
+      ],
+      "result": "docs/results/P02/DOOM-P2-060.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-070",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-070.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-060"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "browser-tests/tests/input.spec.mjs",
+        "browser-tests/support/**",
+        "web/p2/shell.html",
+        "web/p2/pre.js",
+        "web/p2/post.js",
+        "docs/results/P02/DOOM-P2-070.md",
+        "evidence/logs/P02/P2-070/**",
+        "evidence/screenshots/P02/P2-070/**",
+        "evidence/task-runs/P02-DOOM-P2-070/**",
+        "tests/test_browser_input_contract.py"
+      ],
+      "result": "docs/results/P02/DOOM-P2-070.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-080",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-080.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-070"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "browser-tests/tests/audio.spec.mjs",
+        "browser-tests/support/**",
+        "web/p2/audio-probe.js",
+        "web/p2/shell.html",
+        "web/p2/pre.js",
+        "web/p2/post.js",
+        "src/sfhs_wasm/**",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/DECISIONS.md",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/reports/WASM_AUDIO_FEASIBILITY.md",
+        "docs/results/P02/DOOM-P2-080.md",
+        "evidence/logs/P02/P2-080/**",
+        "evidence/task-runs/P02-DOOM-P2-080/**",
+        "tests/test_audio_probe_contract.py",
+        "src/i_sound.c",
+        "src/i_sdlsound.c",
+        "src/i_sdlmusic.c"
+      ],
+      "result": "docs/results/P02/DOOM-P2-080.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-085",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-085.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-080"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "browser-tests/tests/parity.spec.mjs",
+        "browser-tests/support/**",
+        "web/p2/**",
+        "src/sfhs_oracle/sfhs_oracle.c",
+        "src/sfhs_oracle/sfhs_oracle.h",
+        "tools/run-wasm-oracle.mjs",
+        "tools/run-native-p2-control.sh",
+        "tools/compare-native-wasm.py",
+        "tests/test_native_wasm_compare.py",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/reports/NATIVE_WASM_PARITY.md",
+        "docs/results/P02/DOOM-P2-085.md",
+        "evidence/logs/P02/P2-085/**",
+        "evidence/task-runs/P02-DOOM-P2-085/**"
+      ],
+      "result": "docs/results/P02/DOOM-P2-085.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-088",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-088.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-085"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/BUILD_IDENTITY.md",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/phases/P02/PHASE_RESULT.md",
+        "docs/reports/WASM_FEASIBILITY_BASELINE.md",
+        "docs/results/P02/DOOM-P2-088.md",
+        "evidence/manifests/P02/**",
+        "evidence/phase-gates/P02/**",
+        "evidence/reports/P02/**",
+        "evidence/logs/P02/P2-088/**",
+        "evidence/task-runs/P02-DOOM-P2-088/**",
+        "tests/test_p2_gate.py",
+        "tools/verify-p2-gate.py"
+      ],
+      "result": "docs/results/P02/DOOM-P2-088.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P2-090",
+      "status": "pending",
+      "card": "docs/tasks/P02/DOOM-P2-090.md",
+      "branch": "phase/p02-wasm-feasibility",
+      "dependencies": [
+        "DOOM-P2-088"
+      ],
+      "allowed_paths": [
+        "read-only repository inspection",
+        "evidence/phase-gates/P02/**"
+      ],
+      "result": "docs/results/P02/DOOM-P2-090.md",
       "commit": null
     }
   ]

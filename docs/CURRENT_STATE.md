@@ -1,10 +1,10 @@
 # SFHS Doom Current State
 
-**Date:** 2026-08-03
-**Phase:** P01 — Native Chocolate Doom Oracle
-**Current task:** DOOM-P1-085
+**Date:** 2026-08-04
+**Phase:** P02 — Multi-file WebAssembly feasibility
+**Current task:** DOOM-P2-000
 **Current result commit:** SELF
-**Branch:** phase/p01-native-oracle
+**Branch:** phase/p02-wasm-feasibility
 
 ## Verified reality
 
@@ -21,30 +21,33 @@
 - No Emscripten build, browser run, mobile-device run, single-file artifact, or release artifact exists in P01.
 - No remote creation, remote mutation, push, pull request, merge, publication, or release action has occurred.
 - The only engine/build delta is the default-OFF P1-080 test observer recorded in `docs/UPSTREAM_DELTA.md`; ordinary Release behavior remains outside the observer path.
+- The accepted P1 independent review is recorded as `PASS_WITH_RECORDED_LIMITATIONS` in `docs/reviews/P01/DOOM-P1-090.md`; its exact SHA-256 is recorded in the P2-000 result.
+- P2 is authorized for multi-file Wasm feasibility only. No Emscripten build, browser run, or strict single-file artifact has yet been produced.
 
 ## Source-of-truth order
 
-After P1-000, workers use:
+For P2, workers use:
 
     AGENTS.md
     docs/PROJECT_SPEC.md
     docs/CURRENT_STATE.md
-    docs/phases/P01/PHASE_PLAN.md
-    docs/tasks/P01/<TASK-ID>.md
+    docs/phases/P02/PHASE_PLAN.md
+    docs/tasks/P02/<TASK-ID>.md
     relevant source, tests, and official metadata
 
-The accepted specification remains unchanged. The P1 packet and P1 phase plan are the temporary/current phase authority for P1 task execution.
+The accepted specification remains unchanged. The attached P2 continuous Luna packet and P2 phase plan are the temporary/current phase authority for P2 task execution.
 
 ## Deferred and independent tasks
 
 DOOM-P0-080 and DOOM-P0-090 remain pending/deferred. They are not completed by P1-000.
 
-DOOM-P1-090 remains pending and ready for an independent read-only Sol review.
-P1-085 does not self-award that verdict and does not authorize P2 implementation,
-remote publication, or release work.
+DOOM-P1-090 is recorded as `PASS_WITH_RECORDED_LIMITATIONS` from the independent
+review artifact. It does not authorize remote publication, release work, or
+strict single-file packaging.
+
+DOOM-P2-090 remains pending and is reserved for independent read-only Sol review.
 
 ## Next task
 
-Commit the passing DOOM-P1-085 gate packet once, verify a clean worktree, rerun
-`python tools/verify-p1-gate.py`, and hand the repository to independent
-DOOM-P1-090 review. Do not mark P1-090 complete in the builder run.
+Execute DOOM-P2-010 from the frozen P2 plan. Keep the artifact multi-file and
+leave DOOM-P2-090 pending.

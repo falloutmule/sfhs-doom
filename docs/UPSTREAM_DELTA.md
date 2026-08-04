@@ -10,7 +10,7 @@ P00 governance files do not alter engine behavior, native build behavior, or fut
 | Task | Commit | Paths | Reason | Native effect | Wasm effect | Tests | Disposition |
 |---|---|---|---|---|---|---|---|
 | DOOM-P0-010 | `69375a29555d2523f8ae435900dc35245c9c0b58` | `docs/bootstrap/REPOSITORY_BASELINE.md`; `docs/results/P00/DOOM-P0-010.md` | Record clean upstream base and branch | None | None | Branch, ancestry, changed-path, remote, and clean-tree checks | Accepted P00 governance change |
-| DOOM-P1-080 | `SELF` | `src/CMakeLists.txt`; `src/doom/d_main.c`; `src/doom/g_game.c`; `src/sfhs_oracle/**` | Emit deterministic test-only native logical-state and indexed-frame checkpoints | Active only with `SFHS_ORACLE_TEST=ON`; OFF build completes the same 140-tic demo and emits no oracle artifacts | Not selected or tested in P01 | Clean Oracle build; five repeated processes; PWAD order; DeHackEd effect; OFF regression; demo/timedemo regressions | Accepted P01 test-only observer pending containing commit |
+| DOOM-P1-080 | `ac9d51be7ec28162920212898ffec34b7315c913` | `src/CMakeLists.txt`; `src/doom/d_main.c`; `src/doom/g_game.c`; `src/sfhs_oracle/**` | Emit deterministic test-only native logical-state and indexed-frame checkpoints | Active only with `SFHS_ORACLE_TEST=ON`; OFF build completes the same 140-tic demo and emits no oracle artifacts | Not selected or tested in P01 | Clean Oracle build; five repeated processes; PWAD order; DeHackEd effect; OFF regression; demo/timedemo regressions | Accepted P01 test-only observer |
 
 ## Future entry schema
 

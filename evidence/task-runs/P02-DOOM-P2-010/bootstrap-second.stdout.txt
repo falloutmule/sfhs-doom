@@ -1,0 +1,60 @@
+Resolving SDK version '6.0.5' to 'sdk-releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit'
+Installing SDK 'sdk-releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit'..
+Skipped installing node-22.16.0-64bit, already installed.
+Skipped installing releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit, already installed.
+All SDK components already installed: 'sdk-releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit'.
+Resolving SDK version '6.0.5' to 'sdk-releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit'
+Setting the following tools as active:
+   node-22.16.0-64bit
+   releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit
+
+Next steps:
+- To conveniently access emsdk tools from the command line,
+  consider adding the following directories to your PATH:
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/emscripten
+- This can be done for the current shell by running:
+    source "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/emsdk_env.sh"
+- Configure emsdk in your shell startup scripts by running:
+    echo 'source "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/emsdk_env.sh"' >> $HOME/.bash_profile
+Setting up EMSDK environment (suppress these messages with EMSDK_QUIET=1)
+Adding directories to PATH:
+PATH += /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk
+PATH += /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/emscripten
+
+Setting environment variables:
+PATH = /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk:/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/emscripten:/home/mule/.local/bin:/home/mule/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/fallo/.codex/tmp/arg0/codex-arg0KXPwZJ:/mnt/c/Users/fallo/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override:/mnt/c/Python314/Scripts/:/mnt/c/Python314/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA app/NvDLISR:/mnt/c/Program Files/dotnet/:/mnt/c/Users/fallo/AppData/Local/Programs/Python/Python311:/mnt/c/Users/fallo/AppData/Local/Programs/Python/Python311/Scripts:/mnt/c/ffmpeg/bin:/mnt/c/Program Files/nodejs/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files/Tailscale/:/Docker/host/bin:/mnt/c/Users/fallo/AppData/Local/Muse Hub/lib:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/GitHub CLI/:/mnt/c/Program Files/Java/jdk1.8.0_211/bin:/mnt/c/Android/android-sdk/tools:/mnt/c/Android/android-sdk/platform-tools:/mnt/c/Android/android-sdk/tools/bin:/mnt/c/Users/fallo/AppData/Local/hermes/hermes-agent/venv/Scripts:/mnt/c/Users/fallo/AppData/Local/hermes/bin:/mnt/c/Users/fallo/.mavis/bin:/mnt/c/Users/fallo/AppData/Local/Programs/Python/Python311/Scripts/:/mnt/c/Users/fallo/AppData/Local/Programs/Python/Python311/:/mnt/c/Users/fallo/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/fallo/AppData/Local/Python/bin:/mnt/c/Users/fallo/.dotnet/tools:/mnt/c/Users/fallo/AppData/Roaming/npm:/mnt/c/Users/fallo/.lmstudio/bin:/mnt/c/Users/fallo/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/fallo/AppData/Local/Microsoft/WinGet/Packages/ChrisBagwell.SoX_Microsoft.Winget.Source_8wekyb3d8bbwe/sox-14.4.2:/mnt/c/Users/fallo/AppData/Local/Microsoft/WinGet/Links:/mnt/c/Users/fallo/AppData/Local/Microsoft/WinGet/Packages/ggml.llamacpp_Microsoft.Winget.Source_8wekyb3d8bbwe:/mnt/c/Users/fallo/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/fallback:/mnt/c/Users/fallo/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/git/cmd:/mnt/c/Users/fallo/AppData/Local/OpenAI/Codex/bin/3e42d49ad3e35a50:/mnt/c/Program Files/WindowsApps/OpenAI.Codex_26.727.6591.0_x64__2p2nqsd0c76g0/app/resources:/snap/bin
+EMSDK = /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk
+EMSDK_NODE = /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/node/22.16.0_64bit/bin/node
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271)
+Copyright (C) 2026 the Emscripten authors (see AUTHORS.txt)
+This is free and open source software under the MIT license.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+SDL_PORTS_REQUESTED=sdl2 sdl2_mixer
+embuilder:INFO: building sdl2
+embuilder:INFO: ...success. Took (0.02s)
+embuilder:INFO: building sdl2_mixer
+embuilder:INFO: ...success. Took (0.08s)
+embuilder:INFO: Built 2 targets in (0.21s)
+
+added 3 packages, and audited 4 packages in 2s
+
+found 0 vulnerabilities
+PLAYWRIGHT_LINUX_DEPS=installed_by_authorized_wsl_root_bootstrap
+Version 1.61.1
+
+Playwright version: 1.61.1
+  Browsers:
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/chromium-1228
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/chromium_headless_shell-1228
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/ffmpeg-1011
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/firefox-1532
+  References:
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/browser-tests/node_modules/playwright-core
+EMSDK_REPOSITORY=https://github.com/emscripten-core/emsdk.git
+EMSDK_COMMIT=9fcdf593953edfcddb297572d7f2177d336b0479
+SDK_VERSION=6.0.5
+EMSCRIPTEN_COMMIT=dbd755b5da399329c2576f6e3dfa7f419f5d8409
+PLAYWRIGHT_BROWSERS_PATH=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright
+GLOBAL_ACTIVATION=NONE

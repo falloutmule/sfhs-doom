@@ -37,6 +37,13 @@ STRIFE*.pcx
 /build/native/
 /build/runtime/
 /vendor-cache/
+/toolchains/emsdk/
+/vendor-cache/playwright/
+/browser-tests/node_modules/
+/browser-tests/playwright-report/
+/browser-tests/test-results/
+/build/wasm/
+/build/runtime/P02/
 
 # These are the default patterns globally ignored by Subversion:
 *.o

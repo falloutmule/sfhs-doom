@@ -1,0 +1,5 @@
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271)
+clang version 24.0.0git (https:/github.com/llvm/llvm-project abd3b3a1445b5a8eeffae5c3912883faa9287fb7)
+Target: wasm32-unknown-emscripten
+Thread model: posix
+InstalledDir: /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/bin

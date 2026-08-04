@@ -1,0 +1,9 @@
+
+Playwright version: 1.61.1
+  Browsers:
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/chromium-1228
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/chromium_headless_shell-1228
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/ffmpeg-1011
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/firefox-1532
+  References:
+    /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/browser-tests/node_modules/playwright-core

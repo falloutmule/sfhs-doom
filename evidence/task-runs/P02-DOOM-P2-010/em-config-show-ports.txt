@@ -1,0 +1,1 @@
+Usage: em-config VAR_NAME

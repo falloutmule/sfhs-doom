@@ -1,8 +1,8 @@
 # SFHS Doom third-party license inventory
 
-**Task:** DOOM-P0-060
-**Inventory date:** 2026-08-03
-**Scope:** P00 governance inventory for the recorded Chocolate Doom 3.1.1 source base
+**Task:** DOOM-P2-010
+**Inventory date:** 2026-08-04
+**Scope:** P2 pinned toolchain and browser-test inventory; prior P00/P01 entries remain historical
 **Status vocabulary:** `VERIFIED` means the cited text was directly inspected; `INFERRED` means the text supports a conservative classification but not an SPDX normalization; `PROPOSED` means project policy only; `UNTESTED` means the component/version/package has not been selected or used; `QUESTION` means legal review is required.
 
 This is an evidence map, not legal advice and not a distribution clearance. No dependency was downloaded, vendored, built, or copied for this task. The engine/content distinction is intentional: GPL engine source, BSD-licensed Freedoom content, permissive libraries, toolchain components, and user-supplied commercial data do not inherit one another's licenses merely because a future HTML artifact may combine them.

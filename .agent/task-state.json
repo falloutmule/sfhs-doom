@@ -509,7 +509,7 @@
     },
     {
       "id": "DOOM-P2-010",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-010.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -531,7 +531,10 @@
         "tools/emsdk-lock.json"
       ],
       "result": "docs/results/P02/DOOM-P2-010.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T09:54:33Z",
+      "base_head": "5b331e708731de731ca63b0e6673b7dee9e6c3a9",
+      "finished_at": "2026-08-04T10:21:09Z"
     },
     {
       "id": "DOOM-P2-020",

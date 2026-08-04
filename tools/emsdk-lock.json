@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/emscripten-core/emsdk.git",
+  "repository_commit": "9fcdf593953edfcddb297572d7f2177d336b0479",
+  "sdk_version": "6.0.5",
+  "emscripten_release_commit": "dbd755b5da399329c2576f6e3dfa7f419f5d8409",
+  "moving_aliases_allowed": false,
+  "activation": "local-only",
+  "ports": ["sdl2", "sdl2_mixer"],
+  "browser_cache": "vendor-cache/playwright"
+}

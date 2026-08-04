@@ -6,7 +6,7 @@
   "phase": "P02",
   "task": "DOOM-P2-050",
   "source": {
-    "commit": "601a9f0aefc9334db529e87ee89b6f98d4231e24",
+    "commit": "342a1418b993f2dad0666f79244198bf6c026ffa",
     "upstream_tag": "chocolate-doom-3.1.1",
     "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
     "dirty": false,
@@ -51,8 +51,8 @@
     ]
   },
   "build": {
-    "utc": "2026-08-04T10:55:43.660725Z",
-    "id": "P02-DOOM-P2-050-run-2-phase2-oracle",
+    "utc": "2026-08-04T15:58:22.528697Z",
+    "id": "P02-DOOM-P2-050-run-5-phase2-oracle",
     "commands": [
       {
         "argv": [
@@ -67,8 +67,8 @@
         ],
         "cwd": ".",
         "exit_code": 0,
-        "stdout_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-oracle/configure.stdout.txt",
-        "stderr_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-oracle/configure.stderr.txt"
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/configure.stderr.txt"
       },
       {
         "argv": [
@@ -80,16 +80,16 @@
         ],
         "cwd": ".",
         "exit_code": 0,
-        "stdout_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-oracle/build.stdout.txt",
-        "stderr_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-oracle/build.stderr.txt"
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/build.stderr.txt"
       }
     ]
   },
   "artifacts": [
     {
       "path": "build/wasm/P2-050/phase2-oracle/src/chocolate-doom.js",
-      "size_bytes": 394364,
-      "sha256": "2ea3560225623aa380ad32f65084ec27475e3a0eb6588733e0ff43d0f6c18d19",
+      "size_bytes": 394428,
+      "sha256": "6b09341a99f00e8ae355b916d24c10f3145102f5f82b1768962a66ff06a22344",
       "kind": "wasm-javascript-loader"
     },
     {
@@ -107,7 +107,7 @@
   ],
   "verification": {
     "run_ids": [
-      "P02-DOOM-P2-050-run-2-phase2-oracle"
+      "P02-DOOM-P2-050-run-5-phase2-oracle"
     ],
     "result": "PASS",
     "checks": [

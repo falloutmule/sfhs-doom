@@ -1,0 +1,2 @@
+WSL pinned browser verification: npx playwright test tests/boot.spec.mjs tests/input.spec.mjs --workers=1 --reporter=line
+6 passed

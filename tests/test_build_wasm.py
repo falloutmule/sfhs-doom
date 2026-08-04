@@ -39,11 +39,22 @@ class BuildWasmTests(unittest.TestCase):
         self.assertIn('phase2-debug', script)
         self.assertIn('phase2-oracle', script)
         self.assertIn('SINGLE_FILE', script)
-        self.assertIn('{{ENGINE_JS}}', shell)
+        self.assertIn('-sINVOKE_RUN=0', script)
+        self.assertIn('-sEXPORTED_FUNCTIONS=_main', script)
+        self.assertIn('-sEXPORTED_RUNTIME_METHODS=callMain,FS,ENV', script)
+        self.assertIn('-DCMAKE_C_COMPILER=emcc', script)
+        self.assertIn('-DCMAKE_CXX_COMPILER=em++', script)
+        self.assertIn('/engine/src/chocolate-doom.js', shell)
         self.assertIn('singleFile: false', post)
         self.assertIn('externalRequests: false', post)
         self.assertNotIn('git push', script)
         self.assertNotIn('git fetch', script)
+
+    def test_staged_javascript_exports_call_main(self):
+        for variant in ('phase1-debug', 'phase2-debug', 'phase2-oracle'):
+            javascript = ROOT / 'build/wasm/P2-050' / variant / 'src/chocolate-doom.js'
+            self.assertTrue(javascript.exists(), javascript)
+            self.assertIn("Module['callMain']", javascript.read_text(encoding='utf-8'))
 
     def test_adapter_does_not_request_gameplay_or_renderer_source_edits(self):
         script = (ROOT / 'tools/build-wasm.sh').read_text(encoding='utf-8')

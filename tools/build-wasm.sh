@@ -82,9 +82,10 @@ for variant in phase1-debug phase2-debug phase2-oracle; do
     if ((oracle)); then oracle_flag='ON'; else oracle_flag='OFF'; fi
     configure=(emcmake cmake -C "$root/cmake/SFHSWasm.cmake" -S . -B "$variant_dir" -G Ninja
         "-DCMAKE_BUILD_TYPE=$build_type" -DENABLE_SDL2_MIXER=ON -DENABLE_SDL2_NET=OFF
+        -DCMAKE_C_COMPILER=emcc -DCMAKE_CXX_COMPILER=em++
         -DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE
         -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE "-DSFHS_ORACLE_TEST=$oracle_flag"
-        '-DCMAKE_EXE_LINKER_FLAGS=-sASYNCIFY -sEXIT_RUNTIME=1')
+        '-DCMAKE_EXE_LINKER_FLAGS=-sASYNCIFY -sEXIT_RUNTIME=1 -sINVOKE_RUN=0 -sEXPORTED_FUNCTIONS=_main -sEXPORTED_RUNTIME_METHODS=callMain,FS,ENV')
     printf '%q ' "${configure[@]}" >"$variant_run/configure.argv.txt"
     printf '\n' >>"$variant_run/configure.argv.txt"
     "${configure[@]}" >"$variant_run/configure.stdout.txt" 2>"$variant_run/configure.stderr.txt"

@@ -1,0 +1,362 @@
+{
+  "browser": "chromium",
+  "preClick": {
+    "doomMainStarted": false,
+    "audioContextExists": false,
+    "audioContextState": null,
+    "callbackCount": 0,
+    "button": {
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 83.40625,
+        "height": 21
+      },
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "pointerEvents": "auto",
+      "position": "fixed",
+      "zIndex": "10",
+      "disabled": false,
+      "hitTarget": "start-doom",
+      "stack": [
+        {
+          "id": "start-doom",
+          "tag": "BUTTON",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        },
+        {
+          "id": "canvas",
+          "tag": "CANVAS",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        },
+        {
+          "id": "",
+          "tag": "HTML",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        }
+      ]
+    }
+  },
+  "postClick": {
+    "doomMainStarted": true,
+    "audioContextExists": true,
+    "audioContextState": "running",
+    "callbackCount": 5,
+    "button": {
+      "rect": {
+        "x": 8,
+        "y": 8,
+        "width": 83.40625,
+        "height": 21
+      },
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "pointerEvents": "auto",
+      "position": "fixed",
+      "zIndex": "10",
+      "disabled": true,
+      "hitTarget": "start-doom",
+      "stack": [
+        {
+          "id": "start-doom",
+          "tag": "BUTTON",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        },
+        {
+          "id": "canvas",
+          "tag": "CANVAS",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        },
+        {
+          "id": "",
+          "tag": "BODY",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        },
+        {
+          "id": "",
+          "tag": "HTML",
+          "pointerEvents": "auto",
+          "opacity": "1"
+        }
+      ]
+    }
+  },
+  "afterFire": {
+    "probe": {
+      "mainStarted": true,
+      "startClicks": 1,
+      "preClickContextExists": false,
+      "preClickCallbackCount": 0,
+      "contextStateBeforeStart": "running",
+      "contextStateAfterStart": "running",
+      "callbacks": 867,
+      "nonzeroPcmCallbacks": 125,
+      "maxAbsPcm": 0.2509765625,
+      "started": true,
+      "resumeError": null,
+      "probeReady": true,
+      "probeAttached": true,
+      "mainScheduled": true,
+      "probeError": null
+    },
+    "keys": [
+      {
+        "type": "keydown",
+        "key": "Enter",
+        "code": "Enter",
+        "target": "canvas",
+        "isTrusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "Enter",
+        "code": "Enter",
+        "target": "canvas",
+        "isTrusted": true
+      },
+      {
+        "type": "keydown",
+        "key": "Control",
+        "code": "ControlLeft",
+        "target": "canvas",
+        "isTrusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "Control",
+        "code": "ControlLeft",
+        "target": "canvas",
+        "isTrusted": true
+      }
+    ]
+  },
+  "probe": {
+    "mainStarted": true,
+    "startClicks": 1,
+    "preClickContextExists": false,
+    "preClickCallbackCount": 0,
+    "contextStateBeforeStart": "running",
+    "contextStateAfterStart": "running",
+    "callbacks": 867,
+    "nonzeroPcmCallbacks": 125,
+    "maxAbsPcm": 0.2509765625,
+    "started": true,
+    "resumeError": null,
+    "probeReady": true,
+    "probeAttached": true,
+    "mainScheduled": true,
+    "probeError": null
+  },
+  "keys": [
+    {
+      "type": "keydown",
+      "key": "Enter",
+      "code": "Enter",
+      "target": "canvas",
+      "isTrusted": true
+    },
+    {
+      "type": "keyup",
+      "key": "Enter",
+      "code": "Enter",
+      "target": "canvas",
+      "isTrusted": true
+    },
+    {
+      "type": "keydown",
+      "key": "Control",
+      "code": "ControlLeft",
+      "target": "canvas",
+      "isTrusted": true
+    },
+    {
+      "type": "keyup",
+      "key": "Control",
+      "code": "ControlLeft",
+      "target": "canvas",
+      "isTrusted": true
+    }
+  ],
+  "events": [
+    {
+      "listener": "window",
+      "type": "pointerdown",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49.70000076293945,
+      "y": 18.5,
+      "button": 0,
+      "pointerType": "mouse",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "document",
+      "type": "pointerdown",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49.70000076293945,
+      "y": 18.5,
+      "button": 0,
+      "pointerType": "mouse",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "window",
+      "type": "mousedown",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49,
+      "y": 18,
+      "button": 0,
+      "pointerType": "",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "document",
+      "type": "mousedown",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49,
+      "y": 18,
+      "button": 0,
+      "pointerType": "",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "window",
+      "type": "pointerup",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49.70000076293945,
+      "y": 18.5,
+      "button": 0,
+      "pointerType": "mouse",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "document",
+      "type": "pointerup",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49.70000076293945,
+      "y": 18.5,
+      "button": 0,
+      "pointerType": "mouse",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "window",
+      "type": "mouseup",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49,
+      "y": 18,
+      "button": 0,
+      "pointerType": "",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "document",
+      "type": "mouseup",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49,
+      "y": 18,
+      "button": 0,
+      "pointerType": "",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "window",
+      "type": "click",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49,
+      "y": 18,
+      "button": 0,
+      "pointerType": "mouse",
+      "isTrusted": true,
+      "defaultPrevented": false
+    },
+    {
+      "listener": "document",
+      "type": "click",
+      "target": "start-doom",
+      "path": [
+        "start-doom",
+        "BODY",
+        "HTML"
+      ],
+      "x": 49,
+      "y": 18,
+      "button": 0,
+      "pointerType": "mouse",
+      "isTrusted": true,
+      "defaultPrevented": false
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    "emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up."
+  ],
+  "clickPath": "locator.click without force"
+}

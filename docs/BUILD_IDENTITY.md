@@ -91,3 +91,18 @@ JavaScript and Wasm files. Phase 1/2 open Freedoom WADs remain separate data
 inputs under ignored local build directories. The three variant manifests are
 under `evidence/manifests/P02/` and are validated by the same standard-library
 manifest checker. `SINGLE_FILE` packaging is explicitly excluded from P2.
+
+P2-080 preserves the multi-file boundary and adds only the browser startup
+adapter needed after explicitly disabling automatic Emscripten invocation.
+The final link vector is:
+
+    -sASYNCIFY -sEXIT_RUNTIME=1 -sINVOKE_RUN=0
+    -sEXPORTED_FUNCTIONS=_main
+    -sEXPORTED_RUNTIME_METHODS=callMain,FS,ENV
+
+The pinned Emscripten 6.0.5 output contains `Module['callMain']`. Audio mode
+keeps main stopped until a trusted Start-button click calls `Module.callMain`
+once; normal boot and input modes call the same exported entrypoint once after
+the runtime and open WAD preload are ready. No shell-generated audio, embedded
+Wasm/data, `SINGLE_FILE`, external request, or engine-source change is part of
+this identity.

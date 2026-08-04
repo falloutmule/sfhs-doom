@@ -1,0 +1,1 @@
+WASM_VARIANT=phase2-debug PASS run=5

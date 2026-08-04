@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "native-chocolate-doom-oracle",
+  "phase": "P01",
+  "task": "DOOM-P1-080",
+  "source": {
+    "commit": "f888f68ea721e7b01fb54946a1bc723b3248b608",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {
+        "name": "gcc",
+        "version": "13.3.0",
+        "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"
+      },
+      {
+        "name": "cmake",
+        "version": "cmake version 3.28.3",
+        "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"
+      },
+      {
+        "name": "ninja",
+        "version": "1.11.1",
+        "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"
+      }
+    ],
+    "inputs": [
+      {
+        "path": "CMakeLists.txt",
+        "size_bytes": 3233,
+        "sha256": "6cabc11e7f8b48589f5a4a0755774fdc9f9d19aa5f5db905ed16dad6b96641c8"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-04T00:58:22.583649Z",
+    "id": "P01-DOOM-P1-080-oracle-20260804T005755Z-379968",
+    "commands": [
+      {
+        "argv": [
+          "cmake",
+          "-S",
+          ".",
+          "-B",
+          "build/native/oracle",
+          "-G",
+          "Ninja",
+          "-DCMAKE_BUILD_TYPE=Debug",
+          "-DENABLE_SDL2_NET=OFF",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE",
+          "-DSFHS_ORACLE_TEST=ON"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P01-DOOM-P1-080/P01-DOOM-P1-080-oracle-20260804T005755Z-379968/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P01-DOOM-P1-080/P01-DOOM-P1-080-oracle-20260804T005755Z-379968/configure.stderr.txt"
+      },
+      {
+        "argv": [
+          "cmake",
+          "--build",
+          "build/native/oracle",
+          "--target",
+          "chocolate-doom"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P01-DOOM-P1-080/P01-DOOM-P1-080-oracle-20260804T005755Z-379968/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P01-DOOM-P1-080/P01-DOOM-P1-080-oracle-20260804T005755Z-379968/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "build/native/oracle/src/chocolate-doom",
+      "size_bytes": 2589736,
+      "sha256": "307cd26bbf33e98c666969630421fe77897e60ee8ff33fd410e1973b14502ef4",
+      "kind": "native-linux-elf-executable"
+    }
+  ],
+  "verification": {
+    "run_ids": [
+      "P01-DOOM-P1-080-oracle-20260804T005755Z-379968"
+    ],
+    "result": "PASS",
+    "checks": [
+      "clean guarded build directory",
+      "executable exists and is executable",
+      "file identity captured",
+      "dynamic dependencies captured",
+      "optional dependency parity flags applied"
+    ]
+  },
+  "notes": [
+    "Configuration: Debug",
+    "SFHS_ORACLE_TEST=ON",
+    "Build duration seconds: 24",
+    "SDL2_net, FluidSynth, SampleRate, and PNG discovery were disabled explicitly."
+  ]
+}

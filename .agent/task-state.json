@@ -404,7 +404,7 @@
     },
     {
       "id": "DOOM-P1-080",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-080.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -430,7 +430,10 @@
         "tools/run-native-oracle.sh"
       ],
       "result": "docs/results/P01/DOOM-P1-080.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T00:39:51Z",
+      "base_head": "f888f68ea721e7b01fb54946a1bc723b3248b608",
+      "finished_at": "2026-08-04T01:14:48Z"
     },
     {
       "id": "DOOM-P1-085",

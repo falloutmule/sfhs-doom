@@ -1,0 +1,2 @@
+duration_seconds=24
+executable=build/native/oracle/src/chocolate-doom

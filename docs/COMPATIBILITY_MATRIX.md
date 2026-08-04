@@ -8,6 +8,7 @@ Every runtime row remains `UNTESTED` until the named artifact, environment, and 
 | Runtime or target | Version/device | Scope | Status | Evidence |
 |---|---|---|---|---|
 | Native Chocolate Doom behavioral oracle | Chocolate Doom 3.1.1; Ubuntu 24.04.4 WSL2; Release artifact from P1-020 | Native build and open-data gameplay entry | VERIFIED | `docs/results/P01/DOOM-P1-020.md`; `evidence/task-runs/P01-DOOM-P1-050/` |
+| Test-only native state/frame oracle | Chocolate Doom 3.1.1; `SFHS_ORACLE_TEST=ON`; Ubuntu 24.04.4 WSL2 | Initial/tic 1/35/70/140 scalar state and tic 1/35/70/140 320x200 indexed logical framebuffer under a generated 140-tic open demo | VERIFIED | `docs/reports/NATIVE_ORACLE_INSTRUMENTATION.md`; `evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/` |
 | Emscripten/WebAssembly build | SDK not selected; owned by P02 | Future Wasm engine build | UNTESTED | None |
 | Desktop Chromium | Version not recorded | Future packaged artifact launch and gameplay checks | UNTESTED | None |
 | Desktop Firefox | Version not recorded | Future packaged artifact launch and gameplay checks | UNTESTED | None |

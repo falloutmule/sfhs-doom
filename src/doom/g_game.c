@@ -75,6 +75,10 @@
 
 #include "g_game.h"
 
+#ifdef SFHS_ORACLE_TEST
+#include "sfhs_oracle.h"
+#endif
+
 
 #define SAVEGAMESIZE	0x2c000
 
@@ -956,6 +960,10 @@ void G_Ticker (void)
 	    break; 
 	} 
     }
+
+#ifdef SFHS_ORACLE_TEST
+    SFHS_OracleCaptureState(0, true);
+#endif
     
     // get commands, check consistancy,
     // and build new consistancy check
@@ -1078,6 +1086,10 @@ void G_Ticker (void)
 	D_PageTicker (); 
 	break;
     }        
+
+#ifdef SFHS_ORACLE_TEST
+    SFHS_OracleCaptureState(gametic + 1, false);
+#endif
 } 
  
  

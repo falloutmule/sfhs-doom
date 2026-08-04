@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P1-080",
+  "source_commit": "f888f68ea721e7b01fb54946a1bc723b3248b608",
+  "upstream_tag": "chocolate-doom-3.1.1",
+  "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+  "configuration": "Oracle",
+  "sfhs_oracle_test": true,
+  "binary": {
+    "path": "build/native/oracle/src/chocolate-doom",
+    "size_bytes": 2589736,
+    "sha256": "307cd26bbf33e98c666969630421fe77897e60ee8ff33fd410e1973b14502ef4"
+  },
+  "command": "build/native/oracle/src/chocolate-doom -iwad vendor-cache/freedoom/0.13.0/data/freedoom1.wad -timedemo build/runtime/P01/P1-080/oracle-140.lmp -file /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/fixtures/open-pwads/order-a.wad /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/fixtures/open-pwads/order-b.wad"
+}

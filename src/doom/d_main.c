@@ -75,6 +75,10 @@
 
 #include "d_main.h"
 
+#ifdef SFHS_ORACLE_TEST
+#include "sfhs_oracle.h"
+#endif
+
 #include "doom_icon.c"
 
 //
@@ -437,7 +441,11 @@ void D_RunFrame()
     // Update display, next frame, with current state if no profiling is on
     if (screenvisible && !nodrawers)
     {
-        if ((wipe = D_Display ()))
+        wipe = D_Display ();
+#ifdef SFHS_ORACLE_TEST
+        SFHS_OracleCaptureFrame(gametic, I_VideoBuffer);
+#endif
+        if (wipe)
         {
             // start wipe on this frame
             wipe_EndScreen(0, 0, SCREENWIDTH, SCREENHEIGHT);
@@ -477,6 +485,10 @@ void D_DoomLoop (void)
     EnableLoadingDisk();
 
     TryRunTics();
+
+#ifdef SFHS_ORACLE_TEST
+    SFHS_OracleCaptureFrame(gametic, I_VideoBuffer);
+#endif
 
     V_RestoreBuffer();
     R_ExecuteSetViewSize();

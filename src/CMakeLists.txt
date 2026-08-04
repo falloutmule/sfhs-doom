@@ -170,6 +170,21 @@ target_include_directories("${PROGRAM_PREFIX}doom" PRIVATE ${GAME_INCLUDE_DIRS})
 target_link_libraries("${PROGRAM_PREFIX}doom" doom ${EXTRA_LIBS})
 set_target_properties("${PROGRAM_PREFIX}doom" PROPERTIES COMPILE_FLAGS "${SDL_FLAGS}")
 
+option(SFHS_ORACLE_TEST "Enable test-only deterministic native oracle" OFF)
+if(SFHS_ORACLE_TEST)
+    target_sources("${PROGRAM_PREFIX}doom" PRIVATE
+                   sfhs_oracle/sfhs_oracle.c
+                   sfhs_oracle/sfhs_oracle.h)
+    target_include_directories("${PROGRAM_PREFIX}doom" PRIVATE
+                               "${CMAKE_CURRENT_SOURCE_DIR}"
+                               "${CMAKE_CURRENT_SOURCE_DIR}/doom"
+                               "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_oracle")
+    target_compile_definitions("${PROGRAM_PREFIX}doom" PRIVATE SFHS_ORACLE_TEST=1)
+    target_include_directories(doom PRIVATE
+                               "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_oracle")
+    target_compile_definitions(doom PRIVATE SFHS_ORACLE_TEST=1)
+endif()
+
 if(MSVC)
     set_target_properties("${PROGRAM_PREFIX}doom" PROPERTIES
                           LINK_FLAGS "/MANIFEST:NO")

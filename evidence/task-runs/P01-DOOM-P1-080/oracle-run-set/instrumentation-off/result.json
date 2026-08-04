@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P1-080",
+  "status": "PASS",
+  "exit_code": 255,
+  "end_tic": 140,
+  "oracle_artifacts": []
+}

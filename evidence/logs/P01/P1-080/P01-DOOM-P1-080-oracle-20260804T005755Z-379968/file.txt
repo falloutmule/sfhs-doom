@@ -1,0 +1,1 @@
+/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/native/oracle/src/chocolate-doom: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=81ca2263e766205568bce0edf215a4ff5c9defb5, for GNU/Linux 3.2.0, with debug_info, not stripped

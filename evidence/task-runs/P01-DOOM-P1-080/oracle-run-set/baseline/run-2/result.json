@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P1-080",
+  "scenario": "baseline/run-2",
+  "status": "PASS",
+  "exit_code": 255,
+  "end_tic": 140,
+  "real_tics": 51,
+  "demo": {
+    "size_bytes": 574,
+    "sha256": "101134c64004963672dfa91cf6c1b1df0573a585365710a79c8e8576431cb056"
+  },
+  "state": {
+    "records": 5,
+    "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+  },
+  "frames": [
+    {
+      "tic": 1,
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "tic": 35,
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "tic": 70,
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "tic": 140,
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    }
+  ],
+  "stdout_sha256": "4ab7ce11b738f7b1f0155dabb0bf29b14c8298c29d43e488ee888d8e78f41696",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "failures": [],
+  "limitations": [
+    "Logical-state and indexed-frame checkpoints only; no universal compatibility claim.",
+    "Real-tic throughput is host-dependent and excluded from deterministic comparison."
+  ]
+}

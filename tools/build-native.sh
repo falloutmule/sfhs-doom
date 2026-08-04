@@ -11,7 +11,7 @@ CLEAN=0
 PRINT_IDENTITY=0
 
 usage() {
-    echo "usage: tools/build-native.sh [--config debug|release|all] [--clean-build-dir] [--print-identity]"
+    echo "usage: tools/build-native.sh [--config debug|release|oracle|all] [--clean-build-dir] [--print-identity]"
 }
 
 while (($#)); do
@@ -42,7 +42,7 @@ while (($#)); do
 done
 
 case "$CONFIG" in
-    debug|release|all) ;;
+    debug|release|oracle|all) ;;
     *) echo "unknown config: $CONFIG" >&2; exit 2 ;;
 esac
 
@@ -73,12 +73,25 @@ fi
 git merge-base --is-ancestor "$UPSTREAM_SHA" HEAD || { echo "pinned upstream is not an ancestor of HEAD" >&2; exit 1; }
 
 ENGINE_PATHS=(CMakeLists.txt cmake src textscreen opl pcsound doom heretic hexen strife setup)
-if ! git diff --ignore-space-at-eol --quiet HEAD -- "${ENGINE_PATHS[@]}" \
-    || [[ -n "$(git ls-files --others --exclude-standard -- "${ENGINE_PATHS[@]}")" ]]; then
-    echo "dirty engine/build-system source refused" >&2
-    git diff --ignore-space-at-eol --name-only HEAD -- "${ENGINE_PATHS[@]}" >&2
-    git ls-files --others --exclude-standard -- "${ENGINE_PATHS[@]}" >&2
-    exit 1
+if [[ "$CONFIG" == oracle ]]; then
+    mapfile -t engine_changes < <(
+        { git diff --ignore-space-at-eol --numstat HEAD -- "${ENGINE_PATHS[@]}" | awk '{print $3}'; \
+          git ls-files --others --exclude-standard -- "${ENGINE_PATHS[@]}"; } | sort -u
+    )
+    for path in "${engine_changes[@]}"; do
+        case "$path" in
+            src/CMakeLists.txt|src/doom/d_main.c|src/doom/g_game.c|src/sfhs_oracle/*) ;;
+            *) echo "unexpected dirty engine/build-system source refused: $path" >&2; exit 1 ;;
+        esac
+    done
+else
+    if ! git diff --ignore-space-at-eol --quiet HEAD -- "${ENGINE_PATHS[@]}" \
+        || [[ -n "$(git ls-files --others --exclude-standard -- "${ENGINE_PATHS[@]}")" ]]; then
+        echo "dirty engine/build-system source refused" >&2
+        git diff --ignore-space-at-eol --name-only HEAD -- "${ENGINE_PATHS[@]}" >&2
+        git ls-files --others --exclude-standard -- "${ENGINE_PATHS[@]}" >&2
+        exit 1
+    fi
 fi
 
 bash tools/native-toolchain-doctor.sh >/dev/null
@@ -88,7 +101,7 @@ mkdir -p evidence/logs/P01/P1-020 evidence/manifests/P01 evidence/task-runs/P01-
 safe_clean_build_dir() {
     local build_dir="$1"
     case "$build_dir" in
-        "$ROOT"/build/native/debug|"$ROOT"/build/native/release) ;;
+        "$ROOT"/build/native/debug|"$ROOT"/build/native/release|"$ROOT"/build/native/oracle) ;;
         *) echo "unsafe build-directory deletion refused: $build_dir" >&2; exit 1 ;;
     esac
     if [[ -e "$build_dir" ]]; then
@@ -98,10 +111,11 @@ safe_clean_build_dir() {
 
 build_one() {
     local config="$1"
-    local cmake_type
+    local cmake_type task_id evidence_task oracle_enabled
     case "$config" in
-        debug) cmake_type="Debug" ;;
-        release) cmake_type="Release" ;;
+        debug) cmake_type="Debug"; task_id="DOOM-P1-020"; evidence_task="P01-DOOM-P1-020"; oracle_enabled="OFF" ;;
+        release) cmake_type="Release"; task_id="DOOM-P1-020"; evidence_task="P01-DOOM-P1-020"; oracle_enabled="OFF" ;;
+        oracle) cmake_type="Debug"; task_id="DOOM-P1-080"; evidence_task="P01-DOOM-P1-080"; oracle_enabled="ON" ;;
     esac
     local build_dir="$ROOT/build/native/$config"
     if ((CLEAN)); then
@@ -111,9 +125,9 @@ build_one() {
 
     local stamp run_id run_dir log_dir configure_out configure_err build_out build_err
     stamp="$(date -u +%Y%m%dT%H%M%SZ)"
-    run_id="P01-DOOM-P1-020-${config}-${stamp}-$$"
-    run_dir="evidence/task-runs/P01-DOOM-P1-020/$run_id"
-    log_dir="evidence/logs/P01/P1-020/$run_id"
+    run_id="${evidence_task}-${config}-${stamp}-$$"
+    run_dir="evidence/task-runs/${evidence_task}/$run_id"
+    log_dir="evidence/logs/P01/${task_id#DOOM-}/$run_id"
     mkdir -p "$run_dir" "$log_dir"
     configure_out="$run_dir/configure.stdout.txt"
     configure_err="$run_dir/configure.stderr.txt"
@@ -128,6 +142,7 @@ build_one() {
         -DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE \
         -DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE \
         -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE \
+        -DSFHS_ORACLE_TEST="$oracle_enabled" \
         >"$configure_out" 2>"$configure_err"
     cmake --build "$build_dir" --target chocolate-doom >"$build_out" 2>"$build_err"
     end="$(date +%s)"
@@ -141,8 +156,13 @@ build_one() {
     print_identity >"$log_dir/identity.txt"
     printf 'duration_seconds=%s\nexecutable=%s\n' "$duration" "${executable#$ROOT/}" >"$log_dir/build-summary.txt"
 
-    local manifest="evidence/manifests/P01/native-${config}-${run_id}.json"
-    python3 - "$config" "$cmake_type" "$run_id" "$manifest" "$executable" "$configure_out" "$configure_err" "$build_out" "$build_err" "$duration" <<'PY'
+    local manifest
+    if [[ "$config" == oracle ]]; then
+        manifest="$run_dir/build-manifest.json"
+    else
+        manifest="evidence/manifests/P01/native-${config}-${run_id}.json"
+    fi
+    python3 - "$config" "$cmake_type" "$run_id" "$manifest" "$executable" "$configure_out" "$configure_err" "$build_out" "$build_err" "$duration" "$task_id" "$oracle_enabled" <<'PY'
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -150,7 +170,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-config, cmake_type, run_id, manifest_name, executable_name, configure_out, configure_err, build_out, build_err, duration = sys.argv[1:]
+config, cmake_type, run_id, manifest_name, executable_name, configure_out, configure_err, build_out, build_err, duration, task_id, oracle_enabled = sys.argv[1:]
 root = Path.cwd()
 
 def record(name, kind=None):
@@ -165,7 +185,7 @@ def output(*argv):
     return subprocess.check_output(argv, text=True).strip()
 
 source_commit = output("git", "rev-parse", "HEAD")
-configure_argv = ["cmake", "-S", ".", "-B", f"build/native/{config}", "-G", "Ninja", f"-DCMAKE_BUILD_TYPE={cmake_type}", "-DENABLE_SDL2_NET=OFF", "-DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE", "-DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE", "-DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE"]
+configure_argv = ["cmake", "-S", ".", "-B", f"build/native/{config}", "-G", "Ninja", f"-DCMAKE_BUILD_TYPE={cmake_type}", "-DENABLE_SDL2_NET=OFF", "-DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE", "-DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE", "-DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE", f"-DSFHS_ORACLE_TEST={oracle_enabled}"]
 build_argv = ["cmake", "--build", f"build/native/{config}", "--target", "chocolate-doom"]
 manifest = {
     "schema_version": 1,
@@ -173,12 +193,12 @@ manifest = {
     "project": "sfhs-doom",
     "edition": f"native-chocolate-doom-{config}",
     "phase": "P01",
-    "task": "DOOM-P1-020",
+    "task": task_id,
     "source": {
         "commit": source_commit,
         "upstream_tag": "chocolate-doom-3.1.1",
         "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
-        "dirty": False,
+        "dirty": bool(output("git", "status", "--short", "--", "CMakeLists.txt", "cmake", "src")),
         "toolchains": [
             {"name": "gcc", "version": output("gcc", "-dumpfullversion", "-dumpversion"), "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"},
             {"name": "cmake", "version": output("cmake", "--version").splitlines()[0], "source": "Ubuntu 24.04 package inventory pinned by DOOM-P1-010"},
@@ -200,7 +220,7 @@ manifest = {
         "result": "PASS",
         "checks": ["clean guarded build directory", "executable exists and is executable", "file identity captured", "dynamic dependencies captured", "optional dependency parity flags applied"],
     },
-    "notes": [f"Configuration: {cmake_type}", f"Build duration seconds: {duration}", "SDL2_net, FluidSynth, SampleRate, and PNG discovery were disabled explicitly."],
+    "notes": [f"Configuration: {cmake_type}", f"SFHS_ORACLE_TEST={oracle_enabled}", f"Build duration seconds: {duration}", "SDL2_net, FluidSynth, SampleRate, and PNG discovery were disabled explicitly."],
 }
 Path(manifest_name).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 print(manifest_name)
@@ -212,5 +232,6 @@ PY
 case "$CONFIG" in
     debug) build_one debug ;;
     release) build_one release ;;
+    oracle) build_one oracle ;;
     all) build_one debug; build_one release ;;
 esac

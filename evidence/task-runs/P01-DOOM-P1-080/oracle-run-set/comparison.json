@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P1-080",
+  "status": "PASS",
+  "baseline_repetitions": 5,
+  "state_checkpoints": [
+    0,
+    1,
+    35,
+    70,
+    140
+  ],
+  "frame_checkpoints": [
+    1,
+    35,
+    70,
+    140
+  ],
+  "failures": []
+}

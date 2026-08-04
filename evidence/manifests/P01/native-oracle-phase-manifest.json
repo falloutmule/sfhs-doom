@@ -1,0 +1,549 @@
+{
+  "schema_version": 1,
+  "phase": "P01",
+  "gate": "native-oracle-builder-candidate",
+  "base_commit": "804ddb9ae855b65aeec922cd5f531c672b9b2c5f",
+  "builder_head": "ac9d51be7ec28162920212898ffec34b7315c913",
+  "upstream_tag": "chocolate-doom-3.1.1",
+  "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+  "branch": "phase/p01-native-oracle",
+  "tasks": [
+    {
+      "id": "DOOM-P1-000",
+      "commit": "840fac0287f89810d346b72ac5977221fab97b57",
+      "subject": "DOOM-P1-000 install continuous native-oracle phase",
+      "result_path": "docs/results/P01/DOOM-P1-000.md",
+      "result_sha256": "aaa389583c2878120212ad068ff5b4526e5849c7779a03e5ab3fdd1ffd96d308"
+    },
+    {
+      "id": "DOOM-P1-010",
+      "commit": "a70068ffc8aac5a93ffe281461f2967bc7ff71d2",
+      "subject": "DOOM-P1-010 pin native oracle host and toolchain",
+      "result_path": "docs/results/P01/DOOM-P1-010.md",
+      "result_sha256": "e9c18edd4c3042bca406bcfa25767455788855f41814f4e5e3a2805d6472fe06"
+    },
+    {
+      "id": "DOOM-P1-020",
+      "commit": "2376b4341d67e872222f7edc56dbcef6756bff37",
+      "subject": "DOOM-P1-020 add reproducible native debug and release builds",
+      "result_path": "docs/results/P01/DOOM-P1-020.md",
+      "result_sha256": "c52238ea301b4efbd486fe6f8fb327861c6035480a717becbf0b1a141fbc90d4"
+    },
+    {
+      "id": "DOOM-P1-030",
+      "commit": "44cc36377e0db83709428cc8ec6f9c28d783fdb4",
+      "subject": "DOOM-P1-030 record truthful upstream native test baseline",
+      "result_path": "docs/results/P01/DOOM-P1-030.md",
+      "result_sha256": "1ae2a0408a2d975ae66c3a534686787e37486b04448b2f571d72d17bfb2e27ef"
+    },
+    {
+      "id": "DOOM-P1-040",
+      "commit": "df474c7270ed193f3062e81f3febff2794e6d292",
+      "subject": "DOOM-P1-040 add pinned Freedoom acquisition and verification",
+      "result_path": "docs/results/P01/DOOM-P1-040.md",
+      "result_sha256": "b3141240755099660fef3903603b6134817cd64c7bd47796b133808190fe40a0"
+    },
+    {
+      "id": "DOOM-P1-050",
+      "commit": "591a89eed883abc61ce32fac47b22503fea8091f",
+      "subject": "DOOM-P1-050 prove native Freedoom gameplay boots",
+      "result_path": "docs/results/P01/DOOM-P1-050.md",
+      "result_sha256": "e1e0100f340f172a3b8e80e7d01942f0ed64286a7de892761b82b2336248e73f"
+    },
+    {
+      "id": "DOOM-P1-060",
+      "commit": "b06baf72a78539e5ebd130aba9cee0f159ca2f84",
+      "subject": "DOOM-P1-060 add deterministic open compatibility fixtures",
+      "result_path": "docs/results/P01/DOOM-P1-060.md",
+      "result_sha256": "f56cb628ed4cdf64db2a45a3950b245dc0866aad4aefc067701dc9ff8470ed67"
+    },
+    {
+      "id": "DOOM-P1-070",
+      "commit": "f888f68ea721e7b01fb54946a1bc723b3248b608",
+      "subject": "DOOM-P1-070 establish native demo and timedemo baseline",
+      "result_path": "docs/results/P01/DOOM-P1-070.md",
+      "result_sha256": "b9cdde795d1ffc1e763a14b98ced8010f3a7c342ed9f57547455d5297ac3eb8b"
+    },
+    {
+      "id": "DOOM-P1-080",
+      "commit": "ac9d51be7ec28162920212898ffec34b7315c913",
+      "subject": "DOOM-P1-080 add deterministic native oracle instrumentation",
+      "result_path": "docs/results/P01/DOOM-P1-080.md",
+      "result_sha256": "4ccd6b142c0d442a4c0a721e97a73eda9f87731b00dbcb7c18846ecab9e70460"
+    }
+  ],
+  "artifacts": [
+    {
+      "kind": "native-debug-executable",
+      "path": "build/native/debug/src/chocolate-doom",
+      "size_bytes": 2574856,
+      "sha256": "cb45217bd19d8895abd4402758f5a89fd1d972378bc86f94ce0f12f9d3434d71"
+    },
+    {
+      "kind": "native-release-executable",
+      "path": "build/native/release/src/chocolate-doom",
+      "size_bytes": 1101144,
+      "sha256": "55d776c3e9d7905922852a84b1de568dd81e2b731a3918954964c2dabe9234fb"
+    },
+    {
+      "kind": "native-oracle-executable",
+      "path": "build/native/oracle/src/chocolate-doom",
+      "size_bytes": 2589736,
+      "sha256": "307cd26bbf33e98c666969630421fe77897e60ee8ff33fd410e1973b14502ef4"
+    },
+    {
+      "kind": "native-oracle-off-executable",
+      "path": "build/native/oracle-off/src/chocolate-doom",
+      "size_bytes": 2574856,
+      "sha256": "7f95111c049217c50c5f5d5599d8edf690b02dafb85808df8a996d9cef4d3460"
+    },
+    {
+      "kind": "freedoom-release-archive",
+      "path": "vendor-cache/freedoom/0.13.0/freedoom-0.13.0.zip",
+      "size_bytes": 24143781,
+      "sha256": "3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59"
+    },
+    {
+      "kind": "open-freedoom-phase1-iwad",
+      "path": "vendor-cache/freedoom/0.13.0/data/freedoom1.wad",
+      "size_bytes": 28795076,
+      "sha256": "7323bcc168c5a45ff10749b339960e98314740a734c30d4b9f3337001f9e703d"
+    },
+    {
+      "kind": "open-freedoom-phase2-iwad",
+      "path": "vendor-cache/freedoom/0.13.0/data/freedoom2.wad",
+      "size_bytes": 28787748,
+      "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+    },
+    {
+      "kind": "native-gameplay-screenshot",
+      "path": "evidence/screenshots/P01/P1-050/phase1-gameplay.png",
+      "size_bytes": 211127,
+      "sha256": "76b9d8cec7d8dcde6ab73d6990d497cdb4580b72f9abd08e9f8befc17af39617"
+    },
+    {
+      "kind": "native-gameplay-screenshot",
+      "path": "evidence/screenshots/P01/P1-050/phase2-gameplay.png",
+      "size_bytes": 176852,
+      "sha256": "18a713283b13690a70b058f2ca3bf649da51ba83901bae6af65025edc3d8a564"
+    },
+    {
+      "kind": "native-demo-matrix",
+      "path": "evidence/task-runs/P01-DOOM-P1-070/demo/matrix.json",
+      "size_bytes": 23964,
+      "sha256": "44b59e4a0ed7bfc607c3072afe4ff7636b6d76c8eca4c7eb8468173e3c8d7db8"
+    },
+    {
+      "kind": "native-timedemo-matrix",
+      "path": "evidence/task-runs/P01-DOOM-P1-070/timedemo/matrix.json",
+      "size_bytes": 12212,
+      "sha256": "038b801532a385d92ededb36073d2b493f3f997fd42de38813d84418769da257"
+    },
+    {
+      "kind": "native-oracle-comparison",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/comparison.json",
+      "size_bytes": 267,
+      "sha256": "a174d82ec668b3a2ea950cf7730457ee91b3e2f8c447ad079ef1843bb9b8a72e"
+    },
+    {
+      "kind": "project-fixture-manifest",
+      "path": "tests/fixtures/expected/manifest.json",
+      "size_bytes": 4059,
+      "sha256": "a30fbef0f4da59f80886ed9a879254c55af25f9c78555e0fe21738cb8a03ae9f"
+    },
+    {
+      "kind": "project-created-fixture",
+      "path": "tests/fixtures/CC0-1.0.txt",
+      "size_bytes": 459,
+      "sha256": "b7442af653086371d3f0acc928c6174c91ce268cb1c426d1315c863dbf5cf9a7"
+    },
+    {
+      "kind": "project-created-fixture",
+      "path": "tests/fixtures/config/oracle.cfg",
+      "size_bytes": 36,
+      "sha256": "97a282690a170f1cb0b9b70c6cd034cf13e766fe24d9efdb4505778587a76d9d"
+    },
+    {
+      "kind": "project-created-fixture",
+      "path": "tests/fixtures/open-deh/oracle.deh",
+      "size_bytes": 29,
+      "sha256": "cb74a444d21cc46c8db7728cf2c3f777469b34b8e3da1e19286c18c4e8acf9f4"
+    },
+    {
+      "kind": "project-created-fixture",
+      "path": "tests/fixtures/open-demos/oracle.lmp",
+      "size_bytes": 18,
+      "sha256": "45f9177a339e21c8a6459dcf3d1d678e1cc777ddf71d7065c9e8f15fb5c58adb"
+    },
+    {
+      "kind": "project-created-fixture",
+      "path": "tests/fixtures/open-pwads/order-a.wad",
+      "size_bytes": 81,
+      "sha256": "217ca8dd04bc202e2fe1e61f3f9cdca08e0a43c51dfec3018552d942692b2b48"
+    },
+    {
+      "kind": "project-created-fixture",
+      "path": "tests/fixtures/open-pwads/order-b.wad",
+      "size_bytes": 81,
+      "sha256": "6fee80fd502e67305d9104ed74eb8bf18abf9618870b1ffc2c0c4a5fa4c39e1f"
+    },
+    {
+      "kind": "project-created-fixture",
+      "path": "tests/fixtures/README.md",
+      "size_bytes": 691,
+      "sha256": "dd92ada0a2613569ecda94cb012f9a6a1286ed7d75a5a6bfa5dc2fa44bcafa96"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-1/build.json",
+      "size_bytes": 616,
+      "sha256": "8e4600bacefbe7655d2faa3f60351ccabd4821957bd94d7349af3d9070f46d9c"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-2/build.json",
+      "size_bytes": 616,
+      "sha256": "8e4600bacefbe7655d2faa3f60351ccabd4821957bd94d7349af3d9070f46d9c"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-3/build.json",
+      "size_bytes": 616,
+      "sha256": "8e4600bacefbe7655d2faa3f60351ccabd4821957bd94d7349af3d9070f46d9c"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-4/build.json",
+      "size_bytes": 616,
+      "sha256": "8e4600bacefbe7655d2faa3f60351ccabd4821957bd94d7349af3d9070f46d9c"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-5/build.json",
+      "size_bytes": 616,
+      "sha256": "8e4600bacefbe7655d2faa3f60351ccabd4821957bd94d7349af3d9070f46d9c"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/deh-effect/build.json",
+      "size_bytes": 719,
+      "sha256": "c267ef97301f2f820733601b8d0e38c75513a06d61f294719773a8b22ad8b013"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ab/build.json",
+      "size_bytes": 809,
+      "sha256": "928630c5d060cba2b2e870d87e9b77c7972237dbc3ac5c867e0bd35afba7b6a6"
+    },
+    {
+      "kind": "oracle-build-identity",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ba/build.json",
+      "size_bytes": 809,
+      "sha256": "05e97fc6ee8a7a2fafd5a398d238c1b11b92039225fdb873f7f4debec9c6045b"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-1/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-2/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-3/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-4/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-5/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/deh-effect/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "6013d3a4e7e13ad1c3e11ae338022bce0deff61b0f74e4b8566772cf43961cd8"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ab/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+    },
+    {
+      "kind": "oracle-state-checkpoints",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ba/state.jsonl",
+      "size_bytes": 1296,
+      "sha256": "9bfd5c250847dab7f1cb8fb553bb0e7616ae9aa0f3bf11b25e72ee157a9414d2"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-1/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-1/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-1/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-1/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-2/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-2/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-2/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-2/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-3/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-3/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-3/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-3/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-4/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-4/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-4/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-4/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-5/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-5/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-5/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-5/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/deh-effect/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/deh-effect/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "385093a86369bf3a52c8a839de45a84df0685cac15d7115a1365804b4282d398"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/deh-effect/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "102ebce99c946a1a46d2e122329a45d7b4a9d07e8568a0e7977a0541513346f2"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/deh-effect/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "448144c91c6ab79bb3847e561fc4ff35ca2bd74a078b723a177925f97d77173a"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ab/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ab/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ab/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ab/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ba/frame-001.bin",
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ba/frame-035.bin",
+      "size_bytes": 64000,
+      "sha256": "07282cf2aee35810cd2e728fc42651bf6a2537ed8e8536feae3e92483ab467df"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ba/frame-070.bin",
+      "size_bytes": 64000,
+      "sha256": "aaf9f842343a14be6359e9e9dd9dbe1a88ab94d413b7410f5224cd7d917ff239"
+    },
+    {
+      "kind": "oracle-indexed-framebuffer",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ba/frame-140.bin",
+      "size_bytes": 64000,
+      "sha256": "5a7a42a0a0a99dc602f46bd4f3068f549e91017e7288ab39114e4742c9d1bb2f"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-1/result.json",
+      "size_bytes": 1371,
+      "sha256": "d9781b299bb72d0efbb0f0c40b4a5b546bbb505260ff4dd097195817e64f2a63"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-2/result.json",
+      "size_bytes": 1371,
+      "sha256": "ed9790279713a07f5b62c32bb31ca8465f2578f650d6bc4d0363fc30453b4212"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-3/result.json",
+      "size_bytes": 1371,
+      "sha256": "27e5c2c5e9cf8d65d05842052b85dbb668575d6ab5b93b8c0d0983a49f37552b"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-4/result.json",
+      "size_bytes": 1371,
+      "sha256": "5abe8fb3504a7031f27d4173a13bf8fbaf475fe020cf3060233509d53e3eb313"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/baseline/run-5/result.json",
+      "size_bytes": 1371,
+      "sha256": "6abceebb13af97534af0c21fa757eb7abe24f7d39e7794c9d76d0406579d9929"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/deh-effect/result.json",
+      "size_bytes": 1367,
+      "sha256": "01dd45c1d7757984a30e5cea02c8db1be7430df9bf2e65723515cb6d49459fc3"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/instrumentation-off/result.json",
+      "size_bytes": 135,
+      "sha256": "3f4ff43d00994f5cd8a2533863bc25d3cda1bffac3450edbb54dbe81d50d43e9"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ab/result.json",
+      "size_bytes": 1365,
+      "sha256": "7e49bffda2698766a52c2f3f286e31fafc1618d05ab02a8ba04d906d07a63794"
+    },
+    {
+      "kind": "oracle-run-result",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/oracle-run-set/order-ba/result.json",
+      "size_bytes": 1365,
+      "sha256": "abf9d7c8e8673b8fb9605ffe3c4e1d6fdf53e74792967f5094e147f220de88ed"
+    },
+    {
+      "kind": "native-oracle-build-manifest",
+      "path": "evidence/task-runs/P01-DOOM-P1-080/P01-DOOM-P1-080-oracle-20260804T005755Z-379968/build-manifest.json",
+      "size_bytes": 3179,
+      "sha256": "166a1f7a0226cdd20df4056eebe231c4dc6ace9132222a0fc4c116e14af46c3a"
+    }
+  ],
+  "limitations": [
+    "Native WSL evidence only; no WebAssembly, browser, mobile, release, or commercial-data claim.",
+    "DOOM-P1-090 remains an independent read-only Sol review and is not completed by this packet."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "phase": "P01",
+  "status": "PASS_BUILDER_CANDIDATE",
+  "base_commit": "804ddb9ae855b65aeec922cd5f531c672b9b2c5f",
+  "builder_head": "ac9d51be7ec28162920212898ffec34b7315c913",
+  "candidate_commit": "SELF",
+  "upstream_tag": "chocolate-doom-3.1.1",
+  "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+  "checks": {
+    "clean_rebuild_variants": 4,
+    "gameplay_editions": 2,
+    "demo_results_passed": 14,
+    "timedemo_results_passed": 7,
+    "oracle_baseline_repetitions": 5,
+    "oracle_comparison": "PASS",
+    "instrumentation_off": "PASS"
+  },
+  "independent_gate": {
+    "task": "DOOM-P1-090",
+    "status": "PENDING",
+    "self_approved": false
+  }
+}

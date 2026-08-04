@@ -437,7 +437,7 @@
     },
     {
       "id": "DOOM-P1-085",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-085.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -461,7 +461,10 @@
         "tools/verify-p1-gate.py"
       ],
       "result": "docs/results/P01/DOOM-P1-085.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T01:15:27Z",
+      "base_head": "ac9d51be7ec28162920212898ffec34b7315c913",
+      "finished_at": "2026-08-04T01:36:26Z"
     },
     {
       "id": "DOOM-P1-090",

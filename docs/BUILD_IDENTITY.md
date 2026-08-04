@@ -59,3 +59,27 @@ The canonical native parity options are:
     -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE
 
 `ldd` can still show FluidSynth and libsamplerate as transitive runtime dependencies of the Ubuntu SDL2_mixer package. That does not mean Chocolate Doom's optional direct CMake integrations were enabled; the CMake cache and link evidence distinguish those cases.
+
+## P01 native-oracle phase-gate identity
+
+P1-085 rebuilt all four native variants from clean ignored build directories at
+committed builder head `ac9d51be7ec28162920212898ffec34b7315c913` using the
+same dependency parity controls:
+
+| Variant | Oracle gate | SHA-256 |
+|---|---|---|
+| Debug | OFF | `cb45217bd19d8895abd4402758f5a89fd1d972378bc86f94ce0f12f9d3434d71` |
+| Release | OFF | `55d776c3e9d7905922852a84b1de568dd81e2b731a3918954964c2dabe9234fb` |
+| Oracle | ON | `307cd26bbf33e98c666969630421fe77897e60ee8ff33fd410e1973b14502ef4` |
+| Oracle-OFF control | OFF | `7f95111c049217c50c5f5d5599d8edf690b02dafb85808df8a996d9cef4d3460` |
+
+The Release hash remains byte-identical to P1-020. Debug includes debug
+information, so guarded source-line additions change its bytes even when
+`SFHS_ORACLE_TEST=OFF`; this is not treated as behavioral drift. The separately
+built Oracle-OFF process completed the same 140-tic demo and emitted no oracle
+artifacts. Build-directory paths also distinguish Debug from Oracle-OFF bytes.
+
+The comprehensive phase identity is
+`evidence/manifests/P01/native-oracle-phase-manifest.json`. It binds executables,
+open WADs, fixtures, demos, gameplay screenshots, state records, indexed frames,
+run results, task-result hashes, upstream identity, and builder commits.

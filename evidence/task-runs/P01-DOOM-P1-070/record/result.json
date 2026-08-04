@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "task": "DOOM-P1-070",
+  "variant": "release",
+  "mode": "record",
+  "run": "1",
+  "demo_source": "project-created:DOOM-P1-070",
+  "demo_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/fixtures/open-demos/oracle.lmp",
+  "demo_size_bytes": 18,
+  "demo_sha256": "45f9177a339e21c8a6459dcf3d1d678e1cc777ddf71d7065c9e8f15fb5c58adb",
+  "stdout_sha256": "3d60cda862d11cb319aa6c137a261c351caa922da057e455d6940ed21452e513",
+  "stderr_sha256": "540051391a07819d443fa57703d9ae41c83bc29f6c9a934598056b85734f6255",
+  "exit_code": 255,
+  "expected_exit_codes": [
+    255
+  ],
+  "completion": "recorded",
+  "desync": false,
+  "end_tic": null,
+  "real_tics": null,
+  "stdout_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P01-DOOM-P1-070/record/record.stdout",
+  "stderr_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P01-DOOM-P1-070/record/record.stderr",
+  "command": "-record evidence/task-runs/P01-DOOM-P1-070/record/raw-recording.lmp at skill 3; normalize first zero-input tic and compare with tests/fixtures/open-demos/oracle.lmp",
+  "environment": "SDL_AUDIODRIVER=dummy; isolated HOME and savedir; xvfb-run; readiness-bound xdotool q",
+  "limitations": [
+    "This is bounded native command evidence, not a claim of universal vanilla demo compatibility."
+  ]
+}

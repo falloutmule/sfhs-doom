@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "task": "DOOM-P1-070",
+  "variant": "release",
+  "mode": "timedemo",
+  "run": "1",
+  "demo_source": "official-freedoom-demo1",
+  "demo_path": null,
+  "demo_size_bytes": null,
+  "demo_sha256": null,
+  "stdout_sha256": "d06d6be00f61c076f5d1fde19a33b2d469fc5c9b520e79164180569291390310",
+  "stderr_sha256": "5f5c14e76db5dfeb479f1fe49cbfe429ad8320d78d9e33ceb747572c67067334",
+  "exit_code": 255,
+  "expected_exit_codes": [
+    0,
+    255
+  ],
+  "completion": "timed",
+  "desync": false,
+  "end_tic": 7117,
+  "real_tics": 557,
+  "stdout_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P01-DOOM-P1-070/timedemo/official-freedoom-demo1/release/run-1/stdout.txt",
+  "stderr_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P01-DOOM-P1-070/timedemo/official-freedoom-demo1/release/run-1/stderr.txt",
+  "command": "/build/native/release/src/chocolate-doom -iwad /vendor-cache/freedoom/0.13.0/data/freedoom1.wad -timedemo DEMO1 -window -width 640 -height 400 -nosound -nomusic -extraconfig /build/runtime/P01/P1-070/timedemo-official-freedoom-demo1-release-1-extra.cfg",
+  "environment": "SDL_AUDIODRIVER=dummy; show_endoom=0; explicit 640x400 window; isolated HOME and savedir; xvfb-run",
+  "limitations": [
+    "This is bounded native command evidence, not a claim of universal vanilla demo compatibility."
+  ]
+}

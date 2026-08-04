@@ -1,0 +1,3 @@
+DEHACKED:549: warning: Cheat sequence longer than supported by Vanilla dehacked
+timed 1 gametics in 0 realtics (inf fps)
+

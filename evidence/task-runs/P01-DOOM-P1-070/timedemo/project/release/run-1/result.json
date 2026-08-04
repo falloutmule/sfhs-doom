@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "task": "DOOM-P1-070",
+  "variant": "release",
+  "mode": "timedemo",
+  "run": "1",
+  "demo_source": "project",
+  "demo_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/fixtures/open-demos/oracle.lmp",
+  "demo_size_bytes": 18,
+  "demo_sha256": "45f9177a339e21c8a6459dcf3d1d678e1cc777ddf71d7065c9e8f15fb5c58adb",
+  "stdout_sha256": "abecc2ec9daf1515254965553fa19e5fdbe433d3ce543532ca07b396ff3b9607",
+  "stderr_sha256": "126cf80b242054fd2979779b55aa805537104e187323e8cd0cb32c44f4d577a4",
+  "exit_code": 255,
+  "expected_exit_codes": [
+    0,
+    255
+  ],
+  "completion": "timed",
+  "desync": false,
+  "end_tic": 1,
+  "real_tics": 0,
+  "stdout_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P01-DOOM-P1-070/timedemo/project/release/run-1/stdout.txt",
+  "stderr_path": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P01-DOOM-P1-070/timedemo/project/release/run-1/stderr.txt",
+  "command": "/build/native/release/src/chocolate-doom -iwad /vendor-cache/freedoom/0.13.0/data/freedoom1.wad -timedemo /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/fixtures/open-demos/oracle.lmp -window -width 640 -height 400 -nosound -nomusic -extraconfig /build/runtime/P01/P1-070/timedemo-project-release-1-extra.cfg",
+  "environment": "SDL_AUDIODRIVER=dummy; show_endoom=0; explicit 640x400 window; isolated HOME and savedir; xvfb-run",
+  "limitations": [
+    "This is bounded native command evidence, not a claim of universal vanilla demo compatibility."
+  ]
+}

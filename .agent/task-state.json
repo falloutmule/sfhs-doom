@@ -376,7 +376,7 @@
     },
     {
       "id": "DOOM-P1-070",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P01/DOOM-P1-070.md",
       "branch": "phase/p01-native-oracle",
       "dependencies": [
@@ -397,7 +397,10 @@
         "tools/demo-result.py"
       ],
       "result": "docs/results/P01/DOOM-P1-070.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-03T23:03:48Z",
+      "base_head": "b06baf72a78539e5ebd130aba9cee0f159ca2f84",
+      "finished_at": "2026-08-04T00:39:25Z"
     },
     {
       "id": "DOOM-P1-080",

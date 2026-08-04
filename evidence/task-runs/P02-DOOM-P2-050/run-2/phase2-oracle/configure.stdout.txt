@@ -1,0 +1,10 @@
+loading initial cache file /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/cmake/SFHSWasm.cmake
+-- Looking for strcasecmp
+-- Looking for strcasecmp - found
+-- Looking for strncasecmp
+-- Looking for strncasecmp - found
+-- Looking for dirent.h
+-- Looking for dirent.h - found
+-- Configuring done (39.5s)
+-- Generating done (2.0s)
+-- Build files have been written to: /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/wasm/P2-050/phase2-oracle

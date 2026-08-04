@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "wasm-phase2-debug",
+  "phase": "P02",
+  "task": "DOOM-P2-050",
+  "source": {
+    "commit": "601a9f0aefc9334db529e87ee89b6f98d4231e24",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {
+        "name": "emsdk",
+        "version": "9fcdf593953edfcddb297572d7f2177d336b0479",
+        "source": "https://github.com/emscripten-core/emsdk.git"
+      },
+      {
+        "name": "Emscripten",
+        "version": "6.0.5",
+        "source": "tools/emsdk-lock.json"
+      },
+      {
+        "name": "Playwright",
+        "version": "1.61.1",
+        "source": "browser-tests/package-lock.json"
+      }
+    ],
+    "inputs": [
+      {
+        "path": "CMakeLists.txt",
+        "size_bytes": 3233,
+        "sha256": "6cabc11e7f8b48589f5a4a0755774fdc9f9d19aa5f5db905ed16dad6b96641c8"
+      },
+      {
+        "path": "src/CMakeLists.txt",
+        "size_bytes": 11612,
+        "sha256": "d178f3655a2a6d9eb1fd0d4b1be5559e205a1775c21c101534c3a9847cd6554b"
+      },
+      {
+        "path": "tools/emsdk-lock.json",
+        "size_bytes": 404,
+        "sha256": "7536f00d39f7749b5eea1c45d52164c54cdd4ddea433d2a97968bbbba435a57a"
+      },
+      {
+        "path": "browser-tests/package-lock.json",
+        "size_bytes": 2260,
+        "sha256": "ee19091be5f91e1c25d1aa6374273538311e4107f9ef44928efeb6dfdef6a8ab"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-04T10:55:43.362521Z",
+    "id": "P02-DOOM-P2-050-run-2-phase2-debug",
+    "commands": [
+      {
+        "argv": [
+          "emcmake",
+          "cmake",
+          "-S",
+          ".",
+          "-B",
+          "build/wasm/P2-050/phase2-debug",
+          "-G",
+          "Ninja"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-debug/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-debug/configure.stderr.txt"
+      },
+      {
+        "argv": [
+          "cmake",
+          "--build",
+          "build/wasm/P2-050/phase2-debug",
+          "--target",
+          "chocolate-doom"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-debug/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-050/run-2/phase2-debug/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "build/wasm/P2-050/phase2-debug/src/chocolate-doom.js",
+      "size_bytes": 394364,
+      "sha256": "5c0e7869c9d3a92e3313aea21e661d28672ec6b7c5ab87fa9b7b093484b63b9d",
+      "kind": "wasm-javascript-loader"
+    },
+    {
+      "path": "build/wasm/P2-050/phase2-debug/src/chocolate-doom.wasm",
+      "size_bytes": 9478472,
+      "sha256": "f4f64354bd40a06192d6cd23c8d62d2b359a95a93c92cea99136519a7153db96",
+      "kind": "wasm-module"
+    },
+    {
+      "path": "build/wasm/P2-050/phase2-debug/data/freedoom2.wad",
+      "size_bytes": 28787748,
+      "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+      "kind": "separate-open-freedoom-iwad"
+    }
+  ],
+  "verification": {
+    "run_ids": [
+      "P02-DOOM-P2-050-run-2-phase2-debug"
+    ],
+    "result": "PASS",
+    "checks": [
+      "multi-file output",
+      "separate open data",
+      "no SINGLE_FILE",
+      "reproducible artifact hashes",
+      "native controls preserved",
+      "loopback-only runtime contract"
+    ]
+  },
+  "notes": [
+    "Variant: phase2-debug. Oracle=false.",
+    "No commercial data, single-file packaging, threads, WebGPU, or network transport."
+  ]
+}

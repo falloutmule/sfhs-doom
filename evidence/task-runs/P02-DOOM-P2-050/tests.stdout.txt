@@ -1,0 +1,9 @@
+test_adapter_does_not_request_gameplay_or_renderer_source_edits (tests.test_build_wasm.BuildWasmTests.test_adapter_does_not_request_gameplay_or_renderer_source_edits) ... ok
+test_build_contract_is_multi_file_and_local_only (tests.test_build_wasm.BuildWasmTests.test_build_contract_is_multi_file_and_local_only) ... ok
+test_each_manifest_validates_and_has_separate_outputs (tests.test_build_wasm.BuildWasmTests.test_each_manifest_validates_and_has_separate_outputs) ... ok
+test_repeatability_and_native_control_evidence (tests.test_build_wasm.BuildWasmTests.test_repeatability_and_native_control_evidence) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.976s
+
+OK

@@ -1,0 +1,23 @@
+{
+  "manifest": "evidence/manifests/P02/phase1-debug.json",
+  "artifacts": [
+    {
+      "path": "build/wasm/P2-050/phase1-debug/src/chocolate-doom.js",
+      "size_bytes": 394364,
+      "sha256": "5c0e7869c9d3a92e3313aea21e661d28672ec6b7c5ab87fa9b7b093484b63b9d",
+      "kind": "wasm-javascript-loader"
+    },
+    {
+      "path": "build/wasm/P2-050/phase1-debug/src/chocolate-doom.wasm",
+      "size_bytes": 9478472,
+      "sha256": "a91b4311bf57d04c80e01c96e80fd508ed0895b89073b255bf6058c2f90fc920",
+      "kind": "wasm-module"
+    },
+    {
+      "path": "build/wasm/P2-050/phase1-debug/data/freedoom1.wad",
+      "size_bytes": 28795076,
+      "sha256": "7323bcc168c5a45ff10749b339960e98314740a734c30d4b9f3337001f9e703d",
+      "kind": "separate-open-freedoom-iwad"
+    }
+  ]
+}

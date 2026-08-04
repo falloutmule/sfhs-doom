@@ -1,0 +1,23 @@
+{
+  "manifest": "evidence/manifests/P02/phase2-oracle.json",
+  "artifacts": [
+    {
+      "path": "build/wasm/P2-050/phase2-oracle/src/chocolate-doom.js",
+      "size_bytes": 394364,
+      "sha256": "2ea3560225623aa380ad32f65084ec27475e3a0eb6588733e0ff43d0f6c18d19",
+      "kind": "wasm-javascript-loader"
+    },
+    {
+      "path": "build/wasm/P2-050/phase2-oracle/src/chocolate-doom.wasm",
+      "size_bytes": 9500228,
+      "sha256": "c9e30e9aea2ffdd6147121a55e34742edf0e9a251c630d8fc42085bd3139e4fb",
+      "kind": "wasm-module"
+    },
+    {
+      "path": "build/wasm/P2-050/phase2-oracle/data/freedoom2.wad",
+      "size_bytes": 28787748,
+      "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+      "kind": "separate-open-freedoom-iwad"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+2ea3560225623aa380ad32f65084ec27475e3a0eb6588733e0ff43d0f6c18d19  /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/wasm/P2-050/phase2-oracle/src/chocolate-doom.js
+c9e30e9aea2ffdd6147121a55e34742edf0e9a251c630d8fc42085bd3139e4fb  /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/wasm/P2-050/phase2-oracle/src/chocolate-doom.wasm

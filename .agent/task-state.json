@@ -610,7 +610,7 @@
     },
     {
       "id": "DOOM-P2-050",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-050.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -644,7 +644,10 @@
         "src/i_sdlmusic.c"
       ],
       "result": "docs/results/P02/DOOM-P2-050.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T10:41:59Z",
+      "base_head": "601a9f0aefc9334db529e87ee89b6f98d4231e24",
+      "finished_at": "2026-08-04T10:58:36Z"
     },
     {
       "id": "DOOM-P2-060",

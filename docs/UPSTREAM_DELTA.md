@@ -22,3 +22,12 @@ Every future upstream delta must record:
 
 Engine-source or upstream-build changes were not permitted in P00. The P1-080
 delta is compile-time gated, observes only, and is absent from ordinary builds.
+
+## P2-050 multi-file Wasm boundary
+
+The P2-040 unmodified Chocolate Doom target links directly under Emscripten
+6.0.5 and emits `chocolate-doom.js` plus `chocolate-doom.wasm`. P2-050 keeps
+that upstream source path intact and adds only the bounded multi-file build
+orchestration, manifest hashing, and loopback shell contract. No `src/doom/**`
+file, gameplay rule, renderer, commercial data, or single-file packaging path
+is changed.

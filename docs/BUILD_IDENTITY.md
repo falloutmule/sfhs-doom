@@ -83,3 +83,11 @@ The comprehensive phase identity is
 `evidence/manifests/P01/native-oracle-phase-manifest.json`. It binds executables,
 open WADs, fixtures, demos, gameplay screenshots, state records, indexed frames,
 run results, task-result hashes, upstream identity, and builder commits.
+
+## P02 multi-file Wasm feasibility identity
+
+P2-050 uses pinned Emscripten 6.0.5 and Playwright 1.61.1 to produce separate
+JavaScript and Wasm files. Phase 1/2 open Freedoom WADs remain separate data
+inputs under ignored local build directories. The three variant manifests are
+under `evidence/manifests/P02/` and are validated by the same standard-library
+manifest checker. `SINGLE_FILE` packaging is explicitly excluded from P2.

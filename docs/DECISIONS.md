@@ -58,3 +58,17 @@ uses the same native dependency parity flags as P1-020 plus
 **Reversibility:** Removing the conditional source list and the two guarded
 calls restores the upstream source path. No persistent format or production
 behavior depends on this observer.
+
+## ADR-016: bounded P2 multi-file Wasm adapter
+
+**Decision:** Keep the P2 browser artifact multi-file and loopback-only. The
+accepted upstream link already succeeds under Emscripten, so P2-050 adds only
+the smallest CMake/shell/web-shell contract needed to make repeated artifact
+identity checks explicit. No `src/doom/**` gameplay or renderer files, single-
+file packaging, threads, WebGPU, network transport, or commercial data are
+part of this phase.
+
+**Evidence boundary:** The P2-040 unmodified link probe is the authority for
+the direct link result. Any future adapter change must remain within the
+task-card path and budget, preserve native controls, keep Wasm and data as
+separate files, and reject external runtime requests.

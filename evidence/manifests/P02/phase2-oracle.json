@@ -6,7 +6,7 @@
   "phase": "P02",
   "task": "DOOM-P2-050",
   "source": {
-    "commit": "342a1418b993f2dad0666f79244198bf6c026ffa",
+    "commit": "84ac4fdd1f31412368b314846fcbf30904bfa79a",
     "upstream_tag": "chocolate-doom-3.1.1",
     "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
     "dirty": false,
@@ -51,8 +51,8 @@
     ]
   },
   "build": {
-    "utc": "2026-08-04T15:58:22.528697Z",
-    "id": "P02-DOOM-P2-050-run-5-phase2-oracle",
+    "utc": "2026-08-04T16:53:24.231221Z",
+    "id": "P02-DOOM-P2-088-phase2-oracle",
     "commands": [
       {
         "argv": [
@@ -67,8 +67,8 @@
         ],
         "cwd": ".",
         "exit_code": 0,
-        "stdout_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/configure.stdout.txt",
-        "stderr_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/configure.stderr.txt"
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase2-oracle/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase2-oracle/configure.stderr.txt"
       },
       {
         "argv": [
@@ -80,8 +80,8 @@
         ],
         "cwd": ".",
         "exit_code": 0,
-        "stdout_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/build.stdout.txt",
-        "stderr_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase2-oracle/build.stderr.txt"
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase2-oracle/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase2-oracle/build.stderr.txt"
       }
     ]
   },
@@ -89,13 +89,13 @@
     {
       "path": "build/wasm/P2-050/phase2-oracle/src/chocolate-doom.js",
       "size_bytes": 394428,
-      "sha256": "6b09341a99f00e8ae355b916d24c10f3145102f5f82b1768962a66ff06a22344",
+      "sha256": "5995313ec6e0c3dc7fb3bb6f28dff777e457aa35640a1f04a0be5da65ddef90c",
       "kind": "wasm-javascript-loader"
     },
     {
       "path": "build/wasm/P2-050/phase2-oracle/src/chocolate-doom.wasm",
-      "size_bytes": 9500228,
-      "sha256": "c9e30e9aea2ffdd6147121a55e34742edf0e9a251c630d8fc42085bd3139e4fb",
+      "size_bytes": 9500374,
+      "sha256": "5af7ebee6579e79048c18228c2f973f3a4b1cf45cf44dcca7b3826f56b1c0957",
       "kind": "wasm-module"
     },
     {
@@ -107,7 +107,7 @@
   ],
   "verification": {
     "run_ids": [
-      "P02-DOOM-P2-050-run-5-phase2-oracle"
+      "P02-DOOM-P2-088-phase2-oracle"
     ],
     "result": "PASS",
     "checks": [

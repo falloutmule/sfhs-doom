@@ -1,0 +1,540 @@
+.........................FF.F................F.EE........F..........FFFF.....F..F.....F..............................EEE...........
+======================================================================
+ERROR: test_tampered_archive_is_rejected_without_manifest_repair (test_fetch_freedoom.FetchFreedoomTests.test_tampered_archive_is_rejected_without_manifest_repair)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_fetch_freedoom.py", line 85, in test_tampered_archive_is_rejected_without_manifest_repair
+    with tempfile.TemporaryDirectory(prefix="freedoom-archive-tamper-", dir="C:/tmp") as directory:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 1021, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 523, in mkdtemp
+    _os.mkdir(file, 0o700)
+FileNotFoundError: [Errno 2] No such file or directory: 'C:/tmp/freedoom-archive-tamper-n7ryhey2'
+
+======================================================================
+ERROR: test_tampered_copy_is_rejected (test_fetch_freedoom.FetchFreedoomTests.test_tampered_copy_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_fetch_freedoom.py", line 68, in test_tampered_copy_is_rejected
+    with tempfile.TemporaryDirectory(prefix="freedoom-tamper-", dir="C:/tmp") as directory:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 1021, in __init__
+    self.name = mkdtemp(suffix, prefix, dir)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 523, in mkdtemp
+    _os.mkdir(file, 0o700)
+FileNotFoundError: [Errno 2] No such file or directory: 'C:/tmp/freedoom-tamper-iv1cq1sh'
+
+======================================================================
+ERROR: test_no_tests_fixture_is_not_present (test_upstream_test_runner.UpstreamTestRunnerTests.test_no_tests_fixture_is_not_present)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_upstream_test_runner.py", line 25, in test_no_tests_fixture_is_not_present
+    result = self.classify("Test project fixture\nNo tests were found!!!\n", 0)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_upstream_test_runner.py", line 14, in classify
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".txt", dir="C:/tmp", delete=False) as stream:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 721, in NamedTemporaryFile
+    file = _io.open(dir, mode, buffering=buffering,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 718, in opener
+    fd, name = _mkstemp_inner(dir, prefix, suffix, flags, output_type)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 395, in _mkstemp_inner
+    fd = _os.open(file, flags, 0o600)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/C:/tmp/tmpugfq8oic.txt'
+
+======================================================================
+ERROR: test_nonzero_fixture_fails (test_upstream_test_runner.UpstreamTestRunnerTests.test_nonzero_fixture_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_upstream_test_runner.py", line 34, in test_nonzero_fixture_fails
+    result = self.classify("1 test failed\n", 8)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_upstream_test_runner.py", line 14, in classify
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".txt", dir="C:/tmp", delete=False) as stream:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 721, in NamedTemporaryFile
+    file = _io.open(dir, mode, buffering=buffering,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 718, in opener
+    fd, name = _mkstemp_inner(dir, prefix, suffix, flags, output_type)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 395, in _mkstemp_inner
+    fd = _os.open(file, flags, 0o600)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/C:/tmp/tmp9xy_t036.txt'
+
+======================================================================
+ERROR: test_populated_success_fixture_passes (test_upstream_test_runner.UpstreamTestRunnerTests.test_populated_success_fixture_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_upstream_test_runner.py", line 30, in test_populated_success_fixture_passes
+    result = self.classify("100% tests passed, 0 tests failed out of 2\n", 0)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_upstream_test_runner.py", line 14, in classify
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".txt", dir="C:/tmp", delete=False) as stream:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 721, in NamedTemporaryFile
+    file = _io.open(dir, mode, buffering=buffering,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 718, in opener
+    fd, name = _mkstemp_inner(dir, prefix, suffix, flags, output_type)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/tempfile.py", line 395, in _mkstemp_inner
+    fd = _os.open(file, flags, 0o600)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/C:/tmp/tmpb12xa_vt.txt'
+
+======================================================================
+FAIL: test_shell_is_focusable_and_input_is_bounded (test_browser_input_contract.BrowserInputContractTests.test_shell_is_focusable_and_input_is_bounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_browser_input_contract.py", line 15, in test_shell_is_focusable_and_input_is_bounded
+    self.assertIn("new URLSearchParams(window.location.search).get('menu')", pre)
+AssertionError: "new URLSearchParams(window.location.search).get('menu')" not found in "(function () {\n  'use strict';\n  const phase = window.SFHS_P2_PHASE || 'phase2';\n  const wad = phase === 'phase1' ? 'freedoom1.wad' : 'freedoom2.wad';\n  const wadUrl = `/p2-data/${wad}`;\n  const query = new URLSearchParams(window.location.search);\n  const menuOnly = query.get('menu') === '1';\n  const audioMode = query.get('audio') === '1';\n  const oracleMode = query.get('oracle') === '1';\n  const dehMode = query.get('deh') === '1';\n  const allowed = new URL('./', window.location.href).origin;\n  const argumentsForMode = oracleMode\n    ? ['-iwad', wad, '-timedemo', 'oracle-140.lmp', '-window', '-width', '640', '-height', '400', '-nosound', '-nomusic', '-config', 'oracle.cfg', '-extraconfig', 'extra.cfg', ...(dehMode ? ['-deh', 'oracle-effect.deh'] : [])]\n    : menuOnly\n      ? ['-iwad', wad, '-window', '-width', '640', '-height', '400', '-nosound', '-nomusic']\n      : ['-iwad', wad, '-warp', '1', '1', '-skill', '3', '-window', '-width', '640', '-height', '400', ...(audioMode ? ['-nomusic'] : ['-nosound', '-nomusic'])];\n  window.SFHS_P2_MODULE = {\n    canvas: document.getElementById('canvas'),\n    arguments: argumentsForMode,\n    locateFile: (name) => new URL(`/engine/src/${name}`, window.location.origin).toString(),\n    noInitialRun: audioMode,\n    ENV: oracleMode ? { SFHS_ORACLE_OUTPUT: '/oracle-output' } : undefined,\n    print: (text) => console.log(String(text)),\n    printErr: (text) => console.error(String(text)),\n    preRun: [function () {\n      if (!window.FS || typeof window.FS.createPreloadedFile !== 'function') {\n        throw new Error('SFHS_P2_PRELOAD_API_MISSING');\n      }\n      if (oracleMode) window.FS.mkdir('/oracle-output');\n      const files = oracleMode\n        ? [\n            [wad, wadUrl],\n            ['oracle-140.lmp', '/p2-data/oracle-140.lmp'],\n            ['oracle.cfg', '/p2-data/oracle.cfg'],\n            ['extra.cfg', '/p2-data/extra.cfg'],\n            ...(dehMode ? [['oracle-effect.deh', '/p2-data/oracle-effect.deh']] : []),\n          ]\n        : [[wad, wadUrl]];\n      let remaining = files.length;\n      const loaded = () => {\n        remaining -= 1;\n        if (remaining === 0) document.body.dataset.sfhsP2Data = 'loaded';\n      };\n      for (const [name, url] of files) {\n        window.FS.createPreloadedFile('/', name, url, true, false,\n          loaded,\n          () => { document.body.dataset.sfhsP2Data = 'failed'; });\n      }\n    }],\n    onRuntimeInitialized: () => { document.body.dataset.sfhsP2Runtime = 'ready'; },\n    sfhsAllowedOrigin: allowed,\n  };\n}());\n"
+
+======================================================================
+FAIL: test_all_manifests_validate (test_build_native.NativeBuildTests.test_all_manifests_validate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_build_native.py", line 86, in test_all_manifests_validate
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : MANIFEST INVALID: artifacts[0].size_bytes does not match disk: build/native/debug/src/chocolate-doom
+
+
+======================================================================
+FAIL: test_current_executables_match_latest_manifests (test_build_native.NativeBuildTests.test_current_executables_match_latest_manifests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_build_native.py", line 73, in test_current_executables_match_latest_manifests
+    self.assertEqual(len(payload), artifact["size_bytes"])
+AssertionError: 2574856 != 2574848
+
+======================================================================
+FAIL: test_no_wad_or_archive_is_tracked (test_fetch_freedoom.FetchFreedoomTests.test_no_wad_or_archive_is_tracked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_fetch_freedoom.py", line 111, in test_no_wad_or_archive_is_tracked
+    self.assertFalse(any(line.endswith((".wad", ".zip")) for line in tracked))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_compile_gate_and_source_edit_budgets (test_native_oracle.NativeOracleTests.test_compile_gate_and_source_edit_budgets)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_native_oracle.py", line 103, in test_compile_gate_and_source_edit_budgets
+    self.assertEqual(existing_c, {"src/doom/d_main.c", "src/doom/g_game.c"})
+AssertionError: Items in the first set but not the second:
+'src/hexen/p_doors.c'
+'src/strife/r_main.c'
+'src/doom/deh_doom.c'
+'src/strife/deh_misc.c'
+'src/doom/p_plats.c'
+'src/strife/p_maputl.c'
+'src/strife/info.c'
+'src/hexen/sb_bar.c'
+'src/heretic/p_floor.c'
+'src/doom/f_finale.c'
+'src/w_merge.c'
+'src/tables.c'
+'textscreen/txt_gui.c'
+'src/doom/deh_misc.c'
+'textscreen/txt_inputbox.c'
+'src/heretic/r_things.c'
+'src/setup/txt_joyaxis.c'
+'src/setup/display.c'
+'textscreen/txt_widget.c'
+'src/z_native.c'
+'src/strife/p_pspr.c'
+'src/heretic/p_switch.c'
+'src/d_iwad.c'
+'src/doom/hu_stuff.c'
+'src/strife/g_game.c'
+'src/midifallback.c'
+'src/hexen/r_bsp.c'
+'src/midifile.c'
+'src/heretic/p_inter.c'
+'src/i_sdlmusic.c'
+'src/hexen/p_sight.c'
+'src/z_zone.c'
+'src/heretic/deh_htic.c'
+'src/heretic/s_sound.c'
+'src/setup/setup_icon.c'
+'src/doom/dstrings.c'
+'src/net_query.c'
+'src/hexen/r_data.c'
+'src/doom/hu_lib.c'
+'src/doom/p_sight.c'
+'src/strife/p_sight.c'
+'src/hexen/sn_sonix.c'
+'src/doom/p_maputl.c'
+'src/doom/r_draw.c'
+'src/net_petname.c'
+'src/doom/p_pspr.c'
+'src/heretic/r_data.c'
+'src/doom/doomstat.c'
+'src/i_cdmus.c'
+'src/i_system.c'
+'src/i_input.c'
+'src/heretic/r_main.c'
+'src/heretic/deh_thing.c'
+'src/m_controls.c'
+'src/doom/p_telept.c'
+'src/net_common.c'
+'src/w_file_win32.c'
+'src/strife/p_setup.c'
+'opl/opl_linux.c'
+'src/doom/deh_weapon.c'
+'src/doom/statdump.c'
+'src/deh_io.c'
+'src/net_sdl.c'
+'src/heretic/p_map.c'
+'src/strife/p_saveg.c'
+'src/strife/st_lib.c'
+'src/sha1.c'
+'src/strife/r_data.c'
+'src/w_checksum.c'
+'src/w_file.c'
+'src/w_file_stdc.c'
+'src/doom/p_lights.c'
+'src/hexen/p_switch.c'
+'src/strife/strife_icon.c'
+'src/doom/p_inter.c'
+'src/hexen/p_anim.c'
+'src/hexen/p_enemy.c'
+'src/hexen/p_mobj.c'
+'src/deh_main.c'
+'src/heretic/r_draw.c'
+'pcsound/pcsound_linux.c'
+'src/setup/execute.c'
+'textscreen/txt_sdl.c'
+'src/doom/p_doors.c'
+'src/heretic/sounds.c'
+'src/doom/p_spec.c'
+'src/strife/doomdef.c'
+'src/hexen/p_spec.c'
+'src/i_sdlsound.c'
+'src/hexen/p_telept.c'
+'src/strife/f_wipe.c'
+'src/strife/deh_strife.c'
+'textscreen/examples/calculator.c'
+'src/hexen/r_plane.c'
+'src/doom/am_map.c'
+'src/strife/f_finale.c'
+'src/doom/doomdef.c'
+'src/net_dedicated.c'
+'src/heretic/p_telept.c'
+'src/heretic/r_segs.c'
+'src/heretic/info.c'
+'src/hexen/r_segs.c'
+'src/hexen/am_map.c'
+'src/heretic/ct_chat.c'
+'src/deh_mapping.c'
+'src/hexen/st_start.c'
+'src/strife/p_map.c'
+'src/heretic/p_enemy.c'
+'src/heretic/d_net.c'
+'src/d_loop.c'
+'pcsound/pcsound_win32.c'
+'src/strife/st_stuff.c'
+'src/hexen/sv_save.c'
+'src/doom/r_main.c'
+'src/net_client.c'
+'textscreen/txt_utf8.c'
+'src/strife/p_lights.c'
+'src/strife/p_plats.c'
+'src/setup/multiplayer.c'
+'src/strife/p_spec.c'
+'src/m_argv.c'
+'src/strife/p_inter.c'
+'src/i_videohr.c'
+'src/hexen/mn_menu.c'
+'src/d_event.c'
+'textscreen/txt_window_action.c'
+'src/m_bbox.c'
+'src/doom/p_setup.c'
+'src/hexen/d_net.c'
+'src/heretic/am_map.c'
+'src/i_endoom.c'
+'src/heretic/p_doors.c'
+'src/hexen/m_random.c'
+'src/doom/doom_icon.c'
+'src/hexen/in_lude.c'
+'src/m_cheat.c'
+'src/doom/d_net.c'
+'src/heretic/r_plane.c'
+'textscreen/txt_separator.c'
+'src/hexen/p_plats.c'
+'textscreen/txt_io.c'
+'opl/opl_timer.c'
+'src/hexen/p_acs.c'
+'src/i_winmusic.c'
+'src/strife/hu_stuff.c'
+'src/doom/r_things.c'
+'src/hexen/p_maputl.c'
+'src/doom/p_tick.c'
+'src/doom/p_saveg.c'
+'src/m_config.c'
+'src/strife/doomstat.c'
+'src/setup/mouse.c'
+'src/doom/r_segs.c'
+'textscreen/txt_label.c'
+'src/strife/p_dialog.c'
+'src/strife/deh_sound.c'
+'src/setup/keyboard.c'
+'src/strife/d_main.c'
+'textscreen/txt_spinctrl.c'
+'src/strife/r_things.c'
+'src/heretic/m_random.c'
+'src/heretic/p_tick.c'
+'src/hexen/p_tick.c'
+'src/heretic/p_plats.c'
+'src/strife/hu_lib.c'
+'src/strife/p_mobj.c'
+'src/heretic/mn_menu.c'
+'src/hexen/info.c'
+'src/i_pcsound.c'
+'textscreen/txt_conditional.c'
+'src/heretic/p_user.c'
+'src/hexen/p_pspr.c'
+'src/net_io.c'
+'src/hexen/p_map.c'
+'src/doom/st_stuff.c'
+'src/deh_str.c'
+'src/hexen/p_ceilng.c'
+'src/setup/txt_joybinput.c'
+'src/hexen/f_finale.c'
+'src/i_musicpack.c'
+'src/gusconf.c'
+'src/doom/deh_cheat.c'
+'src/heretic/g_game.c'
+'src/memio.c'
+'textscreen/txt_dropdown.c'
+'src/hexen/p_lights.c'
+'src/doom/p_enemy.c'
+'src/doom/deh_bexstr.c'
+'textscreen/examples/guitest.c'
+'src/doom/deh_sound.c'
+'opl/opl_sdl.c'
+'src/i_timer.c'
+'src/strife/m_random.c'
+'src/strife/am_map.c'
+'src/hexen/hexen_icon.c'
+'src/hexen/p_things.c'
+'src/doom/st_lib.c'
+'src/doom/info.c'
+'opl/opl3.c'
+'src/hexen/r_things.c'
+'src/strife/p_switch.c'
+'src/heretic/p_setup.c'
+'src/heretic/deh_ammo.c'
+'src/w_wad.c'
+'src/hexen/h2_main.c'
+'src/i_main.c'
+'textscreen/txt_strut.c'
+'src/strife/s_sound.c'
+'src/setup/sound.c'
+'src/strife/d_items.c'
+'src/heretic/deh_frame.c'
+'src/mus2mid.c'
+'src/v_diskicon.c'
+'src/i_joystick.c'
+'textscreen/txt_button.c'
+'src/heretic/d_main.c'
+'opl/opl.c'
+'src/i_oplmusic.c'
+'src/heretic/p_spec.c'
+'src/strife/dstrings.c'
+'src/doom/d_items.c'
+'src/w_file_posix.c'
+'src/setup/txt_keyinput.c'
+'src/aes_prng.c'
+'src/doom/r_bsp.c'
+'src/m_misc.c'
+'src/heretic/p_saveg.c'
+'textscreen/txt_radiobutton.c'
+'src/doom/p_floor.c'
+'src/strife/deh_thing.c'
+'src/heretic/r_bsp.c'
+'textscreen/txt_checkbox.c'
+'pcsound/pcsound_bsd.c'
+'textscreen/txt_desktop.c'
+'src/strife/p_telept.c'
+'src/strife/p_floor.c'
+'src/strife/r_plane.c'
+'textscreen/txt_fileselect.c'
+'src/heretic/deh_htext.c'
+'src/heretic/p_lights.c'
+'src/net_structrw.c'
+'src/doom/p_mobj.c'
+'pcsound/pcsound_sdl.c'
+'src/net_server.c'
+'opl/opl_win32.c'
+'src/hexen/p_floor.c'
+'src/heretic/p_pspr.c'
+'src/hexen/a_action.c'
+'src/doom/sounds.c'
+'src/hexen/p_setup.c'
+'src/strife/deh_ammo.c'
+'src/v_video.c'
+'src/d_dedicated.c'
+'src/hexen/ct_chat.c'
+'src/heretic/deh_sound.c'
+'src/strife/wi_stuff.c'
+'opl/ioperm_sys.c'
+'src/strife/p_ceilng.c'
+'src/doom/p_map.c'
+'src/i_sound.c'
+'src/doom/r_sky.c'
+'src/doom/wi_stuff.c'
+'src/strife/deh_frame.c'
+'src/hexen/sounds.c'
+'src/strife/p_doors.c'
+'src/deh_text.c'
+'src/doom/s_sound.c'
+'src/setup/txt_mouseinput.c'
+'src/m_fixed.c'
+'src/hexen/sc_man.c'
+'src/heretic/f_finale.c'
+'src/d_mode.c'
+'opl/opl_obsd.c'
+'src/heretic/deh_weapon.c'
+'src/doom/p_user.c'
+'src/hexen/s_sound.c'
+'opl/opl_queue.c'
+'src/strife/r_bsp.c'
+'tests/fixtures/wasm/sdl-smoke.c'
+'src/strife/m_menu.c'
+'src/doom/m_menu.c'
+'src/doom/deh_ptr.c'
+'src/strife/p_enemy.c'
+'src/strife/r_sky.c'
+'src/net_loop.c'
+'src/strife/r_draw.c'
+'src/heretic/p_ceilng.c'
+'pcsound/pcsound.c'
+'src/strife/r_segs.c'
+'src/i_flmusic.c'
+'src/heretic/heretic_icon.c'
+'src/doom/r_plane.c'
+'src/doom/deh_frame.c'
+'opl/examples/droplay.c'
+'src/doom/deh_thing.c'
+'src/hexen/r_main.c'
+'src/hexen/p_user.c'
+'src/strife/deh_ptr.c'
+'src/hexen/p_inter.c'
+'src/doom/r_data.c'
+'win32/win_opendir.c'
+'src/doom/f_wipe.c'
+'textscreen/txt_table.c'
+'src/setup/compatibility.c'
+'src/setup/mode.c'
+'src/strife/deh_weapon.c'
+'src/strife/p_tick.c'
+'src/hexen/g_game.c'
+'src/strife/d_net.c'
+'src/setup/mainmenu.c'
+'src/strife/m_saves.c'
+'src/hexen/po_man.c'
+'src/doom/p_ceilng.c'
+'src/i_glob.c'
+'src/strife/deh_cheat.c'
+'src/doom/m_random.c'
+'src/doom/deh_ammo.c'
+'src/heretic/in_lude.c'
+'src/strife/p_user.c'
+'src/i_video.c'
+'src/setup/joystick.c'
+'src/net_gui.c'
+'src/strife/sounds.c'
+'src/w_main.c'
+'src/heretic/p_maputl.c'
+'textscreen/txt_scrollpane.c'
+'src/heretic/p_mobj.c'
+'textscreen/txt_window.c'
+'src/hexen/r_draw.c'
+'src/doom/p_switch.c'
+'src/net_packet.c'
+'src/heretic/sb_bar.c'
+'src/heretic/p_sight.c'
+
+======================================================================
+FAIL: test_doctor_failure_is_nonzero_and_explicit (test_native_toolchain.NativeToolchainTests.test_doctor_failure_is_nonzero_and_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_native_toolchain.py", line 54, in test_doctor_failure_is_nonzero_and_explicit
+    self.assertIn("COMMAND cmake FAIL forced-missing", result.stdout)
+AssertionError: 'COMMAND cmake FAIL forced-missing' not found in ''
+
+======================================================================
+FAIL: test_doctor_passes_without_installing (test_native_toolchain.NativeToolchainTests.test_doctor_passes_without_installing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_native_toolchain.py", line 44, in test_doctor_passes_without_installing
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : bash: line 1: cd: /mnt//mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom: No such file or directory
+
+
+======================================================================
+FAIL: test_native_env_accepts_repository_and_prints_identity (test_native_toolchain.NativeToolchainTests.test_native_env_accepts_repository_and_prints_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_native_toolchain.py", line 32, in test_native_env_accepts_repository_and_prints_identity
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : bash: line 1: cd: /mnt//mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom: No such file or directory
+
+
+======================================================================
+FAIL: test_native_env_rejects_invocation_outside_repository (test_native_toolchain.NativeToolchainTests.test_native_env_rejects_invocation_outside_repository)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_native_toolchain.py", line 40, in test_native_env_rejects_invocation_outside_repository
+    self.assertIn("invoke from inside", result.stderr)
+AssertionError: 'invoke from inside' not found in 'bash: /mnt//mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tools/native-env.sh: No such file or directory\n'
+
+======================================================================
+FAIL: test_canonical_fixture_set_verifies (test_oracle_fixtures.OracleFixtureTests.test_canonical_fixture_set_verifies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_oracle_fixtures.py", line 52, in test_canonical_fixture_set_verifies
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : ORACLE_FIXTURES INVALID: unexpected fixture paths: ['wasm/sdl-smoke.c']
+
+
+======================================================================
+FAIL: test_generation_is_deterministic_and_verifies (test_oracle_fixtures.OracleFixtureTests.test_generation_is_deterministic_and_verifies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_oracle_fixtures.py", line 65, in test_generation_is_deterministic_and_verifies
+    self.assertEqual(fixture_hashes(first), fixture_hashes(CANONICAL))
+AssertionError: {'CC0[614 chars]9e1f'} != {'CC0[614 chars]9e1f', 'wasm/sdl-smoke.c': '04c74d28e6ee8ed2b4[43 chars]61e'}
+Diff is 1030 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_gate_passes_and_is_read_only (test_p1_gate.P1GateTests.test_gate_passes_and_is_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/tests/test_p1_gate.py", line 72, in test_gate_passes_and_is_read_only
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : SFHS_DOOM_P1_NATIVE_ORACLE_GATE=FAIL reason=wrong branch
+
+
+----------------------------------------------------------------------
+Ran 131 tests in 62.230s
+
+FAILED (failures=12, errors=5)
+BLOCK PASS: DOOM-P0-001 blocked; report reports/blocker.md
+START PASS: DOOM-P1-010 running at a472debf1840ec534d323c7f5092c23c9df42df2
+FINISH PASS: DOOM-P1-010 done with SELF
+VERIFY-HEAD PASS: DOOM-P1-010 HEAD=66892c55d99a961c2558b99a1e514ddf088aebf6 recorded=SELF resolved=66892c55d99a961c2558b99a1e514ddf088aebf6
+START PASS: DOOM-P0-001 running at 667f1826243e378b9b5bf2ab6f34b5edb13f911a
+FINISH PASS: DOOM-P0-001 done with SELF
+VERIFY-HEAD PASS: DOOM-P0-001 HEAD=0fb9c64fad136b07915d14b331ab5a4efba5d6fd recorded=SELF resolved=0fb9c64fad136b07915d14b331ab5a4efba5d6fd
+START PASS: DOOM-P0-002 running at c7975b10169c8ba131131c6a720f1cc7df578af3
+nEXIT_CODE=n

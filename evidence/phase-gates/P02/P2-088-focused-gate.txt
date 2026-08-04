@@ -1,0 +1,30 @@
+SFHS Doom P2-088 Focused Gate
+=============================
+
+COMMAND: python tools/verify-p2-gate.py
+GLOBAL_PYTHON_DISCOVERY: DIAGNOSTIC_NON_BLOCKING
+FOCUSED_RESULT: PASS
+GATE: SFHS_DOOM_P2_WASM_FEASIBILITY_GATE=PASS_WITH_RECORDED_LIMITATIONS
+
+Blocking focused checks:
+- project-document validation: PASS
+- task-state validation: PASS
+- phase1-debug artifact manifest: PASS
+- phase2-debug artifact manifest: PASS
+- phase2-oracle artifact manifest: PASS
+- P2 gate regression tests: 9 passed
+- P2 browser evidence: 8 existing tests passed
+- P2 parity evidence: 1 existing test passed
+- NATIVE_WASM_COMPARE: PASS
+- exact native/Wasm scalar and raw-frame parity: PASS
+- Chromium/Firefox boot/input/audio evidence: PASS
+- external runtime requests: none recorded
+- commercial Doom data: none accepted
+- single-file packaging: not performed
+- P2-090: pending and reserved for independent review
+
+Non-blocking diagnostic:
+- 131-test global Python discovery output is preserved under
+  evidence/task-runs/P02-DOOM-P2-088/.
+- It is not labeled PASS. Exact identifiers and classifications are in
+  docs/ISSUE_LOG.md.

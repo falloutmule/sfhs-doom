@@ -1,0 +1,6 @@
+COMMAND: python tools/validate_artifact_manifest.py evidence/manifests/P02/phase1-debug.json
+RESULT: BLOCKED: build.commands[0].stdout_path file is missing: evidence/task-runs/P02-DOOM-P2-088/manifest-phase1-debug/configure.stdout.txt
+COMMAND: python tools/validate_artifact_manifest.py evidence/manifests/P02/phase2-debug.json
+RESULT: BLOCKED: build.commands[0].stdout_path file is missing: evidence/task-runs/P02-DOOM-P2-088/manifest-phase2-debug/configure.stdout.txt
+COMMAND: python tools/validate_artifact_manifest.py evidence/manifests/P02/phase2-oracle.json
+RESULT: BLOCKED: build.commands[0].stdout_path file is missing: evidence/task-runs/P02-DOOM-P2-088/manifest-phase2-oracle/configure.stdout.txt

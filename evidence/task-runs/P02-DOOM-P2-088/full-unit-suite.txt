@@ -1,0 +1,5 @@
+COMMAND: wsl.exe -d Ubuntu -- bash -lc "source tools/wasm-env.sh && python3 -m unittest discover -s tests -p 'test_*.py'"
+RESULT: FAIL
+SUMMARY: Ran 131 tests in 61.651s
+SUMMARY: FAILED (failures=13, errors=5)
+PRIMARY_FAILURES: P1 gate hard-coded to phase/p01-native-oracle; P1 source-budget test rejects later P2 source history; native manifest byte mismatch; P2 SDL smoke fixture rejected by older fixture contract; Windows C:/tmp fixture paths unavailable under WSL; native toolchain negative-fixture assumptions fail.

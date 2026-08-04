@@ -776,7 +776,7 @@
     },
     {
       "id": "DOOM-P2-088",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-088.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -800,7 +800,12 @@
         "tools/verify-p2-gate.py"
       ],
       "result": "docs/results/P02/DOOM-P2-088.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T17:00:06Z",
+      "base_head": "84ac4fdd1f31412368b314846fcbf30904bfa79a",
+      "blocker_report": "docs/results/P02/DOOM-P2-088.md",
+      "blocked_at": "2026-08-04T17:00:06Z",
+      "finished_at": "2026-08-04T17:20:20Z"
     },
     {
       "id": "DOOM-P2-090",

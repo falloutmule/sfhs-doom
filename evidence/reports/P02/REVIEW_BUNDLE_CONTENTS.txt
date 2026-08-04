@@ -1,0 +1,7 @@
+SFHS Doom P2 review bundle
+
+This bundle contains reviewable P2 plans, task results, phase reports,
+focused gate evidence, artifact manifests, diagnostic logs, browser/parity
+JSON evidence, and the P2 source/build adapter files changed in the phase.
+It intentionally excludes ignored build directories, downloaded WAD files,
+commercial game data, and unnecessary repository history.

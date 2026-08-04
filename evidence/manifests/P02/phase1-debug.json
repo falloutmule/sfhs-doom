@@ -6,7 +6,7 @@
   "phase": "P02",
   "task": "DOOM-P2-050",
   "source": {
-    "commit": "342a1418b993f2dad0666f79244198bf6c026ffa",
+    "commit": "84ac4fdd1f31412368b314846fcbf30904bfa79a",
     "upstream_tag": "chocolate-doom-3.1.1",
     "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
     "dirty": false,
@@ -51,8 +51,8 @@
     ]
   },
   "build": {
-    "utc": "2026-08-04T15:56:08.785687Z",
-    "id": "P02-DOOM-P2-050-run-5-phase1-debug",
+    "utc": "2026-08-04T16:53:24.023792Z",
+    "id": "P02-DOOM-P2-088-phase1-debug",
     "commands": [
       {
         "argv": [
@@ -67,8 +67,8 @@
         ],
         "cwd": ".",
         "exit_code": 0,
-        "stdout_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase1-debug/configure.stdout.txt",
-        "stderr_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase1-debug/configure.stderr.txt"
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase1-debug/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase1-debug/configure.stderr.txt"
       },
       {
         "argv": [
@@ -80,8 +80,8 @@
         ],
         "cwd": ".",
         "exit_code": 0,
-        "stdout_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase1-debug/build.stdout.txt",
-        "stderr_path": "evidence/task-runs/P02-DOOM-P2-080/build-run-5/phase1-debug/build.stderr.txt"
+        "stdout_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase1-debug/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P02-DOOM-P2-088/manifest-phase1-debug/build.stderr.txt"
       }
     ]
   },
@@ -107,7 +107,7 @@
   ],
   "verification": {
     "run_ids": [
-      "P02-DOOM-P2-050-run-5-phase1-debug"
+      "P02-DOOM-P2-088-phase1-debug"
     ],
     "result": "PASS",
     "checks": [

@@ -1,0 +1,48 @@
+{
+  "screenshotState": {
+    "bytes": 145757,
+    "uniqueBytes": 256,
+    "sha256": "dbb1e95290fa4780f3684fa0eb81758075ae1365a841a9bf657a5d5ee426cbf1"
+  },
+  "consoleMessages": [
+    "log:                          Chocolate Doom 3.1.1",
+    "log: Z_Init: Init zone memory allocation daemon. ",
+    "log: zone memory: 0x15d620, 1000000 allocated for zone",
+    "log: Using /libsdl/chocolate-doom/ for configuration and saves",
+    "log: V_Init: allocate screens.",
+    "log: M_LoadDefaults: Load system defaults.",
+    "log: saving config in /libsdl/chocolate-doom/default.cfg",
+    "log: W_Init: Init WADfiles.",
+    "log:  adding freedoom2.wad",
+    "log: ===========================================================================",
+    "log:                            Freedoom: Phase 2",
+    "log: ===========================================================================",
+    "log:  Chocolate Doom is free software, covered by the GNU General Public",
+    "log:  License.  There is NO warranty; not even for MERCHANTABILITY or FITNESS",
+    "log:  FOR A PARTICULAR PURPOSE. You are welcome to change and distribute",
+    "log:  copies under certain conditions. See the source for more information.",
+    "log: ===========================================================================",
+    "log: I_Init: Setting up machine state.",
+    "log: NET_Init: Init network subsystem.",
+    "log: M_Init: Init miscellaneous info.",
+    "log: R_Init: Init DOOM refresh daemon - [                                               ]\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b...............................................",
+    "log: P_Init: Init Playloop state.",
+    "log: S_Init: Setting up sound.",
+    "log: D_CheckNetGame: Checking network game status.",
+    "log: startskill 2  deathmatch: 0  startmap: 1  startepisode: 1",
+    "log: player 1 of 1 (1 nodes)",
+    "log: Emulating the behavior of the 'Doom 1.9' executable.",
+    "log: HU_Init: Setting up heads up display.",
+    "log: ST_Init: Init status bar.",
+    "error: emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up.",
+    "warning: [.WebGL-0x17b40015fe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "warning: [.WebGL-0x17b40015fe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "warning: [.WebGL-0x17b40015fe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "warning: [.WebGL-0x17b40015fe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+  ],
+  "consoleErrors": [
+    "emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up."
+  ],
+  "pageErrors": [],
+  "failedRequests": []
+}

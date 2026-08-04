@@ -1,0 +1,20 @@
+{"bytes": 526, "kind": "phase1", "path": "/phase1/", "status": 200}
+{"bytes": 814, "kind": "asset", "path": "/p2/post.js", "status": 200}
+{"bytes": 1154, "kind": "asset", "path": "/p2/pre.js", "status": 200}
+{"bytes": 394364, "kind": "engine", "path": "/engine/src/chocolate-doom.js", "status": 200}
+{"bytes": 9478472, "kind": "engine", "path": "/engine/src/chocolate-doom.wasm", "status": 200}
+{"bytes": 28795076, "kind": "data", "path": "/p2-data/freedoom1.wad", "status": 200}
+{"bytes": 526, "kind": "phase2", "path": "/phase2/", "status": 200}
+{"bytes": 814, "kind": "asset", "path": "/p2/post.js", "status": 200}
+{"bytes": 1154, "kind": "asset", "path": "/p2/pre.js", "status": 200}
+{"bytes": 394364, "kind": "engine", "path": "/engine/src/chocolate-doom.js", "status": 200}
+{"bytes": 9478472, "kind": "engine", "path": "/engine/src/chocolate-doom.wasm", "status": 200}
+{"bytes": 28787748, "kind": "data", "path": "/p2-data/freedoom2.wad", "status": 200}
+{"bytes": 526, "kind": "phase2", "path": "/phase2/", "status": 200}
+{"bytes": 814, "kind": "asset", "path": "/p2/post.js", "status": 200}
+{"bytes": 1154, "kind": "asset", "path": "/p2/pre.js", "status": 200}
+{"bytes": 394364, "kind": "engine", "path": "/engine/src/chocolate-doom.js", "status": 200}
+{"bytes": 9478472, "kind": "engine", "path": "/engine/src/chocolate-doom.wasm", "status": 200}
+{"kind": "optional-browser-request", "path": "/favicon.ico", "status": 204}
+{"bytes": 28787748, "kind": "data", "path": "/p2-data/freedoom2.wad", "status": 200}
+{"clean": true, "event": "shutdown"}

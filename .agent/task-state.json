@@ -651,7 +651,7 @@
     },
     {
       "id": "DOOM-P2-060",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-060.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -673,7 +673,10 @@
         "web/p2/post.js"
       ],
       "result": "docs/results/P02/DOOM-P2-060.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T11:00:36Z",
+      "base_head": "5f991ad9f33219bc3380bf40c8f1e8578c8314ba",
+      "finished_at": "2026-08-04T11:34:18Z"
     },
     {
       "id": "DOOM-P2-070",

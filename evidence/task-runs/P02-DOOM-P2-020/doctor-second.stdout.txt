@@ -1,0 +1,19 @@
+COMMAND bash PASS /usr/bin/bash
+COMMAND emcc PASS /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/emscripten/emcc
+COMMAND em++ PASS /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/toolchains/emsdk/upstream/emscripten/em++
+COMMAND node PASS /usr/bin/node
+COMMAND npm PASS /usr/bin/npm
+COMMAND cmake PASS /usr/bin/cmake
+COMMAND ninja PASS /usr/bin/ninja
+COMMAND python3 PASS /usr/bin/python3
+VERSION emcc PASS emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271)
+VERSION node PASS v22.16.0
+VERSION playwright PASS Version 1.61.1
+PIN emscripten PASS sdk=6.0.5
+BROWSER_CACHE chromium-1228 PASS /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/chromium-1228
+BROWSER_CACHE firefox-1532 PASS /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/playwright/firefox-1532
+23f2887725886ece61da9aff7f79a465d344a22a5865c172def624a7ea443f08  /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P02/P2-020/sdl-smoke.js
+144f4a471286617fdd94923cf2051021aab8c8b17d7c5f9f2abf19d9d8a539ce  /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P02/P2-020/sdl-smoke.wasm
+SMOKE_ROOT=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P02/P2-020
+SMOKE_HTML=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P02/P2-020/sdl-smoke.html
+WASM_TOOLCHAIN_DOCTOR=PASS

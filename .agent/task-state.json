@@ -538,7 +538,7 @@
     },
     {
       "id": "DOOM-P2-020",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-020.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -557,7 +557,10 @@
         "browser-tests/tests/toolchain.spec.mjs"
       ],
       "result": "docs/results/P02/DOOM-P2-020.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T10:26:15Z",
+      "base_head": "8d815ac8c59b7e651fb273404fc2591135547e07",
+      "finished_at": "2026-08-04T10:29:58Z"
     },
     {
       "id": "DOOM-P2-030",

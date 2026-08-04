@@ -1,0 +1,2 @@
+SMOKE_ROOT=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P02/P2-020
+SMOKE_HTML=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P02/P2-020/sdl-smoke.html

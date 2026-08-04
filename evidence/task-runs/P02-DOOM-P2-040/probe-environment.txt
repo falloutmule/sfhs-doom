@@ -1,0 +1,5 @@
+SOURCE_COMMIT=e8a1f708bd4e367f06d4077b54406b1e8bfaf74b
+IWAD=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/freedoom/0.13.0/data/freedoom2.wad
+BUILD_DIR=build/wasm/upstream-configure
+TARGET=chocolate-doom
+COMPILER=emcc

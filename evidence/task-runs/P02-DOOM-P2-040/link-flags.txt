@@ -1,0 +1,1 @@
+/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P02-DOOM-P2-040/build.stdout.txt:Run Build Command(s): /usr/bin/ninja -v chocolate-doom

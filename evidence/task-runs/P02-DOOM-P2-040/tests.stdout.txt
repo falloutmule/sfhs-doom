@@ -1,0 +1,9 @@
+test_no_commercial_data_is_claimed (tests.test_wasm_link_probe.WasmLinkProbeTests.test_no_commercial_data_is_claimed) ... ok
+test_probe_is_unmodified_source_and_local_only (tests.test_wasm_link_probe.WasmLinkProbeTests.test_probe_is_unmodified_source_and_local_only) ... ok
+test_probe_summary_is_captured_and_bounded (tests.test_wasm_link_probe.WasmLinkProbeTests.test_probe_summary_is_captured_and_bounded) ... ok
+test_required_probe_evidence_exists (tests.test_wasm_link_probe.WasmLinkProbeTests.test_required_probe_evidence_exists) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.011s
+
+OK

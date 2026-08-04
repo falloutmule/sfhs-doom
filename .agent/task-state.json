@@ -587,7 +587,7 @@
     },
     {
       "id": "DOOM-P2-040",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-040.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -603,7 +603,10 @@
         "tools/probe-wasm-link.sh"
       ],
       "result": "docs/results/P02/DOOM-P2-040.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T10:35:42Z",
+      "base_head": "e8a1f708bd4e367f06d4077b54406b1e8bfaf74b",
+      "finished_at": "2026-08-04T10:41:40Z"
     },
     {
       "id": "DOOM-P2-050",

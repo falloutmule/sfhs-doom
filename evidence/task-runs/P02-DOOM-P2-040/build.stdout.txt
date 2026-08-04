@@ -1,0 +1,5 @@
+Change Dir: '/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/wasm/upstream-configure'
+
+Run Build Command(s): /usr/bin/ninja -v chocolate-doom
+ninja: no work to do.
+

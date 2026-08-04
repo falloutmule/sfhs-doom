@@ -1,0 +1,2 @@
+html=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/wasm/upstream-configure/probe-shell.html
+local_server_load=PASS

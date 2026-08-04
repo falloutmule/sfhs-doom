@@ -1,0 +1,14 @@
+SOURCE_COMMIT=e8a1f708bd4e367f06d4077b54406b1e8bfaf74b
+IWAD=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/freedoom/0.13.0/data/freedoom2.wad
+BUILD_DIR=build/wasm/upstream-configure
+TARGET=chocolate-doom
+COMPILER=emcc
+emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5 (1db513782be24469589d7cb8a1f1834e9a33f271)
+Copyright (C) 2026 the Emscripten authors (see AUTHORS.txt)
+This is free and open source software under the MIT license.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+build_exit=0
+build_exit=0
+classification=DIRECT_SUCCESS
+PROBE_WASM_LINK=PASS classification=DIRECT_SUCCESS

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P2-085",
+  "status": "PASS",
+  "state_checkpoints": [
+    0,
+    1,
+    35,
+    70,
+    140
+  ],
+  "frame_checkpoints": [
+    1,
+    35,
+    70,
+    140
+  ],
+  "normalization": "none",
+  "pwad_order_claim": "excluded",
+  "failures": []
+}

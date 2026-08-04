@@ -1,0 +1,277 @@
+[
+  {
+    "path": "/oracle/",
+    "status": 200,
+    "kind": "shell"
+  },
+  {
+    "path": "/p2/pre.js",
+    "status": 200,
+    "bytes": 2530
+  },
+  {
+    "path": "/engine/src/chocolate-doom.js",
+    "status": 200,
+    "bytes": 394428
+  },
+  {
+    "path": "/p2/post.js",
+    "status": 200,
+    "bytes": 5554
+  },
+  {
+    "path": "/engine/src/chocolate-doom.wasm",
+    "status": 200,
+    "bytes": 9500374
+  },
+  {
+    "path": "/p2-data/freedoom2.wad",
+    "status": 200,
+    "bytes": 28787748
+  },
+  {
+    "path": "/p2-data/oracle-140.lmp",
+    "status": 200,
+    "bytes": 574
+  },
+  {
+    "path": "/p2-data/oracle.cfg",
+    "status": 200,
+    "bytes": 36
+  },
+  {
+    "path": "/p2-data/extra.cfg",
+    "status": 200,
+    "bytes": 32
+  },
+  {
+    "path": "/oracle/",
+    "status": 200,
+    "kind": "shell"
+  },
+  {
+    "path": "/p2/pre.js",
+    "status": 200,
+    "bytes": 2530
+  },
+  {
+    "path": "/engine/src/chocolate-doom.js",
+    "status": 200,
+    "bytes": 394428
+  },
+  {
+    "path": "/p2/post.js",
+    "status": 200,
+    "bytes": 5554
+  },
+  {
+    "path": "/engine/src/chocolate-doom.wasm",
+    "status": 200,
+    "bytes": 9500374
+  },
+  {
+    "path": "/p2-data/freedoom2.wad",
+    "status": 200,
+    "bytes": 28787748
+  },
+  {
+    "path": "/p2-data/oracle-140.lmp",
+    "status": 200,
+    "bytes": 574
+  },
+  {
+    "path": "/p2-data/oracle.cfg",
+    "status": 200,
+    "bytes": 36
+  },
+  {
+    "path": "/p2-data/extra.cfg",
+    "status": 200,
+    "bytes": 32
+  },
+  {
+    "path": "/oracle/",
+    "status": 200,
+    "kind": "shell"
+  },
+  {
+    "path": "/p2/pre.js",
+    "status": 200,
+    "bytes": 2530
+  },
+  {
+    "path": "/engine/src/chocolate-doom.js",
+    "status": 200,
+    "bytes": 394428
+  },
+  {
+    "path": "/p2/post.js",
+    "status": 200,
+    "bytes": 5554
+  },
+  {
+    "path": "/engine/src/chocolate-doom.wasm",
+    "status": 200,
+    "bytes": 9500374
+  },
+  {
+    "path": "/p2-data/freedoom2.wad",
+    "status": 200,
+    "bytes": 28787748
+  },
+  {
+    "path": "/p2-data/oracle-140.lmp",
+    "status": 200,
+    "bytes": 574
+  },
+  {
+    "path": "/p2-data/oracle.cfg",
+    "status": 200,
+    "bytes": 36
+  },
+  {
+    "path": "/p2-data/extra.cfg",
+    "status": 200,
+    "bytes": 32
+  },
+  {
+    "path": "/oracle/",
+    "status": 200,
+    "kind": "shell"
+  },
+  {
+    "path": "/p2/pre.js",
+    "status": 200,
+    "bytes": 2530
+  },
+  {
+    "path": "/engine/src/chocolate-doom.js",
+    "status": 200,
+    "bytes": 394428
+  },
+  {
+    "path": "/p2/post.js",
+    "status": 200,
+    "bytes": 5554
+  },
+  {
+    "path": "/engine/src/chocolate-doom.wasm",
+    "status": 200,
+    "bytes": 9500374
+  },
+  {
+    "path": "/p2-data/freedoom2.wad",
+    "status": 200,
+    "bytes": 28787748
+  },
+  {
+    "path": "/p2-data/oracle-140.lmp",
+    "status": 200,
+    "bytes": 574
+  },
+  {
+    "path": "/p2-data/oracle.cfg",
+    "status": 200,
+    "bytes": 36
+  },
+  {
+    "path": "/p2-data/extra.cfg",
+    "status": 200,
+    "bytes": 32
+  },
+  {
+    "path": "/oracle/",
+    "status": 200,
+    "kind": "shell"
+  },
+  {
+    "path": "/p2/pre.js",
+    "status": 200,
+    "bytes": 2530
+  },
+  {
+    "path": "/engine/src/chocolate-doom.js",
+    "status": 200,
+    "bytes": 394428
+  },
+  {
+    "path": "/p2/post.js",
+    "status": 200,
+    "bytes": 5554
+  },
+  {
+    "path": "/engine/src/chocolate-doom.wasm",
+    "status": 200,
+    "bytes": 9500374
+  },
+  {
+    "path": "/p2-data/freedoom2.wad",
+    "status": 200,
+    "bytes": 28787748
+  },
+  {
+    "path": "/p2-data/oracle-140.lmp",
+    "status": 200,
+    "bytes": 574
+  },
+  {
+    "path": "/p2-data/oracle.cfg",
+    "status": 200,
+    "bytes": 36
+  },
+  {
+    "path": "/p2-data/extra.cfg",
+    "status": 200,
+    "bytes": 32
+  },
+  {
+    "path": "/oracle/",
+    "status": 200,
+    "kind": "shell"
+  },
+  {
+    "path": "/p2/pre.js",
+    "status": 200,
+    "bytes": 2530
+  },
+  {
+    "path": "/engine/src/chocolate-doom.js",
+    "status": 200,
+    "bytes": 394428
+  },
+  {
+    "path": "/p2/post.js",
+    "status": 200,
+    "bytes": 5554
+  },
+  {
+    "path": "/engine/src/chocolate-doom.wasm",
+    "status": 200,
+    "bytes": 9500374
+  },
+  {
+    "path": "/p2-data/freedoom2.wad",
+    "status": 200,
+    "bytes": 28787748
+  },
+  {
+    "path": "/p2-data/oracle-140.lmp",
+    "status": 200,
+    "bytes": 574
+  },
+  {
+    "path": "/p2-data/oracle.cfg",
+    "status": 200,
+    "bytes": 36
+  },
+  {
+    "path": "/p2-data/extra.cfg",
+    "status": 200,
+    "bytes": 32
+  },
+  {
+    "path": "/p2-data/oracle-effect.deh",
+    "status": 200,
+    "bytes": 66
+  }
+]

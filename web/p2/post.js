@@ -117,6 +117,7 @@
       if (mainStarted || document.body.dataset.sfhsP2Runtime !== 'ready' || document.body.dataset.sfhsP2Data !== 'loaded') return;
       if (!window.Module || typeof window.Module.callMain !== 'function') return;
       mainStarted = true;
+      if (query.get('oracle') === '1' && window.Module.ENV) window.Module.ENV.SFHS_ORACLE_OUTPUT = '/oracle-output';
       document.body.dataset.sfhsP2Main = 'started';
       const mainRun = window.Module.callMain(window.Module.arguments);
       if (mainRun && typeof mainRun.then === 'function') {

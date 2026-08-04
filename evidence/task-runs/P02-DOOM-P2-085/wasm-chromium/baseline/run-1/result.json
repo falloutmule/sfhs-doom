@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P2-085",
+  "browser": "chromium",
+  "status": "PASS",
+  "deh": false,
+  "files": {
+    "state.jsonl": {
+      "size_bytes": 1301,
+      "sha256": "68d7b42d5c48f862d2d3f0d3fb43618ccb7fbf9c884aedd281bb5e894c0b5c6f"
+    },
+    "frame-001.bin": {
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    "frame-035.bin": {
+      "size_bytes": 64000,
+      "sha256": "5223675a1d0e690c8fa0dfed577aa6004d05aaab88b9a45bc265a363630f7ad9"
+    },
+    "frame-070.bin": {
+      "size_bytes": 64000,
+      "sha256": "07eb66c84a66926e933b5e02af4470a41389cf0e4015b4e9fef78e9b0dee36d8"
+    },
+    "frame-140.bin": {
+      "size_bytes": 64000,
+      "sha256": "b1deff7db1ea8d5ef8408a55d9a2e066ea732ecd134f69306fdcd73ffe1116b7"
+    }
+  },
+  "console": [
+    {
+      "type": "log",
+      "text": "                         Chocolate Doom 3.1.1"
+    },
+    {
+      "type": "log",
+      "text": "Z_Init: Init zone memory allocation daemon. "
+    },
+    {
+      "type": "log",
+      "text": "zone memory: 0x15d7c8, 1000000 allocated for zone"
+    },
+    {
+      "type": "log",
+      "text": "Using /libsdl/chocolate-doom/ for configuration and saves"
+    },
+    {
+      "type": "log",
+      "text": "V_Init: allocate screens."
+    },
+    {
+      "type": "log",
+      "text": "M_LoadDefaults: Load system defaults."
+    },
+    {
+      "type": "log",
+      "text": "\tdefault file: oracle.cfg"
+    },
+    {
+      "type": "log",
+      "text": "saving config in oracle.cfg"
+    },
+    {
+      "type": "log",
+      "text": "        extra configuration file: extra.cfg"
+    },
+    {
+      "type": "log",
+      "text": "W_Init: Init WADfiles."
+    },
+    {
+      "type": "log",
+      "text": " adding freedoom2.wad"
+    },
+    {
+      "type": "log",
+      "text": " adding oracle-140.lmp"
+    },
+    {
+      "type": "log",
+      "text": "Warning: Truncated 'oracle-140.lmp' lump name to 'ORACLE-1'."
+    },
+    {
+      "type": "log",
+      "text": "Playing demo oracle-140.lmp."
+    },
+    {
+      "type": "log",
+      "text": "==========================================================================="
+    },
+    {
+      "type": "log",
+      "text": "                           Freedoom: Phase 2"
+    },
+    {
+      "type": "log",
+      "text": "==========================================================================="
+    },
+    {
+      "type": "log",
+      "text": " Chocolate Doom is free software, covered by the GNU General Public"
+    },
+    {
+      "type": "log",
+      "text": " License.  There is NO warranty; not even for MERCHANTABILITY or FITNESS"
+    },
+    {
+      "type": "log",
+      "text": " FOR A PARTICULAR PURPOSE. You are welcome to change and distribute"
+    },
+    {
+      "type": "log",
+      "text": " copies under certain conditions. See the source for more information."
+    },
+    {
+      "type": "log",
+      "text": "==========================================================================="
+    },
+    {
+      "type": "log",
+      "text": "I_Init: Setting up machine state."
+    },
+    {
+      "type": "log",
+      "text": "NET_Init: Init network subsystem."
+    },
+    {
+      "type": "log",
+      "text": "M_Init: Init miscellaneous info."
+    },
+    {
+      "type": "log",
+      "text": "R_Init: Init DOOM refresh daemon - [                                               ]\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b..............................................."
+    },
+    {
+      "type": "log",
+      "text": "P_Init: Init Playloop state."
+    },
+    {
+      "type": "log",
+      "text": "S_Init: Setting up sound."
+    },
+    {
+      "type": "log",
+      "text": "D_CheckNetGame: Checking network game status."
+    },
+    {
+      "type": "log",
+      "text": "startskill 2  deathmatch: 0  startmap: 1  startepisode: 1"
+    },
+    {
+      "type": "log",
+      "text": "player 1 of 1 (1 nodes)"
+    },
+    {
+      "type": "log",
+      "text": "Emulating the behavior of the 'Doom 1.9' executable."
+    },
+    {
+      "type": "log",
+      "text": "HU_Init: Setting up heads up display."
+    },
+    {
+      "type": "log",
+      "text": "ST_Init: Init status bar."
+    },
+    {
+      "type": "error",
+      "text": "emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up."
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x170c0014ca00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x170c0014ca00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x170c0014ca00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels"
+    },
+    {
+      "type": "warning",
+      "text": "[.WebGL-0x170c0014ca00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+    },
+    {
+      "type": "error",
+      "text": "timed 140 gametics in 67 realtics (73.134331 fps)"
+    },
+    {
+      "type": "error",
+      "text": ""
+    }
+  ],
+  "page_errors": [],
+  "failed_requests": []
+}

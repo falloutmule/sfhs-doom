@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P2-085",
+  "scenario": "baseline/run-4",
+  "status": "PASS",
+  "exit_code": 124,
+  "termination": "watchdog-after-complete",
+  "end_tic": 140,
+  "state": {
+    "records": 5
+  },
+  "frames": [
+    {
+      "tic": 1,
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "tic": 35,
+      "size_bytes": 64000,
+      "sha256": "5223675a1d0e690c8fa0dfed577aa6004d05aaab88b9a45bc265a363630f7ad9"
+    },
+    {
+      "tic": 70,
+      "size_bytes": 64000,
+      "sha256": "07eb66c84a66926e933b5e02af4470a41389cf0e4015b4e9fef78e9b0dee36d8"
+    },
+    {
+      "tic": 140,
+      "size_bytes": 64000,
+      "sha256": "b1deff7db1ea8d5ef8408a55d9a2e066ea732ecd134f69306fdcd73ffe1116b7"
+    }
+  ],
+  "command": "build/native/oracle/src/chocolate-doom -iwad vendor-cache/freedoom/0.13.0/data/freedoom2.wad -timedemo build/runtime/P02/P2-085-native/oracle-140.lmp ",
+  "failures": []
+}

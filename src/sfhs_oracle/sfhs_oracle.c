@@ -24,6 +24,12 @@ static const char *OracleOutput(void)
     if (!checked)
     {
         output = getenv("SFHS_ORACLE_OUTPUT");
+#ifdef __EMSCRIPTEN__
+        if (output == NULL || output[0] == '\0')
+        {
+            output = "/oracle-output";
+        }
+#endif
         checked = true;
     }
 

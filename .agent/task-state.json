@@ -744,7 +744,7 @@
     },
     {
       "id": "DOOM-P2-085",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-085.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -769,7 +769,10 @@
         "evidence/task-runs/P02-DOOM-P2-085/**"
       ],
       "result": "docs/results/P02/DOOM-P2-085.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-04T16:19:26Z",
+      "base_head": "4632d98adcab0b88c4ebb9d0973698ed2125fa76",
+      "finished_at": "2026-08-04T16:51:38Z"
     },
     {
       "id": "DOOM-P2-088",

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P2-085",
+  "scenario": "deh-effect",
+  "status": "PASS",
+  "exit_code": 124,
+  "termination": "watchdog-after-complete",
+  "end_tic": 140,
+  "state": {
+    "records": 5
+  },
+  "frames": [
+    {
+      "tic": 1,
+      "size_bytes": 64000,
+      "sha256": "4f7988030a00d082fe445e00a2ac5dab502300ff1b80e8592dd569867b60ef74"
+    },
+    {
+      "tic": 35,
+      "size_bytes": 64000,
+      "sha256": "6ef57829eae401863d9f5d91ed7e9a63de97c568bf473a167110922e7cb41cac"
+    },
+    {
+      "tic": 70,
+      "size_bytes": 64000,
+      "sha256": "9bf9d19fcbdfb6335480a16fb84c0edeae56a5b89d780a5f1e724d455c2426de"
+    },
+    {
+      "tic": 140,
+      "size_bytes": 64000,
+      "sha256": "c58f55adfb88cc4aa04432a33d1a0382eaa1f310ccd9bd20e9e64d16df3dfb1f"
+    }
+  ],
+  "command": "build/native/oracle/src/chocolate-doom -iwad vendor-cache/freedoom/0.13.0/data/freedoom2.wad -timedemo build/runtime/P02/P2-085-native/oracle-140.lmp -deh /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/build/runtime/P02/P2-085-native/oracle-effect.deh",
+  "failures": []
+}

@@ -1,0 +1,7 @@
+{
+  "task": "DOOM-P2-085",
+  "browser": "chromium",
+  "repeat": 5,
+  "status": "PASS",
+  "base_url": "http://127.0.0.1:42931"
+}

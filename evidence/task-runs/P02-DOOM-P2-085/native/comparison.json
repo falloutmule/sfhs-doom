@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "task": "DOOM-P2-085",
+  "status": "PASS",
+  "baseline_repetitions": 5,
+  "failures": []
+}

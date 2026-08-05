@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-04
 **Phase:** P03 — Strict single-file offline packaging proof
-**Current task:** DOOM-P3-000
+**Current task:** DOOM-P3-040
 **Current result commit:** SELF
 **Branch:** phase/p03-single-file
 
@@ -29,6 +29,15 @@ infrastructure debt and will not be run.
 
 DOOM-P3-090 remains pending for independent Sol review.
 
+## P3 result
+
+P3-000 through P3-030 are committed. P3-030 is
+`PASS_WITH_RECORDED_LIMITATIONS`: Chromium direct-file gameplay/audio/input
+and Oracle movement pass; Firefox direct-file gameplay and input pass with a
+recorded suspended AudioContext limitation after the bounded trusted-task
+resume attempt. P3-040 is assembling the focused final gate and safe review
+bundle. P3-090 remains pending for independent review.
+
 ## Next task
 
-Execute DOOM-P3-010 under the frozen P3 plan and task card.
+Execute DOOM-P3-040 under the frozen P3 plan and task card.

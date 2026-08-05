@@ -40,8 +40,8 @@
       },
       {
         "path": "cmake/SFHSWasm.cmake",
-        "size_bytes": 444,
-        "sha256": "7b4fa08bb67d3b1f8426c47a901eb13d6e0e6eabc9ef71e531392decc4b2843f"
+        "size_bytes": 617,
+        "sha256": "9a1b3b05f4f3ba12b2f80d2c180c53e73c0d07be197c0272dce0f743e9cc9167"
       },
       {
         "path": "tools/emsdk-lock.json",

@@ -72,3 +72,4 @@ classifications.
 | ID | Status | Observation | Disposition |
 |---|---|---|---|
 | P3-P2-REVIEW-001 | recorded limitation | P2 accepted packaging while direct gameplay movement remained unproven and the prior review ZIP did not preserve repository paths safely. | P3 must prove one packaged turn/movement state change and create a duplicate-free, path-safe review bundle. |
+| P3-FIREFOX-AUDIO-001 | recorded limitation | Firefox direct-file Start invoked main, delivered keyboard input, advanced heartbeat, and produced callbacks, but the engine-created AudioContext remained suspended after the trusted-task resume attempt. | Accepted under the final P3-030 amendment as a browser limitation; no further P3 investigation. Evidence: `evidence/task-runs/P03-DOOM-P3-030/firefox-product.json`. |

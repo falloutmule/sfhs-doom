@@ -50,8 +50,8 @@
       },
       {
         "path": "web/p3/shell.html",
-        "size_bytes": 5018,
-        "sha256": "e2263426d3f2680e4246419d16b8ffab2029786860acaec4b096a976ed65e550"
+        "size_bytes": 5129,
+        "sha256": "bbb0ef4cbf4b3628310066bf849103de8a504f241ee612c80b8fb15ac868c27a"
       },
       {
         "path": "vendor-cache/freedoom/0.13.0/data/freedoom2.wad",

@@ -52,8 +52,9 @@ The engine itself will not be rewritten as a JavaScript raycaster. A historicall
 | ADR-012 | Make landscape the primary mobile gameplay orientation; keep the launcher usable in portrait. | Accepted by user — 2026-08-02 | Doom’s corrected display is naturally 4:3 and touch FPS controls need horizontal room. Orientation lock remains optional, not required. |
 | ADR-013 | Require desktop Chromium and Firefox; treat iOS Safari as best-effort, not a release gate. | Accepted by user — 2026-08-02 | This keeps the first complete release testable and low-cost while covering two browser engines and the user’s real phone. |
 | ADR-014 | Do not require an offline AI model for the critical path. | Accepted by user — 2026-08-02 | Luna is the default implementation worker. Task cards remain model-neutral so a proven local model can later substitute for qualified low-risk tasks. |
+| ADR-015 | Make the Android product portrait-first with a simultaneous minimap, adjustable touch controls, and read-only mobile HUD; retain landscape as a functional fallback. | Accepted by user — 2026-08-05 | This supersedes ADR-012's landscape-first presentation decision only. |
 
-ADR-011 through ADR-014 are now frozen as accepted product/workflow decisions. ADR-010 remains a reversible serial-execution default rather than an irreversible product constraint.
+ADR-011, ADR-013, and ADR-014 remain frozen. ADR-015 supersedes ADR-012 only for Android presentation. ADR-010 remains a reversible serial-execution default rather than an irreversible product constraint.
 
 ---
 
@@ -1588,27 +1589,21 @@ The exact implementation details of later cards may be refined by Sol after earl
 
 ---
 
-## Phase P6 — Desktop controls, mobile controls, viewport, and lifecycle
+## Phase P6 — Android portrait shell, controls, minimap, and HUD
 
-**Goal:** Make the port genuinely playable on desktop and the target Samsung phone without changing simulation.
+**Goal:** Produce a strict one-file Freedoom Android candidate that is portrait-first, playable with simultaneous touch controls, and leaves Chocolate Doom simulation and rendering authoritative.
 
-**Exit gate:** Desktop input, touch multi-input, resizing, fullscreen fallback, and app lifecycle pass automated and physical tests.
+**Exit gate:** P6-040 passes focused desktop/mobile-emulation checks and P6-050 records physical Samsung acceptance. P5 persistence remains a separate deferred phase.
 
 | Task | Intelligence | Work | Done when |
 |---|---|---|---|
-| DOOM-P6-001 | HUMAN/SOL-H | Record the actual target Samsung model, Android/Chrome versions, desktop Chromium/Firefox versions, and any implementation-time constraints without reopening ADR-011 through ADR-013. | Device/browser identities are recorded; any proposed policy change is elevated as a new ADR rather than silently applied. |
-| DOOM-P6-010 | LUNA-M | Complete keyboard mapping and browser-shortcut policy. | Menu/gameplay keys match configured engine actions without stuck states. |
-| DOOM-P6-020 | LUNA-H | Complete mouse buttons, relative motion, pointer lock, escape, and reacquisition. | Desktop play is stable across repeated capture/release cycles. |
-| DOOM-P6-030 | LUNA-L | Implement canonical viewport state using dynamic viewport, safe areas, corrected gameplay rectangle, and DPR/backing metrics. | Resize diagnostics remain internally consistent. |
-| DOOM-P6-040 | LUNA-M | Add fullscreen enhancement, error logging, and pseudo-fullscreen fallback. | Supported path enters/exits; unsupported path remains playable. |
-| DOOM-P6-050 | LUNA-M | Add page visibility/background pause and safe resume. | No giant simulation jump or stuck audio/input after return. |
-| DOOM-P6-060 | LUNA-M | Implement pointer-ID-based left movement control. | Movement supports drag-off, capture, release, and `pointercancel`. |
-| DOOM-P6-070 | LUNA-M | Implement right drag-to-turn control through existing mouse/event semantics. | Turn response is configurable and does not alter demo simulation. |
-| DOOM-P6-080 | LUNA-M | Implement fire, use, run, weapon, map, pause, and menu touch controls. | Concurrent movement/turn/action works with at least three active pointers where device permits. |
-| DOOM-P6-090 | LUNA-L | Add left-handed mode, opacity, layout help, and safe-area debug overlay. | Settings persist and controls remain reachable. |
-| DOOM-P6-100 | LUNA-M | Automate touch ownership, multi-touch, resize, and lifecycle smoke tests. | Tests catch stuck pointers and state loss. |
-| DOOM-P6-110 | HUMAN | Run physical Samsung acceptance route. | Evidence and user verdict recorded. |
-| DOOM-P6-120 | SOL-GATE | Review input architecture and physical evidence. | PASS only if controls translate actions without gameplay hacks. |
+| DOOM-P6-000 | LUNA-L | Install the P6 branch, review record, corrected ADR, and cards from P3. | P4 remains blocked/separate; P6-010 is ready. |
+| DOOM-P6-010 | LUNA-M | Add portrait shell and profile editor. | Four regions, safe viewport, layouts, and import/export work. |
+| DOOM-P6-020 | LUNA-H | Add multi-touch input through the normal engine event queue. | Move/turn/actions and cleanup work without gameplay mutation. |
+| DOOM-P6-030 | LUNA-H | Add read-only state bridge, minimap, and HUD. | Known geometry and live player status render at bounded rate. |
+| DOOM-P6-040 | LUNA-M | Build the Android one-file candidate and focused bundle. | Candidate gate passes with physical acceptance pending. |
+| DOOM-P6-050 | LUNA-M/HUMAN | Run the real Samsung acceptance route. | Physical gate passes with recorded limitations. |
+| DOOM-P6-090 | SOL-GATE | Independently review P6. | Verdict is recorded without a builder commit. |
 
 ---
 

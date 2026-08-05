@@ -1,10 +1,10 @@
 # SFHS Doom Current State
 
-**Date:** 2026-08-04
-**Phase:** P03 — Strict single-file offline packaging proof
-**Current task:** DOOM-P3-040
+**Date:** 2026-08-05
+**Phase:** P06 — Android portrait shell, controls, minimap, and HUD
+**Current task:** DOOM-P6-010
 **Current result commit:** SELF
-**Branch:** phase/p03-single-file
+**Branch:** phase/p06-android-portrait
 
 ## Verified reality
 
@@ -19,25 +19,22 @@
   commercial-data, remote, launcher, mobile, persistence, or release work is
   authorized.
 
-## P3 boundary
+## P6 boundary
 
-P3 will clean-rebuild only the accepted P2 packaging inputs, create one
-embedded Freedoom Phase 2 HTML artifact, and prove direct-file offline
-Chromium/Firefox startup, trusted audio, menu input, and one real movement or
-turn state change. The historical P2 global suite remains recorded
-infrastructure debt and will not be run.
+P6 starts directly from protected P3 commit `4fd982192b783bb55c48f6fe73e29e4515c09b2f`.
+It creates a sibling Android artifact without changing the protected P3 file,
+P4 runtime, Doom simulation, renderer, or P5 persistence scope. Portrait is
+the complete Android layout and landscape is fallback.
 
 DOOM-P3-090 remains pending for independent Sol review.
 
-## P3 result
+## P3 and P4 disposition
 
-P3-000 through P3-030 are committed. P3-030 is
-`PASS_WITH_RECORDED_LIMITATIONS`: Chromium direct-file gameplay/audio/input
-and Oracle movement pass; Firefox direct-file gameplay and input pass with a
-recorded suspended AudioContext limitation after the bounded trusted-task
-resume attempt. P3-040 is assembling the focused final gate and safe review
-bundle. P3-090 remains pending for independent review.
+P3-040 is `PASS_WITH_RECORDED_LIMITATIONS`; P3-090 is the exact independent
+review with no review commit. P4 remains separate at
+`3de1cb2d038124895a8e6408d587461ad0a6f47b` and is
+`BLOCKED_ARCHITECTURE`; no P4 runtime code is inherited.
 
 ## Next task
 
-Execute DOOM-P3-040 under the frozen P3 plan and task card.
+Execute DOOM-P6-010 under the frozen P6 plan and task card.

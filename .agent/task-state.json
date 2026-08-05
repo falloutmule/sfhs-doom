@@ -913,7 +913,7 @@
     },
     {
       "id": "DOOM-P3-030",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P03/DOOM-P3-030.md",
       "branch": "phase/p03-single-file",
       "dependencies": [
@@ -941,7 +941,10 @@
         "tools/build-wasm.sh"
       ],
       "result": "docs/results/P03/DOOM-P3-030.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-05T00:48:49Z",
+      "base_head": "8dfc08595dc631b10bf4490bc2eff5a9d19e2682",
+      "finished_at": "2026-08-05T09:22:47Z"
     },
     {
       "id": "DOOM-P3-040",

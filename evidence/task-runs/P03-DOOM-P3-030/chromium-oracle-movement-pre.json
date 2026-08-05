@@ -1,0 +1,19 @@
+{
+  "pre": {
+    "buildProfile": "P3-SINGLE_FILE-1",
+    "mainStarted": false,
+    "mainInvocations": 0,
+    "startClicks": 0,
+    "heartbeat": 6,
+    "pointerEvents": [],
+    "audioContextState": null,
+    "audioCallbacks": 0,
+    "nonzeroPcmCallbacks": 0,
+    "errors": [],
+    "oracle": true,
+    "moduleCallMain": true,
+    "audioContext": null
+  },
+  "file": "/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/evidence/task-runs/P03-DOOM-P3-030/direct-file/sfhs-doom-oracle.html",
+  "query": "?oracle=1&audio=0"
+}

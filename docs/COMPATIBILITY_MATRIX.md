@@ -20,3 +20,10 @@ Every runtime row remains `UNTESTED` until the named artifact, environment, and 
 | Freedoom Phase 2 edition | Freedoom v0.13.0 `freedoom2.wad` | MAP01 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase2-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase2/` |
 
 VERIFIED rows make only the stated native evidence claim. No browser, WebAssembly, mobile, physical-device, broad compatibility, or release-support claim follows from them.
+## P3-030 direct-file result
+
+Chromium direct-file gameplay/audio/input and Oracle movement proof pass. The
+Firefox direct-file lane passes with a recorded limitation because the
+engine-created AudioContext remains suspended after the trusted Start gesture
+and bounded activation repair. See
+`docs/reports/P03_OFFLINE_RUNTIME.md` and the P3-030 evidence directory.

@@ -1,0 +1,105 @@
+{
+  "started": {
+    "rect": {
+      "hit": "start-doom",
+      "trustedRequired": true
+    },
+    "post": {
+      "buildProfile": "P3-SINGLE_FILE-1",
+      "mainStarted": true,
+      "mainInvocations": 1,
+      "startClicks": 1,
+      "heartbeat": 15,
+      "pointerEvents": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "target": "start-doom"
+        }
+      ],
+      "audioContextState": "running",
+      "audioCallbacks": 11,
+      "nonzeroPcmCallbacks": 0,
+      "errors": [],
+      "oracle": true,
+      "audioProbeInstalled": true,
+      "audioContext": "running",
+      "moduleCallMain": true
+    }
+  },
+  "checkpoint": {
+    "checkpoint": "tic",
+    "tic": 35,
+    "final": false,
+    "gamestate": 0,
+    "episode": 1,
+    "map": 1,
+    "skill": 2,
+    "x": -12582912,
+    "y": -12582912,
+    "z": 0,
+    "angle": 0,
+    "health": 100,
+    "armor": 0,
+    "readyweapon": 1,
+    "kills": 0,
+    "items": 0,
+    "secrets": 0,
+    "leveltime": 35,
+    "rndindex": 99,
+    "ammo0": 50,
+    "maxammo0": 200
+  },
+  "move": false,
+  "keys": [],
+  "proof": "fresh Chromium control/movement sessions, checkpoint tic 35",
+  "post": {
+    "state": {
+      "buildProfile": "P3-SINGLE_FILE-1",
+      "mainStarted": true,
+      "mainInvocations": 1,
+      "startClicks": 1,
+      "heartbeat": 54,
+      "pointerEvents": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "target": "start-doom"
+        }
+      ],
+      "audioContextState": "running",
+      "audioCallbacks": 475,
+      "nonzeroPcmCallbacks": 0,
+      "errors": [],
+      "oracle": true,
+      "audioProbeInstalled": true
+    },
+    "keys": [],
+    "activationRepair": []
+  },
+  "externalRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [
+    "emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up."
+  ]
+}

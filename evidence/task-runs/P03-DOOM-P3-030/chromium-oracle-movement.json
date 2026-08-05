@@ -1,0 +1,131 @@
+{
+  "started": {
+    "rect": {
+      "hit": "start-doom",
+      "trustedRequired": true
+    },
+    "post": {
+      "buildProfile": "P3-SINGLE_FILE-1",
+      "mainStarted": true,
+      "mainInvocations": 1,
+      "startClicks": 1,
+      "heartbeat": 13,
+      "pointerEvents": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "target": "start-doom"
+        }
+      ],
+      "audioContextState": "running",
+      "audioCallbacks": 11,
+      "nonzeroPcmCallbacks": 0,
+      "errors": [],
+      "oracle": true,
+      "audioProbeInstalled": true,
+      "audioContext": "running",
+      "moduleCallMain": true
+    }
+  },
+  "checkpoint": {
+    "checkpoint": "tic",
+    "tic": 35,
+    "final": false,
+    "gamestate": 0,
+    "episode": 1,
+    "map": 1,
+    "skill": 2,
+    "x": -580799,
+    "y": -11767237,
+    "z": -131072,
+    "angle": 46137344,
+    "health": 100,
+    "armor": 0,
+    "readyweapon": 1,
+    "kills": 0,
+    "items": 0,
+    "secrets": 0,
+    "leveltime": 35,
+    "rndindex": 99,
+    "ammo0": 50,
+    "maxammo0": 200
+  },
+  "move": true,
+  "keys": [
+    {
+      "type": "keydown",
+      "key": "ArrowUp",
+      "target": "canvas",
+      "trusted": true
+    },
+    {
+      "type": "keyup",
+      "key": "ArrowUp",
+      "target": "canvas",
+      "trusted": true
+    }
+  ],
+  "proof": "fresh Chromium control/movement sessions, checkpoint tic 35",
+  "post": {
+    "state": {
+      "buildProfile": "P3-SINGLE_FILE-1",
+      "mainStarted": true,
+      "mainInvocations": 1,
+      "startClicks": 1,
+      "heartbeat": 47,
+      "pointerEvents": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "target": "start-doom"
+        }
+      ],
+      "audioContextState": "running",
+      "audioCallbacks": 1308,
+      "nonzeroPcmCallbacks": 0,
+      "errors": [],
+      "oracle": true,
+      "audioProbeInstalled": true
+    },
+    "keys": [
+      {
+        "type": "keydown",
+        "key": "ArrowUp",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "ArrowUp",
+        "target": "canvas",
+        "trusted": true
+      }
+    ],
+    "activationRepair": []
+  },
+  "externalRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [
+    "emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up."
+  ]
+}

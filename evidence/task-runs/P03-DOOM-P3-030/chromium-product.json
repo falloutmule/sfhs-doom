@@ -1,0 +1,148 @@
+{
+  "pre": {
+    "buildProfile": "P3-SINGLE_FILE-1",
+    "mainStarted": false,
+    "mainInvocations": 0,
+    "startClicks": 0,
+    "heartbeat": 8,
+    "pointerEvents": [],
+    "audioContextState": null,
+    "audioCallbacks": 0,
+    "nonzeroPcmCallbacks": 0,
+    "errors": [],
+    "oracle": false,
+    "moduleCallMain": true,
+    "audioContext": null
+  },
+  "started": {
+    "rect": {
+      "hit": "start-doom",
+      "trustedRequired": true
+    },
+    "post": {
+      "buildProfile": "P3-SINGLE_FILE-1",
+      "mainStarted": true,
+      "mainInvocations": 1,
+      "startClicks": 1,
+      "heartbeat": 15,
+      "pointerEvents": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "target": "start-doom"
+        }
+      ],
+      "audioContextState": "running",
+      "audioCallbacks": 11,
+      "nonzeroPcmCallbacks": 0,
+      "errors": [],
+      "oracle": false,
+      "audioProbeInstalled": true,
+      "audioContext": "running",
+      "moduleCallMain": true
+    }
+  },
+  "screenshotSha256": {
+    "pre": "d183b450aceb67193f4fc21f237ca09116a31cdf71098e5edbc70802ce3a6d72",
+    "post": "af8c3bd46fe204196d2a6067c85d2e18411685f1e40995807d768f5c0bb303ee"
+  },
+  "proof": "file://, locator.click without force, real keyboard events",
+  "post": {
+    "state": {
+      "buildProfile": "P3-SINGLE_FILE-1",
+      "mainStarted": true,
+      "mainInvocations": 1,
+      "startClicks": 1,
+      "heartbeat": 34,
+      "pointerEvents": [
+        {
+          "type": "pointerdown",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "pointerup",
+          "trusted": true,
+          "target": "start-doom"
+        },
+        {
+          "type": "click",
+          "trusted": true,
+          "target": "start-doom"
+        }
+      ],
+      "audioContextState": "running",
+      "audioCallbacks": 84,
+      "nonzeroPcmCallbacks": 33,
+      "errors": [],
+      "oracle": false,
+      "audioProbeInstalled": true
+    },
+    "keys": [
+      {
+        "type": "keydown",
+        "key": "Escape",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "Escape",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keydown",
+        "key": "ArrowDown",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "ArrowDown",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keydown",
+        "key": "ArrowUp",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "ArrowUp",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keydown",
+        "key": "Enter",
+        "target": "canvas",
+        "trusted": true
+      },
+      {
+        "type": "keyup",
+        "key": "Enter",
+        "target": "canvas",
+        "trusted": true
+      }
+    ],
+    "activationRepair": []
+  },
+  "externalRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [
+    "emscripten_set_main_loop_timing: Cannot set timing mode for main loop since a main loop does not exist! Call emscripten_set_main_loop first to set one up."
+  ]
+}

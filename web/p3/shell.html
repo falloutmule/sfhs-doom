@@ -71,7 +71,7 @@
       window.setTimeout(() => window.clearInterval(attach),5000);
     });
     window.SFHS_WASM_TEST = Object.freeze({
-      readOracleState: function () { if (!window.Module || typeof window.Module.FS!=='function') return ''; try { return new TextDecoder().decode(window.Module.FS.readFile('/oracle-output/state.jsonl')); } catch (_) { return ''; } },
+      readOracleState: function () { if (!window.Module || !window.Module.FS || typeof window.Module.FS.readFile !== 'function') return ''; try { const value = window.Module.FS.readFile('/oracle-output/state.jsonl', { encoding: 'utf8' }); return typeof value === 'string' ? value : new TextDecoder().decode(value); } catch (_) { return ''; } },
       moduleKeys: function () { return Object.keys(window.Module || {}); },
     });
   }());

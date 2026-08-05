@@ -1,0 +1,3 @@
+997b9cbdae85ff9d6432c2822341ae77af760ae6ccdf9d54ed560faf02a5fba6  build/wasm/p3-input/phase2-debug/src/chocolate-doom.js
+e85cd56912c431df3e5c0fe0229e5991f6507f9fdd1883c641807adbee81f95c  build/wasm/p3-input/phase2-debug/src/chocolate-doom.wasm
+a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b  build/wasm/p3-input/phase2-debug/data/freedoom2.wad

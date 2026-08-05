@@ -1,0 +1,3 @@
+5995313ec6e0c3dc7fb3bb6f28dff777e457aa35640a1f04a0be5da65ddef90c  build/wasm/p3-input/phase2-oracle/src/chocolate-doom.js
+e02414231803385c6e7fcc1b6cb3133f02ab905a9adaa507acc6bd476698e0ae  build/wasm/p3-input/phase2-oracle/src/chocolate-doom.wasm
+a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b  build/wasm/p3-input/phase2-oracle/data/freedoom2.wad

@@ -854,7 +854,7 @@
     },
     {
       "id": "DOOM-P3-010",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P03/DOOM-P3-010.md",
       "branch": "phase/p03-single-file",
       "dependencies": [
@@ -872,7 +872,10 @@
         "tests/test_p3_input.py"
       ],
       "result": "docs/results/P03/DOOM-P3-010.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-05T00:24:13Z",
+      "base_head": "fe813d24d721fcf3b3857502eb0562e94c392701",
+      "finished_at": "2026-08-05T00:24:13Z"
     },
     {
       "id": "DOOM-P3-020",

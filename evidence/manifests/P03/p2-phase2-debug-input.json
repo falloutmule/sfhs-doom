@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "wasm-p3-phase2-debug-input",
+  "phase": "P03",
+  "task": "DOOM-P3-010",
+  "source": {
+    "commit": "fe813d24d721fcf3b3857502eb0562e94c392701",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {
+        "name": "emsdk",
+        "version": "9fcdf593953edfcddb297572d7f2177d336b0479",
+        "source": "https://github.com/emscripten-core/emsdk.git"
+      },
+      {
+        "name": "Emscripten",
+        "version": "6.0.5",
+        "source": "tools/emsdk-lock.json"
+      },
+      {
+        "name": "Playwright",
+        "version": "1.61.1",
+        "source": "browser-tests/package-lock.json"
+      }
+    ],
+    "inputs": [
+      {
+        "path": "CMakeLists.txt",
+        "size_bytes": 3233,
+        "sha256": "6cabc11e7f8b48589f5a4a0755774fdc9f9d19aa5f5db905ed16dad6b96641c8"
+      },
+      {
+        "path": "src/CMakeLists.txt",
+        "size_bytes": 11612,
+        "sha256": "d178f3655a2a6d9eb1fd0d4b1be5559e205a1775c21c101534c3a9847cd6554b"
+      },
+      {
+        "path": "cmake/SFHSWasm.cmake",
+        "size_bytes": 444,
+        "sha256": "7b4fa08bb67d3b1f8426c47a901eb13d6e0e6eabc9ef71e531392decc4b2843f"
+      },
+      {
+        "path": "tools/emsdk-lock.json",
+        "size_bytes": 404,
+        "sha256": "7536f00d39f7749b5eea1c45d52164c54cdd4ddea433d2a97968bbbba435a57a"
+      },
+      {
+        "path": "tools/freedoom-lock.json",
+        "size_bytes": 1564,
+        "sha256": "43aa5ce0a44e8fa5ff4883795705c02a534f573c1258ec480c92d3c66bed3e64"
+      },
+      {
+        "path": "browser-tests/package-lock.json",
+        "size_bytes": 2260,
+        "sha256": "ee19091be5f91e1c25d1aa6374273538311e4107f9ef44928efeb6dfdef6a8ab"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-05T00:23:32.308783Z",
+    "id": "P03-DOOM-P3-010-phase2-debug",
+    "commands": [
+      {
+        "argv": [
+          "emcmake",
+          "cmake",
+          "-C",
+          "cmake/SFHSWasm.cmake",
+          "-S",
+          ".",
+          "-B",
+          "build/wasm/p3-input/phase2-debug",
+          "-G",
+          "Ninja",
+          "-DCMAKE_BUILD_TYPE=Debug",
+          "-DENABLE_SDL2_MIXER=ON",
+          "-DENABLE_SDL2_NET=OFF",
+          "-DCMAKE_C_COMPILER=emcc",
+          "-DCMAKE_CXX_COMPILER=em++",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE",
+          "-DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE",
+          "-DSFHS_ORACLE_TEST=OFF",
+          "-DCMAKE_EXE_LINKER_FLAGS=-sASYNCIFY -sEXIT_RUNTIME=1 -sINVOKE_RUN=0 -sEXPORTED_FUNCTIONS=_main -sEXPORTED_RUNTIME_METHODS=callMain,FS,ENV"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P03-DOOM-P3-010/phase2-debug/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P03-DOOM-P3-010/phase2-debug/configure.stderr.txt"
+      },
+      {
+        "argv": [
+          "cmake",
+          "--build",
+          "build/wasm/p3-input/phase2-debug",
+          "--target",
+          "chocolate-doom"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P03-DOOM-P3-010/phase2-debug/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P03-DOOM-P3-010/phase2-debug/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "build/wasm/p3-input/phase2-debug/src/chocolate-doom.js",
+      "size_bytes": 394428,
+      "sha256": "997b9cbdae85ff9d6432c2822341ae77af760ae6ccdf9d54ed560faf02a5fba6",
+      "kind": "wasm-javascript-loader"
+    },
+    {
+      "path": "build/wasm/p3-input/phase2-debug/src/chocolate-doom.wasm",
+      "size_bytes": 9478474,
+      "sha256": "e85cd56912c431df3e5c0fe0229e5991f6507f9fdd1883c641807adbee81f95c",
+      "kind": "wasm-module"
+    },
+    {
+      "path": "build/wasm/p3-input/phase2-debug/data/freedoom2.wad",
+      "size_bytes": 28787748,
+      "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+      "kind": "separate-open-freedoom-iwad"
+    }
+  ],
+  "verification": {
+    "run_ids": [
+      "P03-DOOM-P3-010-phase2-debug"
+    ],
+    "result": "PASS",
+    "checks": [
+      "clean configure",
+      "real compilation",
+      "separate open data",
+      "multi-file output",
+      "P2 flag profile preserved"
+    ]
+  },
+  "notes": [
+    "P3 packaging input only; SINGLE_FILE is intentionally absent.",
+    "No commercial data, remote action, or engine source change."
+  ]
+}

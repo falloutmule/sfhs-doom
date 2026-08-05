@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "branch": "phase/p02-wasm-feasibility",
+  "branch": "phase/p03-single-file",
   "tasks": [
     {
       "id": "DOOM-P0-001",
@@ -809,7 +809,7 @@
     },
     {
       "id": "DOOM-P2-090",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P02/DOOM-P2-090.md",
       "branch": "phase/p02-wasm-feasibility",
       "dependencies": [
@@ -820,6 +820,166 @@
         "evidence/phase-gates/P02/**"
       ],
       "result": "docs/results/P02/DOOM-P2-090.md",
+      "commit": "SELF",
+      "finished_at": "2026-08-04T18:00:00Z"
+    },
+    {
+      "id": "DOOM-P3-000",
+      "status": "done",
+      "card": "docs/tasks/P03/DOOM-P3-000.md",
+      "branch": "phase/p03-single-file",
+      "dependencies": [
+        "DOOM-P2-088"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/reviews/P02/DOOM-P2-090.md",
+        "docs/results/P02/DOOM-P2-090.md",
+        "docs/phases/P03/PHASE_PLAN.md",
+        "docs/tasks/P03/DOOM-P3-000.md",
+        "docs/tasks/P03/DOOM-P3-010.md",
+        "docs/tasks/P03/DOOM-P3-020.md",
+        "docs/tasks/P03/DOOM-P3-030.md",
+        "docs/tasks/P03/DOOM-P3-040.md",
+        "docs/tasks/P03/DOOM-P3-090.md",
+        "docs/results/P03/DOOM-P3-000.md"
+      ],
+      "result": "docs/results/P03/DOOM-P3-000.md",
+      "commit": "SELF",
+      "started_at": "2026-08-04T18:00:00Z",
+      "base_head": "48b61cccea64ab2a4d29e3f293cbce142aee4de9",
+      "finished_at": "2026-08-05T00:17:09Z"
+    },
+    {
+      "id": "DOOM-P3-010",
+      "status": "pending",
+      "card": "docs/tasks/P03/DOOM-P3-010.md",
+      "branch": "phase/p03-single-file",
+      "dependencies": [
+        "DOOM-P3-000"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/reports/P03_CLEAN_INPUT_BASELINE.md",
+        "docs/results/P03/DOOM-P3-010.md",
+        "evidence/logs/P03/P3-010/**",
+        "evidence/manifests/P03/p2-phase2-debug-input.json",
+        "evidence/manifests/P03/p2-phase2-oracle-input.json",
+        "evidence/task-runs/P03-DOOM-P3-010/**",
+        "tools/verify-p3-input.py",
+        "tests/test_p3_input.py"
+      ],
+      "result": "docs/results/P03/DOOM-P3-010.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P3-020",
+      "status": "pending",
+      "card": "docs/tasks/P03/DOOM-P3-020.md",
+      "branch": "phase/p03-single-file",
+      "dependencies": [
+        "DOOM-P3-010"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        ".gitignore",
+        "cmake/SFHSWasm.cmake",
+        "tools/build-wasm.sh",
+        "tools/build-single-file.sh",
+        "tools/package-inline-js.py",
+        "tools/validate-single-file.py",
+        "web/p3/shell.html",
+        "tests/test_single_file_build.py",
+        "docs/BUILD_IDENTITY.md",
+        "docs/DECISIONS.md",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/reports/P03_SINGLE_FILE_BUILD.md",
+        "docs/results/P03/DOOM-P3-020.md",
+        "evidence/logs/P03/P3-020/**",
+        "evidence/manifests/P03/sfhs-doom-freedoom2.json",
+        "evidence/task-runs/P03-DOOM-P3-020/**",
+        "dist/sfhs-doom-freedoom2.html"
+      ],
+      "result": "docs/results/P03/DOOM-P3-020.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P3-030",
+      "status": "pending",
+      "card": "docs/tasks/P03/DOOM-P3-030.md",
+      "branch": "phase/p03-single-file",
+      "dependencies": [
+        "DOOM-P3-020"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "browser-tests/tests/single-file-offline.spec.mjs",
+        "browser-tests/support/p3/**",
+        "tools/run-single-file-offline.mjs",
+        "tests/test_single_file_offline_contract.py",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/reports/P03_OFFLINE_RUNTIME.md",
+        "docs/results/P03/DOOM-P3-030.md",
+        "evidence/logs/P03/P3-030/**",
+        "evidence/screenshots/P03/P3-030/**",
+        "evidence/task-runs/P03-DOOM-P3-030/**",
+        "web/p3/shell.html",
+        "web/p2/shell.html",
+        "web/p2/pre.js",
+        "web/p2/post.js",
+        "web/p2/audio-probe.js",
+        "cmake/SFHSWasm.cmake",
+        "tools/build-single-file.sh",
+        "tools/build-wasm.sh"
+      ],
+      "result": "docs/results/P03/DOOM-P3-030.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P3-040",
+      "status": "pending",
+      "card": "docs/tasks/P03/DOOM-P3-040.md",
+      "branch": "phase/p03-single-file",
+      "dependencies": [
+        "DOOM-P3-030"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/BUILD_IDENTITY.md",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/phases/P03/PHASE_RESULT.md",
+        "docs/reports/P03_SINGLE_FILE_BASELINE.md",
+        "docs/results/P03/DOOM-P3-040.md",
+        "evidence/manifests/P03/**",
+        "evidence/phase-gates/P03/**",
+        "evidence/reports/P03/**",
+        "evidence/logs/P03/P3-040/**",
+        "evidence/task-runs/P03-DOOM-P3-040/**",
+        "tests/test_p3_gate.py",
+        "tools/verify-p3-gate.py",
+        "tools/create-p3-review-bundle.py",
+        "dist/sfhs-doom-freedoom2.html"
+      ],
+      "result": "docs/results/P03/DOOM-P3-040.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P3-090",
+      "status": "pending",
+      "card": "docs/tasks/P03/DOOM-P3-090.md",
+      "branch": "phase/p03-single-file",
+      "dependencies": [
+        "DOOM-P3-040"
+      ],
+      "allowed_paths": [
+        "read-only repository inspection",
+        "evidence/phase-gates/P03/**"
+      ],
+      "result": "docs/results/P03/DOOM-P3-090.md",
       "commit": null
     }
   ]

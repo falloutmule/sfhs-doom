@@ -66,3 +66,9 @@ classifications.
 | `test_oracle_fixtures.OracleFixtureTests.test_canonical_fixture_set_verifies` | FAIL | `KNOWN_INFRASTRUCTURE_DEBT`; `NOT_PRODUCT_BEHAVIOR_EVIDENCE`; `DEFERRED_TO_SEPARATE_CROSS_PHASE_TEST_REPAIR` | Older P1 fixture contract rejects the P2 SDL smoke fixture. |
 | `test_oracle_fixtures.OracleFixtureTests.test_generation_is_deterministic_and_verifies` | FAIL | `KNOWN_INFRASTRUCTURE_DEBT`; `NOT_PRODUCT_BEHAVIOR_EVIDENCE`; `DEFERRED_TO_SEPARATE_CROSS_PHASE_TEST_REPAIR` | Same cross-phase fixture-set assumption. |
 | `test_p1_gate.P1GateTests.test_gate_passes_and_is_read_only` | FAIL | `KNOWN_INFRASTRUCTURE_DEBT`; `NOT_PRODUCT_BEHAVIOR_EVIDENCE`; `DEFERRED_TO_SEPARATE_CROSS_PHASE_TEST_REPAIR` | P1 gate is intentionally hard-coded to the P1 branch and is not P2 evidence. |
+
+## P3 carried limitations
+
+| ID | Status | Observation | Disposition |
+|---|---|---|---|
+| P3-P2-REVIEW-001 | recorded limitation | P2 accepted packaging while direct gameplay movement remained unproven and the prior review ZIP did not preserve repository paths safely. | P3 must prove one packaged turn/movement state change and create a duplicate-free, path-safe review bundle. |

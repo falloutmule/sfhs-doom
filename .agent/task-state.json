@@ -879,7 +879,7 @@
     },
     {
       "id": "DOOM-P3-020",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P03/DOOM-P3-020.md",
       "branch": "phase/p03-single-file",
       "dependencies": [
@@ -906,7 +906,10 @@
         "dist/sfhs-doom-freedoom2.html"
       ],
       "result": "docs/results/P03/DOOM-P3-020.md",
-      "commit": null
+      "commit": "SELF",
+      "started_at": "2026-08-05T00:45:36Z",
+      "base_head": "465384fbc9ab9f4d75b9151a74b6607327ae2103",
+      "finished_at": "2026-08-05T00:45:55Z"
     },
     {
       "id": "DOOM-P3-030",

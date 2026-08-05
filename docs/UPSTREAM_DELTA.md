@@ -30,6 +30,15 @@ engine timing change. Its CMake/build changes are limited to the supported
 Emscripten link exports and explicit compiler selection; browser shell changes
 call the exported entrypoint without awaiting the long-running main loop.
 
+## P3-020 packaging delta
+
+P3-020 adds only the strict single-file CMake profile marker, packaging scripts,
+an inline HTML shell, and static packaging validation. The source link remains
+the accepted P2 Chocolate Doom target; `-sSINGLE_FILE=1` and `--embed-file` are
+packaging flags, not engine behavior changes. The final product is a single
+embedded HTML file and the Oracle-enabled packaging variant is ignored test
+evidence. No C path changed.
+
 ## P2-050 multi-file Wasm boundary
 
 The P2-040 unmodified Chocolate Doom target links directly under Emscripten

@@ -106,3 +106,17 @@ once; normal boot and input modes call the same exported entrypoint once after
 the runtime and open WAD preload are ready. No shell-generated audio, embedded
 Wasm/data, `SINGLE_FILE`, external request, or engine-source change is part of
 this identity.
+
+## P03 strict single-file candidate identity
+
+P3-020 packages the accepted P2 build with Emscripten 6.0.5 using
+`-sSINGLE_FILE=1` and `--embed-file` for the open Freedoom Phase 2 IWAD. The
+product is exactly `dist/sfhs-doom-freedoom2.html`; its loader, Wasm module, and
+WAD bytes are embedded in that one file. The committed candidate is 48,225,654
+bytes with SHA-256
+`6737dbfc8c7909ea18a820de3cd6677654fab95277caf05eb9d660cb9235490e`.
+
+Two clean builds produced byte-identical HTML. The ignored Oracle-enabled
+single-file variant under `build/runtime/P03/` is test evidence only and is not
+the product. No C source, gameplay, renderer, SDL implementation, commercial
+data, or runtime network dependency was added.

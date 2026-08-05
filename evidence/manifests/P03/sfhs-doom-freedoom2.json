@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "single-file-freedoom2",
+  "phase": "P03",
+  "task": "DOOM-P3-020",
+  "source": {
+    "commit": "465384fbc9ab9f4d75b9151a74b6607327ae2103",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {
+        "name": "emsdk",
+        "version": "9fcdf593953edfcddb297572d7f2177d336b0479",
+        "source": "https://github.com/emscripten-core/emsdk.git"
+      },
+      {
+        "name": "Emscripten",
+        "version": "6.0.5",
+        "source": "tools/emsdk-lock.json"
+      },
+      {
+        "name": "Playwright",
+        "version": "1.61.1",
+        "source": "browser-tests/package-lock.json"
+      }
+    ],
+    "inputs": [
+      {
+        "path": "cmake/SFHSWasm.cmake",
+        "size_bytes": 617,
+        "sha256": "9a1b3b05f4f3ba12b2f80d2c180c53e73c0d07be197c0272dce0f743e9cc9167"
+      },
+      {
+        "path": "tools/build-single-file.sh",
+        "size_bytes": 2512,
+        "sha256": "93d3da6d5eeef95cc2a0ba5dc539a8cd4ef1eb941df239cdd0b969c229d300c2"
+      },
+      {
+        "path": "tools/package-inline-js.py",
+        "size_bytes": 1068,
+        "sha256": "0c2fa0e544c0bccaa73fae7f076b50625ff07ef853dcb18e331dcfa0c62b555d"
+      },
+      {
+        "path": "tools/validate-single-file.py",
+        "size_bytes": 5142,
+        "sha256": "6e66351d6edd641e232f8a4e4df947b4b3e3e2adbcb1d15134ec186ef2c114c7"
+      },
+      {
+        "path": "web/p3/shell.html",
+        "size_bytes": 5018,
+        "sha256": "e2263426d3f2680e4246419d16b8ffab2029786860acaec4b096a976ed65e550"
+      },
+      {
+        "path": "vendor-cache/freedoom/0.13.0/data/freedoom2.wad",
+        "size_bytes": 28787748,
+        "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-05T00:42:18.732142Z",
+    "id": "P03-DOOM-P3-020-single-file",
+    "commands": [
+      {
+        "argv": [
+          "emcmake",
+          "cmake",
+          "-C",
+          "cmake/SFHSWasm.cmake",
+          "-S",
+          ".",
+          "-B",
+          "build/wasm/p3-single-file/phase2-product",
+          "-G",
+          "Ninja",
+          "-sSINGLE_FILE=1",
+          "--embed-file",
+          "freedoom2.wad@/freedoom2.wad"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P03-DOOM-P3-020/product/configure.stdout.txt",
+        "stderr_path": "evidence/task-runs/P03-DOOM-P3-020/product/configure.stderr.txt"
+      },
+      {
+        "argv": [
+          "cmake",
+          "--build",
+          "build/wasm/p3-single-file/phase2-product",
+          "--target",
+          "chocolate-doom"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P03-DOOM-P3-020/product/build.stdout.txt",
+        "stderr_path": "evidence/task-runs/P03-DOOM-P3-020/product/build.stderr.txt"
+      },
+      {
+        "argv": [
+          "C:\\Python314\\python.exe",
+          "tools/package-inline-js.py",
+          "--shell",
+          "web/p3/shell.html",
+          "--engine-js",
+          "generated/chocolate-doom.js",
+          "--output",
+          "dist/sfhs-doom-freedoom2.html"
+        ],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/task-runs/P03-DOOM-P3-020/product/package.stdout.txt",
+        "stderr_path": "evidence/task-runs/P03-DOOM-P3-020/product/package.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-freedoom2.html",
+      "size_bytes": 48225654,
+      "sha256": "6737dbfc8c7909ea18a820de3cd6677654fab95277caf05eb9d660cb9235490e",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": [
+      "P03-DOOM-P3-020-product",
+      "P03-DOOM-P3-020-product-rebuild"
+    ],
+    "result": "PASS",
+    "checks": [
+      "SINGLE_FILE=1",
+      "embedded Wasm and open Freedoom WAD",
+      "two clean builds byte-identical",
+      "no sibling runtime files",
+      "static offline packaging contract"
+    ]
+  },
+  "notes": [
+    "The product contains one HTML file with the Emscripten loader and open Freedoom Phase 2 data embedded.",
+    "The ignored Oracle packaging variant is separate test evidence and is not the product.",
+    "No commercial data, network runtime, engine-source, gameplay, renderer, or SDL change."
+  ]
+}

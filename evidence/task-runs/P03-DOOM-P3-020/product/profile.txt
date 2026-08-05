@@ -1,0 +1,3 @@
+SINGLE_FILE=1
+--embed-file /mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/vendor-cache/freedoom/0.13.0/data/freedoom2.wad@/freedoom2.wad
+oracle=0

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="sfhs-build-profile" content="P3-SINGLE_FILE-1">
+  <title>SFHS Doom P3</title>
+  <style>
+    html,body { margin:0; background:#000; color:#fff; }
+    #canvas { display:block; margin:0 auto; width:640px; height:400px; }
+    #start-doom { position:fixed; left:8px; top:8px; z-index:10; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="640" height="400" tabindex="0" aria-label="Chocolate Doom canvas"></canvas>
+  <button id="start-doom" type="button" hidden>Start Doom</button>
+  <pre id="status" aria-live="polite">Preparing embedded engine…</pre>
+  <script>
+  (function () {
+    'use strict';
+    const query = new URLSearchParams(location.search);
+    const oracle = query.get('oracle') === '1';
+    const audio = query.get('audio') !== '0';
+    const args = oracle
+      ? ['-iwad', 'freedoom2.wad', '-warp', '1', '1', '-skill', '3', '-window', '-width', '640', '-height', '400', '-nomusic']
+      : ['-iwad', 'freedoom2.wad', '-warp', '1', '1', '-skill', '3', '-window', '-width', '640', '-height', '400', ...(audio ? ['-nomusic'] : ['-nosound', '-nomusic'])];
+    const state = { buildProfile:'P3-SINGLE_FILE-1', mainStarted:false, mainInvocations:0, startClicks:0, heartbeat:0, pointerEvents:[], audioContextState:null, audioCallbacks:0, nonzeroPcmCallbacks:0, errors:[], oracle };
+    window.SFHS_P3_STATE = state;
+    window.SFHS_P3_MODULE_CONFIG = {
+      canvas: document.getElementById('canvas'), arguments: args, noInitialRun: true,
+      ENV: oracle ? { SFHS_ORACLE_OUTPUT:'/oracle-output' } : undefined,
+      print: value => console.log(String(value)), printErr: value => console.error(String(value)),
+      onAbort: value => { state.errors.push('abort:' + String(value)); },
+      onRuntimeInitialized: function () {
+        document.body.dataset.sfhsP3Runtime='ready'; document.body.dataset.sfhsP3Data='embedded';
+        const start=document.getElementById('start-doom'); start.hidden=false;
+        document.getElementById('status').textContent='Ready — click Start Doom';
+      },
+    };
+    window.SFHS_P3_MODULE = window.SFHS_P3_MODULE_CONFIG;
+    window.setInterval(() => { state.heartbeat += 1; }, 50);
+    window.addEventListener('error', event => state.errors.push(String(event.message || event.error || 'error')));
+    const start=document.getElementById('start-doom');
+    for (const type of ['pointerdown','pointerup','click']) start.addEventListener(type, event => state.pointerEvents.push({type, trusted:event.isTrusted, target:event.target.id}));
+    function installAudioProbe() {
+      const sdl=window.Module && window.Module.SDL2; const context=sdl && sdl.audioContext; const node=sdl && sdl.audio && sdl.audio.scriptProcessorNode;
+      if (!context || !node || typeof node.onaudioprocess !== 'function') return false;
+      if (state.audioProbeInstalled) return true;
+      state.audioProbeInstalled=true; state.audioContextState=context.state;
+      const original=node.onaudioprocess;
+      node.onaudioprocess=function(event) {
+        original.call(this,event); state.audioCallbacks += 1; let max=0;
+        for (let channel=0; channel<event.outputBuffer.numberOfChannels; channel += 1) { const data=event.outputBuffer.getChannelData(channel); for (let i=0;i<data.length;i += 1) max=Math.max(max,Math.abs(data[i])); }
+        if (max>0.0001) state.nonzeroPcmCallbacks += 1;
+      };
+      return true;
+    }
+    start.addEventListener('click', function () {
+      if (state.mainStarted) return;
+      state.startClicks += 1;
+      if (!window.Module || typeof window.Module.callMain !== 'function') { state.errors.push('callMain unavailable'); return; }
+      state.mainInvocations += 1; state.mainStarted=true;
+      const result=window.Module.callMain(window.Module.arguments);
+      if (result && typeof result.catch==='function') result.catch(error => state.errors.push(String(error)));
+      document.body.dataset.sfhsP3Main='started'; document.getElementById('canvas').focus();
+      const attach=window.setInterval(() => {
+        if (installAudioProbe()) window.clearInterval(attach);
+        const context=window.Module.SDL2 && window.Module.SDL2.audioContext;
+        if (context) { state.audioContextState=context.state; if (audio && context.state!=='running') context.resume().catch(error => state.errors.push(String(error))); }
+      },25);
+      window.setTimeout(() => window.clearInterval(attach),5000);
+    });
+    window.SFHS_WASM_TEST = Object.freeze({
+      readOracleState: function () { if (!window.Module || typeof window.Module.FS!=='function') return ''; try { return new TextDecoder().decode(window.Module.FS.readFile('/oracle-output/state.jsonl')); } catch (_) { return ''; } },
+      moduleKeys: function () { return Object.keys(window.Module || {}); },
+    });
+  }());
+  </script>
+  <script>var Module = window.SFHS_P3_MODULE_CONFIG;</script>
+  <!-- SFHS_P3_ENGINE_JS -->
+</body>
+</html>

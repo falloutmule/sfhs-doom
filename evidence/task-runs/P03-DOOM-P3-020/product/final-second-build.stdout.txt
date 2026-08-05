@@ -1,0 +1,1 @@
+P3_SINGLE_FILE=PASS output=/mnt/c/Users/fallo/Documents/Single-File-Html/sfhs-doom/dist/sfhs-doom-freedoom2.html

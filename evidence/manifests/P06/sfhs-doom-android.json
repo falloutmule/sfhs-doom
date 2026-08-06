@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-portrait",
+  "phase": "P06",
+  "task": "DOOM-P6-040",
+  "source": {
+    "commit": "c16277b4291520e2d6579a6381b9602bbea24151",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-06T00:00:00Z",
+    "id": "P6-040-android-candidate",
+    "commands": [
+      {
+        "argv": ["python", "tools/validate-p6-mobile.py", "dist/sfhs-doom-android.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/reports/P06/P6-040-publication-selection.stdout.txt",
+        "stderr_path": "evidence/reports/P06/P6-040-publication-selection.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-android.html",
+      "size_bytes": 48275694,
+      "sha256": "fb357e4276a019832a30ba0719a26b5ad815c7accb45ff46be8b302c7406c171",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P6-040-candidate", "P6-040-emulator"],
+    "result": "PASS",
+    "checks": [
+      "P6 Android candidate gate passed with physical acceptance pending",
+      "Android 15/API 35 emulator gate passed with recorded limitations",
+      "protected P3 artifact identity retained"
+    ]
+  },
+  "notes": [
+    "The selected candidate is published byte-for-byte; it is not rebuilt by Pages.",
+    "The later P6 authoritative source commit records emulator evidence only."
+  ]
+}

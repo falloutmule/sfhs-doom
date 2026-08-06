@@ -1,5 +1,7 @@
 # SFHS Doom — Complete Vanilla-Compatible Single-File HTML Project Specification
 
+> **Current implementation note (2026-08-06):** This is the long-horizon planning specification. Its historical bootstrap and future-phase passages do not override the verified P6 candidate records. For current product authority, acceptance, publication status, and next work, use `docs/SOURCE_AUTHORITY.md`, `docs/PROJECT-STATUS.md`, and `docs/ROADMAP.md`.
+
 **Document status:** Accepted authoritative project specification v1.0  
 **Date:** 2026-08-02  
 **Decision freeze:** ADR-011 through ADR-014 accepted by the user on 2026-08-02  

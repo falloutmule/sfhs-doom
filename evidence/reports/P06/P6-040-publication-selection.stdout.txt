@@ -1,0 +1,8 @@
+P6 publication selection
+
+Selected artifact: dist/sfhs-doom-android.html
+Bytes: 48275694
+SHA-256: fb357e4276a019832a30ba0719a26b5ad815c7accb45ff46be8b302c7406c171
+Source authority: 12537ce3d1d9f0106153377b76e9450a49cc074f
+Candidate product build record: c16277b4291520e2d6579a6381b9602bbea24151
+Result: PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING

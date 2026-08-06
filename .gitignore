@@ -45,6 +45,12 @@ STRIFE*.pcx
 /build/wasm/
 /build/runtime/P02/
 
+# Local credentials and run-local verification output must never be published.
+.env
+.env.*
+!.env.example
+/test-results/
+
 # These are the default patterns globally ignored by Subversion:
 *.o
 *.lo

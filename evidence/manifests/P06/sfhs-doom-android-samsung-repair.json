@@ -46,7 +46,7 @@
     ]
   },
   "notes": [
-    "Physical Samsung acceptance is pending and this sibling artifact is not published.",
+    "Selected for GitHub Pages deployment; physical Samsung acceptance remains pending.",
     "Visible WebGL readback is recorded when supported but may be transient without a preserved drawing buffer."
   ]
 }

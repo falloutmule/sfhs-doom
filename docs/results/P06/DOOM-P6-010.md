@@ -8,6 +8,8 @@
 
 Result commit: SELF
 
+Task-state completion: recorded by taskctl before post-commit verification.
+
 ## What was done
 
 Added a P6 Android portrait shell, responsive landscape fallback, normalized

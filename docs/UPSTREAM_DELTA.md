@@ -39,6 +39,22 @@ packaging flags, not engine behavior changes. The final product is a single
 embedded HTML file and the Oracle-enabled packaging variant is ignored test
 evidence. No C path changed.
 
+## P6-020 mobile input delta
+
+P6-020 adds an Emscripten-only `src/sfhs_mobile/sfhs_mobile_input` unit to the
+existing Chocolate Doom executable target. It reads the already-configured
+control bindings from `m_controls.h` and posts ordinary `ev_keydown`,
+`ev_keyup`, and horizontal `ev_mouse` records through `D_PostEvent`. It does
+not call a responder, mutate player/game structures, alter tic timing, or
+change an existing Doom C source file. Native targets do not compile the unit.
+
+## P6-030 mobile state delta
+
+P6-030 adds a second Emscripten-only, static read-only packet. It copies only
+player status and map lines marked `ML_MAPPED` while excluding `ML_DONTDRAW`.
+It exports no entities, items, or simulation mutator and does not alter the
+engine automap path.
+
 ## P2-050 multi-file Wasm boundary
 
 The P2-040 unmodified Chocolate Doom target links directly under Emscripten

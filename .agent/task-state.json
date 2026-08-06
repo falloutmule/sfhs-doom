@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "branch": "phase/p03-single-file",
+  "branch": "phase/p06-android-portrait",
   "tasks": [
     {
       "id": "DOOM-P0-001",
@@ -151,7 +151,7 @@
     },
     {
       "id": "DOOM-P0-080",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P00/DOOM-P0-080.md",
       "branch": "phase/p00-governance",
       "dependencies": [
@@ -981,7 +981,7 @@
     },
     {
       "id": "DOOM-P3-090",
-      "status": "pending",
+      "status": "done",
       "card": "docs/tasks/P03/DOOM-P3-090.md",
       "branch": "phase/p03-single-file",
       "dependencies": [
@@ -992,6 +992,174 @@
         "evidence/phase-gates/P03/**"
       ],
       "result": "docs/results/P03/DOOM-P3-090.md",
+      "commit": "NOT_APPLICABLE_INDEPENDENT_REVIEW",
+      "completion_kind": "independent_review",
+      "review": "docs/reviews/P03/DOOM-P3-090.md",
+      "review_sha256": "00cbc269d2c2dc52c289de83b154b5527e09fde0ef9191676aa61f8f5871ab47",
+      "verdict": "PASS_WITH_RECORDED_LIMITATIONS",
+      "finished_at": "2026-08-05T00:00:00Z"
+    },
+    {
+      "id": "DOOM-P6-000",
+      "status": "done",
+      "card": "docs/tasks/P06/DOOM-P6-000.md",
+      "branch": "phase/p06-android-portrait",
+      "dependencies": [
+        "DOOM-P3-090"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "docs/PROJECT_SPEC.md",
+        "docs/DECISIONS.md",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/blocked/P04_LOCAL_LAUNCHER.md",
+        "docs/reviews/P03/DOOM-P3-090.md",
+        "docs/results/P03/DOOM-P3-090.md",
+        "docs/phases/P06/**",
+        "docs/tasks/P06/**",
+        "docs/results/P06/**"
+      ],
+      "result": "docs/results/P06/DOOM-P6-000.md",
+      "commit": "SELF",
+      "started_at": "2026-08-05T23:27:19Z",
+      "base_head": "4fd982192b783bb55c48f6fe73e29e4515c09b2f",
+      "finished_at": "2026-08-05T23:28:10Z"
+    },
+    {
+      "id": "DOOM-P6-010",
+      "status": "done",
+      "card": "docs/tasks/P06/DOOM-P6-010.md",
+      "branch": "phase/p06-android-portrait",
+      "dependencies": [
+        "DOOM-P6-000"
+      ],
+      "allowed_paths": [
+        "web/p6/**",
+        "tools/build-single-file.sh",
+        "browser-tests/tests/p6-layout.spec.mjs",
+        "tests/test_p6_mobile_contract.py",
+        "tests/fixtures/p6/**",
+        "docs/reports/P06_PORTRAIT_SHELL.md",
+        "docs/results/P06/DOOM-P6-010.md",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P06/DOOM-P6-010.md",
+      "commit": "SELF",
+      "started_at": "2026-08-05T23:28:31Z",
+      "base_head": "20c28ec0d106a4809bbb3dc78a8f35e23738a6ce",
+      "finished_at": "2026-08-06T00:06:47Z"
+    },
+    {
+      "id": "DOOM-P6-020",
+      "status": "done",
+      "card": "docs/tasks/P06/DOOM-P6-020.md",
+      "branch": "phase/p06-android-portrait",
+      "dependencies": [
+        "DOOM-P6-010"
+      ],
+      "allowed_paths": [
+        "src/CMakeLists.txt",
+        "src/sfhs_mobile/sfhs_mobile_input.c",
+        "src/sfhs_mobile/sfhs_mobile_input.h",
+        "web/p6/**",
+        "browser-tests/tests/p6-runtime.spec.mjs",
+        "tests/test_p6_mobile_contract.py",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/results/P06/DOOM-P6-020.md",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P06/DOOM-P6-020.md",
+      "commit": "SELF",
+      "started_at": "2026-08-06T00:06:58Z",
+      "base_head": "7cd35917f6ba8e15bb7b72de8382e7980bb8f21e",
+      "finished_at": "2026-08-06T00:09:14Z"
+    },
+    {
+      "id": "DOOM-P6-030",
+      "status": "done",
+      "card": "docs/tasks/P06/DOOM-P6-030.md",
+      "branch": "phase/p06-android-portrait",
+      "dependencies": [
+        "DOOM-P6-020"
+      ],
+      "allowed_paths": [
+        "src/CMakeLists.txt",
+        "src/sfhs_mobile/sfhs_mobile_state.c",
+        "src/sfhs_mobile/sfhs_mobile_state.h",
+        "web/p6/**",
+        "browser-tests/tests/p6-runtime.spec.mjs",
+        "tests/test_p6_mobile_contract.py",
+        "docs/UPSTREAM_DELTA.md",
+        "docs/COMPATIBILITY_MATRIX.md",
+        "docs/results/P06/DOOM-P6-030.md",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P06/DOOM-P6-030.md",
+      "commit": "SELF",
+      "started_at": "2026-08-06T00:09:22Z",
+      "base_head": "1a99824f44ce15bc82a0ca8adf11e0fcef0974e5",
+      "finished_at": "2026-08-06T00:25:50Z"
+    },
+    {
+      "id": "DOOM-P6-040",
+      "status": "done",
+      "card": "docs/tasks/P06/DOOM-P6-040.md",
+      "branch": "phase/p06-android-portrait",
+      "dependencies": [
+        "DOOM-P6-030"
+      ],
+      "allowed_paths": [
+        "dist/sfhs-doom-android.html",
+        "tools/validate-p6-mobile.py",
+        "tools/create-p6-review-bundle.py",
+        "browser-tests/tests/p6-candidate.spec.mjs",
+        "tests/test_p6_mobile_contract.py",
+        "docs/BUILD_IDENTITY.md",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        "docs/phases/P06/**",
+        "docs/reports/P06_ANDROID_CANDIDATE.md",
+        "docs/results/P06/DOOM-P6-040.md",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P06/DOOM-P6-040.md",
+      "commit": "SELF",
+      "started_at": "2026-08-06T00:25:56Z",
+      "base_head": "4ca5f10cef30268660045e8a29877a94b91289e2",
+      "finished_at": "2026-08-06T03:08:31Z"
+    },
+    {
+      "id": "DOOM-P6-050",
+      "status": "pending",
+      "card": "docs/tasks/P06/DOOM-P6-050.md",
+      "branch": "phase/p06-android-portrait",
+      "dependencies": [
+        "DOOM-P6-040"
+      ],
+      "allowed_paths": [
+        "docs/results/P06/DOOM-P6-050.md",
+        "docs/phases/P06/**",
+        "docs/CURRENT_STATE.md",
+        "docs/ISSUE_LOG.md",
+        ".agent/task-state.json"
+      ],
+      "result": "docs/results/P06/DOOM-P6-050.md",
+      "commit": null
+    },
+    {
+      "id": "DOOM-P6-090",
+      "status": "pending",
+      "card": "docs/tasks/P06/DOOM-P6-090.md",
+      "branch": "phase/p06-android-portrait",
+      "dependencies": [
+        "DOOM-P6-050"
+      ],
+      "allowed_paths": [
+        "read-only repository inspection",
+        "external gate verdict"
+      ],
+      "result": "docs/results/P06/DOOM-P6-090.md",
       "commit": null
     }
   ]

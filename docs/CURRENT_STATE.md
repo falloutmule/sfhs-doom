@@ -28,6 +28,10 @@ the complete Android layout and landscape is fallback.
 
 P6-040 candidate gate is `PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING`; P6-050
 physical Android acceptance and P6-090 independent review remain pending.
+The supplemental Android Studio Emulator gate is
+`SFHS_DOOM_P6_ANDROID_EMULATOR_GATE=PASS_WITH_RECORDED_LIMITATIONS`; it is
+documented in `docs/phases/P06/EMULATOR_ACCEPTANCE.md` and is not P6-050
+Samsung acceptance.
 
 ## P3 and P4 disposition
 

@@ -177,6 +177,27 @@
   }());
   </script>
   <script>var Module = window.SFHS_P3_MODULE_CONFIG;</script>
+  <script>
+  (function () {
+    'use strict';
+    const action = { move:null, look:null, fire:4, use:5, run:6, menu:7, map:8, weaponPrevious:9, weaponNext:10 };
+    function call(name, args) { if (window.Module && typeof window.Module.ccall === 'function') window.Module.ccall(name, null, args.map(() => 'number'), args); }
+    function release() { call('sfhs_mobile_input_release_all', []); }
+    function set(actionId, down) { call('sfhs_mobile_input_set_held', [actionId, down ? 1 : 0]); }
+    function move(event, element) {
+      const rect=element.getBoundingClientRect(), p=window.SFHS_WASM_TEST.mobileProfile(), x=(event.clientX-rect.left)/rect.width-.5, y=(event.clientY-rect.top)/rect.height-.5, dead=p.settings.moveDeadZone/2;
+      set(0, y < -dead); set(1, y > dead); set(2, x < -dead); set(3, x > dead);
+    }
+    for (const element of document.querySelectorAll('[data-mobile-action]')) {
+      const name=element.dataset.mobileAction;
+      element.addEventListener('pointerdown', event => { if (document.body.dataset.sfhsP6Editing === 'true') return; element.setPointerCapture(event.pointerId); if (name === 'move') move(event, element); else if (name === 'look') element._sfhsLookX=event.clientX; else if (action[name] >= 7) call('sfhs_mobile_input_pulse', [action[name]]); else set(action[name], true); event.preventDefault(); });
+      element.addEventListener('pointermove', event => { if (document.body.dataset.sfhsP6Editing === 'true') return; if (name === 'move') move(event, element); if (name === 'look' && Number.isFinite(element._sfhsLookX)) { const dx=Math.round((event.clientX-element._sfhsLookX)*window.SFHS_WASM_TEST.mobileProfile().settings.lookSensitivity); element._sfhsLookX=event.clientX; call('sfhs_mobile_input_post_look', [dx]); } });
+      const end = event => { if (name === 'move') { set(0,false); set(1,false); set(2,false); set(3,false); } else if (name === 'look') delete element._sfhsLookX; else if (action[name] < 7) set(action[name], false); };
+      element.addEventListener('pointerup', end); element.addEventListener('pointercancel', end); element.addEventListener('lostpointercapture', end);
+    }
+    document.addEventListener('sfhs-mobile-release-input', release); window.addEventListener('blur', release); window.addEventListener('pagehide', release); window.addEventListener('orientationchange', release); document.addEventListener('visibilitychange', () => { if (document.hidden) release(); });
+  }());
+  </script>
   <!-- SFHS_P3_ENGINE_JS -->
 </body>
 </html>

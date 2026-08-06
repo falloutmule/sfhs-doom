@@ -185,6 +185,14 @@ if(SFHS_ORACLE_TEST)
     target_compile_definitions(doom PRIVATE SFHS_ORACLE_TEST=1)
 endif()
 
+if(DEFINED EMSCRIPTEN)
+    target_sources("${PROGRAM_PREFIX}doom" PRIVATE
+                   sfhs_mobile/sfhs_mobile_input.c
+                   sfhs_mobile/sfhs_mobile_input.h)
+    target_include_directories("${PROGRAM_PREFIX}doom" PRIVATE
+                               "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_mobile")
+endif()
+
 if(MSVC)
     set_target_properties("${PROGRAM_PREFIX}doom" PROPERTIES
                           LINK_FLAGS "/MANIFEST:NO")

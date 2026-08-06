@@ -6,6 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 SHELL = (ROOT / 'web/p6/shell.html').read_text(encoding='utf-8')
 BUILD = (ROOT / 'tools/build-single-file.sh').read_text(encoding='utf-8')
+INPUT = (ROOT / 'src/sfhs_mobile/sfhs_mobile_input.c').read_text(encoding='utf-8')
 
 
 class P6MobileContractTests(unittest.TestCase):
@@ -28,6 +29,12 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('Android profile requires an explicit --output path', BUILD)
         self.assertIn('Android profile refuses the protected P3 output path', BUILD)
         self.assertIn('shell="$root/web/p6/shell.html"', BUILD)
+
+    def test_mobile_input_posts_standard_events_without_gameplay_calls(self):
+        self.assertIn('D_PostEvent(&event);', INPUT)
+        self.assertIn('key_up', INPUT)
+        self.assertNotIn('G_Responder', INPUT)
+        self.assertNotIn('player_t', INPUT)
 
 
 if __name__ == '__main__':

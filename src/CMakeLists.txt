@@ -188,7 +188,9 @@ endif()
 if(DEFINED EMSCRIPTEN)
     target_sources("${PROGRAM_PREFIX}doom" PRIVATE
                    sfhs_mobile/sfhs_mobile_input.c
-                   sfhs_mobile/sfhs_mobile_input.h)
+                   sfhs_mobile/sfhs_mobile_input.h
+                   sfhs_mobile/sfhs_mobile_state.c
+                   sfhs_mobile/sfhs_mobile_state.h)
     target_include_directories("${PROGRAM_PREFIX}doom" PRIVATE
                                "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_mobile")
 endif()

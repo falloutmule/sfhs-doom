@@ -48,6 +48,13 @@ control bindings from `m_controls.h` and posts ordinary `ev_keydown`,
 not call a responder, mutate player/game structures, alter tic timing, or
 change an existing Doom C source file. Native targets do not compile the unit.
 
+## P6-030 mobile state delta
+
+P6-030 adds a second Emscripten-only, static read-only packet. It copies only
+player status and map lines marked `ML_MAPPED` while excluding `ML_DONTDRAW`.
+It exports no entities, items, or simulation mutator and does not alter the
+engine automap path.
+
 ## P2-050 multi-file Wasm boundary
 
 The P2-040 unmodified Chocolate Doom target links directly under Emscripten

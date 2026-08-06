@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SHELL = (ROOT / 'web/p6/shell.html').read_text(encoding='utf-8')
 BUILD = (ROOT / 'tools/build-single-file.sh').read_text(encoding='utf-8')
 INPUT = (ROOT / 'src/sfhs_mobile/sfhs_mobile_input.c').read_text(encoding='utf-8')
+STATE = (ROOT / 'src/sfhs_mobile/sfhs_mobile_state.c').read_text(encoding='utf-8')
 
 
 class P6MobileContractTests(unittest.TestCase):
@@ -35,6 +36,12 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('key_up', INPUT)
         self.assertNotIn('G_Responder', INPUT)
         self.assertNotIn('player_t', INPUT)
+
+    def test_mobile_state_exports_only_mapped_drawable_line_geometry(self):
+        self.assertIn('ML_MAPPED', STATE)
+        self.assertIn('ML_DONTDRAW', STATE)
+        self.assertNotIn('thinkercap', STATE)
+        self.assertNotIn('P_DamageMobj', STATE)
 
 
 if __name__ == '__main__':

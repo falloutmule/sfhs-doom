@@ -198,6 +198,25 @@
     document.addEventListener('sfhs-mobile-release-input', release); window.addEventListener('blur', release); window.addEventListener('pagehide', release); window.addEventListener('orientationchange', release); document.addEventListener('visibilitychange', () => { if (document.hidden) release(); });
   }());
   </script>
+  <script>
+  (function () {
+    'use strict';
+    const canvas=document.getElementById('minimap-canvas'), context=canvas.getContext('2d'), placeholder=document.getElementById('minimap-placeholder');
+    const fields=['hud-health','hud-armor','hud-ammo','hud-weapon','hud-keys']; let pollTimer=null;
+    function draw(values, linePointer) {
+      const count=Math.min(values[13],4096), heap=window.Module.HEAP32, points=[];
+      for(let index=0;index<count;index+=1) { const base=(linePointer>>2)+index*5; points.push([heap[base]/65536,heap[base+1]/65536,heap[base+2]/65536,heap[base+3]/65536]); }
+      const playerX=values[4]/65536, playerY=values[5]/65536; let lowX=playerX-64,highX=playerX+64,lowY=playerY-64,highY=playerY+64;
+      for(const line of points){lowX=Math.min(lowX,line[0],line[2]);highX=Math.max(highX,line[0],line[2]);lowY=Math.min(lowY,line[1],line[3]);highY=Math.max(highY,line[1],line[3]);}
+      const scale=Math.min((canvas.width-12)/(highX-lowX||1),(canvas.height-12)/(highY-lowY||1)), x=value=>6+(value-lowX)*scale, y=value=>canvas.height-6-(value-lowY)*scale;
+      context.fillStyle='#0b151d';context.fillRect(0,0,canvas.width,canvas.height);context.strokeStyle='#89abc2';context.lineWidth=1;context.beginPath();for(const line of points){context.moveTo(x(line[0]),y(line[1]));context.lineTo(x(line[2]),y(line[3]));}context.stroke();
+      context.fillStyle='#f4c27e';context.beginPath();context.arc(x(playerX),y(playerY),3,0,Math.PI*2);context.fill();
+    }
+    function update() { if(document.hidden || !window.Module || typeof window.Module.ccall!=='function' || !window.Module.HEAP32) return; const pointer=window.Module.ccall('sfhs_mobile_state_snapshot','number',[],[]); if(!pointer)return;const heap=window.Module.HEAP32, base=pointer>>2, values=[];for(let index=0;index<14;index+=1)values.push(heap[base+index]);if(values[0]!==1)return;const hud=[values[7],values[8],values[11],'W'+values[10],values[12].toString(16).toUpperCase()];fields.forEach((id,index)=>document.getElementById(id).textContent=hud[index]);draw(values,window.Module.ccall('sfhs_mobile_state_lines','number',[],[]));placeholder.hidden=true; }
+    function syncTimer(){if(pollTimer!==null){window.clearInterval(pollTimer);pollTimer=null;}if(!document.hidden)pollTimer=window.setInterval(update,100);}
+    document.addEventListener('visibilitychange',syncTimer);window.addEventListener('pagehide',()=>{if(pollTimer!==null)window.clearInterval(pollTimer);pollTimer=null;});syncTimer();
+  }());
+  </script>
   <!-- SFHS_P3_ENGINE_JS -->
 </body>
 </html>

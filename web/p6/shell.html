@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-1">
+  <title>SFHS Doom — Android</title>
+  <style>
+    :root { color-scheme: dark; --edge:#5a7a93; --panel:#111921; --ink:#edf6ff; --amber:#ae7140; --deck-alpha:.58; --vvh:100dvh; }
+    * { box-sizing:border-box; }
+    html, body { width:100%; height:100%; margin:0; overflow:hidden; background:#05080c; color:var(--ink); font:12px/1.15 ui-monospace,Consolas,monospace; }
+    button, input { font:inherit; }
+    button { color:inherit; border:1px solid #6f8ca1; background:#182631; border-radius:3px; touch-action:manipulation; }
+    #sfhs-shell { height:var(--vvh); min-height:0; padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); display:grid; grid-template-rows:minmax(0,41fr) minmax(0,17fr) minmax(0,33fr) minmax(28px,9fr); background:#05080c; }
+    .region { min-width:0; min-height:0; border-bottom:1px solid var(--edge); }
+    #game-region { position:relative; display:grid; place-items:center; overflow:hidden; background:#000; }
+    #canvas { display:block; width:auto; height:auto; max-width:100%; max-height:100%; aspect-ratio:8/5; image-rendering:pixelated; outline:none; }
+    #start-doom { position:absolute; z-index:4; left:10px; top:10px; min-height:34px; padding:5px 9px; background:#67201e; border-color:#d0735f; }
+    #edit-toggle { position:absolute; z-index:4; right:10px; top:10px; min-height:34px; padding:5px 9px; }
+    #status { position:absolute; z-index:3; left:8px; right:8px; bottom:5px; margin:0; color:#c4d9e9; font-size:10px; text-align:center; text-shadow:0 1px #000; pointer-events:none; }
+    #minimap-region { display:grid; place-items:center; overflow:hidden; background:#0b151d; }
+    #minimap-canvas { width:min(100%, 400px); height:100%; max-height:100%; image-rendering:pixelated; }
+    #minimap-placeholder { position:absolute; color:#71899a; pointer-events:none; }
+    #control-deck { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(#17232d, #0d151c); --deck-alpha:.58; }
+    .mobile-control { position:absolute; z-index:2; transform:translateZ(0); display:grid; place-items:center; min-width:44px; min-height:44px; padding:2px; border:1px solid color-mix(in srgb, var(--amber) 90%, #fff); border-radius:50%; background:rgb(120 70 31 / var(--deck-alpha)); color:#fff0d5; text-align:center; font-weight:700; user-select:none; -webkit-user-select:none; touch-action:none; }
+    .mobile-control.utility { border-radius:4px; background:rgb(28 44 56 / var(--deck-alpha)); border-color:#7599b2; font-size:10px; }
+    .mobile-control.pad { color:#ffe2b6; border-style:dashed; }
+    .mobile-control[data-control="move"]::after { content:"MOVE"; }
+    .mobile-control[data-control="look"]::after { content:"LOOK / TURN"; }
+    .mobile-control.is-editing { outline:2px solid #b5e2ff; outline-offset:1px; cursor:grab; }
+    .mobile-control.is-editing[data-resizing="true"] { cursor:nwse-resize; }
+    .resize-handle { display:none; position:absolute; width:16px; height:16px; right:20%; bottom:20%; border:1px solid #ddecf8; background:#294b61; border-radius:50%; }
+    .is-editing .resize-handle { display:block; }
+    #edit-panel { position:fixed; z-index:8; top:8px; left:50%; width:min(380px,calc(100vw - 16px)); max-height:calc(41vh - 16px); transform:translateX(-50%); display:none; grid-template-columns:1fr 1fr; gap:6px; align-content:start; padding:8px; overflow:auto; background:#081119f2; border:1px solid #86aac2; border-radius:5px; pointer-events:auto; }
+    #edit-panel.is-open { display:grid; }
+    #edit-panel h2, #edit-panel p { grid-column:1 / -1; margin:0; }
+    #edit-panel h2 { font-size:13px; color:#d8efff; }
+    #edit-panel p { color:#a9becd; font-size:10px; }
+    #edit-panel label { display:grid; gap:3px; color:#c5d8e4; }
+    #edit-panel input[type="range"] { width:100%; }
+    #edit-panel button { min-height:32px; padding:4px; }
+    #edit-panel .wide { grid-column:1 / -1; }
+    #profile-file { display:none; }
+    #info-strip { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); align-items:center; gap:1px; padding:2px 4px; overflow:hidden; background:#0a0e13; }
+    .info-field { min-width:0; text-align:center; color:#e4f1fa; }
+    .info-field b { display:block; color:#7faac5; font-size:9px; }
+    .info-field span { font-size:clamp(11px, 3vw, 17px); font-weight:700; white-space:nowrap; }
+    body[data-sfhs-p6-editing="true"] #status { display:none; }
+    @media (orientation:landscape) {
+      #sfhs-shell { grid-template-columns:minmax(0,1fr) minmax(150px,26vw); grid-template-rows:minmax(0,1fr) minmax(30px,12vh); }
+      #game-region { grid-column:1; grid-row:1; }
+      #minimap-region { grid-column:2; grid-row:1; border-left:1px solid var(--edge); }
+      #control-deck { grid-column:2; grid-row:1; margin-top:34%; border-left:1px solid var(--edge); }
+      #info-strip { grid-column:1 / -1; grid-row:2; }
+      #minimap-canvas { max-width:100%; height:auto; aspect-ratio:1; }
+    }
+  </style>
+</head>
+<body>
+  <main id="sfhs-shell" aria-label="SFHS Doom Android portrait shell">
+    <section id="game-region" class="region" aria-label="Doom game view">
+      <canvas id="canvas" width="320" height="200" tabindex="0" aria-label="Chocolate Doom canvas"></canvas>
+      <button id="start-doom" type="button" hidden>Start Doom</button>
+      <button id="edit-toggle" type="button" aria-expanded="false">Edit controls</button>
+      <pre id="status" aria-live="polite">Preparing embedded engine…</pre>
+    </section>
+    <section id="minimap-region" class="region" aria-label="Explored minimap">
+      <canvas id="minimap-canvas" width="320" height="120" aria-label="Read-only explored minimap"></canvas>
+      <span id="minimap-placeholder">MINIMAP — P6-030</span>
+    </section>
+    <section id="control-deck" class="region" aria-label="Touch control deck">
+      <button class="mobile-control utility" data-control="menu" data-mobile-action="menu" type="button">MENU<span class="resize-handle" data-resize></span></button>
+      <button class="mobile-control utility" data-control="map" data-mobile-action="map" type="button">MAP<span class="resize-handle" data-resize></span></button>
+      <button class="mobile-control utility" data-control="weaponPrevious" data-mobile-action="weaponPrevious" type="button">WPN−<span class="resize-handle" data-resize></span></button>
+      <button class="mobile-control utility" data-control="weaponNext" data-mobile-action="weaponNext" type="button">WPN+<span class="resize-handle" data-resize></span></button>
+      <div class="mobile-control pad" data-control="move" data-mobile-action="move" role="button" aria-label="Move pad"><span class="resize-handle" data-resize></span></div>
+      <div class="mobile-control pad" data-control="look" data-mobile-action="look" role="button" aria-label="Look and turn pad"><span class="resize-handle" data-resize></span></div>
+      <button class="mobile-control" data-control="fire" data-mobile-action="fire" type="button">FIRE<span class="resize-handle" data-resize></span></button>
+      <button class="mobile-control" data-control="use" data-mobile-action="use" type="button">USE<span class="resize-handle" data-resize></span></button>
+      <button class="mobile-control" data-control="run" data-mobile-action="run" type="button">RUN<span class="resize-handle" data-resize></span></button>
+      <form id="edit-panel" aria-label="Control editor">
+        <h2>Control editor</h2><p>Drag a control; use its lower-right handle to resize. Game input is suspended while editing.</p>
+        <label>Opacity <input id="control-opacity" type="range" min="0.25" max="0.9" step="0.01"></label>
+        <label>Look sensitivity <input id="look-sensitivity" type="range" min="0.25" max="3" step="0.05"></label>
+        <label class="wide">Move dead zone <input id="move-dead-zone" type="range" min="0.1" max="0.45" step="0.01"></label>
+        <button id="preset-standard" type="button">Standard</button><button id="preset-large" type="button">Large controls</button>
+        <button id="preset-left" type="button">Left handed</button><button id="profile-reset" type="button">Reset</button>
+        <button id="profile-export" type="button">Export JSON</button><button id="profile-import" type="button">Import JSON</button>
+        <input id="profile-file" type="file" accept="application/json,.json">
+        <button id="edit-save" class="wide" type="button">Save layout</button>
+      </form>
+    </section>
+    <section id="info-strip" aria-label="Mobile game information">
+      <div class="info-field"><b>HP</b><span id="hud-health">—</span></div><div class="info-field"><b>ARMOR</b><span id="hud-armor">—</span></div><div class="info-field"><b>AMMO</b><span id="hud-ammo">—</span></div><div class="info-field"><b>WEAPON</b><span id="hud-weapon">—</span></div><div class="info-field"><b>KEYS</b><span id="hud-keys">—</span></div>
+    </section>
+  </main>
+  <script>
+  (function () {
+    'use strict';
+    const PROFILE_KEY = 'sfhsDoom.mobileControls.v1';
+    const MAX_PROFILE_BYTES = 65536;
+    const CONTROLS = ['move', 'look', 'fire', 'use', 'run', 'menu', 'map', 'weaponPrevious', 'weaponNext'];
+    const defaults = Object.freeze({ version: 1, controls: { move:{x:.03,y:.40,w:.39,h:.52}, look:{x:.58,y:.42,w:.39,h:.52}, fire:{x:.78,y:.20,w:.19,h:.25}, use:{x:.58,y:.23,w:.16,h:.21}, run:{x:.78,y:.72,w:.18,h:.21}, menu:{x:.02,y:.02,w:.17,h:.16}, map:{x:.205,y:.02,w:.17,h:.16}, weaponPrevious:{x:.39,y:.02,w:.17,h:.16}, weaponNext:{x:.575,y:.02,w:.17,h:.16} }, settings:{opacity:.58,lookSensitivity:1,moveDeadZone:.22} });
+    const deck = document.getElementById('control-deck'); const panel = document.getElementById('edit-panel'); const editToggle = document.getElementById('edit-toggle');
+    const clone = value => JSON.parse(JSON.stringify(value));
+    let profile = clone(defaults); let editing = false; let gesture = null;
+    function clamp(value, low, high) { return Math.min(high, Math.max(low, value)); }
+    function validControl(value) { return value && ['x','y','w','h'].every(key => Number.isFinite(value[key])) && value.x >= 0 && value.y >= 0 && value.w > 0 && value.h > 0 && value.x + value.w <= 1 && value.y + value.h <= 1; }
+    function normalize(candidate) {
+      if (!candidate || candidate.version !== 1 || !candidate.controls || !candidate.settings) throw new Error('Unsupported control profile.');
+      const next = clone(defaults);
+      for (const name of CONTROLS) { if (!validControl(candidate.controls[name])) throw new Error('Invalid control bounds: ' + name); next.controls[name] = candidate.controls[name]; }
+      for (const [name, low, high] of [['opacity', .25, .9], ['lookSensitivity', .25, 3], ['moveDeadZone', .1, .45]]) { if (!Number.isFinite(candidate.settings[name])) throw new Error('Invalid setting: ' + name); next.settings[name] = clamp(candidate.settings[name], low, high); }
+      return next;
+    }
+    function persist() { try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); } catch (_) {} }
+    function restore() { try { const stored = localStorage.getItem(PROFILE_KEY); if (stored) profile = normalize(JSON.parse(stored)); } catch (_) { profile = clone(defaults); } }
+    function apply() {
+      deck.style.setProperty('--deck-alpha', profile.settings.opacity);
+      for (const name of CONTROLS) { const entry = profile.controls[name]; const element = deck.querySelector('[data-control="' + name + '"]'); element.style.left = (entry.x * 100) + '%'; element.style.top = (entry.y * 100) + '%'; element.style.width = (entry.w * 100) + '%'; element.style.height = (entry.h * 100) + '%'; element.classList.toggle('is-editing', editing); }
+      document.getElementById('control-opacity').value = profile.settings.opacity;
+      document.getElementById('look-sensitivity').value = profile.settings.lookSensitivity;
+      document.getElementById('move-dead-zone').value = profile.settings.moveDeadZone;
+    }
+    function releaseGameInput() { document.dispatchEvent(new CustomEvent('sfhs-mobile-release-input')); }
+    function setEditing(value) { editing = value; document.body.dataset.sfhsP6Editing = String(value); panel.classList.toggle('is-open', value); editToggle.setAttribute('aria-expanded', String(value)); editToggle.textContent = value ? 'Editing' : 'Edit controls'; releaseGameInput(); apply(); }
+    function preset(kind) {
+      profile = clone(defaults);
+      if (kind === 'large') { for (const name of ['move','look','fire','use','run']) { const item = profile.controls[name]; item.w = Math.min(.46, item.w * 1.18); item.h = Math.min(.62, item.h * 1.18); item.x = Math.min(1-item.w, item.x); item.y = Math.min(1-item.h, item.y); } }
+      if (kind === 'left') { const oldMove=profile.controls.move; profile.controls.move=profile.controls.look; profile.controls.look=oldMove; profile.controls.fire.x=.03; profile.controls.use.x=.25; profile.controls.run.x=.04; }
+      apply();
+    }
+    function updateViewport() { document.documentElement.style.setProperty('--vvh', ((window.visualViewport && window.visualViewport.height) || window.innerHeight) + 'px'); }
+    function beginGesture(event) {
+      if (!editing || event.button !== 0) return;
+      const control = event.currentTarget; const name = control.dataset.control; const deckRect = deck.getBoundingClientRect();
+      gesture = { id:event.pointerId, name, resize:event.target.hasAttribute('data-resize'), startX:event.clientX, startY:event.clientY, start:clone(profile.controls[name]), deckRect };
+      control.dataset.resizing = String(gesture.resize); control.setPointerCapture(event.pointerId); event.preventDefault();
+    }
+    function moveGesture(event) {
+      if (!gesture || gesture.id !== event.pointerId) return;
+      const deltaX=(event.clientX-gesture.startX)/gesture.deckRect.width, deltaY=(event.clientY-gesture.startY)/gesture.deckRect.height; const item=profile.controls[gesture.name];
+      if (gesture.resize) { item.w=clamp(gesture.start.w+deltaX, 44/gesture.deckRect.width, 1-gesture.start.x); item.h=clamp(gesture.start.h+deltaY, 44/gesture.deckRect.height, 1-gesture.start.y); }
+      else { item.x=clamp(gesture.start.x+deltaX, 0, 1-gesture.start.w); item.y=clamp(gesture.start.y+deltaY, 0, 1-gesture.start.h); }
+      apply(); event.preventDefault();
+    }
+    function endGesture(event) { if (!gesture || gesture.id !== event.pointerId) return; const element=deck.querySelector('[data-control="' + gesture.name + '"]'); element.dataset.resizing='false'; gesture=null; }
+    function exportProfile() { const blob=new Blob([JSON.stringify(profile, null, 2)], {type:'application/json'}); const url=URL.createObjectURL(blob); const anchor=document.createElement('a'); anchor.href=url; anchor.download='sfhs-doom-mobile-controls-v1.json'; anchor.click(); URL.revokeObjectURL(url); }
+    async function importProfile(file) { if (!file || file.size > MAX_PROFILE_BYTES) throw new Error('Profile must be a JSON file no larger than 64 KiB.'); const text=await file.text(); if (new TextEncoder().encode(text).length > MAX_PROFILE_BYTES) throw new Error('Profile is too large.'); profile=normalize(JSON.parse(text)); apply(); }
+    restore(); apply(); updateViewport();
+    editToggle.addEventListener('click', () => setEditing(!editing));
+    for (const control of deck.querySelectorAll('.mobile-control')) { control.addEventListener('pointerdown', beginGesture); control.addEventListener('pointermove', moveGesture); control.addEventListener('pointerup', endGesture); control.addEventListener('pointercancel', endGesture); control.addEventListener('lostpointercapture', endGesture); }
+    document.getElementById('control-opacity').addEventListener('input', event => { profile.settings.opacity=Number(event.target.value); apply(); });
+    document.getElementById('look-sensitivity').addEventListener('input', event => { profile.settings.lookSensitivity=Number(event.target.value); apply(); });
+    document.getElementById('move-dead-zone').addEventListener('input', event => { profile.settings.moveDeadZone=Number(event.target.value); apply(); });
+    document.getElementById('preset-standard').addEventListener('click', () => preset('standard'));
+    document.getElementById('preset-large').addEventListener('click', () => preset('large'));
+    document.getElementById('preset-left').addEventListener('click', () => preset('left'));
+    document.getElementById('profile-reset').addEventListener('click', () => { profile=clone(defaults); apply(); });
+    document.getElementById('profile-export').addEventListener('click', exportProfile);
+    document.getElementById('profile-import').addEventListener('click', () => document.getElementById('profile-file').click());
+    document.getElementById('profile-file').addEventListener('change', event => { importProfile(event.target.files[0]).catch(error => window.alert(error.message)); event.target.value=''; });
+    document.getElementById('edit-save').addEventListener('click', () => { persist(); setEditing(false); });
+    window.addEventListener('resize', updateViewport); window.addEventListener('orientationchange', () => { updateViewport(); releaseGameInput(); });
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', updateViewport);
+    const query=new URLSearchParams(location.search); const oracle=query.get('oracle')==='1'; const audio=query.get('audio')!=='0';
+    const args=oracle ? ['-iwad','freedoom2.wad','-warp','1','1','-skill','3','-window','-width','320','-height','200','-nomusic'] : ['-iwad','freedoom2.wad','-warp','1','1','-skill','3','-window','-width','320','-height','200',...(audio?['-nomusic']:['-nosound','-nomusic'])];
+    const state={buildProfile:'P6-ANDROID-PORTRAIT-1',mainStarted:false,mainInvocations:0,startClicks:0,heartbeat:0,pointerEvents:[],audioContextState:null,audioCallbacks:0,nonzeroPcmCallbacks:0,errors:[],oracle};
+    window.SFHS_P6_STATE=state;
+    window.SFHS_P3_MODULE_CONFIG={canvas:document.getElementById('canvas'),arguments:args,noInitialRun:true,ENV:oracle?{SFHS_ORACLE_OUTPUT:'/oracle-output'}:undefined,print:value=>console.log(String(value)),printErr:value=>console.error(String(value)),onAbort:value=>state.errors.push('abort:'+String(value)),onRuntimeInitialized:function(){document.body.dataset.sfhsP6Runtime='ready';document.body.dataset.sfhsP6Data='embedded';const start=document.getElementById('start-doom');start.hidden=false;document.getElementById('status').textContent='Ready — tap Start Doom';}};
+    window.SFHS_P3_MODULE=window.SFHS_P3_MODULE_CONFIG;
+    window.setInterval(()=>{state.heartbeat+=1;},50); window.addEventListener('error',event=>state.errors.push(String(event.message||event.error||'error')));
+    const start=document.getElementById('start-doom'); for(const type of ['pointerdown','pointerup','click']) start.addEventListener(type,event=>state.pointerEvents.push({type,trusted:event.isTrusted,target:event.target.id}));
+    function installAudioProbe(){const sdl=window.Module&&window.Module.SDL2,context=sdl&&sdl.audioContext,node=sdl&&sdl.audio&&sdl.audio.scriptProcessorNode;if(!context||!node||typeof node.onaudioprocess!=='function')return false;if(state.audioProbeInstalled)return true;state.audioProbeInstalled=true;state.audioContextState=context.state;const original=node.onaudioprocess;node.onaudioprocess=function(event){original.call(this,event);state.audioCallbacks+=1;let max=0;for(let channel=0;channel<event.outputBuffer.numberOfChannels;channel+=1){const data=event.outputBuffer.getChannelData(channel);for(let index=0;index<data.length;index+=1)max=Math.max(max,Math.abs(data[index]));}if(max>.0001)state.nonzeroPcmCallbacks+=1;};return true;}
+    start.addEventListener('click',function(){if(state.mainStarted)return;state.startClicks+=1;if(!window.Module||typeof window.Module.callMain!=='function'){state.errors.push('callMain unavailable');return;}state.mainInvocations+=1;state.mainStarted=true;const result=window.Module.callMain(window.Module.arguments);if(result&&typeof result.catch==='function')result.catch(error=>state.errors.push(String(error)));document.body.dataset.sfhsP6Main='started';document.getElementById('canvas').focus();const attach=window.setInterval(()=>{if(installAudioProbe())window.clearInterval(attach);const context=window.Module.SDL2&&window.Module.SDL2.audioContext;if(context){state.audioContextState=context.state;if(audio&&context.state!=='running')context.resume().catch(error=>state.errors.push(String(error)));}},25);window.setTimeout(()=>window.clearInterval(attach),5000);});
+    window.SFHS_WASM_TEST=Object.freeze({readOracleState:function(){if(!window.Module||!window.Module.FS||typeof window.Module.FS.readFile!=='function')return '';try{const value=window.Module.FS.readFile('/oracle-output/state.jsonl',{encoding:'utf8'});return typeof value==='string'?value:new TextDecoder().decode(value);}catch(_){return '';}},moduleKeys:function(){return Object.keys(window.Module||{});},mobileProfile:function(){return clone(profile);},setMobileProfile:function(value){profile=normalize(value);apply();}});
+  }());
+  </script>
+  <script>var Module = window.SFHS_P3_MODULE_CONFIG;</script>
+  <!-- SFHS_P3_ENGINE_JS -->
+</body>
+</html>

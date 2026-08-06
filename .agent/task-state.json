@@ -1028,7 +1028,7 @@
     },
     {
       "id": "DOOM-P6-010",
-      "status": "pending",
+      "status": "running",
       "card": "docs/tasks/P06/DOOM-P6-010.md",
       "branch": "phase/p06-android-portrait",
       "dependencies": [
@@ -1045,7 +1045,9 @@
         ".agent/task-state.json"
       ],
       "result": "docs/results/P06/DOOM-P6-010.md",
-      "commit": null
+      "commit": null,
+      "started_at": "2026-08-05T23:28:31Z",
+      "base_head": "20c28ec0d106a4809bbb3dc78a8f35e23738a6ce"
     },
     {
       "id": "DOOM-P6-020",

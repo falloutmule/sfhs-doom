@@ -192,7 +192,9 @@ if(DEFINED EMSCRIPTEN)
                    sfhs_mobile/sfhs_mobile_state.c
                    sfhs_mobile/sfhs_mobile_state.h)
     target_include_directories("${PROGRAM_PREFIX}doom" PRIVATE
-                               "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_mobile")
+                               "${CMAKE_CURRENT_SOURCE_DIR}"
+                               "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_mobile"
+                               "${CMAKE_CURRENT_SOURCE_DIR}/doom")
 endif()
 
 if(MSVC)

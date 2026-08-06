@@ -45,6 +45,17 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertNotIn('P_DamageMobj', STATE)
         self.assertNotIn('sfhs_mobile_state_write', STATE)
 
+    def test_samsung_diagnostic_reads_the_existing_logical_framebuffer(self):
+        self.assertIn('sfhs_mobile_video_probe', STATE)
+        self.assertIn('I_VideoBuffer', STATE)
+        self.assertNotIn('I_VideoBuffer[', STATE.split('sfhs_mobile_video_probe', 1)[1].replace('I_VideoBuffer[(', ''))
+        self.assertIn('P6-SAMSUNG-BLACK-CANVAS-DIAG-1', SHELL)
+        self.assertIn('SFHS_P6_DIAGNOSTICS', SHELL)
+
+    def test_samsung_repair_keeps_the_original_state_packet_layout(self):
+        header = (ROOT / 'src/sfhs_mobile/sfhs_mobile_state.h').read_text(encoding='utf-8')
+        self.assertIn('typedef struct { int32_t version, active, episode, map, x, y, angle, health, armor, armor_type, weapon, ammo, keys, line_count; } sfhs_mobile_state_t;', header)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -40,3 +40,14 @@ test('P6 Samsung repair candidate rejects an active black game canvas', async ({
   }), { timeout: 15000 }).toBeTruthy();
   expect(errors).toEqual([]); expect(requests).toEqual([]);
 });
+
+test('P6 Samsung repair applies the source-confirmed software SDL hint before Start', async ({ page }) => {
+  test.skip(!hasSamsungRepair, 'Samsung repair artifact has not been built in this checkout.');
+  await page.setViewportSize({ width: 400, height: 844 });
+  await page.goto(samsungRepairUrl, { waitUntil: 'load', timeout: 60000 });
+  await expect(page.locator('body')).toHaveAttribute('data-sfhs-p6-runtime', 'ready', { timeout: 60000 });
+  await page.getByLabel('Renderer mode').selectOption('software');
+  await page.getByRole('button', { name: 'Start Doom' }).click();
+  await expect(page.locator('body')).toHaveAttribute('data-sfhs-p6-main', 'started', { timeout: 15000 });
+  expect(await page.evaluate(() => ({ selected:window.SFHS_P6_STATE.rendererMode, hint:window.Module.ENV.SDL_RENDER_DRIVER }))).toEqual({ selected:'software', hint:'software' });
+});

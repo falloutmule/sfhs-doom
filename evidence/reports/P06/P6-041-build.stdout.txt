@@ -1,0 +1,4 @@
+P6_ANDROID_SINGLE_FILE=PASS output=dist/sfhs-doom-android-samsung-repair.html
+Source commit: 924f329a85dbf502ab96ee3f0a23a3b6bcb50fd2
+Bytes: 48283802
+SHA-256: a2def0b319c2558bca87da57b1436a87bf443b6f73b546442561d310b8ac8190

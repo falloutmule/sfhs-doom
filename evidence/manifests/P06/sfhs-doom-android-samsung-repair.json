@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-samsung-repair",
+  "phase": "P06",
+  "task": "DOOM-P6-040",
+  "source": {
+    "commit": "924f329a85dbf502ab96ee3f0a23a3b6bcb50fd2",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "SDL2", "version": "2.32.10", "source": "toolchains/emsdk/upstream/emscripten/cache/ports/sdl2/SDL-release-2.32.10"}
+    ],
+    "inputs": [
+      {"path": "web/p6/shell.html", "size_bytes": 34828, "sha256": "96d26bba96d6957e36f9a0c017e10c37582dbbcf022062d5a6355fbd13998d4a"},
+      {"path": "src/sfhs_mobile/sfhs_mobile_state.c", "size_bytes": 2569, "sha256": "b67721a374c509c1cdfafc1f91f6b777f45eeb301500893b8fa2459e495796b4"},
+      {"path": "src/sfhs_mobile/sfhs_mobile_state.h", "size_bytes": 628, "sha256": "5ceaaad4437c556b3b229522be22438213ef7929ed1e42a9b9042110f91bea49"}
+    ]
+  },
+  "build": {
+    "utc": "2026-08-06T00:00:00Z",
+    "id": "P6-041-samsung-black-canvas-repair",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-samsung-repair.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "evidence/reports/P06/P6-041-build.stdout.txt",
+        "stderr_path": "evidence/reports/P06/P6-041-build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {"path": "dist/sfhs-doom-android-samsung-repair.html", "size_bytes": 48283802, "sha256": "a2def0b319c2558bca87da57b1436a87bf443b6f73b546442561d310b8ac8190", "kind": "single-file-html"}
+  ],
+  "verification": {
+    "run_ids": ["P6-041-desktop-mobile-emulation"],
+    "result": "PASS",
+    "checks": [
+      "logical framebuffer probe is read-only and nonblack after Start",
+      "container-relative canvas sizing prevents a 1 by 0 backing store in focused mobile emulation",
+      "published P6 and protected P3 artifacts remain unchanged"
+    ]
+  },
+  "notes": [
+    "Physical Samsung acceptance is pending and this sibling artifact is not published.",
+    "Visible WebGL readback is recorded when supported but may be transient without a preserved drawing buffer."
+  ]
+}

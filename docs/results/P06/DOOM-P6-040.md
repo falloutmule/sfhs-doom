@@ -8,6 +8,8 @@
 
 Result commit: SELF
 
+Task-state completion: recorded after the user-authorized P6-040 build-profile amendment.
+
 ## Gate
 
 `SFHS_DOOM_P6_ANDROID_CANDIDATE_GATE=PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING`

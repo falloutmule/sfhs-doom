@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-05
 **Phase:** P06 — Android portrait shell, controls, minimap, and HUD
-**Current task:** DOOM-P6-010
+**Current task:** DOOM-P6-040
 **Current result commit:** SELF
 **Branch:** phase/p06-android-portrait
 
@@ -26,7 +26,8 @@ It creates a sibling Android artifact without changing the protected P3 file,
 P4 runtime, Doom simulation, renderer, or P5 persistence scope. Portrait is
 the complete Android layout and landscape is fallback.
 
-DOOM-P3-090 remains pending for independent Sol review.
+P6-040 candidate gate is `PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING`; P6-050
+physical Android acceptance and P6-090 independent review remain pending.
 
 ## P3 and P4 disposition
 
@@ -37,4 +38,5 @@ review with no review commit. P4 remains separate at
 
 ## Next task
 
-Execute DOOM-P6-010 under the frozen P6 plan and task card.
+Run P6-050 only when the Samsung Android device is connected and available for
+physical acceptance.

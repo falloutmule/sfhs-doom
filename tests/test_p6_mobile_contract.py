@@ -30,6 +30,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('Android profile requires an explicit --output path', BUILD)
         self.assertIn('Android profile refuses the protected P3 output path', BUILD)
         self.assertIn('shell="$root/web/p6/shell.html"', BUILD)
+        self.assertIn('EXPORTED_RUNTIME_METHODS=callMain,FS,ENV,HEAP32', BUILD)
 
     def test_mobile_input_posts_standard_events_without_gameplay_calls(self):
         self.assertIn('D_PostEvent(&event);', INPUT)
@@ -42,6 +43,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('ML_DONTDRAW', STATE)
         self.assertNotIn('thinkercap', STATE)
         self.assertNotIn('P_DamageMobj', STATE)
+        self.assertNotIn('sfhs_mobile_state_write', STATE)
 
 
 if __name__ == '__main__':

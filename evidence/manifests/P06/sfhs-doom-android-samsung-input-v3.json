@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-samsung-input-v3",
+  "phase": "P06",
+  "task": "DOOM-P6-045",
+  "source": {
+    "commit": "0b8bc1c64a73db032bdab26f97f8e914afbf9248",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-07T12:07:12Z",
+    "id": "P6-SAMSUNG-INPUT-V3",
+    "commands": [{
+      "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-samsung-input-v3.html"],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout_path": "evidence/reports/P06/P6-045-focused-gate.txt",
+      "stderr_path": "evidence/reports/P06/P6-045-build.stderr.txt"
+    }]
+  },
+  "artifacts": [{
+    "path": "dist/sfhs-doom-android-samsung-input-v3.html",
+    "size_bytes": 48320562,
+    "sha256": "f4bb688392c9be95f2bed258ff31b203a11ee972290222c23aeaaac070e7a35f",
+    "kind": "single-file-html"
+  }],
+  "verification": {
+    "run_ids": ["P6-045-local-focused-gate"],
+    "result": "PASS",
+    "checks": [
+      "focused V3 Playwright: 5 passed",
+      "repeated MOVE and LOOK outcome checks: 6 passed",
+      "existing P6 candidate and layout Playwright: 8 passed",
+      "P6 mobile contract: 10 passed",
+      "P6 Android static validation",
+      "published P6, Samsung V2, and protected P3 artifact hashes retained"
+    ]
+  },
+  "notes": [
+    "Physical Samsung game view is visible by user observation.",
+    "Physical Samsung input acceptance is pending.",
+    "Android emulator V3 was not rerun; prior V2 emulator acceptance is regression context only.",
+    "No remote action or Pages deployment was performed for V3."
+  ]
+}

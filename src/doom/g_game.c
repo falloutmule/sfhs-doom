@@ -79,6 +79,15 @@
 #include "sfhs_oracle.h"
 #endif
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten/emscripten.h>
+static int sfhs_mobile_game_input_debug[12] = { 1 };
+EMSCRIPTEN_KEEPALIVE const int *sfhs_mobile_game_input_debug_snapshot(void)
+{
+    return sfhs_mobile_game_input_debug;
+}
+#endif
+
 
 #define SAVEGAMESIZE	0x2c000
 
@@ -343,6 +352,13 @@ void G_BuildTiccmd (ticcmd_t* cmd, int maketic)
     int		side;
 
     memset(cmd, 0, sizeof(ticcmd_t));
+
+#ifdef __EMSCRIPTEN__
+    ++sfhs_mobile_game_input_debug[7];
+    sfhs_mobile_game_input_debug[6] = gamekeydown[key_up];
+    if (gamekeydown[key_up]) ++sfhs_mobile_game_input_debug[8];
+    if (mousex != 0) ++sfhs_mobile_game_input_debug[9];
+#endif
 
     cmd->consistancy = 
 	consistancy[consoleplayer][maketic%BACKUPTICS]; 
@@ -653,6 +669,10 @@ void G_BuildTiccmd (ticcmd_t* cmd, int maketic)
 
         carry = desired_angleturn - cmd->angleturn;
     }
+#ifdef __EMSCRIPTEN__
+    if (cmd->forwardmove != 0) ++sfhs_mobile_game_input_debug[10];
+    if (cmd->angleturn != 0) ++sfhs_mobile_game_input_debug[11];
+#endif
 } 
  
 
@@ -869,6 +889,10 @@ boolean G_Responder (event_t* ev)
     switch (ev->type) 
     { 
       case ev_keydown: 
+#ifdef __EMSCRIPTEN__
+        ++sfhs_mobile_game_input_debug[1];
+        sfhs_mobile_game_input_debug[4] = ev->data1;
+#endif
 	if (ev->data1 == key_pause) 
 	{ 
 	    sendpause = true; 
@@ -881,11 +905,19 @@ boolean G_Responder (event_t* ev)
 	return true;    // eat key down events 
  
       case ev_keyup: 
+#ifdef __EMSCRIPTEN__
+        ++sfhs_mobile_game_input_debug[2];
+        sfhs_mobile_game_input_debug[4] = ev->data1;
+#endif
 	if (ev->data1 <NUMKEYS) 
 	    gamekeydown[ev->data1] = false; 
 	return false;   // always let key up events filter down 
 		 
       case ev_mouse: 
+#ifdef __EMSCRIPTEN__
+        ++sfhs_mobile_game_input_debug[3];
+        sfhs_mobile_game_input_debug[5] = ev->data2;
+#endif
         SetMouseButtons(ev->data1);
 	mousex = ev->data2*(mouseSensitivity+5)/10; 
 	mousey = ev->data3*(mouseSensitivity+5)/10; 

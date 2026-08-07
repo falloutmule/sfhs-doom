@@ -1,4 +1,4 @@
-name: Verify and deploy P6 Samsung test candidate v2
+name: Verify and deploy P6 Samsung input candidate v3
 
 on:
   pull_request:
@@ -28,20 +28,20 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: browser-tests/package-lock.json
-      - name: Verify exact selected Samsung test artifact identity
+      - name: Verify exact selected Samsung V3 artifact identity
         shell: bash
         run: |
-          test "$(wc -c < dist/sfhs-doom-android-samsung-repair-v2.html | tr -d ' ')" = '48304713'
-          printf '%s  %s\n' '0784085bbf8c0e72ded514bc5a41f803e166154bb2eb3a422e9b2668619fedd2' 'dist/sfhs-doom-android-samsung-repair-v2.html' | sha256sum --check --strict
+          test "$(wc -c < dist/sfhs-doom-android-samsung-input-v3.html | tr -d ' ')" = '48320562'
+          printf '%s  %s\n' 'f4bb688392c9be95f2bed258ff31b203a11ee972290222c23aeaaac070e7a35f' 'dist/sfhs-doom-android-samsung-input-v3.html' | sha256sum --check --strict
           test "$(wc -c < dist/sfhs-doom-android.html | tr -d ' ')" = '48275694'
           printf '%s  %s\n' 'fb357e4276a019832a30ba0719a26b5ad815c7accb45ff46be8b302c7406c171' 'dist/sfhs-doom-android.html' | sha256sum --check --strict
           test "$(wc -c < dist/sfhs-doom-freedoom2.html | tr -d ' ')" = '48225654'
           printf '%s  %s\n' '6737dbfc8c7909ea18a820de3cd6677654fab95277caf05eb9d660cb9235490e' 'dist/sfhs-doom-freedoom2.html' | sha256sum --check --strict
       - name: Run focused static and state-contract checks
         run: |
-          python tools/validate-p6-mobile.py dist/sfhs-doom-android-samsung-repair-v2.html
+          python tools/validate-p6-mobile.py dist/sfhs-doom-android-samsung-input-v3.html
           python -m unittest tests.test_p6_mobile_contract tests.test_artifact_manifest
-          python tools/validate_artifact_manifest.py evidence/manifests/P06/sfhs-doom-android-samsung-repair-v2.json
+          python tools/validate_artifact_manifest.py evidence/manifests/P06/sfhs-doom-android-samsung-input-v3.json
           python tools/validate_project_docs.py
           python tools/taskctl.py validate
       - name: Install focused browser test dependencies
@@ -51,7 +51,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Run focused browser checks
         working-directory: browser-tests
-        run: npx playwright test tests/p6-layout.spec.mjs tests/p6-candidate.spec.mjs --workers=1
+        run: npx playwright test tests/p6-layout.spec.mjs tests/p6-candidate.spec.mjs tests/p6-samsung-input-v3.spec.mjs --workers=1
 
   deploy-pages:
     name: Publish exact candidate to GitHub Pages
@@ -71,15 +71,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Stage only exact Samsung test candidate bytes
+      - name: Stage only exact Samsung V3 candidate bytes
         shell: bash
         run: |
           set -euo pipefail
-          expected='0784085bbf8c0e72ded514bc5a41f803e166154bb2eb3a422e9b2668619fedd2'
-          test "$(wc -c < dist/sfhs-doom-android-samsung-repair-v2.html | tr -d ' ')" = '48304713'
-          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-samsung-repair-v2.html' | sha256sum --check --strict
+          expected='f4bb688392c9be95f2bed258ff31b203a11ee972290222c23aeaaac070e7a35f'
+          test "$(wc -c < dist/sfhs-doom-android-samsung-input-v3.html | tr -d ' ')" = '48320562'
+          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-samsung-input-v3.html' | sha256sum --check --strict
           mkdir -p _pages
-          cp dist/sfhs-doom-android-samsung-repair-v2.html _pages/index.html
+          cp dist/sfhs-doom-android-samsung-input-v3.html _pages/index.html
           : > _pages/.nojekyll
           printf '%s  %s\n' "$expected" '_pages/index.html' | sha256sum --check --strict
       - uses: actions/upload-pages-artifact@v3

@@ -51,8 +51,15 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('sfhs_mobile_video_probe', STATE)
         self.assertIn('I_VideoBuffer', STATE)
         self.assertNotIn('I_VideoBuffer[', STATE.split('sfhs_mobile_video_probe', 1)[1].replace('I_VideoBuffer[(', ''))
-        self.assertIn('P6-SAMSUNG-INPUT-RENDER-V2', SHELL)
+        self.assertIn('P6-SAMSUNG-INPUT-V3', SHELL)
         self.assertIn('SFHS_P6_DIAGNOSTICS', SHELL)
+
+    def test_v3_look_accumulates_fractional_pointer_motion(self):
+        self.assertIn('lookState.accumulator+=rawDelta*sensitivity', SHELL)
+        self.assertIn('const whole=Math.trunc(lookState.accumulator)', SHELL)
+        self.assertIn("typeof event.getCoalescedEvents==='function'", SHELL)
+        self.assertNotIn('Math.round((event.clientX-element._sfhsLookX)', SHELL)
+        self.assertIn('authoritativeForPhysicalVisibility:false', SHELL)
 
     def test_v2_input_bridge_has_direct_exports_and_read_only_telemetry(self):
         self.assertIn("window.Module['_'+name]", SHELL)

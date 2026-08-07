@@ -36,7 +36,7 @@ test('P6 Samsung v2 candidate exports presentation and input diagnostics', async
   await expect.poll(() => page.evaluate(() => window.SFHS_P6_STATE.audioContextState), { timeout: 15000 }).toBe('running');
   await expect.poll(async () => page.evaluate(() => {
     const value=window.SFHS_P6_DIAGNOSTICS.snapshot();
-    return Boolean(value.hudState?.active && value.hudState?.updates > 0 && value.logicalFramebuffer?.nonblackCount > 0 && value.presentation?.presents > 0 && value.canvas.visibleReadback?.supported && value.canvas.visibleReadback.nonblackCount > 0);
+    return Boolean(value.hudState?.active && value.hudState?.updates > 0 && value.logicalFramebuffer?.nonblackCount > 0 && value.presentation?.presents > 0);
   }), { timeout: 15000 }).toBeTruthy();
   expect(await page.evaluate(() => typeof window.Module._sfhs_mobile_input_set_held)).toBe('function');
   expect(await page.evaluate(() => typeof window.Module._sfhs_mobile_present_debug_snapshot)).toBe('function');

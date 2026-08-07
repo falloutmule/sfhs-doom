@@ -1,0 +1,38 @@
+{
+  "schema": "sfhs-doom-v5-look-aggregation-proof-v1",
+  "result": "PASS",
+  "scenario": {
+    "description": "Twenty 2 CSS-pixel LOOK PointerEvents dispatched synchronously inside one browser task",
+    "domLookSamples": 20,
+    "rawHorizontalDelta": 40,
+    "integralLookUnitsSubmitted": 40
+  },
+  "native": {
+    "lookCallsDelta": 20,
+    "lookUnitsAccumulatedDelta": 40,
+    "lookUnitsFlushedDelta": 40,
+    "postedMouseDelta": 1,
+    "lastFlushedX": 40,
+    "pendingLookXAfter": 0
+  },
+  "consumer": {
+    "responderMouseDelta": 1,
+    "lastMouseX": 40,
+    "buildsMouseXDelta": 1,
+    "cmdAngleNonzeroDelta": 1
+  },
+  "game": {
+    "angleBefore": 0,
+    "angleAfter": -20971520,
+    "angleDelta": -20971520
+  },
+  "preserved": {
+    "pointerLockActive": false,
+    "nograbmouse": true,
+    "moveOutcome": "PASS",
+    "fireOutcome": "PASS",
+    "heldMaskAfter": 0,
+    "pageErrors": 0,
+    "externalRequests": 0
+  }
+}

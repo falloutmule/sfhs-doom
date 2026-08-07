@@ -49,6 +49,7 @@
 #include "z_zone.h"
 
 #ifdef __EMSCRIPTEN__
+#include "sfhs_mobile_input.h"
 #include "sfhs_mobile_present.h"
 #endif
 
@@ -497,6 +498,12 @@ void I_StartTic (void)
     {
         I_ReadMouse();
     }
+
+#ifdef __EMSCRIPTEN__
+    // DOM pointer events can outnumber Doom tics.  Flush their accumulated
+    // horizontal motion once here so G_Responder receives one ev_mouse per tic.
+    sfhs_mobile_input_flush_look();
+#endif
 
     if (joywait < I_GetTime())
     {

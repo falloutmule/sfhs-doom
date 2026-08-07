@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-samsung-input-v4",
+  "phase": "P06",
+  "task": "DOOM-P6-046",
+  "source": {
+    "commit": "7f0d7527a9424b2b8835ead12eedc0ffacd5c7fa",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": false,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-07T13:13:09Z",
+    "id": "P6-SAMSUNG-INPUT-V4",
+    "commands": [{
+      "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-samsung-input-v4.html"],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout_path": "evidence/reports/P06/P6-046-build.stdout.txt",
+      "stderr_path": "evidence/reports/P06/P6-046-build.stderr.txt"
+    }]
+  },
+  "artifacts": [{
+    "path": "dist/sfhs-doom-android-samsung-input-v4.html",
+    "size_bytes": 48323709,
+    "sha256": "dff29abb293d0f373a696393537a2c2f88a8f116c751b2eff3cc9ebc8908b640",
+    "kind": "single-file-html"
+  }],
+  "verification": {
+    "run_ids": ["P6-046-local-focused-gate"],
+    "result": "PASS",
+    "checks": [
+      "focused V4 Playwright: 6 passed",
+      "existing P6 and V3 Playwright: 13 passed",
+      "focused Python contract and manifest tests: 28 passed",
+      "P6 Android static validation",
+      "project-document and task-state validation",
+      "V3, published Android base, and protected P3 artifact hashes retained"
+    ]
+  },
+  "notes": [
+    "Physical Samsung game view is visible by user observation.",
+    "Physical Samsung V4 coordinate and input acceptance is pending.",
+    "V4 was not pushed, merged, deployed, or released.",
+    "No C, renderer, gameplay, HUD, minimap, audio, or state-packet file changed."
+  ]
+}

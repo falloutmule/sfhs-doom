@@ -20,8 +20,8 @@
       "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-samsung-repair-v2.html"],
       "cwd": ".",
       "exit_code": 0,
-      "stdout_path": "build/runtime/P06-build/product/build.stdout.txt",
-      "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+      "stdout_path": "evidence/reports/P06/P6-044-build.stdout.txt",
+      "stderr_path": "evidence/reports/P06/P6-044-build.stderr.txt"
     }]
   },
   "artifacts": [{

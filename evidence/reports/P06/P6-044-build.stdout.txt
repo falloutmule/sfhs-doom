@@ -1,0 +1,3 @@
+P6_ANDROID_SINGLE_FILE=PASS output=dist/sfhs-doom-android-samsung-repair-v2.html
+bytes=48304713
+sha256=0784085bbf8c0e72ded514bc5a41f803e166154bb2eb3a422e9b2668619fedd2

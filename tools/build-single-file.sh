@@ -30,7 +30,7 @@ case "$build" in
 esac
 run="$run_root/$name"; mkdir -p "$run"
 oracle_flag=OFF; if ((oracle)); then oracle_flag=ON; fi
-exports="['_main','_sfhs_mobile_input_version','_sfhs_mobile_input_set_held','_sfhs_mobile_input_pulse','_sfhs_mobile_input_post_look','_sfhs_mobile_input_release_all','_sfhs_mobile_input_debug_snapshot','_sfhs_mobile_state_snapshot','_sfhs_mobile_state_lines','_sfhs_mobile_video_probe','_sfhs_mobile_present_configure_renderer','_sfhs_mobile_present_debug_snapshot']"
+exports="['_main','_sfhs_mobile_input_version','_sfhs_mobile_input_set_held','_sfhs_mobile_input_pulse','_sfhs_mobile_input_post_look','_sfhs_mobile_input_release_all','_sfhs_mobile_input_debug_snapshot','_sfhs_mobile_game_input_debug_snapshot','_sfhs_mobile_state_snapshot','_sfhs_mobile_state_lines','_sfhs_mobile_video_probe','_sfhs_mobile_present_configure_renderer','_sfhs_mobile_present_debug_snapshot']"
 flags="-sASYNCIFY -sEXIT_RUNTIME=1 -sINVOKE_RUN=0 -sEXPORTED_FUNCTIONS=$exports -sEXPORTED_RUNTIME_METHODS=callMain,ccall,cwrap,FS,ENV,HEAP32 -sSINGLE_FILE=1 --embed-file $wad@/freedoom2.wad"
 configure=(emcmake cmake -C "$root/cmake/SFHSWasm.cmake" -S . -B "$build" -G Ninja
   -DCMAKE_BUILD_TYPE=Debug -DENABLE_SDL2_MIXER=ON -DENABLE_SDL2_NET=OFF -DCMAKE_C_COMPILER=emcc -DCMAKE_CXX_COMPILER=em++

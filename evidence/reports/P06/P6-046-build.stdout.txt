@@ -1,0 +1,4 @@
+P6_ANDROID_SINGLE_FILE=PASS output=dist/sfhs-doom-android-samsung-input-v4.html
+Clean Android build directory: build/wasm/p6-android/phase2-product
+Artifact bytes: 48323709
+Artifact SHA-256: dff29abb293d0f373a696393537a2c2f88a8f116c751b2eff3cc9ebc8908b640

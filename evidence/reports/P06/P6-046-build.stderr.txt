@@ -1,0 +1,1 @@
+No build error. The pinned Emscripten 6.0.5 command exited 0.

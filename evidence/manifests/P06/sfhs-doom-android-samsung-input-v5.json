@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-samsung-look-v5",
+  "phase": "P06",
+  "task": "DOOM-P6-048",
+  "source": {
+    "commit": "b6ce2862f827258b3b9f58c6a2d81188a6681856",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-07T14:42:08.1057066Z",
+    "id": "P6-SAMSUNG-LOOK-V5",
+    "commands": [{
+      "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-samsung-input-v5.html"],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout_path": "evidence/reports/P06/P6-048-build.stdout.txt",
+      "stderr_path": "evidence/reports/P06/P6-048-build.stderr.txt"
+    }]
+  },
+  "artifacts": [{
+    "path": "dist/sfhs-doom-android-samsung-input-v5.html",
+    "size_bytes": 48327803,
+    "sha256": "fa78944cd1482770dde9fde2192022b07991ca1942359de97d7557dc79333b7e",
+    "kind": "single-file-html"
+  }],
+  "verification": {
+    "run_ids": ["P6-048-local-focused-gate"],
+    "result": "PASS",
+    "checks": [
+      "focused P6/V3/V4/V5 Playwright: 21 passed",
+      "focused Python mobile and manifest tests: 29 passed before final manifest validation",
+      "same-task LOOK burst: 20 samples and 40 units became one 40-unit ev_mouse",
+      "V5 MOVE and FIRE outcomes passed",
+      "P6 Android static validation",
+      "protected V4 and P3 artifact identities retained"
+    ]
+  },
+  "notes": [
+    "The candidate was built from the recorded main commit plus the bounded uncommitted V5 delta; the result commit records that complete source and artifact as SELF.",
+    "Default mobile LOOK sensitivity is unchanged.",
+    "Physical Samsung V5 rate acceptance is pending.",
+    "V5 was not pushed, merged, deployed, or released."
+  ]
+}

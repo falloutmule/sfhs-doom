@@ -7,6 +7,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SHELL = (ROOT / 'web/p6/shell.html').read_text(encoding='utf-8')
 BUILD = (ROOT / 'tools/build-single-file.sh').read_text(encoding='utf-8')
 INPUT = (ROOT / 'src/sfhs_mobile/sfhs_mobile_input.c').read_text(encoding='utf-8')
+INPUT_HEADER = (ROOT / 'src/sfhs_mobile/sfhs_mobile_input.h').read_text(encoding='utf-8')
+VIDEO = (ROOT / 'src/i_video.c').read_text(encoding='utf-8')
 STATE = (ROOT / 'src/sfhs_mobile/sfhs_mobile_state.c').read_text(encoding='utf-8')
 
 
@@ -55,7 +57,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('sfhs_mobile_video_probe', STATE)
         self.assertIn('I_VideoBuffer', STATE)
         self.assertNotIn('I_VideoBuffer[', STATE.split('sfhs_mobile_video_probe', 1)[1].replace('I_VideoBuffer[(', ''))
-        self.assertIn('P6-SAMSUNG-INPUT-V4', SHELL)
+        self.assertIn('P6-SAMSUNG-LOOK-V5', SHELL)
         self.assertIn('SFHS_P6_DIAGNOSTICS', SHELL)
 
     def test_v3_look_accumulates_fractional_pointer_motion(self):
@@ -65,14 +67,31 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertNotIn('Math.round((event.clientX-element._sfhsLookX)', SHELL)
         self.assertIn('authoritativeForPhysicalVisibility:false', SHELL)
 
-    def test_v4_records_pointer_state_and_always_collects_outcomes(self):
-        self.assertIn("schema:'sfhs-doom-samsung-diagnostics-v4'", SHELL)
+    def test_v5_records_pointer_state_and_always_collects_outcomes(self):
+        self.assertIn("schema:'sfhs-doom-samsung-diagnostics-v5'", SHELL)
         self.assertIn('pointerLock:{active:!!locked', SHELL)
         self.assertIn('documentHasFocus:document.hasFocus()', SHELL)
         for field in ('screenX', 'screenY', 'pageX', 'pageY', 'movementX', 'movementY', 'buttons', 'pressure'):
             self.assertIn(field, SHELL)
         self.assertNotIn('if(!telemetry.testMode)return null', SHELL)
         self.assertIn('coordinateUsable:coordinateUsable(event,element)', SHELL)
+
+    def test_v5_aggregates_mobile_look_once_per_platform_tic(self):
+        self.assertIn('pending_look_x = SaturatingAdd(pending_look_x, relative_x);', INPUT)
+        self.assertIn('int sfhs_mobile_input_flush_look(void)', INPUT)
+        self.assertIn('sfhs_mobile_input_flush_look();', VIDEO)
+        self.assertIn('sfhs_mobile_input_flush_look(void);', INPUT_HEADER)
+        self.assertIn('look_units_accumulated', INPUT_HEADER)
+        self.assertIn('look_flush_calls', INPUT_HEADER)
+        self.assertIn('look_units_flushed', INPUT_HEADER)
+        post_look = INPUT.split('SFHS_KEEP int sfhs_mobile_input_post_look', 1)[1].split('int sfhs_mobile_input_flush_look', 1)[0]
+        self.assertNotIn('D_PostEvent', post_look)
+        flush = INPUT.split('int sfhs_mobile_input_flush_look', 1)[1].split('SFHS_KEEP int sfhs_mobile_input_release_all', 1)[0]
+        self.assertEqual(flush.count('D_PostEvent(&event);'), 1)
+        self.assertNotIn('G_Responder', INPUT)
+        self.assertIn('domLookSamples', SHELL)
+        self.assertIn('lookUnitsFlushed', SHELL)
+        self.assertIn('angleProducingTics', SHELL)
 
     def test_v2_input_bridge_has_direct_exports_and_read_only_telemetry(self):
         self.assertIn("window.Module['_'+name]", SHELL)

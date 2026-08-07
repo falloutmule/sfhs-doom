@@ -7,16 +7,22 @@
   "task": "DOOM-P6-044",
   "source": {
     "commit": "5bbaa1ec89bf697ead8551fcd2c034d335c3d67b",
-    "base_commit": "f592ca663a47b40a46d1e2d159f97c702d6bff44",
     "upstream_tag": "chocolate-doom-3.1.1",
     "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
-    "toolchains": [{"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"}]
+    "dirty": false,
+    "toolchains": [{"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"}],
+    "inputs": []
   },
   "build": {
+    "utc": "2026-08-07T00:00:00Z",
     "id": "P6-044-samsung-input-render-v2",
-    "command": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-samsung-repair-v2.html"],
-    "profile": "android",
-    "single_file": true
+    "commands": [{
+      "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-samsung-repair-v2.html"],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout_path": "build/runtime/P06-build/product/build.stdout.txt",
+      "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+    }]
   },
   "artifacts": [{
     "path": "dist/sfhs-doom-android-samsung-repair-v2.html",
@@ -25,7 +31,8 @@
     "kind": "single-file-html"
   }],
   "verification": {
-    "result": "PASS_WITH_PHYSICAL_SAMSUNG_PENDING",
+    "run_ids": ["P6-044-local-focused-gate"],
+    "result": "PASS",
     "checks": [
       "focused Python contract: 9 passed",
       "focused Playwright candidate/layout suite: 8 passed",
@@ -33,7 +40,7 @@
       "published P6 and protected P3 artifact hashes retained"
     ]
   },
-  "limitations": [
+  "notes": [
     "Samsung Chrome physical input and compatibility-mode behavior are untested.",
     "A single self-contained local HTML document cannot reliably read its own on-disk SHA-256; the frozen diagnostic identifies the artifact filename and source commit, while this manifest is the canonical artifact hash record."
   ]

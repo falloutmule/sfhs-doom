@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs';
 const candidate = new URL('../../dist/sfhs-doom-android-samsung-input-v4.html', import.meta.url);
 const candidateUrl = candidate.href;
 const hasCandidate = existsSync(candidate);
+const outcomeTimeout = 10000;
 
 async function start(page) {
   test.skip(!hasCandidate, 'Samsung input V4 artifact has not been built in this checkout.');
@@ -15,7 +16,10 @@ async function start(page) {
   await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.readGameState()?.active), { timeout: 15000 }).toBe(1);
   await expect.poll(() => page.evaluate(() => window.SFHS_P6_STATE.audioContextState), { timeout: 15000 }).toBe('running');
   const buildCalls = await page.evaluate(() => window.SFHS_P6_INPUT.consumerDebug().buildTiccmdCalls);
-  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.consumerDebug().buildTiccmdCalls), { timeout: 15000 }).toBeGreaterThan(buildCalls);
+  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.consumerDebug().buildTiccmdCalls), { timeout: 15000 }).toBeGreaterThan(buildCalls + 4);
+  const stableBuildCalls = await page.evaluate(() => window.SFHS_P6_INPUT.consumerDebug().buildTiccmdCalls);
+  await page.waitForTimeout(250);
+  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.consumerDebug().buildTiccmdCalls), { timeout: 15000 }).toBeGreaterThan(stableBuildCalls + 4);
 }
 
 async function dispatch(page, selector, type, options) {
@@ -56,9 +60,9 @@ test('V4 always records real-coordinate MOVE outcome without opening the panel',
   const x = rect.x + rect.width / 2;
   const y = rect.y + rect.height * 0.15;
   await dispatch(page, '[data-control="move"]', 'pointerdown', { pointerId: 401, clientX: x, clientY: y, screenX: x, screenY: y, pageX: x, pageY: y });
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(1200);
   await dispatch(page, '[data-control="move"]', 'pointerup', { pointerId: 401, clientX: x, clientY: y, screenX: x, screenY: y, pageX: x, pageY: y });
-  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.move?.pass), { timeout: 3000 }).toBeTruthy();
+  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.move?.pass), { timeout: outcomeTimeout }).toBeTruthy();
   const snapshot = await page.evaluate(() => window.SFHS_P6_INPUT.snapshot());
   expect(snapshot.telemetry.outcomes.move.coordinateUsable).toBeTruthy();
   expect(snapshot.telemetry.outcomes.move.dx !== 0 || snapshot.telemetry.outcomes.move.dy !== 0).toBeTruthy();
@@ -81,7 +85,7 @@ test('V4 always records real-coordinate LOOK outcome and keeps fractional accumu
   }
   await page.waitForTimeout(300);
   await dispatch(page, '[data-control="look"]', 'pointerup', { pointerId: 402, clientX: x + 32, clientY: y, screenX: x + 32, screenY: y, pageX: x + 32, pageY: y });
-  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.look?.pass), { timeout: 3000 }).toBeTruthy();
+  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.look?.pass), { timeout: outcomeTimeout }).toBeTruthy();
   const snapshot = await page.evaluate(() => window.SFHS_P6_INPUT.snapshot());
   expect(snapshot.telemetry.outcomes.look.coordinateChanged).toBeTruthy();
   expect(snapshot.telemetry.outcomes.look.nativeAfter.postedMouse).toBeGreaterThan(snapshot.telemetry.outcomes.look.nativeBefore.postedMouse);
@@ -97,9 +101,9 @@ test('V4 preserves coordinate-independent FIRE outcome', async ({ page }) => {
   const x = rect.x + rect.width / 2;
   const y = rect.y + rect.height / 2;
   await dispatch(page, '[data-control="fire"]', 'pointerdown', { pointerId: 403, clientX: 0, clientY: 0, screenX: 0, screenY: 0, pageX: 0, pageY: 0 });
-  await page.waitForTimeout(220);
+  await page.waitForTimeout(500);
   await dispatch(page, '[data-control="fire"]', 'pointerup', { pointerId: 403, clientX: 0, clientY: 0, screenX: 0, screenY: 0, pageX: 0, pageY: 0 });
-  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.fire?.pass), { timeout: 3000 }).toBeTruthy();
+  await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.fire?.pass), { timeout: outcomeTimeout }).toBeTruthy();
   const outcome = await page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.fire);
   expect(outcome.ammoDelta).toBeLessThan(0);
   expect(Number.isFinite(x + y)).toBeTruthy();

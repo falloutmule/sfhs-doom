@@ -30,10 +30,12 @@ case "$build" in
 esac
 run="$run_root/$name"; mkdir -p "$run"
 oracle_flag=OFF; if ((oracle)); then oracle_flag=ON; fi
-flags="-sASYNCIFY -sEXIT_RUNTIME=1 -sINVOKE_RUN=0 -sEXPORTED_FUNCTIONS=_main -sEXPORTED_RUNTIME_METHODS=callMain,FS,ENV,HEAP32 -sSINGLE_FILE=1 --embed-file $wad@/freedoom2.wad"
+exports="['_main','_sfhs_mobile_input_version','_sfhs_mobile_input_set_held','_sfhs_mobile_input_pulse','_sfhs_mobile_input_post_look','_sfhs_mobile_input_release_all','_sfhs_mobile_input_debug_snapshot','_sfhs_mobile_state_snapshot','_sfhs_mobile_state_lines','_sfhs_mobile_video_probe','_sfhs_mobile_present_configure_renderer','_sfhs_mobile_present_debug_snapshot']"
+flags="-sASYNCIFY -sEXIT_RUNTIME=1 -sINVOKE_RUN=0 -sEXPORTED_FUNCTIONS=$exports -sEXPORTED_RUNTIME_METHODS=callMain,ccall,cwrap,FS,ENV,HEAP32 -sSINGLE_FILE=1 --embed-file $wad@/freedoom2.wad"
 configure=(emcmake cmake -C "$root/cmake/SFHSWasm.cmake" -S . -B "$build" -G Ninja
   -DCMAKE_BUILD_TYPE=Debug -DENABLE_SDL2_MIXER=ON -DENABLE_SDL2_NET=OFF -DCMAKE_C_COMPILER=emcc -DCMAKE_CXX_COMPILER=em++
   -DCMAKE_DISABLE_FIND_PACKAGE_FluidSynth=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_SampleRate=TRUE -DCMAKE_DISABLE_FIND_PACKAGE_PNG=TRUE
+  -DHAVE_DECL_STRCASECMP=1 -DHAVE_DECL_STRNCASECMP=1 -DHAVE_DIRENT_H=1
   "-DSFHS_ORACLE_TEST=$oracle_flag" "-DCMAKE_EXE_LINKER_FLAGS=$flags")
 printf '%q ' "${configure[@]}" >"$run/configure.argv.txt"; printf '\n' >>"$run/configure.argv.txt"
 "${configure[@]}" >"$run/configure.stdout.txt" 2>"$run/configure.stderr.txt"

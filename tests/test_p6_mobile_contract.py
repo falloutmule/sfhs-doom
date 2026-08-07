@@ -30,7 +30,9 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('Android profile requires an explicit --output path', BUILD)
         self.assertIn('Android profile refuses the protected P3 output path', BUILD)
         self.assertIn('shell="$root/web/p6/shell.html"', BUILD)
-        self.assertIn('EXPORTED_RUNTIME_METHODS=callMain,FS,ENV,HEAP32', BUILD)
+        self.assertIn('EXPORTED_RUNTIME_METHODS=callMain,ccall,cwrap,FS,ENV,HEAP32', BUILD)
+        self.assertIn("'_sfhs_mobile_input_set_held'", BUILD)
+        self.assertIn("'_sfhs_mobile_present_debug_snapshot'", BUILD)
 
     def test_mobile_input_posts_standard_events_without_gameplay_calls(self):
         self.assertIn('D_PostEvent(&event);', INPUT)
@@ -49,8 +51,15 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('sfhs_mobile_video_probe', STATE)
         self.assertIn('I_VideoBuffer', STATE)
         self.assertNotIn('I_VideoBuffer[', STATE.split('sfhs_mobile_video_probe', 1)[1].replace('I_VideoBuffer[(', ''))
-        self.assertIn('P6-SAMSUNG-BLACK-CANVAS-DIAG-1', SHELL)
+        self.assertIn('P6-SAMSUNG-INPUT-RENDER-V2', SHELL)
         self.assertIn('SFHS_P6_DIAGNOSTICS', SHELL)
+
+    def test_v2_input_bridge_has_direct_exports_and_read_only_telemetry(self):
+        self.assertIn("window.Module['_'+name]", SHELL)
+        self.assertIn('sfhs_mobile_input_debug_snapshot', INPUT)
+        self.assertIn('sfhs_mobile_present_debug_snapshot', BUILD)
+        self.assertNotIn('G_Responder', INPUT)
+        self.assertNotIn('P_DamageMobj', INPUT)
 
     def test_samsung_repair_keeps_the_original_state_packet_layout(self):
         header = (ROOT / 'src/sfhs_mobile/sfhs_mobile_state.h').read_text(encoding='utf-8')

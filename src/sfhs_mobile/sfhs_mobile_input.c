@@ -11,6 +11,26 @@
 #endif
 
 static int held[11];
+static sfhs_mobile_input_debug_t debug;
+
+static void InitDebug(void)
+{
+    if (debug.version == 0)
+    {
+        debug.version = 1;
+        debug.last_action = -1;
+    }
+}
+
+static void UpdateHeldMask(void)
+{
+    int action;
+    debug.held_mask = 0;
+    for (action = 0; action < 11; ++action)
+    {
+        if (held[action]) debug.held_mask |= 1 << action;
+    }
+}
 
 static int ActionKey(int action)
 {
@@ -31,39 +51,80 @@ static int ActionKey(int action)
     }
 }
 
-static void PostKey(int type, int key)
+static int PostKey(int type, int key)
 {
-    event_t event;
-    if (key == 0) return;
+    event_t event = { 0 };
+    if (key == 0) return -2;
     event.type = type; event.data1 = key; event.data2 = 0; event.data3 = 0;
     D_PostEvent(&event);
+    if (type == ev_keydown) ++debug.posted_keydown;
+    else if (type == ev_keyup) ++debug.posted_keyup;
+    return 1;
 }
 
-SFHS_KEEP int sfhs_mobile_input_version(void) { return 1; }
+SFHS_KEEP int sfhs_mobile_input_version(void) { InitDebug(); return 2; }
 
-SFHS_KEEP void sfhs_mobile_input_set_held(int action, int down)
+SFHS_KEEP int sfhs_mobile_input_set_held(int action, int down)
 {
-    if (action < 0 || action >= 11 || !!down == !!held[action]) return;
+    int key;
+    InitDebug(); ++debug.total_calls; ++debug.set_held_calls;
+    debug.last_action = action; debug.last_down = !!down;
+    if (action < 0 || action >= 11)
+    {
+        ++debug.invalid_actions;
+        return -1;
+    }
+    key = ActionKey(action);
+    debug.last_key = key;
+    if (key == 0) return -2;
+    if (!!down == !!held[action]) return 0;
     held[action] = !!down;
-    PostKey(down ? ev_keydown : ev_keyup, ActionKey(action));
+    UpdateHeldMask();
+    return PostKey(down ? ev_keydown : ev_keyup, key);
 }
 
-SFHS_KEEP void sfhs_mobile_input_pulse(int action)
+SFHS_KEEP int sfhs_mobile_input_pulse(int action)
 {
-    int key = ActionKey(action);
-    PostKey(ev_keydown, key); PostKey(ev_keyup, key);
+    int key, down, up;
+    InitDebug(); ++debug.total_calls; ++debug.pulse_calls;
+    debug.last_action = action; debug.last_down = 1;
+    if (action < 0 || action >= 11)
+    {
+        ++debug.invalid_actions;
+        return -1;
+    }
+    key = ActionKey(action); debug.last_key = key;
+    if (key == 0) return -2;
+    down = PostKey(ev_keydown, key); up = PostKey(ev_keyup, key);
+    return down > 0 && up > 0 ? 1 : (down < 0 ? down : up);
 }
 
-SFHS_KEEP void sfhs_mobile_input_post_look(int relative_x)
+SFHS_KEEP int sfhs_mobile_input_post_look(int relative_x)
 {
-    event_t event;
-    if (relative_x == 0) return;
+    event_t event = { 0 };
+    InitDebug(); ++debug.total_calls; ++debug.look_calls;
+    debug.last_relative_x = relative_x;
+    if (relative_x == 0) return 0;
     event.type = ev_mouse; event.data1 = 0; event.data2 = relative_x; event.data3 = 0;
     D_PostEvent(&event);
+    ++debug.posted_mouse;
+    return 1;
 }
 
-SFHS_KEEP void sfhs_mobile_input_release_all(void)
+SFHS_KEEP int sfhs_mobile_input_release_all(void)
 {
-    int action;
-    for (action = 0; action < 11; ++action) sfhs_mobile_input_set_held(action, 0);
+    int action, result, changed = 0;
+    InitDebug(); ++debug.total_calls; ++debug.release_all_calls;
+    for (action = 0; action < 11; ++action)
+    {
+        result = sfhs_mobile_input_set_held(action, 0);
+        if (result > 0) changed = 1;
+    }
+    return changed;
+}
+
+SFHS_KEEP const sfhs_mobile_input_debug_t *sfhs_mobile_input_debug_snapshot(void)
+{
+    InitDebug();
+    return &debug;
 }

@@ -65,6 +65,7 @@ test('V3 treats pointer-capture failure as nonfatal for MOVE LOOK and FIRE', asy
   expect(after.native.setHeldCalls).toBeGreaterThan(before.setHeldCalls);
   expect(after.native.postedMouse).toBeGreaterThan(before.postedMouse);
   await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.fire?.pass), { timeout: 3000 }).toBeTruthy();
+  console.log('SFHS_V3_FIRE=' + JSON.stringify(await page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.fire)));
 });
 
 test('V3 real PointerEvent MOVE changes player position', async ({ page }) => {
@@ -79,6 +80,7 @@ test('V3 real PointerEvent MOVE changes player position', async ({ page }) => {
   const after = await page.evaluate(() => ({ state: window.SFHS_P6_INPUT.readGameState(), native: window.SFHS_P6_INPUT.nativeDebug(), consumer: window.SFHS_P6_INPUT.consumerDebug(), present: window.SFHS_P6_DIAGNOSTICS.snapshot().presentation }));
   expect(after.state.x !== before.state.x || after.state.y !== before.state.y, JSON.stringify({ before, after })).toBeTruthy();
   await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.move?.pass), { timeout: 3000 }).toBeTruthy();
+  console.log('SFHS_V3_MOVE=' + JSON.stringify(await page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.move)));
 });
 
 test('V3 real PointerEvent LOOK posts mouse input and changes player angle', async ({ page }) => {
@@ -95,6 +97,7 @@ test('V3 real PointerEvent LOOK posts mouse input and changes player angle', asy
   expect(after.native.postedMouse).toBeGreaterThan(before.native.postedMouse);
   expect(after.state.angle, JSON.stringify({ before, after })).not.toBe(before.state.angle);
   await expect.poll(() => page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.look?.pass), { timeout: 3000 }).toBeTruthy();
+  console.log('SFHS_V3_LOOK=' + JSON.stringify(await page.evaluate(() => window.SFHS_P6_INPUT.snapshot().telemetry.outcomes.look)));
 });
 
 test('V3 releases every held action after pointer cancellation', async ({ page }) => {

@@ -1,0 +1,3 @@
+The pinned Emscripten environment initialized successfully. Configure, build,
+and one-file packaging completed with exit code 0. No build failure was
+reported. The focused gate summary is P6-045-focused-gate.txt.

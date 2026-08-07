@@ -1,5 +1,11 @@
 # P6 Samsung Black-Canvas Repair
 
+> **Superseded on 2026-08-07:** the user confirmed that the physical Samsung
+> game view is visible. The earlier Boundary B physical-black classification
+> is withdrawn. WebGL default-framebuffer readback is non-authoritative for
+> physical visibility. The active repair is documented in
+> `P06_SAMSUNG_TOUCH_INPUT_V3.md`.
+
 ## Result
 
 `P6_SAMSUNG_BLACK_CANVAS_DIAGNOSTIC=BOUNDARY_B_SDL_BROWSER_PRESENTATION`

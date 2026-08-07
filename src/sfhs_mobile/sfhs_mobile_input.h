@@ -9,10 +9,19 @@ enum
     SFHS_MOBILE_WEAPON_PREVIOUS, SFHS_MOBILE_WEAPON_NEXT
 };
 
+typedef struct
+{
+    int version, total_calls, set_held_calls, pulse_calls, look_calls;
+    int release_all_calls, posted_keydown, posted_keyup, posted_mouse;
+    int invalid_actions, held_mask, last_action, last_down, last_key;
+    int last_relative_x;
+} sfhs_mobile_input_debug_t;
+
 int sfhs_mobile_input_version(void);
-void sfhs_mobile_input_set_held(int action, int down);
-void sfhs_mobile_input_pulse(int action);
-void sfhs_mobile_input_post_look(int relative_x);
-void sfhs_mobile_input_release_all(void);
+int sfhs_mobile_input_set_held(int action, int down);
+int sfhs_mobile_input_pulse(int action);
+int sfhs_mobile_input_post_look(int relative_x);
+int sfhs_mobile_input_release_all(void);
+const sfhs_mobile_input_debug_t *sfhs_mobile_input_debug_snapshot(void);
 
 #endif

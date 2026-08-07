@@ -48,6 +48,10 @@
 #include "w_wad.h"
 #include "z_zone.h"
 
+#ifdef __EMSCRIPTEN__
+#include "sfhs_mobile_present.h"
+#endif
+
 // These are (1) the window (or the full screen) that our game is rendered to
 // and (2) the renderer that scales the texture (see below) into this window.
 
@@ -787,37 +791,76 @@ void I_FinishUpdate (void)
     // 32-bit RGBA buffer and update the intermediate texture with the
     // contents of the RGBA buffer.
 
-    SDL_LockTexture(texture, &blit_rect, &argbbuffer->pixels,
-                    &argbbuffer->pitch);
-    SDL_LowerBlit(screenbuffer, &blit_rect, argbbuffer, &blit_rect);
+    #ifdef __EMSCRIPTEN__
+    sfhs_mobile_present_note_logical(I_VideoBuffer, SCREENWIDTH * SCREENHEIGHT);
+    #endif
+    if (SDL_LockTexture(texture, &blit_rect, &argbbuffer->pixels,
+                        &argbbuffer->pitch) != 0)
+    {
+        #ifdef __EMSCRIPTEN__
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_LOCK, -1, SDL_GetError());
+        #endif
+        return;
+    }
+    if (SDL_LowerBlit(screenbuffer, &blit_rect, argbbuffer, &blit_rect) != 0)
+    {
+        #ifdef __EMSCRIPTEN__
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_BLIT, -1, SDL_GetError());
+        #endif
+    }
+    #ifdef __EMSCRIPTEN__
+    sfhs_mobile_present_note_argb(argbbuffer->pixels, argbbuffer->pitch * SCREENHEIGHT);
+    #endif
     SDL_UnlockTexture(texture);
 
     // Make sure the pillarboxes are kept clear each frame.
 
+    #ifdef __EMSCRIPTEN__
+    sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_CLEAR, SDL_RenderClear(renderer), SDL_GetError());
+    #else
     SDL_RenderClear(renderer);
+    #endif
 
     if (smooth_pixel_scaling && !force_software_renderer)
     {
         // Render this intermediate texture into the upscaled texture
         // using "nearest" integer scaling.
+        #ifdef __EMSCRIPTEN__
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_TARGET, SDL_SetRenderTarget(renderer, texture_upscaled), SDL_GetError());
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_COPY, SDL_RenderCopy(renderer, texture, NULL, NULL), SDL_GetError());
+        #else
         SDL_SetRenderTarget(renderer, texture_upscaled);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
+        #endif
 
         // Finally, render this upscaled texture to screen using linear scaling.
 
+        #ifdef __EMSCRIPTEN__
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_TARGET, SDL_SetRenderTarget(renderer, NULL), SDL_GetError());
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_COPY, SDL_RenderCopy(renderer, texture_upscaled, NULL, NULL), SDL_GetError());
+        #else
         SDL_SetRenderTarget(renderer, NULL);
         SDL_RenderCopy(renderer, texture_upscaled, NULL, NULL);
+        #endif
     }
     else
     {
+        #ifdef __EMSCRIPTEN__
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_TARGET, SDL_SetRenderTarget(renderer, NULL), SDL_GetError());
+        sfhs_mobile_present_note_sdl_result(SFHS_PRESENT_COPY, SDL_RenderCopy(renderer, texture, NULL, NULL), SDL_GetError());
+        #else
         SDL_SetRenderTarget(renderer, NULL);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
+        #endif
     }
 
 
     // Draw!
 
     SDL_RenderPresent(renderer);
+    #ifdef __EMSCRIPTEN__
+    sfhs_mobile_present_note_present();
+    #endif
 
     // Restore background and undo the disk indicator, if it was drawn.
     V_RestoreDiskBackground();
@@ -1321,6 +1364,14 @@ static void SetVideoMode(void)
                 SDL_GetError());
     }
 
+    #ifdef __EMSCRIPTEN__
+    {
+        int output_width = 0, output_height = 0;
+        SDL_GetRendererOutputSize(renderer, &output_width, &output_height);
+        sfhs_mobile_present_note_renderer(renderer_flags, output_width, output_height);
+    }
+    #endif
+
     // Important: Set the "logical size" of the rendering context. At the same
     // time this also defines the aspect ratio that is preserved while scaling
     // and stretching the texture into the window.
@@ -1418,6 +1469,12 @@ void I_InitGraphics(void)
     SDL_Event dummy;
     byte *doompal;
     char *env;
+
+    #ifdef __EMSCRIPTEN__
+    // Defaults are loaded before graphics startup; apply the trusted
+    // pre-Start compatibility request here, before SDL creates a renderer.
+    sfhs_mobile_present_apply_configuration();
+    #endif
 
     // Pass through the XSCREENSAVER_WINDOW environment variable to 
     // SDL_WINDOWID, to embed the SDL window into the Xscreensaver

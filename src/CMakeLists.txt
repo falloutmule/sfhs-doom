@@ -189,6 +189,8 @@ if(DEFINED EMSCRIPTEN)
     target_sources("${PROGRAM_PREFIX}doom" PRIVATE
                    sfhs_mobile/sfhs_mobile_input.c
                    sfhs_mobile/sfhs_mobile_input.h
+                   sfhs_mobile/sfhs_mobile_present.c
+                   sfhs_mobile/sfhs_mobile_present.h
                    sfhs_mobile/sfhs_mobile_state.c
                    sfhs_mobile/sfhs_mobile_state.h)
     target_include_directories("${PROGRAM_PREFIX}doom" PRIVATE
@@ -287,7 +289,7 @@ endif()
 if (DEFINED EMSCRIPTEN)
     set_target_properties("${PROGRAM_PREFIX}setup" PROPERTIES LINK_FLAGS "${SDL_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s ASYNCIFY=1 -s EXPORTED_FUNCTIONS=_main,ccall,cwrap,FS,ENV,PATH,ERRNO_CODES")
     set_target_properties("${PROGRAM_PREFIX}strife" PROPERTIES LINK_FLAGS "${SDL_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s ASYNCIFY=1 -s EXPORTED_FUNCTIONS=_main,ccall,cwrap,FS,ENV,PATH,ERRNO_CODES")
-    set_target_properties("${PROGRAM_PREFIX}doom" PROPERTIES LINK_FLAGS "${SDL_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s ASYNCIFY=1 -s EXPORTED_FUNCTIONS=_main,ccall,cwrap,FS,ENV,PATH,ERRNO_CODES")
+    set_target_properties("${PROGRAM_PREFIX}doom" PROPERTIES LINK_FLAGS "${SDL_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s ASYNCIFY=1")
     set_target_properties("${PROGRAM_PREFIX}heretic" PROPERTIES LINK_FLAGS "${SDL_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s ASYNCIFY=1 -s EXPORTED_FUNCTIONS=_main,ccall,cwrap,FS,ENV,PATH,ERRNO_CODES")
     set_target_properties("${PROGRAM_PREFIX}hexen" PROPERTIES LINK_FLAGS "${SDL_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s ASYNCIFY=1 -s EXPORTED_FUNCTIONS=_main,ccall,cwrap,FS,ENV,PATH,ERRNO_CODES")
 endif()

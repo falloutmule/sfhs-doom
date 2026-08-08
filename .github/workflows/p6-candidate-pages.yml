@@ -1,4 +1,4 @@
-name: Verify and deploy P6 SFHS controls candidate v6
+name: Verify and deploy P6 SFHS controls candidate v7
 
 on:
   pull_request:
@@ -28,9 +28,11 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: browser-tests/package-lock.json
-      - name: Verify exact selected V6 artifact identity
+      - name: Verify exact selected V7 artifact identity
         shell: bash
         run: |
+          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v7.html | tr -d ' ')" = '48327287'
+          printf '%s  %s\n' 'db64e072f66f7f74103b93f3d1ada194e88b43086327aef6a45fccf9ebe4356c' 'dist/sfhs-doom-android-sfhs-controls-v7.html' | sha256sum --check --strict
           test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v6.html | tr -d ' ')" = '48327079'
           printf '%s  %s\n' '6b1e1b2a6929bc0b975d983265e7d2643b30f25866c2cc9414f9b32c58c5ca20' 'dist/sfhs-doom-android-sfhs-controls-v6.html' | sha256sum --check --strict
           test "$(wc -c < dist/sfhs-doom-android-samsung-input-v5.html | tr -d ' ')" = '48327803'
@@ -43,7 +45,7 @@ jobs:
           printf '%s  %s\n' '6737dbfc8c7909ea18a820de3cd6677654fab95277caf05eb9d660cb9235490e' 'dist/sfhs-doom-freedoom2.html' | sha256sum --check --strict
       - name: Run focused static and state-contract checks
         run: |
-          python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v6.html
+          python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v7.html
           python -m unittest tests.test_p6_mobile_contract tests.test_p6_sfhs_controls_v6 tests.test_artifact_manifest
           python tools/validate_artifact_manifest.py evidence/manifests/P06/sfhs-doom-android-sfhs-controls-v6.json
           python tools/validate_project_docs.py
@@ -55,7 +57,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Run focused browser checks
         working-directory: browser-tests
-        run: npx playwright test tests/p6-layout.spec.mjs tests/p6-candidate.spec.mjs tests/p6-samsung-input-v3.spec.mjs tests/p6-samsung-input-v4.spec.mjs tests/p6-samsung-input-v5.spec.mjs tests/p6-sfhs-controls-v6.spec.mjs --workers=1
+        run: npx playwright test tests/p6-layout.spec.mjs tests/p6-candidate.spec.mjs tests/p6-samsung-input-v3.spec.mjs tests/p6-samsung-input-v4.spec.mjs tests/p6-samsung-input-v5.spec.mjs tests/p6-sfhs-controls-v6.spec.mjs tests/p6-move-axis-v7.spec.mjs --workers=1
 
   deploy-pages:
     name: Publish exact candidate to GitHub Pages
@@ -75,15 +77,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Stage only exact V6 candidate bytes
+      - name: Stage only exact V7 candidate bytes
         shell: bash
         run: |
           set -euo pipefail
-          expected='6b1e1b2a6929bc0b975d983265e7d2643b30f25866c2cc9414f9b32c58c5ca20'
-          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v6.html | tr -d ' ')" = '48327079'
-          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v6.html' | sha256sum --check --strict
+          expected='db64e072f66f7f74103b93f3d1ada194e88b43086327aef6a45fccf9ebe4356c'
+          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v7.html | tr -d ' ')" = '48327287'
+          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v7.html' | sha256sum --check --strict
           mkdir -p _pages
-          cp dist/sfhs-doom-android-sfhs-controls-v6.html _pages/index.html
+          cp dist/sfhs-doom-android-sfhs-controls-v7.html _pages/index.html
           : > _pages/.nojekyll
           printf '%s  %s\n' "$expected" '_pages/index.html' | sha256sum --check --strict
       - uses: actions/upload-pages-artifact@v3

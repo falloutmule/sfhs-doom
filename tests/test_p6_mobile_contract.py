@@ -29,6 +29,10 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("lookCountsPerWidth = 4096", SHELL)
         self.assertIn("relativeSensitivity:1", SHELL)
 
+    def test_shared_stick_uses_upward_cartesian_y_for_doom_forward(self):
+        self.assertIn("setHeld(actions.forward,move.y > threshold)", SHELL)
+        self.assertIn("setHeld(actions.backward,move.y < -threshold)", SHELL)
+
     def test_v6_keeps_mobile_launch_contract_and_single_file_bundle(self):
         self.assertIn("'-nograbmouse'", SHELL)
         self.assertNotIn("'-nomouse'", SHELL)

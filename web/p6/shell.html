@@ -93,7 +93,10 @@
       const move=snapshot.controls.move,look=snapshot.controls.look,primary=snapshot.controls.primary,interact=snapshot.controls.interact,modifier=snapshot.controls.modifier;
       adapter.lastMove={x:move.x,y:move.y}; adapter.lastLookNormalized=look.delta;
       const threshold=.30;
-      setHeld(actions.forward,move.y < -threshold); setHeld(actions.backward,move.y > threshold); setHeld(actions.left,move.x < -threshold); setHeld(actions.right,move.x > threshold);
+      // The shared stick exposes Cartesian Y: upward touch motion is positive.
+      // Map that convention to Doom's forward/back bindings without changing
+      // the controller or the native input path.
+      setHeld(actions.forward,move.y > threshold); setHeld(actions.backward,move.y < -threshold); setHeld(actions.left,move.x < -threshold); setHeld(actions.right,move.x > threshold);
       setHeld(actions.primary,primary.pressed); setHeld(actions.interact,interact.pressed); setHeld(actions.modifier,modifier.pressed);
       adapter.lastHeld={primary:primary.pressed,interact:interact.pressed,modifier:modifier.pressed};
       const combined=look.delta*lookCountsPerWidth+lookRemainder,whole=Math.trunc(combined); lookRemainder=combined-whole; adapter.lastLookCount=whole;

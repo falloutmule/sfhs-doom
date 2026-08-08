@@ -21,11 +21,13 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertNotIn("processLook(event)", SHELL)
         self.assertNotIn("lookState.accumulator", SHELL)
 
-    def test_v6_declares_generic_controls_and_division_strip(self):
+    def test_v8_declares_generic_controls_and_usable_division_strip_editor(self):
         for control in ("move", "look", "primary", "interact", "modifier", "menu", "map", "weapon-previous", "weapon-next"):
             self.assertIn(f"id:'{control}'", SHELL)
         self.assertIn('data-sfhs-control-id="look"', SHELL)
-        self.assertIn("top:50%; height:22px", SHELL)
+        self.assertIn("top:50%; height:38px", SHELL)
+        self.assertIn(".sfhs-mobile-control-resize { width:32px; height:32px", SHELL)
+        self.assertIn('[data-editing="true"] .sfhs-mobile-control[data-control-active="true"]', SHELL)
         self.assertIn("lookCountsPerWidth = 4096", SHELL)
         self.assertIn("relativeSensitivity:1", SHELL)
 

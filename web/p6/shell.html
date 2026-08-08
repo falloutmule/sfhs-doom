@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-1">
-  <title>SFHS Doom - Android V8</title>
+  <title>SFHS Doom - Android V9</title>
   <style>
     :root { color-scheme:dark; --edge:#5a7a93; --ink:#edf6ff; --vvh:100dvh; }
     * { box-sizing:border-box; }
@@ -32,7 +32,7 @@
     #sfhs-mobile-controls-root .sfhs-mobile-control { font:700 11px/1 ui-monospace,Consolas,monospace; letter-spacing:.04em; }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"] { border:0; background:transparent; color:#ffe4bc; }
     /* The rail is visual only: the package-owned relative1d target remains its generous rectangle. */
-    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"]::before { content:""; position:absolute; left:6%; right:6%; top:50%; height:38px; transform:translateY(-50%); border:1px solid #d29b65; border-radius:999px; background:rgb(112 67 32 / .72); box-shadow:0 0 0 1px rgb(255 224 183 / .14) inset; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"]::before { content:""; position:absolute; left:6%; right:6%; top:27.5%; bottom:27.5%; border:1px solid #d29b65; border-radius:999px; background:rgb(112 67 32 / .72); box-shadow:0 0 0 1px rgb(255 224 183 / .14) inset; }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"] .sfhs-mobile-control-label { position:relative; z-index:1; }
     /* Keep the package editor's drag/resize routing; these rules only improve its phone affordances. */
     #sfhs-mobile-controls-root .sfhs-mobile-control-resize { width:32px; height:32px; display:none; right:0; bottom:0; transform:translate(22%,22%); border:3px solid #fff4c9; background:repeating-linear-gradient(135deg,#ffcc55 0 4px,#643c12 4px 8px); box-shadow:0 0 0 2px #101c25,0 0 12px rgb(255 204 85 / .95); }
@@ -72,18 +72,18 @@
     const lookCountsPerWidth = 4096;
     const declarations = [
       {id:'move',type:'stick2d',label:'MOVE',minWidth:.08,minHeight:.08,layout:{portrait:{x:.03,y:.67,width:.36,height:.20},landscape:{x:.75,y:.55,width:.11,height:.25}}},
-      {id:'look',type:'relative1d',axis:'x',label:'LOOK',minWidth:.08,minHeight:.08,layout:{portrait:{x:.52,y:.70,width:.43,height:.10},landscape:{x:.87,y:.61,width:.11,height:.12}}},
-      {id:'primary',type:'hold',label:'FIRE',layout:{portrait:{x:.75,y:.60,width:.20,height:.08},landscape:{x:.89,y:.50,width:.08,height:.09}}},
-      {id:'interact',type:'hold',label:'USE',layout:{portrait:{x:.76,y:.81,width:.16,height:.08},landscape:{x:.89,y:.75,width:.08,height:.08}}},
-      {id:'modifier',type:'hold',label:'RUN',layout:{portrait:{x:.40,y:.81,width:.11,height:.08},landscape:{x:.75,y:.81,width:.11,height:.08}}},
-      {id:'menu',type:'pulse',label:'MENU',layout:{portrait:{x:.02,y:.58,width:.16,height:.08},landscape:{x:.75,y:.36,width:.10,height:.08}}},
-      {id:'map',type:'pulse',label:'MAP',layout:{portrait:{x:.20,y:.58,width:.16,height:.08},landscape:{x:.87,y:.36,width:.10,height:.08}}},
-      {id:'weapon-previous',type:'pulse',label:'WPN-',layout:{portrait:{x:.38,y:.58,width:.16,height:.08},landscape:{x:.75,y:.45,width:.10,height:.08}}},
-      {id:'weapon-next',type:'pulse',label:'WPN+',layout:{portrait:{x:.56,y:.58,width:.16,height:.08},landscape:{x:.87,y:.45,width:.10,height:.08}}}
+      {id:'look',type:'relative1d',axis:'x',label:'LOOK',minWidth:.08,minHeight:.05,layout:{portrait:{x:.52,y:.70,width:.43,height:.10},landscape:{x:.87,y:.61,width:.11,height:.12}}},
+      {id:'primary',type:'hold',label:'FIRE',minWidth:.07,minHeight:.05,layout:{portrait:{x:.75,y:.60,width:.20,height:.08},landscape:{x:.89,y:.50,width:.08,height:.09}}},
+      {id:'interact',type:'hold',label:'USE',minWidth:.06,minHeight:.05,layout:{portrait:{x:.76,y:.81,width:.16,height:.08},landscape:{x:.89,y:.75,width:.08,height:.08}}},
+      {id:'modifier',type:'hold',label:'RUN',minWidth:.06,minHeight:.05,layout:{portrait:{x:.40,y:.81,width:.11,height:.08},landscape:{x:.75,y:.81,width:.11,height:.08}}},
+      {id:'menu',type:'pulse',label:'MENU',minWidth:.06,minHeight:.05,layout:{portrait:{x:.02,y:.58,width:.16,height:.08},landscape:{x:.75,y:.36,width:.10,height:.08}}},
+      {id:'map',type:'pulse',label:'MAP',minWidth:.06,minHeight:.05,layout:{portrait:{x:.20,y:.58,width:.16,height:.08},landscape:{x:.87,y:.36,width:.10,height:.08}}},
+      {id:'weapon-previous',type:'pulse',label:'WPN-',minWidth:.06,minHeight:.05,layout:{portrait:{x:.38,y:.58,width:.16,height:.08},landscape:{x:.75,y:.45,width:.10,height:.08}}},
+      {id:'weapon-next',type:'pulse',label:'WPN+',minWidth:.06,minHeight:.05,layout:{portrait:{x:.56,y:.58,width:.16,height:.08},landscape:{x:.87,y:.45,width:.10,height:.08}}}
     ];
     const controller = window.SFHSMobileControls.createMobileControls({controls:declarations,persistence:{key:'sfhsDoom.mobileControls.v2'},settings:{relativeSensitivity:1}});
     controller.mount(document.getElementById('sfhs-mobile-controls-root'));
-    const state = {buildProfile:'P6-ANDROID-PORTRAIT-V8',diagnosticBuild:'P6-SFHS-CONTROLS-V8',sourceCommit:'ed8bd449c19273df11f68d62e38807225c58f9fa+local-v8',artifact:'sfhs-doom-android-sfhs-controls-v8.html',mainStarted:false,mainInvocations:0,hudUpdates:0,audioContextState:null,audioCallbacks:0,nonzeroPcmCallbacks:0,errors:[],lastEngineDiagnostic:null,oracle:false};
+    const state = {buildProfile:'P6-ANDROID-PORTRAIT-V9',diagnosticBuild:'P6-SFHS-CONTROLS-V9',sourceCommit:'local-v9-resize-range',artifact:'sfhs-doom-android-sfhs-controls-v9.html',mainStarted:false,mainInvocations:0,hudUpdates:0,audioContextState:null,audioCallbacks:0,nonzeroPcmCallbacks:0,errors:[],lastEngineDiagnostic:null,oracle:false};
     window.SFHS_P6_STATE = state;
     const actions = {forward:0,backward:1,left:2,right:3,primary:4,interact:5,modifier:6,menu:7,map:8,previous:9,next:10};
     let lookRemainder = 0;

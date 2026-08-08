@@ -21,15 +21,20 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertNotIn("processLook(event)", SHELL)
         self.assertNotIn("lookState.accumulator", SHELL)
 
-    def test_v8_declares_generic_controls_and_usable_division_strip_editor(self):
+    def test_v9_declares_doom_specific_resize_ranges_and_relative_look_rail(self):
         for control in ("move", "look", "primary", "interact", "modifier", "menu", "map", "weapon-previous", "weapon-next"):
             self.assertIn(f"id:'{control}'", SHELL)
         self.assertIn('data-sfhs-control-id="look"', SHELL)
-        self.assertIn("top:50%; height:38px", SHELL)
+        self.assertIn("top:27.5%; bottom:27.5%", SHELL)
         self.assertIn(".sfhs-mobile-control-resize { width:32px; height:32px", SHELL)
         self.assertIn('[data-editing="true"] .sfhs-mobile-control[data-control-active="true"]', SHELL)
         self.assertIn("lookCountsPerWidth = 4096", SHELL)
         self.assertIn("relativeSensitivity:1", SHELL)
+        self.assertIn("id:'look',type:'relative1d',axis:'x',label:'LOOK',minWidth:.08,minHeight:.05", SHELL)
+        self.assertIn("id:'primary',type:'hold',label:'FIRE',minWidth:.07,minHeight:.05", SHELL)
+        for control in ("interact", "modifier", "menu", "map", "weapon-previous", "weapon-next"):
+            self.assertIn(f"id:'{control}'", SHELL)
+        self.assertEqual(SHELL.count("minWidth:.06,minHeight:.05"), 6)
 
     def test_shared_stick_uses_upward_cartesian_y_for_doom_forward(self):
         self.assertIn("setHeld(actions.forward,move.y > threshold)", SHELL)

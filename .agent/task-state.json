@@ -1130,6 +1130,40 @@
       "finished_at": "2026-08-06T03:08:31Z"
     },
     {
+      "id": "DOOM-P6-051",
+      "status": "done",
+      "card": "docs/tasks/P06/DOOM-P6-051.md",
+      "branch": "repair/p6-sfhs-mobile-controls-v6",
+      "dependencies": [
+        "DOOM-P6-040"
+      ],
+      "allowed_paths": [
+        ".agent/task-state.json",
+        "vendor/sfhs-mobile-controls-v1/**",
+        "web/p6/shell.html",
+        "src/sfhs_mobile/sfhs_mobile_input.c",
+        "src/sfhs_mobile/sfhs_mobile_input.h",
+        "src/i_video.c",
+        "tools/build-single-file.sh",
+        "tools/inject-mobile-controls-bundle.py",
+        "browser-tests/tests/p6-layout.spec.mjs",
+        "browser-tests/tests/p6-sfhs-controls-v6.spec.mjs",
+        "tests/test_p6_mobile_contract.py",
+        "tests/test_p6_sfhs_controls_v6.py",
+        "docs/tasks/P06/DOOM-P6-051.md",
+        "docs/results/P06/DOOM-P6-051.md",
+        "docs/reports/P06_SFHS_MOBILE_CONTROLS_V6.md",
+        "evidence/manifests/P06/sfhs-doom-android-sfhs-controls-v6.json",
+        "evidence/logs/P06/P6-051/**",
+        "dist/sfhs-doom-android-sfhs-controls-v6.html"
+      ],
+      "result": "docs/results/P06/DOOM-P6-051.md",
+      "commit": "SELF",
+      "started_at": "2026-08-08T00:00:00Z",
+      "base_head": "2353154a279c9a24a61e150b0ebeaaa4f8cd29f1",
+      "finished_at": "2026-08-08T05:00:00Z"
+    },
+    {
       "id": "DOOM-P6-050",
       "status": "pending",
       "card": "docs/tasks/P06/DOOM-P6-050.md",

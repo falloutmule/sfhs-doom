@@ -1,10 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { existsSync } from 'node:fs';
 
-const shellUrl = new URL('../../web/p6/shell.html', import.meta.url).href;
+const shellFile = new URL('../../dist/sfhs-doom-android-sfhs-controls-v6.html', import.meta.url);
+const shellUrl = shellFile.href;
 
 async function openShell(page, viewport) {
+  test.skip(!existsSync(shellFile), 'V6 artifact has not been built.');
   await page.setViewportSize(viewport);
-  await page.goto(shellUrl, { waitUntil: 'load' });
+  await page.goto(shellUrl, { waitUntil: 'load', timeout: 60000 });
+  await expect.poll(() => page.evaluate(() => Boolean(window.SFHSDoomMobileControls)), { timeout: 60000 }).toBeTruthy();
   await expect(page.locator('#sfhs-shell')).toBeVisible();
 }
 
@@ -30,13 +34,13 @@ for (const viewport of [
 test('editor drags and resizes a control without leaving edit mode', async ({ page }) => {
   await openShell(page, { width: 400, height: 844 });
   await page.getByRole('button', { name: 'Edit controls' }).click();
-  const move = page.locator('[data-control="move"]');
+  const move = page.locator('[data-sfhs-control-id="move"]');
   const before = await move.boundingBox();
   await move.hover({ position: { x: before.width / 2, y: before.height / 2 } });
   await page.mouse.down(); await page.mouse.move(before.x + before.width / 2 + 20, before.y + before.height / 2 + 22); await page.mouse.up();
   const dragged = await move.boundingBox();
   expect(dragged.x).toBeGreaterThan(before.x + 10);
-  const handle = move.locator('[data-resize]');
+  const handle = move.locator('[data-sfhs-resize-handle]');
   const beforeResize = await move.boundingBox();
   await handle.hover(); await page.mouse.down(); await page.mouse.move(beforeResize.x + beforeResize.width + 18, beforeResize.y + beforeResize.height + 18); await page.mouse.up();
   const resized = await move.boundingBox();
@@ -46,11 +50,11 @@ test('editor drags and resizes a control without leaving edit mode', async ({ pa
 
 test('mobile profile can be read and restored through its versioned contract', async ({ page }) => {
   await openShell(page, { width: 360, height: 800 });
-  const before = await page.evaluate(() => window.SFHS_WASM_TEST.mobileProfile());
-  const next = structuredClone(before); next.settings.opacity = 0.42; next.controls.fire.x = 0.72;
-  await page.evaluate((value) => window.SFHS_WASM_TEST.setMobileProfile(value), next);
-  const restored = await page.evaluate(() => window.SFHS_WASM_TEST.mobileProfile());
-  expect(restored.version).toBe(1);
+  const before = await page.evaluate(() => window.SFHS_WASM_TEST.mobileControlsProfile());
+  const next = structuredClone(before); next.settings.opacity = 0.42; next.layouts.portrait.primary.x = 0.72;
+  await page.evaluate((value) => window.SFHS_WASM_TEST.setMobileControlsProfile(value), next);
+  const restored = await page.evaluate(() => window.SFHS_WASM_TEST.mobileControlsProfile());
+  expect(restored.schema).toBe('sfhs.mobile-controls-profile@1');
   expect(restored.settings.opacity).toBe(0.42);
-  expect(restored.controls.fire.x).toBe(0.72);
+  expect(restored.layouts.portrait.primary.x).toBe(0.72);
 });

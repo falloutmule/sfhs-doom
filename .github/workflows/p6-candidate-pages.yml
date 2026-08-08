@@ -1,4 +1,4 @@
-name: Verify and deploy P6 SFHS controls candidate v8
+name: Verify and deploy P6 V8 resize observation probe
 
 on:
   pull_request:
@@ -28,9 +28,11 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: browser-tests/package-lock.json
-      - name: Verify exact selected V8 artifact identity
+      - name: Verify exact V8 probe and protected artifact identities
         shell: bash
         run: |
+          test "$(wc -c < dist/sfhs-doom-android-v8-resize-probe.html | tr -d ' ')" = '48335892'
+          printf '%s  %s\n' '9b4d3eb8aab37e0fa769b47ad29e430844ea1789fd807cbb8d88834cef73f6af' 'dist/sfhs-doom-android-v8-resize-probe.html' | sha256sum --check --strict
           test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v8.html | tr -d ' ')" = '48328131'
           printf '%s  %s\n' 'b806eb9274ae46954ecdc54968735ca1ca94f3f062e3559c54c59b0e7f6ad912' 'dist/sfhs-doom-android-sfhs-controls-v8.html' | sha256sum --check --strict
           test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v7.html | tr -d ' ')" = '48327287'
@@ -47,7 +49,7 @@ jobs:
           printf '%s  %s\n' '6737dbfc8c7909ea18a820de3cd6677654fab95277caf05eb9d660cb9235490e' 'dist/sfhs-doom-freedoom2.html' | sha256sum --check --strict
       - name: Run focused static and state-contract checks
         run: |
-          python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v8.html
+          python tools/validate-p6-mobile.py dist/sfhs-doom-android-v8-resize-probe.html
           python -m unittest tests.test_p6_mobile_contract tests.test_p6_sfhs_controls_v6 tests.test_artifact_manifest
           python tools/validate_artifact_manifest.py evidence/manifests/P06/sfhs-doom-android-sfhs-controls-v6.json
           python tools/validate_project_docs.py
@@ -79,15 +81,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Stage only exact V8 candidate bytes
+      - name: Stage only exact V8 resize-probe bytes
         shell: bash
         run: |
           set -euo pipefail
-          expected='b806eb9274ae46954ecdc54968735ca1ca94f3f062e3559c54c59b0e7f6ad912'
-          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v8.html | tr -d ' ')" = '48328131'
-          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v8.html' | sha256sum --check --strict
+          expected='9b4d3eb8aab37e0fa769b47ad29e430844ea1789fd807cbb8d88834cef73f6af'
+          test "$(wc -c < dist/sfhs-doom-android-v8-resize-probe.html | tr -d ' ')" = '48335892'
+          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-v8-resize-probe.html' | sha256sum --check --strict
           mkdir -p _pages
-          cp dist/sfhs-doom-android-sfhs-controls-v8.html _pages/index.html
+          cp dist/sfhs-doom-android-v8-resize-probe.html _pages/index.html
           : > _pages/.nojekyll
           printf '%s  %s\n' "$expected" '_pages/index.html' | sha256sum --check --strict
       - uses: actions/upload-pages-artifact@v3

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-1">
-  <title>SFHS Doom - Android V6</title>
+  <title>SFHS Doom - Android V8</title>
   <style>
     :root { color-scheme:dark; --edge:#5a7a93; --ink:#edf6ff; --vvh:100dvh; }
     * { box-sizing:border-box; }
@@ -31,8 +31,13 @@
     #sfhs-mobile-controls-root .sfhs-mobile-control { pointer-events:auto; }
     #sfhs-mobile-controls-root .sfhs-mobile-control { font:700 11px/1 ui-monospace,Consolas,monospace; letter-spacing:.04em; }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"] { border:0; background:transparent; color:#ffe4bc; }
-    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"]::before { content:""; position:absolute; left:6%; right:6%; top:50%; height:22px; transform:translateY(-50%); border:1px solid #d29b65; border-radius:999px; background:rgb(112 67 32 / .72); box-shadow:0 0 0 1px rgb(255 224 183 / .14) inset; }
+    /* The rail is visual only: the package-owned relative1d target remains its generous rectangle. */
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"]::before { content:""; position:absolute; left:6%; right:6%; top:50%; height:38px; transform:translateY(-50%); border:1px solid #d29b65; border-radius:999px; background:rgb(112 67 32 / .72); box-shadow:0 0 0 1px rgb(255 224 183 / .14) inset; }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"] .sfhs-mobile-control-label { position:relative; z-index:1; }
+    /* Keep the package editor's drag/resize routing; these rules only improve its phone affordances. */
+    #sfhs-mobile-controls-root .sfhs-mobile-control-resize { width:32px; height:32px; display:none; right:0; bottom:0; transform:translate(22%,22%); border:3px solid #fff4c9; background:repeating-linear-gradient(135deg,#ffcc55 0 4px,#643c12 4px 8px); box-shadow:0 0 0 2px #101c25,0 0 12px rgb(255 204 85 / .95); }
+    #sfhs-mobile-controls-root[data-editing="true"] .sfhs-mobile-control-resize { display:block; }
+    #sfhs-mobile-controls-root[data-editing="true"] .sfhs-mobile-control[data-control-active="true"] { z-index:2; outline:4px solid #ffcc55; outline-offset:4px; box-shadow:0 0 0 2px #12212c,0 0 16px rgb(255 204 85 / .9); }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="primary"] { background:rgb(137 77 35 / .85); font-size:13px; }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="interact"] { background:rgb(99 58 30 / .78); }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="menu"],#sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="map"],#sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id^="weapon"] { border-radius:4px; background:rgb(28 44 56 / .84); border-color:#7599b2; }
@@ -78,7 +83,7 @@
     ];
     const controller = window.SFHSMobileControls.createMobileControls({controls:declarations,persistence:{key:'sfhsDoom.mobileControls.v2'},settings:{relativeSensitivity:1}});
     controller.mount(document.getElementById('sfhs-mobile-controls-root'));
-    const state = {buildProfile:'P6-ANDROID-PORTRAIT-V6',diagnosticBuild:'P6-SFHS-CONTROLS-V6',sourceCommit:'2353154a279c9a24a61e150b0ebeaaa4f8cd29f1+local-v6',artifact:'sfhs-doom-android-sfhs-controls-v6.html',mainStarted:false,mainInvocations:0,hudUpdates:0,audioContextState:null,audioCallbacks:0,nonzeroPcmCallbacks:0,errors:[],lastEngineDiagnostic:null,oracle:false};
+    const state = {buildProfile:'P6-ANDROID-PORTRAIT-V8',diagnosticBuild:'P6-SFHS-CONTROLS-V8',sourceCommit:'ed8bd449c19273df11f68d62e38807225c58f9fa+local-v8',artifact:'sfhs-doom-android-sfhs-controls-v8.html',mainStarted:false,mainInvocations:0,hudUpdates:0,audioContextState:null,audioCallbacks:0,nonzeroPcmCallbacks:0,errors:[],lastEngineDiagnostic:null,oracle:false};
     window.SFHS_P6_STATE = state;
     const actions = {forward:0,backward:1,left:2,right:3,primary:4,interact:5,modifier:6,menu:7,map:8,previous:9,next:10};
     let lookRemainder = 0;

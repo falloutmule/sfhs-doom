@@ -51,6 +51,9 @@
 #ifdef __EMSCRIPTEN__
 #include "sfhs_mobile_input.h"
 #include "sfhs_mobile_present.h"
+#ifdef SFHS_MOBILE_DETACHED_HUD
+#include "sfhs_mobile_hud.h"
+#endif
 #endif
 
 // These are (1) the window (or the full screen) that our game is rendered to
@@ -899,7 +902,15 @@ void I_SetPalette (byte *doompalette)
         palette[i].r = gammatable[usegamma][*doompalette++] & ~3;
         palette[i].g = gammatable[usegamma][*doompalette++] & ~3;
         palette[i].b = gammatable[usegamma][*doompalette++] & ~3;
+#ifdef SFHS_MOBILE_DETACHED_HUD
+        sfhs_mobile_hud_set_palette_entry(i, palette[i].r, palette[i].g,
+                                          palette[i].b);
+#endif
     }
+
+#ifdef SFHS_MOBILE_DETACHED_HUD
+    sfhs_mobile_hud_palette_updated();
+#endif
 
     palette_to_set = true;
 }
@@ -1514,6 +1525,12 @@ void I_InitGraphics(void)
         fullscreen = true;
     }
 
+#ifdef SFHS_MOBILE_DETACHED_HUD
+    // The V10 handheld presents the complete native 320x200 surface at its
+    // own 8:5 aspect. Do not mutate aspect_ratio_correct: it remains the
+    // user's persisted Chocolate Doom preference outside this presentation.
+    actualheight = SCREENHEIGHT;
+#else
     if (aspect_ratio_correct == 1)
     {
         actualheight = SCREENHEIGHT_4_3;
@@ -1522,6 +1539,7 @@ void I_InitGraphics(void)
     {
         actualheight = SCREENHEIGHT;
     }
+#endif
 
     // Create the game window; this may switch graphic modes depending
     // on configuration.

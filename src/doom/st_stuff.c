@@ -59,6 +59,10 @@
 #include "dstrings.h"
 #include "sounds.h"
 
+#ifdef SFHS_MOBILE_DETACHED_HUD
+#include "sfhs_mobile_hud.h"
+#endif
+
 //
 // STATUS BAR DATA
 //
@@ -998,9 +1002,55 @@ void ST_diffDraw(void)
     ST_drawWidgets(false);
 }
 
+#ifdef SFHS_MOBILE_DETACHED_HUD
+static void ST_DrawDetachedStatus(void)
+{
+    pixel_t *scratch = sfhs_mobile_hud_indexed_buffer();
+    boolean saved_statusbaron = st_statusbaron;
+    boolean saved_armson = st_armson;
+    boolean saved_fragson = st_fragson;
+    boolean saved_firsttime = st_firsttime;
+
+    // Draw the existing WAD-owned background and widgets at their authentic
+    // absolute 320x200 coordinates. ST_refreshBackground() cannot be reused
+    // here because its V_RestoreBuffer() deliberately selects I_VideoBuffer.
+    st_statusbaron = true;
+    V_UseBuffer(st_backing_screen);
+    V_DrawPatch(ST_X, 0, sbar);
+    if (sbarr)
+    {
+        V_DrawPatch(ST_ARMSBGX, 0, sbarr);
+    }
+    if (netgame)
+    {
+        V_DrawPatch(ST_FX, 0, faceback);
+    }
+
+    V_UseBuffer(scratch);
+    V_CopyRect(ST_X, 0, st_backing_screen, ST_WIDTH, ST_HEIGHT, ST_X, ST_Y);
+    ST_drawWidgets(true);
+    V_RestoreBuffer();
+
+    st_statusbaron = saved_statusbaron;
+    st_armson = saved_armson;
+    st_fragson = saved_fragson;
+    st_firsttime = saved_firsttime;
+
+    sfhs_mobile_hud_publish(scaledviewwidth, viewheight, 11, 0);
+}
+#endif
+
 void ST_Drawer (boolean fullscreen, boolean refresh)
 {
-  
+#ifdef SFHS_MOBILE_DETACHED_HUD
+    // Palette effects remain owned by the original status implementation,
+    // while all authentic status pixels go only to the detached surface.
+    st_statusbaron = false;
+    ST_doPaletteStuff();
+    ST_DrawDetachedStatus();
+    return;
+#endif
+
     st_statusbaron = (!fullscreen) || automapactive;
     st_firsttime = st_firsttime || refresh;
 

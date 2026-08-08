@@ -199,6 +199,21 @@ if(DEFINED EMSCRIPTEN)
                                "${CMAKE_CURRENT_SOURCE_DIR}/doom")
 endif()
 
+option(SFHS_MOBILE_DETACHED_HUD
+       "Enable the Doom-only detached authentic mobile status surface" OFF)
+if(DEFINED EMSCRIPTEN AND SFHS_MOBILE_DETACHED_HUD)
+    target_sources("${PROGRAM_PREFIX}doom" PRIVATE
+                   sfhs_mobile/sfhs_mobile_hud.c
+                   sfhs_mobile/sfhs_mobile_hud.h)
+    target_include_directories("${PROGRAM_PREFIX}doom" PRIVATE
+                               "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_mobile")
+    target_compile_definitions("${PROGRAM_PREFIX}doom" PRIVATE
+                               SFHS_MOBILE_DETACHED_HUD=1)
+    target_include_directories(doom PRIVATE
+                               "${CMAKE_CURRENT_SOURCE_DIR}/sfhs_mobile")
+    target_compile_definitions(doom PRIVATE SFHS_MOBILE_DETACHED_HUD=1)
+endif()
+
 if(MSVC)
     set_target_properties("${PROGRAM_PREFIX}doom" PROPERTIES
                           LINK_FLAGS "/MANIFEST:NO")

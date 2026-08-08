@@ -1,4 +1,4 @@
-name: Verify and deploy P6 V9 resize-range candidate
+name: Verify and deploy P6 V10 native-HUD fullscreen candidate
 
 on:
   pull_request:
@@ -11,12 +11,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: p6-v9-candidate-${{ github.workflow }}-${{ github.ref }}
+  group: p6-v10-candidate-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   verify:
-    name: Minimal V9 candidate gate
+    name: Minimal V10 candidate gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,26 +28,27 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: browser-tests/package-lock.json
-      - name: Verify exact V9 candidate and protected V8 baseline
+      - name: Verify exact V10 candidate and protected V9/V8 baselines
         shell: bash
         run: |
           set -euo pipefail
-          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v9.html | tr -d ' ')" = '48328267'
+          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v10.html | tr -d ' ')" = '48341427'
+          printf '%s  %s\n' '73a29b3ef179239744785a9b3e9b995fab77b82ab6c33452ae143d57a0b9e8f7' 'dist/sfhs-doom-android-sfhs-controls-v10.html' | sha256sum --check --strict
           printf '%s  %s\n' 'be885e63be73232d30bb0f897a319baa380231ea56e3eaebea64b29c71c05111' 'dist/sfhs-doom-android-sfhs-controls-v9.html' | sha256sum --check --strict
           printf '%s  %s\n' 'b806eb9274ae46954ecdc54968735ca1ca94f3f062e3559c54c59b0e7f6ad912' 'dist/sfhs-doom-android-sfhs-controls-v8.html' | sha256sum --check --strict
       - name: Validate the current single-file candidate
-        run: python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v9.html
+        run: python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v10.html
       - name: Install focused browser test dependencies
         working-directory: browser-tests
         run: |
           npm ci
           npx playwright install --with-deps chromium
-      - name: Run V9-focused browser gate
+      - name: Run V10-focused browser gate
         working-directory: browser-tests
-        run: npx playwright test tests/p6-v9-resize-range.spec.mjs --workers=1
+        run: npx playwright test tests/p6-v10-native-hud-fullscreen.spec.mjs --workers=1
 
   deploy-pages:
-    name: Publish exact V9 candidate to GitHub Pages
+    name: Publish exact V10 candidate to GitHub Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
@@ -64,15 +65,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Stage only exact V9 bytes
+      - name: Stage only exact V10 bytes
         shell: bash
         run: |
           set -euo pipefail
-          expected='be885e63be73232d30bb0f897a319baa380231ea56e3eaebea64b29c71c05111'
-          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v9.html | tr -d ' ')" = '48328267'
-          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v9.html' | sha256sum --check --strict
+          expected='73a29b3ef179239744785a9b3e9b995fab77b82ab6c33452ae143d57a0b9e8f7'
+          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v10.html | tr -d ' ')" = '48341427'
+          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v10.html' | sha256sum --check --strict
           mkdir -p _pages
-          cp dist/sfhs-doom-android-sfhs-controls-v9.html _pages/index.html
+          cp dist/sfhs-doom-android-sfhs-controls-v10.html _pages/index.html
           : > _pages/.nojekyll
           printf '%s  %s\n' "$expected" '_pages/index.html' | sha256sum --check --strict
       - uses: actions/upload-pages-artifact@v3

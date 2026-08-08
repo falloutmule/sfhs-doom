@@ -654,6 +654,12 @@ R_SetViewSize
 ( int		blocks,
   int		detail )
 {
+#ifdef SFHS_MOBILE_DETACHED_HUD
+    // The browser-only detached status surface frees the complete logical
+    // framebuffer for the world. Keep the user's bound configuration value
+    // untouched so the forced presentation choice is never saved over it.
+    blocks = 11;
+#endif
     setsizeneeded = true;
     setblocks = blocks;
     setdetail = detail;
@@ -673,6 +679,12 @@ void R_ExecuteSetViewSize (void)
     int		startmap; 	
 
     setsizeneeded = false;
+
+#ifdef SFHS_MOBILE_DETACHED_HUD
+    // Also guard the application seam so no direct pending resize request can
+    // reintroduce the internal status reservation or decorative border.
+    setblocks = 11;
+#endif
 
     if (setblocks == 11)
     {

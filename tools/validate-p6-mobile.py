@@ -10,9 +10,28 @@ def main(path: Path) -> int:
     failures = []
     if text.count("<!doctype html>") != 1:
         failures.append("not exactly one HTML document")
-    for token in ("P6-ANDROID-PORTRAIT-1", "minimap-canvas", "sfhs_mobile_state_snapshot", "sfhs_mobile_input_set_held"):
+    for token in (
+        "P6-ANDROID-PORTRAIT-V10",
+        'id="sfhs-fullscreen-root"',
+        'data-sfhs-fullscreen-app-root="v10"',
+        'id="canvas" width="320" height="200"',
+        'id="doom-status-canvas" width="320" height="32"',
+        "requestFullscreen",
+        "sfhs_mobile_hud_snapshot",
+        "sfhs_mobile_hud_pixels",
+        "HEAPU8",
+        "minimap-canvas",
+        "sfhs_mobile_state_snapshot",
+        "sfhs_mobile_state_lines",
+        "sfhs_mobile_input_set_held",
+        "sfhs_mobile_input_post_look",
+    ):
         if token not in text:
             failures.append(f"missing {token}")
+    for stale in ('id="info-strip"', 'id="hud-health"', 'id="hud-armor"',
+                  'id="hud-ammo"', 'id="hud-weapon"', 'id="hud-keys"'):
+        if stale in text:
+            failures.append(f"stale HTML HUD token {stale}")
     if re.search(r"(?:src|href)=[\"'][^\"']*chocolate-doom\.wasm", text, re.I):
         failures.append("external Wasm asset reference")
     if re.search(r"<(?:script|link|img)\b[^>]+(?:src|href)=[\"']https?://", text, re.I):

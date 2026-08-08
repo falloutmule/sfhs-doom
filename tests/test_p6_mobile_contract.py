@@ -10,6 +10,8 @@ BUILD = (ROOT / "tools/build-single-file.sh").read_text(encoding="utf-8")
 INPUT = (ROOT / "src/sfhs_mobile/sfhs_mobile_input.c").read_text(encoding="utf-8")
 HEADER = (ROOT / "src/sfhs_mobile/sfhs_mobile_input.h").read_text(encoding="utf-8")
 STATE = (ROOT / "src/sfhs_mobile/sfhs_mobile_state.c").read_text(encoding="utf-8")
+HUD = (ROOT / "src/sfhs_mobile/sfhs_mobile_hud.c").read_text(encoding="utf-8")
+HUD_HEADER = (ROOT / "src/sfhs_mobile/sfhs_mobile_hud.h").read_text(encoding="utf-8")
 
 
 class P6MobileContractTests(unittest.TestCase):
@@ -21,14 +23,14 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertNotIn("processLook(event)", SHELL)
         self.assertNotIn("lookState.accumulator", SHELL)
 
-    def test_v9_declares_doom_specific_resize_ranges_and_relative_look_rail(self):
+    def test_v10_retains_doom_specific_resize_ranges_and_relative_look_rail(self):
         for control in ("move", "look", "primary", "interact", "modifier", "menu", "map", "weapon-previous", "weapon-next"):
             self.assertIn(f"id:'{control}'", SHELL)
         self.assertIn('data-sfhs-control-id="look"', SHELL)
         self.assertIn("top:27.5%; bottom:27.5%", SHELL)
         self.assertIn(".sfhs-mobile-control-resize { width:32px; height:32px", SHELL)
         self.assertIn('[data-editing="true"] .sfhs-mobile-control[data-control-active="true"]', SHELL)
-        self.assertIn("lookCountsPerWidth = 4096", SHELL)
+        self.assertIn("lookCountsPerWidth=4096", SHELL)
         self.assertIn("relativeSensitivity:1", SHELL)
         self.assertIn("id:'look',type:'relative1d',axis:'x',label:'LOOK',minWidth:.08,minHeight:.05", SHELL)
         self.assertIn("id:'primary',type:'hold',label:'FIRE',minWidth:.07,minHeight:.05", SHELL)
@@ -37,16 +39,29 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertEqual(SHELL.count("minWidth:.06,minHeight:.05"), 6)
 
     def test_shared_stick_uses_upward_cartesian_y_for_doom_forward(self):
-        self.assertIn("setHeld(actions.forward,move.y > threshold)", SHELL)
-        self.assertIn("setHeld(actions.backward,move.y < -threshold)", SHELL)
+        self.assertIn("setHeld(actions.forward,move.y>threshold)", SHELL)
+        self.assertIn("setHeld(actions.backward,move.y< -threshold)", SHELL)
 
-    def test_v6_keeps_mobile_launch_contract_and_single_file_bundle(self):
+    def test_v10_keeps_mobile_launch_contract_and_single_file_bundle(self):
         self.assertIn("'-nograbmouse'", SHELL)
         self.assertNotIn("'-nomouse'", SHELL)
         self.assertIn("inject-mobile-controls-bundle.py", BUILD)
         self.assertIn("--global-name=SFHSMobileControls", BUILD)
         self.assertIn("--format=iife", BUILD)
-        self.assertIn("EXPORTED_RUNTIME_METHODS=callMain,ccall,cwrap,FS,ENV,HEAP32", BUILD)
+        self.assertIn("runtime_methods='callMain,ccall,cwrap,FS,ENV,HEAP32'", BUILD)
+        self.assertIn('runtime_methods="$runtime_methods,HEAPU8"', BUILD)
+        self.assertIn("_sfhs_mobile_hud_snapshot", BUILD)
+        self.assertIn("_sfhs_mobile_hud_pixels", BUILD)
+
+    def test_v10_detached_hud_contract_is_read_only_and_fixed_size(self):
+        self.assertIn("#define SFHS_MOBILE_HUD_WIDTH 320", HUD_HEADER)
+        self.assertIn("#define SFHS_MOBILE_HUD_HEIGHT 32", HUD_HEADER)
+        self.assertIn("const sfhs_mobile_hud_snapshot_t *sfhs_mobile_hud_snapshot", HUD_HEADER)
+        self.assertIn("const uint8_t *sfhs_mobile_hud_pixels", HUD_HEADER)
+        self.assertIn("SFHS_MOBILE_HUD_WIDTH * 4", HUD)
+        self.assertIn('id="doom-status-canvas" width="320" height="32"', SHELL)
+        self.assertIn('id="sfhs-fullscreen-root"', SHELL)
+        self.assertNotIn('id="info-strip"', SHELL)
 
     def test_native_bridge_posts_only_standard_doom_events(self):
         self.assertIn("D_PostEvent(&event);", INPUT)

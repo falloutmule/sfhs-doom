@@ -199,7 +199,11 @@ static int 	grid = 0;
 
 boolean    	automapactive = false;
 static int 	finit_width = SCREENWIDTH;
+#ifdef SFHS_MOBILE_DETACHED_HUD
+static int 	finit_height = SCREENHEIGHT;
+#else
 static int 	finit_height = SCREENHEIGHT - ST_HEIGHT;
+#endif
 
 // location of window on screen
 static int 	f_x;

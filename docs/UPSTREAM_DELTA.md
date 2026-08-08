@@ -1,6 +1,6 @@
 # Upstream Delta
 
-**Current engine delta:** one compile-time-gated P01 test observer; ordinary builds remain behaviorally unchanged
+**Current engine delta:** compile-time-gated P01 oracle observer plus a V10 Emscripten-only detached-HUD presentation path; ordinary native builds remain behaviorally unchanged
 **Upstream base:** Chocolate Doom `chocolate-doom-3.1.1` at `410d96855b5df5410ff591a90efeafa889119224`
 
 P00 governance files do not alter engine behavior, native build behavior, or future Wasm behavior.
@@ -54,6 +54,23 @@ P6-030 adds a second Emscripten-only, static read-only packet. It copies only
 player status and map lines marked `ML_MAPPED` while excluding `ML_DONTDRAW`.
 It exports no entities, items, or simulation mutator and does not alter the
 engine automap path.
+
+## P6-058 detached native HUD and full-view delta
+
+P6-058 adds `SFHS_MOBILE_DETACHED_HUD`, enabled only by the Android single-file
+profile under Emscripten. When enabled, `R_SetViewSize` and its application seam
+use screenblocks 11 without changing the persisted configuration value; the
+automap uses the complete 320x200 logical surface; and SDL presentation uses the
+raw 8:5 logical height without rewriting `aspect_ratio_correct`.
+
+The existing Doom status implementation draws its original WAD graphics and
+widgets into a Doom-owned 320x200 scratch buffer, restores the active video
+target and private status flags, then publishes only rows 168-199 as a
+palette-correct 320x32 RGBA snapshot. `I_SetPalette` supplies the exact active
+gamma-adjusted PLAYPAL colors. Native builds do not compile this module or
+define the flag; a clean Debug native link with the flag explicitly OFF passes.
+No simulation, tic, RNG, save, demo, compatibility, or configuration-format
+path changes.
 
 ## P2-050 multi-file Wasm boundary
 

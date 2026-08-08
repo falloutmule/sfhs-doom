@@ -500,9 +500,9 @@ void I_StartTic (void)
     }
 
 #ifdef __EMSCRIPTEN__
-    // DOM pointer events can outnumber Doom tics.  Flush their accumulated
-    // horizontal motion once here so G_Responder receives one ev_mouse per tic.
-    sfhs_mobile_input_flush_look();
+    // The shared DOM controller drains its relative/pulse output once per
+    // authoritative Doom tic and posts only ordinary configured Doom input.
+    sfhs_mobile_input_flush_controls();
 #endif
 
     if (joywait < I_GetTime())

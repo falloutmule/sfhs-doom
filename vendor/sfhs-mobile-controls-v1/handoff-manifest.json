@@ -1,0 +1,29 @@
+{
+  "schema": "sfhs.mobile-controls-handoff@1",
+  "repository": "falloutmule/single-file-html-software",
+  "branch": "feature/sfhs-mobile-controls-v1",
+  "head": "b02336c4de013a3fcd9bd900701867c7f99ffdd1",
+  "implementationCommit": "9af795fbf22b19e06724785517b97bb3d98c934a",
+  "base": "4248c67021e930b7fb4a882f73dfd8ab87df0ee7",
+  "donor": {
+    "repository": "falloutmule/solidarity-not-charity-can-run",
+    "commit": "ae0cba08b647ebff5db533f1dedff1b46f789412",
+    "primarySourceBlob": "f50ef5e957a4fb7a5cf2e9b1a01bb061276b169b"
+  },
+  "artifact": {
+    "path": "examples/mobile-controls-lab/dist/index.html",
+    "bytes": 31218,
+    "sha256": "d12ed344823610cc636cd01561629443b7b434f8d97b6cff35d39d39457b1e33",
+    "buildId": "mobile-controls-lab-9a565838dc8e"
+  },
+  "verification": {
+    "focused": "35 passed, 2 skipped",
+    "full": "270 passed, 2 skipped",
+    "determinism": "passed",
+    "browser": "passed",
+    "physicalSamsung": "PASS — user-reported 2026-08-07",
+    "overallAcceptance": "PASS",
+    "frozenImplementation": "ACCEPTED"
+  },
+  "remoteActions": []
+}

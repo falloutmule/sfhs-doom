@@ -4,76 +4,43 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-1">
-  <title>SFHS Doom — Android</title>
+  <title>SFHS Doom - Android V6</title>
   <style>
-    :root { color-scheme: dark; --edge:#5a7a93; --panel:#111921; --ink:#edf6ff; --amber:#ae7140; --deck-alpha:.58; --vvh:100dvh; }
+    :root { color-scheme:dark; --edge:#5a7a93; --ink:#edf6ff; --vvh:100dvh; }
     * { box-sizing:border-box; }
-    html, body { width:100%; height:100%; margin:0; overflow:hidden; background:#05080c; color:var(--ink); font:12px/1.15 ui-monospace,Consolas,monospace; }
-    button, input { font:inherit; }
-    button { color:inherit; border:1px solid #6f8ca1; background:#182631; border-radius:3px; touch-action:manipulation; }
+    html,body { width:100%; height:100%; margin:0; overflow:hidden; background:#05080c; color:var(--ink); font:12px/1.15 ui-monospace,Consolas,monospace; }
+    button,input { font:inherit; } button { color:inherit; border:1px solid #6f8ca1; background:#182631; border-radius:3px; touch-action:manipulation; }
     #sfhs-shell { height:var(--vvh); min-height:0; padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); display:grid; grid-template-rows:minmax(0,41fr) minmax(0,17fr) minmax(0,33fr) minmax(28px,9fr); background:#05080c; }
     .region { min-width:0; min-height:0; border-bottom:1px solid var(--edge); }
     #game-region { position:relative; display:grid; place-items:center; overflow:hidden; background:#000; container-type:size; }
     #canvas { display:block; inline-size:min(100cqw,160cqh); block-size:min(62.5cqw,100cqh); aspect-ratio:8/5; image-rendering:pixelated; outline:none; }
-    #start-doom { position:absolute; z-index:4; left:10px; top:10px; min-height:34px; padding:5px 9px; background:#67201e; border-color:#d0735f; }
-    #renderer-selector { position:absolute; z-index:4; left:10px; top:50px; display:grid; gap:2px; color:#c4d9e9; font-size:9px; }
+    #start-doom,#edit-toggle,#diagnostics-toggle,#renderer-selector { position:absolute; z-index:4; }
+    #start-doom { left:10px; top:10px; min-height:34px; padding:5px 9px; background:#67201e; border-color:#d0735f; }
+    #renderer-selector { left:10px; top:50px; display:grid; gap:2px; color:#c4d9e9; font-size:9px; }
     #renderer-selector select { min-height:27px; color:inherit; background:#182631; border:1px solid #6f8ca1; }
-    #edit-toggle { position:absolute; z-index:4; right:10px; top:10px; min-height:34px; padding:5px 9px; }
-    #diagnostics-toggle { position:absolute; z-index:4; right:10px; top:50px; min-height:28px; padding:4px 7px; font-size:10px; }
-    #input-test-toggle { position:absolute; z-index:4; left:10px; top:88px; min-height:28px; padding:4px 7px; font-size:10px; }
-    #input-test-panel { position:fixed; z-index:11; top:8px; left:8px; width:min(390px,calc(100vw - 16px)); display:grid; gap:5px; padding:8px; background:#081119f5; border:1px solid #86aac2; border-radius:5px; pointer-events:none; }
-    #input-test-panel[hidden] { display:none; }
-    #input-test-panel header { display:flex; align-items:center; justify-content:space-between; gap:6px; }
-    #input-test-panel button { min-height:28px; padding:3px 7px; pointer-events:auto; }
-    .input-test-row { display:grid; grid-template-columns:48px 64px minmax(0,1fr); gap:5px; align-items:start; padding:3px 0; border-top:1px solid #294151; }
-    .input-test-row output { font-weight:700; color:#c6d8e5; }
-    .input-test-row output[data-result="PASS"] { color:#8be59c; }
-    .input-test-row output[data-result="FAIL"] { color:#ff9b8d; }
-    .input-test-row small { color:#a9c0d0; overflow-wrap:anywhere; }
-    #input-test-utility { margin:0; color:#a9c0d0; font-size:9px; }
+    #edit-toggle { right:10px; top:10px; min-height:34px; padding:5px 9px; }
+    #diagnostics-toggle { right:10px; top:50px; min-height:28px; padding:4px 7px; font-size:10px; }
     #status { position:absolute; z-index:3; left:8px; right:8px; bottom:5px; margin:0; color:#c4d9e9; font-size:10px; text-align:center; text-shadow:0 1px #000; pointer-events:none; }
-    #diagnostic-panel { position:fixed; z-index:12; top:8px; right:8px; left:8px; max-height:calc(var(--vvh) - 16px); display:grid; grid-template-rows:auto auto minmax(220px,1fr) auto; gap:6px; padding:8px; overflow:hidden; background:#081119f5; border:1px solid #86aac2; border-radius:5px; }
-    #diagnostic-panel[hidden] { display:none; }
-    #diagnostic-panel header { display:flex; gap:6px; align-items:center; justify-content:space-between; }
-    #diagnostic-panel textarea { min-height:220px; height:min(62vh,560px); width:100%; resize:vertical; overflow:auto; white-space:pre; font:10px/1.2 ui-monospace,Consolas,monospace; color:#d8efff; background:#050b10; border:1px solid #506d82; }
-    #diagnostics-message { min-height:1.2em; margin:0; color:#b8d5e8; font-size:10px; }
-    #diagnostic-panel button { min-height:30px; padding:4px 7px; }
     #minimap-region { display:grid; place-items:center; overflow:hidden; background:#0b151d; }
-    #minimap-canvas { width:min(100%, 400px); height:100%; max-height:100%; image-rendering:pixelated; }
+    #minimap-canvas { width:min(100%,400px); height:100%; max-height:100%; image-rendering:pixelated; }
     #minimap-placeholder { position:absolute; color:#71899a; pointer-events:none; }
-    #control-deck { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(#17232d, #0d151c); --deck-alpha:.58; }
-    .mobile-control { position:absolute; z-index:2; transform:translateZ(0); display:grid; place-items:center; min-width:44px; min-height:44px; padding:2px; border:1px solid color-mix(in srgb, var(--amber) 90%, #fff); border-radius:50%; background:rgb(120 70 31 / var(--deck-alpha)); color:#fff0d5; text-align:center; font-weight:700; user-select:none; -webkit-user-select:none; touch-action:none; }
-    .mobile-control.utility { border-radius:4px; background:rgb(28 44 56 / var(--deck-alpha)); border-color:#7599b2; font-size:10px; }
-    .mobile-control.pad { color:#ffe2b6; border-style:dashed; }
-    .mobile-control[data-control="move"]::after { content:"MOVE"; }
-    .mobile-control[data-control="look"]::after { content:"LOOK / TURN"; }
-    .mobile-control.is-editing { outline:2px solid #b5e2ff; outline-offset:1px; cursor:grab; }
-    .mobile-control.is-editing[data-resizing="true"] { cursor:nwse-resize; }
-    .resize-handle { display:none; position:absolute; width:16px; height:16px; right:20%; bottom:20%; border:1px solid #ddecf8; background:#294b61; border-radius:50%; }
-    .is-editing .resize-handle { display:block; }
-    #edit-panel { position:fixed; z-index:8; top:8px; left:50%; width:min(380px,calc(100vw - 16px)); max-height:calc(41vh - 16px); transform:translateX(-50%); display:none; grid-template-columns:1fr 1fr; gap:6px; align-content:start; padding:8px; overflow:auto; background:#081119f2; border:1px solid #86aac2; border-radius:5px; pointer-events:auto; }
-    #edit-panel.is-open { display:grid; }
-    #edit-panel h2, #edit-panel p { grid-column:1 / -1; margin:0; }
-    #edit-panel h2 { font-size:13px; color:#d8efff; }
-    #edit-panel p { color:#a9becd; font-size:10px; }
-    #edit-panel label { display:grid; gap:3px; color:#c5d8e4; }
-    #edit-panel input[type="range"] { width:100%; }
-    #edit-panel button { min-height:32px; padding:4px; }
-    #edit-panel .wide { grid-column:1 / -1; }
-    #profile-file { display:none; }
+    #control-deck { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(#17232d,#0d151c); }
     #info-strip { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); align-items:center; gap:1px; padding:2px 4px; overflow:hidden; background:#0a0e13; }
-    .info-field { min-width:0; text-align:center; color:#e4f1fa; }
-    .info-field b { display:block; color:#7faac5; font-size:9px; }
-    .info-field span { font-size:clamp(11px, 3vw, 17px); font-weight:700; white-space:nowrap; }
-    body[data-sfhs-p6-editing="true"] #status { display:none; }
-    @media (orientation:landscape) {
-      #sfhs-shell { grid-template-columns:minmax(0,1fr) minmax(150px,26vw); grid-template-rows:minmax(0,1fr) minmax(30px,12vh); }
-      #game-region { grid-column:1; grid-row:1; }
-      #minimap-region { grid-column:2; grid-row:1; border-left:1px solid var(--edge); }
-      #control-deck { grid-column:2; grid-row:1; margin-top:34%; border-left:1px solid var(--edge); }
-      #info-strip { grid-column:1 / -1; grid-row:2; }
-      #minimap-canvas { max-width:100%; height:auto; aspect-ratio:1; }
-    }
+    .info-field { min-width:0; text-align:center; color:#e4f1fa; }.info-field b { display:block; color:#7faac5; font-size:9px; }.info-field span { font-size:clamp(11px,3vw,17px); font-weight:700; white-space:nowrap; }
+    #sfhs-mobile-controls-root { position:fixed; inset:0; z-index:1000; pointer-events:none; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control { pointer-events:auto; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control { font:700 11px/1 ui-monospace,Consolas,monospace; letter-spacing:.04em; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"] { border:0; background:transparent; color:#ffe4bc; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"]::before { content:""; position:absolute; left:6%; right:6%; top:50%; height:22px; transform:translateY(-50%); border:1px solid #d29b65; border-radius:999px; background:rgb(112 67 32 / .72); box-shadow:0 0 0 1px rgb(255 224 183 / .14) inset; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="look"] .sfhs-mobile-control-label { position:relative; z-index:1; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="primary"] { background:rgb(137 77 35 / .85); font-size:13px; }
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="interact"] { background:rgb(99 58 30 / .78); }
+    #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="menu"],#sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="map"],#sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id^="weapon"] { border-radius:4px; background:rgb(28 44 56 / .84); border-color:#7599b2; }
+    #edit-panel,#diagnostic-panel { position:fixed; z-index:1100; top:8px; left:50%; width:min(390px,calc(100vw - 16px)); transform:translateX(-50%); display:none; gap:6px; padding:8px; overflow:auto; background:#081119f5; border:1px solid #86aac2; border-radius:5px; }
+    #edit-panel.is-open,#diagnostic-panel.is-open { display:grid; } #edit-panel { grid-template-columns:1fr 1fr; max-height:calc(var(--vvh) - 16px); } #diagnostic-panel { grid-template-rows:auto minmax(160px,1fr); max-height:calc(var(--vvh) - 16px); }
+    #edit-panel h2,#edit-panel p { grid-column:1 / -1; margin:0; } #edit-panel p { color:#a9becd; font-size:10px; } #edit-panel label { display:grid; gap:3px; color:#c5d8e4; } #edit-panel input[type="range"] { width:100%; } #edit-panel button { min-height:32px; padding:4px; } #edit-panel .wide { grid-column:1 / -1; }
+    #diagnostic-output { margin:0; min-height:160px; overflow:auto; white-space:pre-wrap; color:#d8efff; font:10px/1.2 ui-monospace,Consolas,monospace; } #profile-file { display:none; }
+    @media (orientation:landscape) { #sfhs-shell { grid-template-columns:minmax(0,1fr) minmax(150px,26vw); grid-template-rows:minmax(0,1fr) minmax(30px,12vh); } #game-region { grid-column:1;grid-row:1; } #minimap-region { grid-column:2;grid-row:1;border-left:1px solid var(--edge); } #control-deck { grid-column:2;grid-row:1;margin-top:34%;border-left:1px solid var(--edge); } #info-strip { grid-column:1/-1;grid-row:2; } #minimap-canvas { max-width:100%;height:auto;aspect-ratio:1; } }
   </style>
 </head>
 <body>
@@ -82,236 +49,85 @@
       <canvas id="canvas" width="320" height="200" tabindex="0" aria-label="Chocolate Doom canvas"></canvas>
       <button id="start-doom" type="button" hidden>Start Doom</button>
       <label id="renderer-selector">Renderer <select id="renderer-mode" aria-label="Renderer mode"><option value="auto">Auto</option><option value="compatibility">Compatibility</option></select></label>
-      <button id="edit-toggle" type="button" aria-expanded="false">Edit controls</button>
-      <button id="diagnostics-toggle" type="button" aria-expanded="false">Diagnostics</button>
-      <button id="input-test-toggle" type="button" aria-pressed="false">Test controls: off</button>
-      <pre id="status" aria-live="polite">Preparing embedded engine…</pre>
+      <button id="edit-toggle" type="button" aria-expanded="false">Edit controls</button><button id="diagnostics-toggle" type="button" aria-expanded="false">Controls</button>
+      <pre id="status" aria-live="polite">Preparing embedded engine...</pre>
     </section>
-    <section id="minimap-region" class="region" aria-label="Explored minimap">
-      <canvas id="minimap-canvas" width="320" height="120" aria-label="Read-only explored minimap"></canvas>
-      <span id="minimap-placeholder">MINIMAP — P6-030</span>
-    </section>
-    <section id="control-deck" class="region" aria-label="Touch control deck">
-      <button class="mobile-control utility" data-control="menu" data-mobile-action="menu" type="button">MENU<span class="resize-handle" data-resize></span></button>
-      <button class="mobile-control utility" data-control="map" data-mobile-action="map" type="button">MAP<span class="resize-handle" data-resize></span></button>
-      <button class="mobile-control utility" data-control="weaponPrevious" data-mobile-action="weaponPrevious" type="button">WPN−<span class="resize-handle" data-resize></span></button>
-      <button class="mobile-control utility" data-control="weaponNext" data-mobile-action="weaponNext" type="button">WPN+<span class="resize-handle" data-resize></span></button>
-      <div class="mobile-control pad" data-control="move" data-mobile-action="move" role="button" aria-label="Move pad"><span class="resize-handle" data-resize></span></div>
-      <div class="mobile-control pad" data-control="look" data-mobile-action="look" role="button" aria-label="Look and turn pad"><span class="resize-handle" data-resize></span></div>
-      <button class="mobile-control" data-control="fire" data-mobile-action="fire" type="button">FIRE<span class="resize-handle" data-resize></span></button>
-      <button class="mobile-control" data-control="use" data-mobile-action="use" type="button">USE<span class="resize-handle" data-resize></span></button>
-      <button class="mobile-control" data-control="run" data-mobile-action="run" type="button">RUN<span class="resize-handle" data-resize></span></button>
-      <form id="edit-panel" aria-label="Control editor">
-        <h2>Control editor</h2><p>Drag a control; use its lower-right handle to resize. Game input is suspended while editing.</p>
-        <label>Opacity <input id="control-opacity" type="range" min="0.25" max="0.9" step="0.01"></label>
-        <label>Look sensitivity <input id="look-sensitivity" type="range" min="0.25" max="3" step="0.05"></label>
-        <label class="wide">Move dead zone <input id="move-dead-zone" type="range" min="0.1" max="0.45" step="0.01"></label>
-        <button id="preset-standard" type="button">Standard</button><button id="preset-large" type="button">Large controls</button>
-        <button id="preset-left" type="button">Left handed</button><button id="profile-reset" type="button">Reset</button>
-        <button id="profile-export" type="button">Export JSON</button><button id="profile-import" type="button">Import JSON</button>
-        <input id="profile-file" type="file" accept="application/json,.json">
-        <button id="edit-save" class="wide" type="button">Save layout</button>
-      </form>
-    </section>
-    <section id="info-strip" aria-label="Mobile game information">
-      <div class="info-field"><b>HP</b><span id="hud-health">—</span></div><div class="info-field"><b>ARMOR</b><span id="hud-armor">—</span></div><div class="info-field"><b>AMMO</b><span id="hud-ammo">—</span></div><div class="info-field"><b>WEAPON</b><span id="hud-weapon">—</span></div><div class="info-field"><b>KEYS</b><span id="hud-keys">—</span></div>
-    </section>
+    <section id="minimap-region" class="region" aria-label="Explored minimap"><canvas id="minimap-canvas" width="320" height="120"></canvas><span id="minimap-placeholder">MINIMAP - P6-030</span></section>
+    <section id="control-deck" class="region" aria-label="Touch control deck"></section>
+    <section id="info-strip" aria-label="Mobile game information"><div class="info-field"><b>HP</b><span id="hud-health">-</span></div><div class="info-field"><b>ARMOR</b><span id="hud-armor">-</span></div><div class="info-field"><b>AMMO</b><span id="hud-ammo">-</span></div><div class="info-field"><b>WEAPON</b><span id="hud-weapon">-</span></div><div class="info-field"><b>KEYS</b><span id="hud-keys">-</span></div></section>
   </main>
-  <aside id="input-test-panel" hidden aria-label="Physical touch-control test results">
-    <header><strong>Physical control test</strong><button id="input-test-close" type="button">Close</button></header>
-    <div class="input-test-row"><b>MOVE</b><output id="input-test-move" data-result="NOT TESTED">NOT TESTED</output><small id="input-test-move-detail">Hold MOVE clearly forward for about one second.</small></div>
-    <div class="input-test-row"><b>LOOK</b><output id="input-test-look" data-result="NOT TESTED">NOT TESTED</output><small id="input-test-look-detail">Drag LOOK left or right by an obvious amount.</small></div>
-    <div class="input-test-row"><b>FIRE</b><output id="input-test-fire" data-result="NOT TESTED">NOT TESTED</output><small id="input-test-fire-detail">Hold FIRE briefly while the pistol has ammunition.</small></div>
-    <p id="input-test-utility">USE/RUN/MENU/MAP/WPN-/WPN+: NOT TESTED</p>
-    <div><button id="native-forward-test" type="button">Native Forward Test</button> <output id="native-forward-result" data-result="NOT TESTED">NOT TESTED</output></div>
-  </aside>
-  <aside id="diagnostic-panel" hidden aria-label="Read-only Samsung rendering and input diagnostic">
-    <header><strong>Samsung rendering and input diagnostic</strong><span><button id="diagnostics-close" type="button">Close</button></span></header>
-    <div><button id="diagnostics-capture" type="button">Capture diagnostics</button> <button id="diagnostics-download" type="button">Download JSON</button> <button id="diagnostics-share" type="button">Share</button> <button id="diagnostics-copy" type="button">Copy JSON</button> <button id="diagnostics-select" type="button">Select all</button></div>
-    <textarea id="diagnostics-json" readonly aria-label="Captured diagnostics JSON">Preparing diagnostic…</textarea>
-    <p id="diagnostics-message" aria-live="polite"></p>
-  </aside>
+  <div id="sfhs-mobile-controls-root" aria-label="SFHS mobile controls"></div>
+  <form id="edit-panel" aria-label="Control editor"><h2>Control editor</h2><p>Shared SFHS controls. Drag a control or use its round resize handle; input is released while editing.</p><label>Opacity <input id="control-opacity" type="range" min="0.1" max="1" step="0.01"></label><label>LOOK sensitivity <input id="look-sensitivity" type="range" min="0.25" max="4" step="0.05"></label><label class="wide">MOVE dead zone <input id="move-dead-zone" type="range" min="0" max="0.5" step="0.01"></label><button id="profile-reset" type="button">Reset</button><button id="profile-export" type="button">Export JSON</button><button id="profile-import" type="button">Import JSON</button><button id="edit-cancel" type="button">Cancel</button><input id="profile-file" type="file" accept="application/json,.json"><button id="edit-save" class="wide" type="button">Save layout</button></form>
+  <aside id="diagnostic-panel" aria-label="Read-only V6 controls diagnostic"><header><strong>V6 controls</strong><button id="diagnostics-close" type="button">Close</button></header><pre id="diagnostic-output"></pre></aside>
+  <!-- SFHS_MOBILE_CONTROLS_BUNDLE -->
   <script>
-  (function () {
+  (() => {
     'use strict';
-    const PROFILE_KEY = 'sfhsDoom.mobileControls.v1';
-    const MAX_PROFILE_BYTES = 65536;
-    const CONTROLS = ['move', 'look', 'fire', 'use', 'run', 'menu', 'map', 'weaponPrevious', 'weaponNext'];
-    const defaults = Object.freeze({ version: 1, controls: { move:{x:.03,y:.40,w:.39,h:.52}, look:{x:.58,y:.42,w:.39,h:.52}, fire:{x:.78,y:.20,w:.19,h:.25}, use:{x:.58,y:.23,w:.16,h:.21}, run:{x:.78,y:.72,w:.18,h:.21}, menu:{x:.02,y:.02,w:.17,h:.16}, map:{x:.205,y:.02,w:.17,h:.16}, weaponPrevious:{x:.39,y:.02,w:.17,h:.16}, weaponNext:{x:.575,y:.02,w:.17,h:.16} }, settings:{opacity:.58,lookSensitivity:1,moveDeadZone:.22} });
-    const deck = document.getElementById('control-deck'); const panel = document.getElementById('edit-panel'); const editToggle = document.getElementById('edit-toggle');
-    const clone = value => JSON.parse(JSON.stringify(value));
-    let profile = clone(defaults); let editing = false; let gesture = null;
-    function clamp(value, low, high) { return Math.min(high, Math.max(low, value)); }
-    function validControl(value) { return value && ['x','y','w','h'].every(key => Number.isFinite(value[key])) && value.x >= 0 && value.y >= 0 && value.w > 0 && value.h > 0 && value.x + value.w <= 1 && value.y + value.h <= 1; }
-    function normalize(candidate) {
-      if (!candidate || candidate.version !== 1 || !candidate.controls || !candidate.settings) throw new Error('Unsupported control profile.');
-      const next = clone(defaults);
-      for (const name of CONTROLS) { if (!validControl(candidate.controls[name])) throw new Error('Invalid control bounds: ' + name); next.controls[name] = candidate.controls[name]; }
-      for (const [name, low, high] of [['opacity', .25, .9], ['lookSensitivity', .25, 3], ['moveDeadZone', .1, .45]]) { if (!Number.isFinite(candidate.settings[name])) throw new Error('Invalid setting: ' + name); next.settings[name] = clamp(candidate.settings[name], low, high); }
-      return next;
+    const packageIdentity = '@sfhs/mobile-controls@b02336c4';
+    const lookCountsPerWidth = 4096;
+    const declarations = [
+      {id:'move',type:'stick2d',label:'MOVE',minWidth:.08,minHeight:.08,layout:{portrait:{x:.03,y:.67,width:.36,height:.20},landscape:{x:.75,y:.55,width:.11,height:.25}}},
+      {id:'look',type:'relative1d',axis:'x',label:'LOOK',minWidth:.08,minHeight:.08,layout:{portrait:{x:.52,y:.70,width:.43,height:.10},landscape:{x:.87,y:.61,width:.11,height:.12}}},
+      {id:'primary',type:'hold',label:'FIRE',layout:{portrait:{x:.75,y:.60,width:.20,height:.08},landscape:{x:.89,y:.50,width:.08,height:.09}}},
+      {id:'interact',type:'hold',label:'USE',layout:{portrait:{x:.76,y:.81,width:.16,height:.08},landscape:{x:.89,y:.75,width:.08,height:.08}}},
+      {id:'modifier',type:'hold',label:'RUN',layout:{portrait:{x:.40,y:.81,width:.11,height:.08},landscape:{x:.75,y:.81,width:.11,height:.08}}},
+      {id:'menu',type:'pulse',label:'MENU',layout:{portrait:{x:.02,y:.58,width:.16,height:.08},landscape:{x:.75,y:.36,width:.10,height:.08}}},
+      {id:'map',type:'pulse',label:'MAP',layout:{portrait:{x:.20,y:.58,width:.16,height:.08},landscape:{x:.87,y:.36,width:.10,height:.08}}},
+      {id:'weapon-previous',type:'pulse',label:'WPN-',layout:{portrait:{x:.38,y:.58,width:.16,height:.08},landscape:{x:.75,y:.45,width:.10,height:.08}}},
+      {id:'weapon-next',type:'pulse',label:'WPN+',layout:{portrait:{x:.56,y:.58,width:.16,height:.08},landscape:{x:.87,y:.45,width:.10,height:.08}}}
+    ];
+    const controller = window.SFHSMobileControls.createMobileControls({controls:declarations,persistence:{key:'sfhsDoom.mobileControls.v2'},settings:{relativeSensitivity:1}});
+    controller.mount(document.getElementById('sfhs-mobile-controls-root'));
+    const state = {buildProfile:'P6-ANDROID-PORTRAIT-V6',diagnosticBuild:'P6-SFHS-CONTROLS-V6',sourceCommit:'2353154a279c9a24a61e150b0ebeaaa4f8cd29f1+local-v6',artifact:'sfhs-doom-android-sfhs-controls-v6.html',mainStarted:false,mainInvocations:0,hudUpdates:0,audioContextState:null,audioCallbacks:0,nonzeroPcmCallbacks:0,errors:[],lastEngineDiagnostic:null,oracle:false};
+    window.SFHS_P6_STATE = state;
+    const actions = {forward:0,backward:1,left:2,right:3,primary:4,interact:5,modifier:6,menu:7,map:8,previous:9,next:10};
+    let lookRemainder = 0;
+    const adapter = {flushes:0,lastMove:{x:0,y:0},lastLookNormalized:0,lastLookCount:0,lastNonzeroLookNormalized:0,lastNonzeroLookCount:0,lastPulseCounts:{menu:0,map:0,'weapon-previous':0,'weapon-next':0},totalPulseCounts:{menu:0,map:0,'weapon-previous':0,'weapon-next':0},lastHeld:{primary:false,interact:false,modifier:false}};
+    const native = (name,...args) => { const fn=window.Module&&window.Module['_'+name]; return typeof fn==='function' ? fn(...args) : -3; };
+    const setHeld = (action,down) => native('sfhs_mobile_input_set_held',action,down?1:0);
+    const pulse = (action,count) => { for(let index=0;index<count;index+=1) native('sfhs_mobile_input_pulse',action); };
+    const gameState = () => { try { const fn=window.Module&&window.Module._sfhs_mobile_state_snapshot,heap=window.Module&&window.Module.HEAP32;if(typeof fn!=='function'||!heap)return null;const pointer=fn();if(!pointer)return null;const base=pointer>>2;return {active:heap[base+1],x:heap[base+4],y:heap[base+5],angle:heap[base+6],ammo:heap[base+11]}; } catch (_) { return null; } };
+    const inputState = () => { try { const heap=window.Module&&window.Module.HEAP32,input=window.Module&&window.Module._sfhs_mobile_input_debug_snapshot,game=window.Module&&window.Module._sfhs_mobile_game_input_debug_snapshot;if(!heap||typeof input!=='function'||typeof game!=='function')return null;const ib=input()>>2,gb=game()>>2;return {heldMask:heap[ib+10],posted:{keydown:heap[ib+6],keyup:heap[ib+7],mouse:heap[ib+8]},flushes:heap[ib+15],lookUnits:heap[ib+16],consumer:{keydown:heap[gb+1],keyup:heap[gb+2],mouse:heap[gb+3],forwardTics:heap[gb+10],angleTics:heap[gb+11]}};}catch(_){return null;}};
+    function flushForDoomTic() {
+      const snapshot=controller.flush(); adapter.flushes+=1;
+      const move=snapshot.controls.move,look=snapshot.controls.look,primary=snapshot.controls.primary,interact=snapshot.controls.interact,modifier=snapshot.controls.modifier;
+      adapter.lastMove={x:move.x,y:move.y}; adapter.lastLookNormalized=look.delta;
+      const threshold=.30;
+      setHeld(actions.forward,move.y < -threshold); setHeld(actions.backward,move.y > threshold); setHeld(actions.left,move.x < -threshold); setHeld(actions.right,move.x > threshold);
+      setHeld(actions.primary,primary.pressed); setHeld(actions.interact,interact.pressed); setHeld(actions.modifier,modifier.pressed);
+      adapter.lastHeld={primary:primary.pressed,interact:interact.pressed,modifier:modifier.pressed};
+      const combined=look.delta*lookCountsPerWidth+lookRemainder,whole=Math.trunc(combined); lookRemainder=combined-whole; adapter.lastLookCount=whole;
+      if(whole!==0) { adapter.lastNonzeroLookNormalized=look.delta;adapter.lastNonzeroLookCount=whole;native('sfhs_mobile_input_post_look',whole); }
+      for(const [id,action] of [['menu',actions.menu],['map',actions.map],['weapon-previous',actions.previous],['weapon-next',actions.next]]) { const count=snapshot.controls[id].count; adapter.lastPulseCounts[id]=count;adapter.totalPulseCounts[id]+=count;if(count>0)pulse(action,count); }
     }
-    function persist() { try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); } catch (_) {} }
-    function restore() { try { const stored = localStorage.getItem(PROFILE_KEY); if (stored) profile = normalize(JSON.parse(stored)); } catch (_) { profile = clone(defaults); } }
-    function apply() {
-      deck.style.setProperty('--deck-alpha', profile.settings.opacity);
-      for (const name of CONTROLS) { const entry = profile.controls[name]; const element = deck.querySelector('[data-control="' + name + '"]'); element.style.left = (entry.x * 100) + '%'; element.style.top = (entry.y * 100) + '%'; element.style.width = (entry.w * 100) + '%'; element.style.height = (entry.h * 100) + '%'; element.classList.toggle('is-editing', editing); }
-      document.getElementById('control-opacity').value = profile.settings.opacity;
-      document.getElementById('look-sensitivity').value = profile.settings.lookSensitivity;
-      document.getElementById('move-dead-zone').value = profile.settings.moveDeadZone;
-    }
-    function releaseGameInput() { document.dispatchEvent(new CustomEvent('sfhs-mobile-release-input')); }
-    function setEditing(value) { editing = value; document.body.dataset.sfhsP6Editing = String(value); panel.classList.toggle('is-open', value); editToggle.setAttribute('aria-expanded', String(value)); editToggle.textContent = value ? 'Editing' : 'Edit controls'; releaseGameInput(); apply(); }
-    function preset(kind) {
-      profile = clone(defaults);
-      if (kind === 'large') { for (const name of ['move','look','fire','use','run']) { const item = profile.controls[name]; item.w = Math.min(.46, item.w * 1.18); item.h = Math.min(.62, item.h * 1.18); item.x = Math.min(1-item.w, item.x); item.y = Math.min(1-item.h, item.y); } }
-      if (kind === 'left') { const oldMove=profile.controls.move; profile.controls.move=profile.controls.look; profile.controls.look=oldMove; profile.controls.fire.x=.03; profile.controls.use.x=.25; profile.controls.run.x=.04; }
-      apply();
-    }
-    function updateViewport() { document.documentElement.style.setProperty('--vvh', ((window.visualViewport && window.visualViewport.height) || window.innerHeight) + 'px'); }
-    function beginGesture(event) {
-      if (!editing || event.button !== 0) return;
-      const control = event.currentTarget; const name = control.dataset.control; const deckRect = deck.getBoundingClientRect();
-      gesture = { id:event.pointerId, name, resize:event.target.hasAttribute('data-resize'), startX:event.clientX, startY:event.clientY, start:clone(profile.controls[name]), deckRect };
-      control.dataset.resizing = String(gesture.resize); control.setPointerCapture(event.pointerId); event.preventDefault();
-    }
-    function moveGesture(event) {
-      if (!gesture || gesture.id !== event.pointerId) return;
-      const deltaX=(event.clientX-gesture.startX)/gesture.deckRect.width, deltaY=(event.clientY-gesture.startY)/gesture.deckRect.height; const item=profile.controls[gesture.name];
-      if (gesture.resize) { item.w=clamp(gesture.start.w+deltaX, 44/gesture.deckRect.width, 1-gesture.start.x); item.h=clamp(gesture.start.h+deltaY, 44/gesture.deckRect.height, 1-gesture.start.y); }
-      else { item.x=clamp(gesture.start.x+deltaX, 0, 1-gesture.start.w); item.y=clamp(gesture.start.y+deltaY, 0, 1-gesture.start.h); }
-      apply(); event.preventDefault();
-    }
-    function endGesture(event) { if (!gesture || gesture.id !== event.pointerId) return; const element=deck.querySelector('[data-control="' + gesture.name + '"]'); element.dataset.resizing='false'; gesture=null; }
-    function exportProfile() { const blob=new Blob([JSON.stringify(profile, null, 2)], {type:'application/json'}); const url=URL.createObjectURL(blob); const anchor=document.createElement('a'); anchor.href=url; anchor.download='sfhs-doom-mobile-controls-v1.json'; anchor.click(); URL.revokeObjectURL(url); }
-    async function importProfile(file) { if (!file || file.size > MAX_PROFILE_BYTES) throw new Error('Profile must be a JSON file no larger than 64 KiB.'); const text=await file.text(); if (new TextEncoder().encode(text).length > MAX_PROFILE_BYTES) throw new Error('Profile is too large.'); profile=normalize(JSON.parse(text)); apply(); }
-    restore(); apply(); updateViewport();
-    editToggle.addEventListener('click', () => setEditing(!editing));
-    for (const control of deck.querySelectorAll('.mobile-control')) { control.addEventListener('pointerdown', beginGesture); control.addEventListener('pointermove', moveGesture); control.addEventListener('pointerup', endGesture); control.addEventListener('pointercancel', endGesture); control.addEventListener('lostpointercapture', endGesture); }
-    document.getElementById('control-opacity').addEventListener('input', event => { profile.settings.opacity=Number(event.target.value); apply(); });
-    document.getElementById('look-sensitivity').addEventListener('input', event => { profile.settings.lookSensitivity=Number(event.target.value); apply(); });
-    document.getElementById('move-dead-zone').addEventListener('input', event => { profile.settings.moveDeadZone=Number(event.target.value); apply(); });
-    document.getElementById('preset-standard').addEventListener('click', () => preset('standard'));
-    document.getElementById('preset-large').addEventListener('click', () => preset('large'));
-    document.getElementById('preset-left').addEventListener('click', () => preset('left'));
-    document.getElementById('profile-reset').addEventListener('click', () => { profile=clone(defaults); apply(); });
-    document.getElementById('profile-export').addEventListener('click', exportProfile);
-    document.getElementById('profile-import').addEventListener('click', () => document.getElementById('profile-file').click());
-    document.getElementById('profile-file').addEventListener('change', event => { importProfile(event.target.files[0]).catch(error => window.alert(error.message)); event.target.value=''; });
-    document.getElementById('edit-save').addEventListener('click', () => { persist(); setEditing(false); });
-    window.addEventListener('resize', updateViewport); window.addEventListener('orientationchange', () => { updateViewport(); releaseGameInput(); });
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', updateViewport);
-    const query=new URLSearchParams(location.search); const oracle=query.get('oracle')==='1'; const audio=query.get('audio')!=='0';
-    const args=oracle ? ['-iwad','freedoom2.wad','-warp','1','1','-skill','3','-window','-width','320','-height','200','-nograbmouse','-nomusic'] : ['-iwad','freedoom2.wad','-warp','1','1','-skill','3','-window','-width','320','-height','200','-nograbmouse',...(audio?['-nomusic']:['-nosound','-nomusic'])];
-    const state={buildProfile:'P6-ANDROID-PORTRAIT-1',diagnosticBuild:'P6-SAMSUNG-LOOK-V5',sourceCommit:'b6ce2862f827258b3b9f58c6a2d81188a6681856+local-v5',artifact:'sfhs-doom-android-samsung-input-v5.html',mainStarted:false,mainInvocations:0,startClicks:0,heartbeat:0,hudUpdates:0,pointerEvents:[],audioContextState:null,audioCallbacks:0,nonzeroPcmCallbacks:0,errors:[],lastEngineDiagnostic:null,lastUnhandledRejection:null,oracle};
-    window.SFHS_P6_STATE=state;
-    window.SFHS_P3_MODULE_CONFIG={canvas:document.getElementById('canvas'),arguments:args,noInitialRun:true,ENV:oracle?{SFHS_ORACLE_OUTPUT:'/oracle-output'}:undefined,print:value=>console.log(String(value)),printErr:value=>console.error(String(value)),onAbort:value=>state.errors.push('abort:'+String(value)),onRuntimeInitialized:function(){document.body.dataset.sfhsP6Runtime='ready';document.body.dataset.sfhsP6Data='embedded';const start=document.getElementById('start-doom');start.hidden=false;document.getElementById('status').textContent='Ready — tap Start Doom';}};
-    const runtimeReady=window.SFHS_P3_MODULE_CONFIG.onRuntimeInitialized;
-    window.SFHS_P3_MODULE_CONFIG.printErr=value=>{state.lastEngineDiagnostic=String(value);console.error(state.lastEngineDiagnostic);};
-    window.SFHS_P3_MODULE_CONFIG.onAbort=value=>{state.lastEngineDiagnostic='abort:'+String(value);state.errors.push(state.lastEngineDiagnostic);};
-    window.SFHS_P3_MODULE_CONFIG.onRuntimeInitialized=function(){runtimeReady();};
+    window.SFHSDoomMobileControls=Object.freeze({identity:packageIdentity,lookCountsPerWidth,controller,flushForDoomTic,snapshot:()=>({packageIdentity,adapter:{...adapter,lastMove:{...adapter.lastMove},lastPulseCounts:{...adapter.lastPulseCounts},totalPulseCounts:{...adapter.totalPulseCounts},lastHeld:{...adapter.lastHeld}},controller:controller.read(),input:inputState(),game:gameState()})});
+    const panel=document.getElementById('edit-panel'),toggle=document.getElementById('edit-toggle');
+    const settings=()=>controller.exportProfile().settings;
+    function syncSettings(){const value=settings();document.getElementById('control-opacity').value=value.opacity;document.getElementById('look-sensitivity').value=value.relativeSensitivity;document.getElementById('move-dead-zone').value=value.stickDeadZone;}
+    function closeEditor(cancel){ if(cancel)controller.cancelEdit(); else controller.commitEdit(); panel.classList.remove('is-open'); toggle.setAttribute('aria-expanded','false'); toggle.textContent='Edit controls'; }
+    toggle.addEventListener('click',()=>{controller.releaseAll('edit');controller.beginEdit();syncSettings();panel.classList.add('is-open');toggle.setAttribute('aria-expanded','true');toggle.textContent='Editing';});
+    document.getElementById('control-opacity').addEventListener('input',event=>controller.updateConfig({opacity:Number(event.target.value)}));
+    document.getElementById('look-sensitivity').addEventListener('input',event=>controller.updateConfig({relativeSensitivity:Number(event.target.value)}));
+    document.getElementById('move-dead-zone').addEventListener('input',event=>controller.updateConfig({stickDeadZone:Number(event.target.value)}));
+    document.getElementById('profile-reset').addEventListener('click',()=>{controller.resetProfile();syncSettings();});
+    document.getElementById('edit-save').addEventListener('click',()=>closeEditor(false)); document.getElementById('edit-cancel').addEventListener('click',()=>closeEditor(true));
+    document.getElementById('profile-export').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(controller.exportProfile(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),anchor=document.createElement('a');anchor.href=url;anchor.download='sfhs-doom-mobile-controls-v2.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),0);});
+    document.getElementById('profile-import').addEventListener('click',()=>document.getElementById('profile-file').click()); document.getElementById('profile-file').addEventListener('change',async event=>{try{controller.importProfile(JSON.parse(await event.target.files[0].text()));syncSettings();}catch(error){state.errors.push(String(error));}event.target.value='';});
+    const diagnostic=document.getElementById('diagnostic-panel'),diagnosticOutput=document.getElementById('diagnostic-output'); const showDiagnostic=()=>{diagnosticOutput.textContent=JSON.stringify(window.SFHSDoomMobileControls.snapshot(),null,2);diagnostic.classList.add('is-open');};
+    document.getElementById('diagnostics-toggle').addEventListener('click',showDiagnostic);document.getElementById('diagnostics-close').addEventListener('click',()=>diagnostic.classList.remove('is-open'));
+    const query=new URLSearchParams(location.search); const oracle=query.get('oracle')==='1'; const audio=query.get('audio')!=='0'; state.oracle=oracle;
+    const args=oracle?['-iwad','freedoom2.wad','-warp','1','1','-skill','3','-window','-width','320','-height','200','-nograbmouse','-nomusic']:['-iwad','freedoom2.wad','-warp','1','1','-skill','3','-window','-width','320','-height','200','-nograbmouse',...(audio?['-nomusic']:['-nosound','-nomusic'])];
+    window.SFHS_P3_MODULE_CONFIG={canvas:document.getElementById('canvas'),arguments:args,noInitialRun:true,ENV:oracle?{SFHS_ORACLE_OUTPUT:'/oracle-output'}:undefined,print:value=>console.log(String(value)),printErr:value=>{state.lastEngineDiagnostic=String(value);console.error(state.lastEngineDiagnostic);},onAbort:value=>state.errors.push('abort:'+String(value)),onRuntimeInitialized:()=>{document.body.dataset.sfhsP6Runtime='ready';document.getElementById('start-doom').hidden=false;document.getElementById('status').textContent='Ready - tap Start Doom';}};
     window.SFHS_P3_MODULE=window.SFHS_P3_MODULE_CONFIG;
-    window.setInterval(()=>{state.heartbeat+=1;},50); window.addEventListener('error',event=>state.errors.push(String(event.message||event.error||'error'))); window.addEventListener('unhandledrejection',event=>{state.lastUnhandledRejection=String(event.reason||'unhandled rejection');state.errors.push(state.lastUnhandledRejection);});
-    const rendererMode=document.getElementById('renderer-mode'); state.rendererMode=rendererMode.value;
-    const start=document.getElementById('start-doom'); for(const type of ['pointerdown','pointerup','click']) start.addEventListener(type,event=>state.pointerEvents.push({type,trusted:event.isTrusted,target:event.target.id}));
-    start.addEventListener('click',function(){if(!state.mainStarted){state.rendererMode=rendererMode.value;if(state.rendererMode==='software')window.Module.ENV={...(window.Module.ENV||{}),SDL_RENDER_DRIVER:'software'};start.hidden=true;rendererMode.disabled=true;document.getElementById('status').textContent='Doom running — open Diagnostics if the game view is blank.';}},true);
-    function installAudioProbe(){const sdl=window.Module&&window.Module.SDL2,context=sdl&&sdl.audioContext,node=sdl&&sdl.audio&&sdl.audio.scriptProcessorNode;if(!context||!node||typeof node.onaudioprocess!=='function')return false;if(state.audioProbeInstalled)return true;state.audioProbeInstalled=true;state.audioContextState=context.state;const original=node.onaudioprocess;node.onaudioprocess=function(event){original.call(this,event);state.audioCallbacks+=1;let max=0;for(let channel=0;channel<event.outputBuffer.numberOfChannels;channel+=1){const data=event.outputBuffer.getChannelData(channel);for(let index=0;index<data.length;index+=1)max=Math.max(max,Math.abs(data[index]));}if(max>.0001)state.nonzeroPcmCallbacks+=1;};return true;}
-    start.addEventListener('click',function(){if(state.mainStarted)return;state.startClicks+=1;if(!window.Module||typeof window.Module.callMain!=='function'||typeof window.Module._sfhs_mobile_present_configure_renderer!=='function'){state.errors.push('required runtime export unavailable');return;}const configure=window.Module._sfhs_mobile_present_configure_renderer(state.rendererMode==='compatibility'?1:0);if(configure<0){state.errors.push('renderer configuration rejected:'+configure);return;}state.mainInvocations+=1;state.mainStarted=true;const result=window.Module.callMain(window.Module.arguments);if(result&&typeof result.catch==='function')result.catch(error=>state.errors.push(String(error)));document.body.dataset.sfhsP6Main='started';document.getElementById('canvas').focus();document.getElementById('status').textContent='Doom running — controls are active.';const attach=window.setInterval(()=>{if(installAudioProbe())window.clearInterval(attach);const context=window.Module.SDL2&&window.Module.SDL2.audioContext;if(context){state.audioContextState=context.state;if(audio&&context.state!=='running')context.resume().catch(error=>state.errors.push(String(error)));}},25);window.setTimeout(()=>window.clearInterval(attach),5000);});
-    window.SFHS_WASM_TEST=Object.freeze({readOracleState:function(){if(!window.Module||!window.Module.FS||typeof window.Module.FS.readFile!=='function')return '';try{const value=window.Module.FS.readFile('/oracle-output/state.jsonl',{encoding:'utf8'});return typeof value==='string'?value:new TextDecoder().decode(value);}catch(_){return '';}},moduleKeys:function(){return Object.keys(window.Module||{});},mobileProfile:function(){return clone(profile);},setMobileProfile:function(value){profile=normalize(value);apply();}});
-  }());
+    const start=document.getElementById('start-doom'),renderer=document.getElementById('renderer-mode'); start.addEventListener('click',()=>{if(state.mainStarted)return;const result=window.Module&&window.Module._sfhs_mobile_present_configure_renderer;if(typeof result!=='function'){state.errors.push('required runtime export unavailable');return;}if(result(renderer.value==='compatibility'?1:0)<0){state.errors.push('renderer configuration rejected');return;}state.mainStarted=true;state.mainInvocations+=1;document.body.dataset.sfhsP6Main='started';start.hidden=true;renderer.disabled=true;document.getElementById('status').textContent='Doom running - shared controls are active.';const run=window.Module.callMain(window.Module.arguments);if(run&&typeof run.catch==='function')run.catch(error=>state.errors.push(String(error)));document.getElementById('canvas').focus();});
+    window.SFHS_WASM_TEST=Object.freeze({mobileControlsSnapshot:()=>controller.read(),flushMobileControls:()=>{flushForDoomTic();return window.SFHSDoomMobileControls.snapshot();},setMobileControlsProfile:value=>controller.importProfile(value),mobileControlsProfile:()=>controller.exportProfile(),controlRect:id=>document.querySelector('[data-sfhs-control-id="'+id+'"]').getBoundingClientRect(),adapterSnapshot:()=>window.SFHSDoomMobileControls.snapshot(),readOracleState:()=>{try{return window.Module.FS.readFile('/oracle-output/state.jsonl',{encoding:'utf8'});}catch(_){return '';}}});
+  })();
   </script>
   <script>var Module = window.SFHS_P3_MODULE_CONFIG;</script>
   <script>
-  (function () {
-    'use strict';
-    const action = { move:null, look:null, fire:4, use:5, run:6, menu:7, map:8, weaponPrevious:9, weaponNext:10 };
-    const telemetry={version:5,testMode:false,events:[],lastNativeReturn:null,lastReleaseReturn:null,lastPointerCapture:null,utilitySeen:{use:0,run:0,menu:0,map:0,weaponPrevious:0,weaponNext:0},outcomes:{move:null,look:null,fire:null,nativeForward:null}};
-    const limit=100;
-    const moveState={pointerId:null,probe:null}; let lookState=null; const buttonPointers=new Map();
-    const resultIds={move:'input-test-move',look:'input-test-look',fire:'input-test-fire',nativeForward:'native-forward-result'};
-    function coordinate(value) { return {type:typeof value,finite:Number.isFinite(value),value}; }
-    function pointerLockState(){const element=document.pointerLockElement;return {active:!!element,elementId:element&&element.id||null};}
-    function eventCoordinates(event){const value=key=>coordinate(event&&event[key]),clientX=value('clientX'),clientY=value('clientY'),screenX=value('screenX'),screenY=value('screenY'),pageX=value('pageX'),pageY=value('pageY'),movementX=value('movementX'),movementY=value('movementY'),buttons=value('buttons'),pressure=value('pressure');return {clientXType:clientX.type,clientXFinite:clientX.finite,clientX:clientX.value,clientYType:clientY.type,clientYFinite:clientY.finite,clientY:clientY.value,screenXType:screenX.type,screenXFinite:screenX.finite,screenX:screenX.value,screenYType:screenY.type,screenYFinite:screenY.finite,screenY:screenY.value,pageXType:pageX.type,pageXFinite:pageX.finite,pageX:pageX.value,pageYType:pageY.type,pageYFinite:pageY.finite,pageY:pageY.value,movementXType:movementX.type,movementXFinite:movementX.finite,movementX:movementX.value,movementYType:movementY.type,movementYFinite:movementY.finite,movementY:movementY.value,buttonsType:buttons.type,buttonsFinite:buttons.finite,buttons:buttons.value,pressureType:pressure.type,pressureFinite:pressure.finite,pressure:pressure.value};}
-    function record(event, control, operation, result, detail={}) { const lock=pointerLockState(),item={time:Date.now(),type:event&&event.type||operation,pointerId:event&&Number.isFinite(event.pointerId)?event.pointerId:null,pointerType:event&&event.pointerType||null,isTrusted:!!(event&&event.isTrusted),control,operation,result,...eventCoordinates(event),pointerLockActive:lock.active,pointerLockElementId:lock.elementId,documentHasFocus:document.hasFocus(),...detail};telemetry.events.push(item);if(telemetry.events.length>limit)telemetry.events.shift();telemetry.lastNativeReturn=result;return result; }
-    function native(name, ...args) { const fn=window.Module&&window.Module['_'+name]; if(typeof fn!=='function') return -99; try{return fn(...args)|0;}catch(error){window.SFHS_P6_STATE.errors.push('input '+name+':'+error);return -98;} }
-    function release(event) { const result=native('sfhs_mobile_input_release_all');telemetry.lastReleaseReturn=result;moveState.pointerId=null;moveState.probe=null;lookState=null;buttonPointers.clear();return record(event,'all','release_all',result); }
-    function set(event, control, actionId, down) { return record(event,control,'set_held:'+actionId+':'+(down?1:0),native('sfhs_mobile_input_set_held',actionId,down?1:0)); }
-    function readGameState() { try{const fn=window.Module&&window.Module._sfhs_mobile_state_snapshot,heap=window.Module&&window.Module.HEAP32;if(typeof fn!=='function'||!heap)return null;const pointer=fn();if(!pointer)return null;const base=pointer>>2,n=['version','active','episode','map','x','y','angle','health','armor','armorType','weapon','ammo','keys','lineCount'],out={};n.forEach((key,index)=>out[key]=heap[base+index]);return out;}catch(error){return {error:String(error)};} }
-    function nativeDebug(){try{const pointer=native('sfhs_mobile_input_debug_snapshot');const heap=window.Module&&window.Module.HEAP32;if(!pointer||!heap)return null;const base=pointer>>2,n=['version','totalCalls','setHeldCalls','pulseCalls','lookCalls','releaseAllCalls','postedKeydown','postedKeyup','postedMouse','invalidActions','heldMask','lastAction','lastDown','lastKey','lastRelativeX','pendingLookX','lookUnitsAccumulated','lookFlushCalls','lookUnitsFlushed','lastFlushedX'],out={};n.forEach((key,index)=>out[key]=heap[base+index]);return out;}catch(error){return {error:String(error)};} }
-    function consumerDebug(){try{const pointer=native('sfhs_mobile_game_input_debug_snapshot');const heap=window.Module&&window.Module.HEAP32;if(!pointer||!heap)return null;const base=pointer>>2,n=['version','responderKeydown','responderKeyup','responderMouse','lastKey','lastMouseX','forwardHeld','buildTiccmdCalls','buildsForwardHeld','buildsMouseX','cmdForwardNonzero','cmdAngleNonzero'],out={};n.forEach((key,index)=>out[key]=heap[base+index]);return out;}catch(error){return {error:String(error)};} }
-    function delta(after,before,key){return after&&before&&Number.isFinite(after[key])&&Number.isFinite(before[key])?after[key]-before[key]:null;}
-    function formatNumber(value){return Number.isFinite(value)?String(value):'n/a';}
-    function renderOutcome(name){const value=telemetry.outcomes[name],element=document.getElementById(resultIds[name]);if(!element)return;if(!value){element.value='NOT TESTED';element.dataset.result='NOT TESTED';return;}element.value=value.pass?'PASS':'FAIL';element.dataset.result=value.pass?'PASS':'FAIL';const detail=document.getElementById(resultIds[name]+'-detail');if(detail)detail.textContent=value.summary;}
-    function setOutcome(name,value){telemetry.outcomes[name]=value;renderOutcome(name);}
-    function updateUtility(){const seen=telemetry.utilitySeen;document.getElementById('input-test-utility').textContent='USE '+(seen.use?'EVENT SEEN':'NOT TESTED')+' / RUN '+(seen.run?'EVENT SEEN':'NOT TESTED')+' / MENU '+(seen.menu?'EVENT SEEN':'NOT TESTED')+' / MAP '+(seen.map?'EVENT SEEN':'NOT TESTED')+' / WPN- '+(seen.weaponPrevious?'EVENT SEEN':'NOT TESTED')+' / WPN+ '+(seen.weaponNext?'EVENT SEEN':'NOT TESTED');}
-    function coordinateUsable(event,element){if(!event||!Number.isFinite(event.clientX)||!Number.isFinite(event.clientY)||(event.clientX===0&&event.clientY===0))return false;const rect=element.getBoundingClientRect(),margin=8;return event.clientX>=rect.left-margin&&event.clientX<=rect.right+margin&&event.clientY>=rect.top-margin&&event.clientY<=rect.bottom+margin;}
-    function beginProbe(extra={}){return {startedAt:Date.now(),before:readGameState(),nativeBefore:nativeDebug(),consumerBefore:consumerDebug(),...extra};}
-    function finishMove(probe){if(!probe)return;window.setTimeout(()=>{const after=readGameState(),nativeAfter=nativeDebug(),consumerAfter=consumerDebug(),dx=delta(after,probe.before,'x'),dy=delta(after,probe.before,'y'),changed=dx!==null&&dy!==null&&(dx!==0||dy!==0),pass=probe.coordinateUsable&&changed;setOutcome('move',{pass,coordinateUsable:probe.coordinateUsable,coordinates:probe.coordinates,before:probe.before,after,dx,dy,nativeBefore:probe.nativeBefore,nativeAfter,consumerBefore:probe.consumerBefore,consumerAfter,summary:'coordinates '+(probe.coordinateUsable?'usable':'invalid')+', x '+formatNumber(probe.before&&probe.before.x)+' -> '+formatNumber(after&&after.x)+', y '+formatNumber(probe.before&&probe.before.y)+' -> '+formatNumber(after&&after.y)+', keydown +'+formatNumber(delta(nativeAfter,probe.nativeBefore,'postedKeydown'))+', keyup +'+formatNumber(delta(nativeAfter,probe.nativeBefore,'postedKeyup'))+', cmd +'+formatNumber(delta(consumerAfter,probe.consumerBefore,'cmdForwardNonzero'))+', held '+formatNumber(nativeAfter&&nativeAfter.heldMask)});},120);}
-    function finishLook(probe,state){if(!probe)return;window.setTimeout(()=>{const after=readGameState(),nativeAfter=nativeDebug(),consumerAfter=consumerDebug(),angleDelta=delta(after,probe.before,'angle'),nativeLookSamples=delta(nativeAfter,probe.nativeBefore,'lookCalls'),lookUnitsAccumulated=delta(nativeAfter,probe.nativeBefore,'lookUnitsAccumulated'),lookFlushCalls=delta(nativeAfter,probe.nativeBefore,'lookFlushCalls'),lookUnitsFlushed=delta(nativeAfter,probe.nativeBefore,'lookUnitsFlushed'),mouseDelta=delta(nativeAfter,probe.nativeBefore,'postedMouse'),consumerMouseDelta=delta(consumerAfter,probe.consumerBefore,'responderMouse'),angleProducingTics=delta(consumerAfter,probe.consumerBefore,'cmdAngleNonzero'),pass=probe.coordinateUsable&&state.coordinateChanged&&Number.isFinite(mouseDelta)&&mouseDelta>0&&Number.isFinite(consumerMouseDelta)&&consumerMouseDelta>0&&Number.isFinite(angleDelta)&&angleDelta!==0;setOutcome('look',{pass,coordinateUsable:probe.coordinateUsable,coordinateChanged:state.coordinateChanged,coordinates:probe.coordinates,before:probe.before,after,angleDelta,rawHorizontalDelta:state.rawDelta,domLookSamples:state.coalescedSampleCount,integralLookUnits:state.integerPosted,nativeLookSamples,lookUnitsAccumulated,lookFlushCalls,lookUnitsFlushed,mouseEventsPosted:mouseDelta,consumerMouseEvents:consumerMouseDelta,angleProducingTics,nativeBefore:probe.nativeBefore,nativeAfter,consumerBefore:probe.consumerBefore,consumerAfter,summary:'coordinates '+(probe.coordinateUsable&&state.coordinateChanged?'moving':'invalid/frozen')+', DOM samples '+formatNumber(state.coalescedSampleCount)+', raw '+state.rawDelta.toFixed(2)+'px, submitted '+state.integerPosted+', flushed '+formatNumber(lookUnitsFlushed)+', mouse +'+formatNumber(mouseDelta)+', consumer +'+formatNumber(consumerMouseDelta)+', angle tics +'+formatNumber(angleProducingTics)+', angle '+formatNumber(probe.before&&probe.before.angle)+' -> '+formatNumber(after&&after.angle)});},120);}
-    function finishFire(probe){if(!probe)return;window.setTimeout(()=>{const after=readGameState(),nativeAfter=nativeDebug(),ammoDelta=delta(after,probe.before,'ammo'),pass=Number.isFinite(ammoDelta)&&ammoDelta<0;setOutcome('fire',{pass,before:probe.before,after,ammoDelta,nativeBefore:probe.nativeBefore,nativeAfter,summary:'ammo '+formatNumber(probe.before&&probe.before.ammo)+' -> '+formatNumber(after&&after.ammo)+', keydown +'+formatNumber(delta(nativeAfter,probe.nativeBefore,'postedKeydown'))});},220);}
-    function move(event, element) { if(!Number.isFinite(event.clientX)||!Number.isFinite(event.clientY)){record(event,'move','invalid_coordinates',-2);return -2;}const rect=element.getBoundingClientRect(),p=window.SFHS_WASM_TEST.mobileProfile(),x=(event.clientX-rect.left)/rect.width-.5,y=(event.clientY-rect.top)/rect.height-.5,dead=p.settings.moveDeadZone/2;return [set(event,'move',0,y<-dead),set(event,'move',1,y>dead),set(event,'move',2,x<-dead),set(event,'move',3,x>dead)].at(-1); }
-    function captureAfterDispatch(element,event) { try{element.setPointerCapture(event.pointerId);telemetry.lastPointerCapture={pointerId:event.pointerId,success:true};}catch(error){telemetry.lastPointerCapture={pointerId:event.pointerId,success:false,error:String(error)};} }
-    function processLook(event){if(!lookState||lookState.pointerId!==event.pointerId)return;let samples=[event];if(typeof event.getCoalescedEvents==='function'){const coalesced=event.getCoalescedEvents();if(coalesced&&coalesced.length)samples=Array.from(coalesced);}lookState.coalescedSampleCount+=samples.length;const sensitivity=window.SFHS_WASM_TEST.mobileProfile().settings.lookSensitivity;for(const sample of samples){const current=sample.clientX;if(!Number.isFinite(current)){lookState.invalidCoordinateCount+=1;record(event,'look','invalid_coordinates',-2,{sampleClientXType:typeof current,sampleClientXFinite:false,coalescedSampleCount:samples.length});continue;}const previous=lookState.previousClientX,rawDelta=Number.isFinite(previous)?current-previous:0,accumulatorBefore=lookState.accumulator;lookState.previousClientX=current;if(current!==lookState.initialClientX)lookState.coordinateChanged=true;lookState.rawDelta+=rawDelta;lookState.accumulator+=rawDelta*sensitivity;const whole=Math.trunc(lookState.accumulator);let result=0;if(whole!==0){result=native('sfhs_mobile_input_post_look',whole);if(result>0){lookState.accumulator-=whole;lookState.integerPosted+=whole;}}record(event,'look','look_accumulate',result,{sampleClientXType:typeof current,sampleClientXFinite:true,sampleClientX:current,sampleClientY:sample.clientY,sampleScreenX:sample.screenX,sampleScreenY:sample.screenY,samplePageX:sample.pageX,samplePageY:sample.pageY,sampleMovementX:sample.movementX,sampleMovementY:sample.movementY,sampleButtons:sample.buttons,samplePressure:sample.pressure,previousClientX:previous,rawDeltaX:rawDelta,sensitivity,accumulatorBefore,integerPosted:whole,accumulatorAfter:lookState.accumulator,coalescedSampleCount:samples.length});}}
-    for (const element of document.querySelectorAll('[data-mobile-action]')) {
-      const name=element.dataset.mobileAction;
-      element.addEventListener('pointerdown', event => { if (document.body.dataset.sfhsP6Editing === 'true') return;let result=0;if(name==='move'){if(moveState.pointerId!==null&&moveState.pointerId!==event.pointerId)return;moveState.pointerId=event.pointerId;moveState.probe=beginProbe({coordinateUsable:coordinateUsable(event,element),coordinates:eventCoordinates(event)});result=move(event,element);}else if(name==='look'){if(lookState&&lookState.pointerId!==event.pointerId)return;if(!Number.isFinite(event.clientX)){record(event,name,'look_begin_invalid',-2);return;}lookState={pointerId:event.pointerId,initialClientX:event.clientX,previousClientX:event.clientX,coordinateChanged:false,accumulator:0,rawDelta:0,integerPosted:0,coalescedSampleCount:0,invalidCoordinateCount:0,probe:beginProbe({coordinateUsable:coordinateUsable(event,element),coordinates:eventCoordinates(event)})};result=record(event,name,'look_begin',0,{clientXType:typeof event.clientX,clientXFinite:true,previousClientX:event.clientX,accumulatorBefore:0,integerPosted:0,accumulatorAfter:0,coalescedSampleCount:0});}else if(action[name]>=7){telemetry.utilitySeen[name]+=1;updateUtility();result=record(event,name,'pulse',native('sfhs_mobile_input_pulse',action[name]));}else{if(buttonPointers.has(name)&&buttonPointers.get(name)!==event.pointerId)return;buttonPointers.set(name,event.pointerId);if(telemetry.utilitySeen[name]!==undefined){telemetry.utilitySeen[name]+=1;updateUtility();}const probe=name==='fire'?beginProbe():null;if(probe)element._sfhsFireProbe=probe;result=set(event,name,action[name],true);}captureAfterDispatch(element,event);event.preventDefault(); });
-      element.addEventListener('pointermove', event => { if (document.body.dataset.sfhsP6Editing === 'true') return;if(name==='move'&&moveState.pointerId===event.pointerId)move(event,element);else if(name==='look')processLook(event); });
-      const end = event => { let result=0;if(name==='move'){if(moveState.pointerId!==event.pointerId)return;const probe=moveState.probe;set(event,name,0,false);set(event,name,1,false);set(event,name,2,false);result=set(event,name,3,false);moveState.pointerId=null;moveState.probe=null;finishMove(probe);}else if(name==='look'){if(!lookState||lookState.pointerId!==event.pointerId)return;const state=lookState;lookState=null;result=record(event,name,'look_end',0,{rawDeltaX:state.rawDelta,integerPosted:state.integerPosted,accumulatorAfter:state.accumulator,coalescedSampleCount:state.coalescedSampleCount,invalidCoordinateCount:state.invalidCoordinateCount});finishLook(state.probe,state);}else if(action[name]<7){if(buttonPointers.get(name)!==event.pointerId)return;buttonPointers.delete(name);result=set(event,name,action[name],false);if(name==='fire'){const probe=element._sfhsFireProbe;delete element._sfhsFireProbe;finishFire(probe);}}record(event,name,'end',result);};
-      element.addEventListener('pointerup',end);element.addEventListener('pointercancel',end);element.addEventListener('lostpointercapture',end);
-    }
-    const test=document.getElementById('input-test-toggle'),testPanel=document.getElementById('input-test-panel');function setTestMode(value){telemetry.testMode=value;testPanel.hidden=!value;test.setAttribute('aria-pressed',String(value));test.textContent='Test controls: '+(value?'on':'off');}test.addEventListener('click',()=>setTestMode(!telemetry.testMode));document.getElementById('input-test-close').addEventListener('click',()=>setTestMode(false));
-    document.getElementById('native-forward-test').addEventListener('click',async()=>{if(!window.SFHS_P6_STATE.mainStarted)return setOutcome('nativeForward',{pass:false,summary:'Start Doom first.'});const before=readGameState(),nativeBefore=nativeDebug();set(null,'nativeForward',0,true);await new Promise(resolve=>setTimeout(resolve,500));set(null,'nativeForward',0,false);await new Promise(resolve=>setTimeout(resolve,140));const after=readGameState(),nativeAfter=nativeDebug(),dx=delta(after,before,'x'),dy=delta(after,before,'y'),pass=Number.isFinite(dx)&&Number.isFinite(dy)&&(dx!==0||dy!==0);setOutcome('nativeForward',{pass,before,after,dx,dy,nativeBefore,nativeAfter,summary:'x '+formatNumber(before&&before.x)+' -> '+formatNumber(after&&after.x)+', y '+formatNumber(before&&before.y)+' -> '+formatNumber(after&&after.y)});});
-    updateUtility();
-    window.SFHS_P6_INPUT=Object.freeze({snapshot:()=>({telemetry:{...telemetry,events:[...telemetry.events],outcomes:{...telemetry.outcomes},utilitySeen:{...telemetry.utilitySeen}},native:nativeDebug(),consumer:consumerDebug(),gameState:readGameState()}),nativeDebug,consumerDebug,readGameState});
-    document.addEventListener('sfhs-mobile-release-input',release);window.addEventListener('blur',release);window.addEventListener('pagehide',release);window.addEventListener('orientationchange',release);document.addEventListener('visibilitychange',()=>{if(document.hidden)release();});
-  }());
-  </script>
-  <script>
-  (function () {
-    'use strict';
-    const canvas=document.getElementById('minimap-canvas'), context=canvas.getContext('2d'), placeholder=document.getElementById('minimap-placeholder');
-    const fields=['hud-health','hud-armor','hud-ammo','hud-weapon','hud-keys']; let pollTimer=null;
-    function draw(values, linePointer) {
-      const count=Math.min(values[13],4096), heap=window.Module.HEAP32, points=[];
-      for(let index=0;index<count;index+=1) { const base=(linePointer>>2)+index*5; points.push([heap[base]/65536,heap[base+1]/65536,heap[base+2]/65536,heap[base+3]/65536]); }
-      const playerX=values[4]/65536, playerY=values[5]/65536; let lowX=playerX-64,highX=playerX+64,lowY=playerY-64,highY=playerY+64;
-      for(const line of points){lowX=Math.min(lowX,line[0],line[2]);highX=Math.max(highX,line[0],line[2]);lowY=Math.min(lowY,line[1],line[3]);highY=Math.max(highY,line[1],line[3]);}
-      const scale=Math.min((canvas.width-12)/(highX-lowX||1),(canvas.height-12)/(highY-lowY||1)), x=value=>6+(value-lowX)*scale, y=value=>canvas.height-6-(value-lowY)*scale;
-      context.fillStyle='#0b151d';context.fillRect(0,0,canvas.width,canvas.height);context.strokeStyle='#89abc2';context.lineWidth=1;context.beginPath();for(const line of points){context.moveTo(x(line[0]),y(line[1]));context.lineTo(x(line[2]),y(line[3]));}context.stroke();
-      context.fillStyle='#f4c27e';context.beginPath();context.arc(x(playerX),y(playerY),3,0,Math.PI*2);context.fill();
-    }
-    function update() { if(document.hidden || !window.Module || typeof window.Module._sfhs_mobile_state_snapshot!=='function' || !window.Module.HEAP32) return; const pointer=window.Module._sfhs_mobile_state_snapshot(); if(!pointer)return;const heap=window.Module.HEAP32, base=pointer>>2, values=[];for(let index=0;index<14;index+=1)values.push(heap[base+index]);if(values[0]!==1)return;const hud=[values[7],values[8],values[11],'W'+values[10],values[12].toString(16).toUpperCase()];fields.forEach((id,index)=>document.getElementById(id).textContent=hud[index]);draw(values,window.Module._sfhs_mobile_state_lines());window.SFHS_P6_STATE.hudUpdates+=1;placeholder.hidden=true; }
-    function syncTimer(){if(pollTimer!==null){window.clearInterval(pollTimer);pollTimer=null;}if(!document.hidden)pollTimer=window.setInterval(update,100);}
-    document.addEventListener('visibilitychange',syncTimer);window.addEventListener('pagehide',()=>{if(pollTimer!==null)window.clearInterval(pollTimer);pollTimer=null;});syncTimer();
-  }());
-  </script>
-  <script>
-  (function () {
-    'use strict';
-    const canvas=document.getElementById('canvas'), panel=document.getElementById('diagnostic-panel'), output=document.getElementById('diagnostics-json'), toggle=document.getElementById('diagnostics-toggle');
-    const nativeGetContext=canvas.getContext.bind(canvas), requestedContexts=[]; let webgl=null, frames=0, captured=null;
-    const webglEvents={lost:0,restored:0,last:null};
-    canvas.getContext=function(type,...args){requestedContexts.push(String(type));const context=nativeGetContext(type,...args);if(context&&/webgl/i.test(String(type)))webgl=context;return context;};
-    canvas.addEventListener('webglcontextlost',event=>{webglEvents.lost+=1;webglEvents.last='lost';});
-    canvas.addEventListener('webglcontextrestored',event=>{webglEvents.restored+=1;webglEvents.last='restored';});
-    function countPixels(read) { let nonblack=0, checksum=2166136261>>>0, count=0; for(let y=0;y<8;y+=1)for(let x=0;x<8;x+=1){const pixel=read(x,y);if(!pixel)continue;count+=1;const visible=pixel[0]!==0||pixel[1]!==0||pixel[2]!==0;if(visible)nonblack+=1;for(const value of pixel){checksum^=value;checksum=Math.imul(checksum,16777619)>>>0;}}return {supported:true,sampleCount:count,nonblackCount:nonblack,checksum}; }
-    function readVisible() { try { if(webgl){const width=canvas.width,height=canvas.height;return countPixels((x,y)=>{const rgba=new Uint8Array(4);webgl.readPixels(Math.min(width-1,Math.floor((x+.5)*width/8)),Math.min(height-1,Math.floor((y+.5)*height/8)),1,1,webgl.RGBA,webgl.UNSIGNED_BYTE,rgba);return rgba;});} const context=nativeGetContext('2d');if(context)return countPixels((x,y)=>context.getImageData(Math.min(canvas.width-1,Math.floor((x+.5)*canvas.width/8)),Math.min(canvas.height-1,Math.floor((y+.5)*canvas.height/8)),1,1).data);return {supported:false,reason:'no readable 2d or WebGL context'};}catch(error){return {supported:false,reason:String(error)};} }
-    function packet(name,fields) { try { const fn=window.Module&&window.Module['_'+name],heap=window.Module&&window.Module.HEAP32;if(typeof fn!=='function'||!heap)return null;const pointer=fn();if(!pointer)return null;const base=pointer>>2,out={};fields.forEach((key,index)=>out[key]=heap[base+index]);return out;}catch(error){return {error:String(error)};} }
-    function logicalProbe() { const probe=packet('sfhs_mobile_video_probe',['version','width','height','sampleCount','nonblackCount','checksum','updateCount']);if(probe&&Number.isInteger(probe.checksum))probe.checksum>>>=0;return probe; }
-    function presentProbe() { const probe=packet('sfhs_mobile_present_debug_snapshot',['version','rendererMode','finishUpdates','presents','logicalNonblack','logicalChecksum','argbNonblack','argbChecksum','rendererFlags','outputWidth','outputHeight','forceSoftware','smoothScaling','lockFailures','blitFailures','targetFailures','copyFailures','lastSdlErrorHash']);if(probe){for(const key of ['logicalChecksum','argbChecksum','lastSdlErrorHash'])if(Number.isInteger(probe[key]))probe[key]>>>=0;}return probe; }
-    function hudProbe() { const statePacket=packet('sfhs_mobile_state_snapshot',['version','active','episode','map','x','y','angle','health','armor','armorType','weapon','ammo','keys','lineCount']);return statePacket?{...statePacket,updates:window.SFHS_P6_STATE.hudUpdates}:null; }
-    function webglInfo() { if(!webgl)return null;try{const extension=webgl.getExtension('WEBGL_debug_renderer_info');return {vendor:extension?webgl.getParameter(extension.UNMASKED_VENDOR_WEBGL):webgl.getParameter(webgl.VENDOR),renderer:extension?webgl.getParameter(extension.UNMASKED_RENDERER_WEBGL):webgl.getParameter(webgl.RENDERER)};}catch(error){return {error:String(error)};} }
-    function snapshot() { const rect=canvas.getBoundingClientRect(),style=getComputedStyle(canvas),viewport=window.visualViewport,readback=readVisible(),locked=document.pointerLockElement;return {schema:'sfhs-doom-samsung-diagnostics-v5',capturedAt:new Date().toISOString(),build:{id:window.SFHS_P6_STATE.diagnosticBuild,profile:window.SFHS_P6_STATE.buildProfile,sourceCommit:window.SFHS_P6_STATE.sourceCommit,artifact:window.SFHS_P6_STATE.artifact,artifactSha256:'not-self-readable-from-a-single-local-HTML-document'},rendererMode:window.SFHS_P6_STATE.rendererMode,pointerLock:{active:!!locked,elementId:locked&&locked.id||null},documentHasFocus:document.hasFocus(),environment:{userAgent:navigator.userAgent,protocol:location.protocol,secureContext:isSecureContext,viewport:{width:innerWidth,height:innerHeight,visualWidth:viewport?viewport.width:null,visualHeight:viewport?viewport.height:null,devicePixelRatio},capabilities:{pointerEvents:'PointerEvent'in window,webgl:!!webgl,clipboard:!!(navigator.clipboard&&navigator.clipboard.writeText),share:typeof navigator.share==='function',fileShare:typeof File==='function'}},canvas:{backing:{width:canvas.width,height:canvas.height},cssRect:{x:rect.x,y:rect.y,width:rect.width,height:rect.height},computed:{display:style.display,visibility:style.visibility,opacity:style.opacity,transform:style.transform,zIndex:style.zIndex},context:{requested:[...requestedContexts],type:webgl?'webgl':(requestedContexts.at(-1)||'unknown'),webgl:webglInfo(),events:webglEvents},webglDefaultFramebufferReadback:{...readback,authoritativeForPhysicalVisibility:false,note:'Default-framebuffer readback is diagnostic only and is not proof of physical visibility.'}},frames,logicalFramebuffer:logicalProbe(),presentation:presentProbe(),input:window.SFHS_P6_INPUT?window.SFHS_P6_INPUT.snapshot():null,lastPageError:window.SFHS_P6_STATE.errors.at(-1)||null,lastUnhandledRejection:window.SFHS_P6_STATE.lastUnhandledRejection,lastEngineDiagnostic:window.SFHS_P6_STATE.lastEngineDiagnostic,audio:{state:window.SFHS_P6_STATE.audioContextState,callbacks:window.SFHS_P6_STATE.audioCallbacks,nonzeroCallbacks:window.SFHS_P6_STATE.nonzeroPcmCallbacks},hudState:hudProbe()}; }
-    function capture(){captured=snapshot();output.value=JSON.stringify(captured,null,2);document.getElementById('diagnostics-message').textContent='Captured. Download or Share this exact snapshot.';return captured;}
-    function tick(){frames+=1;requestAnimationFrame(tick);}requestAnimationFrame(tick);
-    function setOpen(open){panel.hidden=!open;toggle.setAttribute('aria-expanded',String(open));if(open)capture();}
-    toggle.addEventListener('click',()=>setOpen(panel.hidden));document.getElementById('diagnostics-close').addEventListener('click',()=>setOpen(false));
-    document.getElementById('diagnostics-capture').addEventListener('click',capture);document.getElementById('diagnostics-select').addEventListener('click',()=>{output.focus();output.select();document.getElementById('diagnostics-message').textContent='Selected; use Android’s Copy command if available.';});
-    function filename(){return 'sfhs-doom-samsung-diagnostics-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';} function file(){return new File([JSON.stringify(captured||capture(),null,2)],filename(),{type:'application/json'});}
-    document.getElementById('diagnostics-download').addEventListener('click',()=>{const blob=file(),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=blob.name;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);document.getElementById('diagnostics-message').textContent='Downloaded '+blob.name+'.';});
-    document.getElementById('diagnostics-share').addEventListener('click',async()=>{try{const value=file();if(!navigator.share||!navigator.canShare||!navigator.canShare({files:[value]}))throw new Error('File sharing is unavailable in this browser. Use Download JSON.');await navigator.share({title:'SFHS Doom Samsung diagnostics',files:[value]});document.getElementById('diagnostics-message').textContent='Shared diagnostic JSON.';}catch(error){document.getElementById('diagnostics-message').textContent='Share unavailable: '+String(error.message||error);}});
-    document.getElementById('diagnostics-copy').addEventListener('click',async()=>{try{const text=JSON.stringify(captured||capture(),null,2);if(navigator.clipboard&&navigator.clipboard.writeText)await navigator.clipboard.writeText(text);else{output.focus();output.select();if(!document.execCommand('copy'))throw new Error('Browser denied copy.');}document.getElementById('diagnostics-message').textContent='Copied diagnostic JSON.';}catch(error){document.getElementById('diagnostics-message').textContent='Copy unavailable: '+String(error.message||error)+'. Use Download JSON.';}});
-    window.SFHS_P6_DIAGNOSTICS=Object.freeze({snapshot,capture});
-  }());
+  (() => { 'use strict'; const canvas=document.getElementById('minimap-canvas'),context=canvas.getContext('2d'),placeholder=document.getElementById('minimap-placeholder'),fields=['hud-health','hud-armor','hud-ammo','hud-weapon','hud-keys']; let timer=null;
+    function update(){if(document.hidden||!window.Module||!window.Module.HEAP32||typeof window.Module._sfhs_mobile_state_snapshot!=='function')return;const pointer=window.Module._sfhs_mobile_state_snapshot();if(!pointer)return;const heap=window.Module.HEAP32,base=pointer>>2,values=[];for(let i=0;i<14;i+=1)values.push(heap[base+i]);if(values[0]!==1)return;const lines=window.Module._sfhs_mobile_state_lines(),count=Math.min(values[13],4096),playerX=values[4]/65536,playerY=values[5]/65536,points=[];for(let i=0;i<count;i+=1){const at=(lines>>2)+i*5;points.push([heap[at]/65536,heap[at+1]/65536,heap[at+2]/65536,heap[at+3]/65536]);}let lowX=playerX-64,highX=playerX+64,lowY=playerY-64,highY=playerY+64;for(const line of points){lowX=Math.min(lowX,line[0],line[2]);highX=Math.max(highX,line[0],line[2]);lowY=Math.min(lowY,line[1],line[3]);highY=Math.max(highY,line[1],line[3]);}const scale=Math.min((canvas.width-12)/(highX-lowX||1),(canvas.height-12)/(highY-lowY||1)),x=value=>6+(value-lowX)*scale,y=value=>canvas.height-6-(value-lowY)*scale;context.fillStyle='#0b151d';context.fillRect(0,0,canvas.width,canvas.height);context.strokeStyle='#89abc2';context.beginPath();for(const line of points){context.moveTo(x(line[0]),y(line[1]));context.lineTo(x(line[2]),y(line[3]));}context.stroke();context.fillStyle='#f4c27e';context.beginPath();context.arc(x(playerX),y(playerY),3,0,Math.PI*2);context.fill();const hud=[values[7],values[8],values[11],'W'+values[10],values[12].toString(16).toUpperCase()];fields.forEach((id,index)=>document.getElementById(id).textContent=hud[index]);window.SFHS_P6_STATE.hudUpdates+=1;placeholder.hidden=true;}
+    function sync(){if(timer!==null)clearInterval(timer);timer=document.hidden?null:setInterval(update,100);}document.addEventListener('visibilitychange',sync);window.addEventListener('pagehide',()=>{if(timer!==null)clearInterval(timer);timer=null;});sync(); })();
   </script>
   <!-- SFHS_P3_ENGINE_JS -->
 </body>

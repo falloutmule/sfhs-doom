@@ -21,6 +21,30 @@ case "$profile" in
     shell="$root/web/p6/shell.html"; build_root="$root/build/wasm/p6-android"; run_root="$root/build/runtime/P06-build"; profile_label=P6_ANDROID_SINGLE_FILE ;;
   *) echo "unknown build profile: $profile" >&2; exit 2 ;;
 esac
+if [[ "$profile" == android ]]; then
+  sfhs_root="$(cd -- "$root/../.worktrees/sfhs-mobile-controls-v1" && pwd -P)"
+  esbuild="${SFHS_MOBILE_CONTROLS_ESBUILD:-$sfhs_root/node_modules/.bin/esbuild}"
+  [[ -x "$esbuild" ]] || { echo "missing frozen SFHS esbuild: $esbuild" >&2; exit 1; }
+  controls_run="$root/build/runtime/P06-build/mobile-controls-v6"
+  controls_bundle="$controls_run/sfhs-mobile-controls-v1.iife.js"
+  controls_shell="$controls_run/p6-shell-v6.html"
+  mkdir -p "$controls_run"
+  if grep -qi microsoft /proc/version 2>/dev/null; then
+    command -v cmd.exe >/dev/null || { echo 'WSL cannot reach the pinned Windows esbuild binary' >&2; exit 1; }
+    windows_esbuild="$(wslpath -w "$esbuild.cmd")"
+    windows_entry="$(wslpath -w "$root/vendor/sfhs-mobile-controls-v1/src/index.ts")"
+    windows_bundle="$(wslpath -w "$controls_bundle")"
+    cmd.exe /d /c "$windows_esbuild $windows_entry --bundle --platform=browser --format=iife --global-name=SFHSMobileControls --target=es2022 --outfile=$windows_bundle"
+    printf '%q ' cmd.exe /d /s /c "$windows_esbuild" "$windows_entry" --bundle --platform=browser --format=iife --global-name=SFHSMobileControls --target=es2022 --outfile="$windows_bundle" >"$controls_run/esbuild.argv.txt"
+  else
+    "$esbuild" "$root/vendor/sfhs-mobile-controls-v1/src/index.ts" --bundle --platform=browser --format=iife --global-name=SFHSMobileControls --target=es2022 --outfile="$controls_bundle"
+    printf '%q ' "$esbuild" "$root/vendor/sfhs-mobile-controls-v1/src/index.ts" --bundle --platform=browser --format=iife --global-name=SFHSMobileControls --target=es2022 --outfile="$controls_bundle" >"$controls_run/esbuild.argv.txt"
+  fi
+  printf '\n' >>"$controls_run/esbuild.argv.txt"
+  sha256sum "$controls_bundle" >"$controls_run/sfhs-mobile-controls-bundle.sha256"
+  python3 tools/inject-mobile-controls-bundle.py --shell "$shell" --bundle "$controls_bundle" --output "$controls_shell"
+  shell="$controls_shell"
+fi
 wad="$root/vendor-cache/freedoom/0.13.0/data/freedoom2.wad"
 [[ -f "$wad" ]] || { echo "missing open Freedoom input: $wad" >&2; exit 1; }
 if ((oracle)); then build="$build_root/phase2-oracle"; name=oracle; else build="$build_root/phase2-product"; name=product; fi

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-sfhs-controls-v6",
+  "phase": "P06",
+  "task": "DOOM-P6-051",
+  "source": {
+    "commit": "2353154a279c9a24a61e150b0ebeaaa4f8cd29f1",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-08T05:00:00Z",
+    "id": "P6-SFHS-CONTROLS-V6",
+    "commands": [{
+      "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-sfhs-controls-v6.html"],
+      "cwd": ".",
+      "exit_code": 0,
+      "stdout_path": "evidence/logs/P06/P6-051/build.stdout.txt",
+      "stderr_path": "evidence/logs/P06/P6-051/build.stderr.txt"
+    }]
+  },
+  "artifacts": [{
+    "path": "dist/sfhs-doom-android-sfhs-controls-v6.html",
+    "size_bytes": 48327079,
+    "sha256": "6b1e1b2a6929bc0b975d983265e7d2643b30f25866c2cc9414f9b32c58c5ca20",
+    "kind": "single-file-html"
+  }],
+  "verification": {
+    "run_ids": ["P6-051-local-emulator-focused-gate"],
+    "result": "PASS",
+    "checks": [
+      "P6 static one-file validation",
+      "V6 Python dependency/provenance and contract checks: 7 passed",
+      "V6 browser controls checks: 3 passed",
+      "focused P6 browser selection: 24 passed",
+      "P3 and V5 protected artifact hashes retained",
+      "no product HTTP/HTTPS request and no V6 page error"
+    ]
+  },
+  "notes": [
+    "Accepted dependency archive: 52596 bytes, SHA-256 f360fe5a9c80ffc78f2fc38ecd4fe22b149702d251ecf3f0fbeca20348123d25, package head b02336c4de013a3fcd9bd900701867c7f99ffdd1, implementation commit 9af795fbf22b19e06724785517b97bb3d98c934a.",
+    "Vendored source-only package bundle SHA-256: 2d8453442bd1ffce8f0a432c9c7c4ddf6a0ba29c6a3ce13ac668669c6579133f.",
+    "Exact bundle invocation: cmd.exe /d /s /c esbuild.cmd index.ts --bundle --platform=browser --format=iife --global-name=SFHSMobileControls --target=es2022 --outfile=sfhs-mobile-controls-v1.iife.js.",
+    "Physical Samsung acceptance is pending. No remote publication action occurred."
+  ]
+}

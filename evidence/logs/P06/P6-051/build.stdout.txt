@@ -1,0 +1,3 @@
+P6_ANDROID_SINGLE_FILE=PASS output=dist/sfhs-doom-android-sfhs-controls-v6.html
+esbuild bundle: sfhs-mobile-controls-v1.iife.js
+bundle SHA-256: 2d8453442bd1ffce8f0a432c9c7c4ddf6a0ba29c6a3ce13ac668669c6579133f

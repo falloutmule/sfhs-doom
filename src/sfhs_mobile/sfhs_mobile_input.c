@@ -13,14 +13,13 @@
 #endif
 
 static int held[11];
-static int pending_look_x;
 static sfhs_mobile_input_debug_t debug;
 
 static void InitDebug(void)
 {
     if (debug.version == 0)
     {
-        debug.version = 2;
+        debug.version = 3;
         debug.last_action = -1;
     }
 }
@@ -117,48 +116,52 @@ SFHS_KEEP int sfhs_mobile_input_pulse(int action)
 
 SFHS_KEEP int sfhs_mobile_input_post_look(int relative_x)
 {
+    event_t event = { 0 };
+
     InitDebug(); ++debug.total_calls; ++debug.look_calls;
     debug.last_relative_x = relative_x;
     if (relative_x == 0) return 0;
 
-    pending_look_x = SaturatingAdd(pending_look_x, relative_x);
-    debug.pending_look_x = pending_look_x;
-    debug.look_units_accumulated = SaturatingAdd(debug.look_units_accumulated,
-                                                 relative_x);
-    return 1;
-}
-
-int sfhs_mobile_input_flush_look(void)
-{
-    int relative_x;
-    event_t event = { 0 };
-
-    InitDebug();
-    ++debug.look_flush_calls;
-    relative_x = pending_look_x;
-    pending_look_x = 0;
-    debug.pending_look_x = 0;
-
-    if (relative_x == 0) return 0;
-
+    // The shared browser controller has already accumulated relative input
+    // until this authoritative Doom tic.  Post one ordinary SDL/Doom mouse
+    // event; do not add a second event-rate accumulator here.
     event.type = ev_mouse;
     event.data1 = 0;
     event.data2 = relative_x;
     event.data3 = 0;
     D_PostEvent(&event);
     ++debug.posted_mouse;
-    debug.look_units_flushed = SaturatingAdd(debug.look_units_flushed,
-                                             relative_x);
+    debug.look_units_posted = SaturatingAdd(debug.look_units_posted,
+                                            relative_x);
     debug.last_flushed_x = relative_x;
     return 1;
+}
+
+#ifdef __EMSCRIPTEN__
+EM_JS(void, SFHSMobileControlsFlush, (),
+{
+    if (typeof window !== 'undefined'
+        && window.SFHSDoomMobileControls
+        && typeof window.SFHSDoomMobileControls.flushForDoomTic === 'function')
+    {
+        window.SFHSDoomMobileControls.flushForDoomTic();
+    }
+ });
+#endif
+
+void sfhs_mobile_input_flush_controls(void)
+{
+    InitDebug();
+    ++debug.control_flush_calls;
+#ifdef __EMSCRIPTEN__
+    SFHSMobileControlsFlush();
+#endif
 }
 
 SFHS_KEEP int sfhs_mobile_input_release_all(void)
 {
     int action, result, changed = 0;
     InitDebug(); ++debug.total_calls; ++debug.release_all_calls;
-    pending_look_x = 0;
-    debug.pending_look_x = 0;
     for (action = 0; action < 11; ++action)
     {
         result = sfhs_mobile_input_set_held(action, 0);

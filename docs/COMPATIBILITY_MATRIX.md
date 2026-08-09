@@ -1,7 +1,7 @@
 # Compatibility Matrix
 
-**Document status:** V11 desktop browser automation and native compile compatibility verified; V11 physical Android acceptance pending
-**Date:** 2026-08-08
+**Document status:** V12 desktop browser automation and native compile compatibility verified; V12 physical Android acceptance pending
+**Date:** 2026-08-09
 
 Every runtime row remains `UNTESTED` until the named artifact, environment, and evidence are available.
 
@@ -18,8 +18,11 @@ Every runtime row remains `UNTESTED` until the named artifact, environment, and 
 | Native V10-off compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | Touched common source compiles and links without mobile HUD symbols or native presentation overrides | VERIFIED | `docs/results/P06/DOOM-P6-058.md` |
 | V11 Android candidate on desktop Chromium | Playwright 1.61.1; Chromium 149; direct `file://`; 360x800, 400x844, and 800x360 | 4:3 portrait CSS presentation with active 320x200 backing, detached 320x32 HUD, unobstructed minimap-region editor, fullscreen/audio/renderers/automap/control and hygiene gates | VERIFIED | `docs/results/P06/DOOM-P6-059.md`; `test-results/P06/P6-059/` |
 | Native V11 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | Unchanged common source compiles and links without V11 browser-shell behavior | VERIFIED | `docs/results/P06/DOOM-P6-059.md` |
+| V12 Android candidate on desktop Chromium | Playwright 1.61.1; Chromium 149; direct `file://`; 360x800, 400x844, 576x1280, and 800x360 | SDL-owned 320x200 backing, complete 4:3 frame occupancy, detached 320x32 HUD, retained editor, fullscreen/audio/renderers/controls/hygiene | VERIFIED | `docs/results/P06/DOOM-P6-060.md`; `test-results/P06/P6-060/` |
+| Native V12 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | V12 changes no native source; fresh full build/link and version check | VERIFIED | `docs/results/P06/DOOM-P6-060.md` |
 | V10 on Samsung Android Chrome | Exact model/version not recorded | User-reported fullscreen, world, HUD, minimap, gameplay, general controls, and editor usability | PARTIAL | PASS for presentation/gameplay/general controls; FAIL for editor settings obscuring controls, as recorded in DOOM-P6-059 input |
-| V11 on Samsung Android Chrome | Exact model/version not recorded | Physical 4:3 presentation and repaired editor acceptance | UNTESTED | No V11 physical run; `adb devices -l` found no attached device |
+| V11 on Samsung Android Chrome | Exact model/version not recorded; physical fullscreen width 576 | Physical 4:3 presentation and repaired editor acceptance | FAILED | 576x432 DOM region showed about 576x286 rendered pixels plus about 146 blank rows; diagnostic photos do not establish edit-mode acceptance |
+| V12 on Samsung Android Chrome | Exact model/version not recorded | Full-frame 4:3 presentation plus hands-on editor and speaker acceptance | UNTESTED | Local automation passes; physical test required after Pages publication |
 | iOS Safari | Version/device not recorded | Best-effort compatibility target | UNTESTED | None |
 | Freedoom Phase 1 edition | Freedoom v0.13.0 `freedoom1.wad` | E1M1 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase1-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase1/` |
 | Freedoom Phase 2 edition | Freedoom v0.13.0 `freedoom2.wad` | MAP01 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase2-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase2/` |

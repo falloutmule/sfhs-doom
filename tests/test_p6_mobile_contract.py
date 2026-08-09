@@ -23,7 +23,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertNotIn("processLook(event)", SHELL)
         self.assertNotIn("lookState.accumulator", SHELL)
 
-    def test_v11_retains_doom_specific_resize_ranges_and_relative_look_rail(self):
+    def test_v12_retains_doom_specific_resize_ranges_and_relative_look_rail(self):
         for control in ("move", "look", "primary", "interact", "modifier", "menu", "map", "weapon-previous", "weapon-next"):
             self.assertIn(f"id:'{control}'", SHELL)
         self.assertIn('data-sfhs-control-id="look"', SHELL)
@@ -42,7 +42,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("setHeld(actions.forward,move.y>threshold)", SHELL)
         self.assertIn("setHeld(actions.backward,move.y< -threshold)", SHELL)
 
-    def test_v11_keeps_mobile_launch_contract_and_single_file_bundle(self):
+    def test_v12_keeps_mobile_launch_contract_and_single_file_bundle(self):
         self.assertIn("'-nograbmouse'", SHELL)
         self.assertNotIn("'-nomouse'", SHELL)
         self.assertIn("inject-mobile-controls-bundle.py", BUILD)
@@ -53,7 +53,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("_sfhs_mobile_hud_snapshot", BUILD)
         self.assertIn("_sfhs_mobile_hud_pixels", BUILD)
 
-    def test_v11_detached_hud_contract_is_read_only_and_fixed_size(self):
+    def test_v12_detached_hud_contract_is_read_only_and_fixed_size(self):
         self.assertIn("#define SFHS_MOBILE_HUD_WIDTH 320", HUD_HEADER)
         self.assertIn("#define SFHS_MOBILE_HUD_HEIGHT 32", HUD_HEADER)
         self.assertIn("const sfhs_mobile_hud_snapshot_t *sfhs_mobile_hud_snapshot", HUD_HEADER)
@@ -63,15 +63,20 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('id="sfhs-fullscreen-root"', SHELL)
         self.assertNotIn('id="info-strip"', SHELL)
 
-    def test_v11_uses_one_portrait_aspect_correction_and_compact_editor_region(self):
+    def test_v12_gives_sdl_backing_ownership_and_keeps_compact_editor_region(self):
         self.assertIn("--world-height:75vw", SHELL)
-        self.assertIn("#canvas { position:absolute; left:0; top:0; display:block; width:320px; height:200px; aspect-ratio:4/3", SHELL)
+        self.assertIn("#game-region { position:relative; width:100%; height:var(--world-height)", SHELL)
+        self.assertIn("#canvas { position:absolute; left:0; top:0; display:block; width:320px; height:200px", SHELL)
         self.assertIn("#canvas { aspect-ratio:8/5; }", SHELL)
         self.assertIn('id="canvas" width="320" height="200"', SHELL)
         self.assertIn("--world-scale-x", SHELL)
         self.assertIn("syncWorldScale()", SHELL)
-        self.assertIn("new MutationObserver(restoreWorldBacking)", SHELL)
-        self.assertIn("worldCanvas.width!==320||worldCanvas.height!==200", SHELL)
+        self.assertIn("document.body.dataset.sfhsP6Presentation='active'", SHELL)
+        self.assertIn("presentationSnapshot", SHELL)
+        self.assertIn("canvasAttributeWidth", SHELL)
+        self.assertIn("gameRegionHeight", SHELL)
+        self.assertNotIn("MutationObserver(restoreWorldBacking)", SHELL)
+        self.assertNotIn("worldCanvas.width!==320||worldCanvas.height!==200", SHELL)
         self.assertIn('--control-deck-height:320px', SHELL)
         minimap_start = SHELL.index('<section id="minimap-region"')
         minimap_end = SHELL.index('</section>', minimap_start)

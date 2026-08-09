@@ -1,6 +1,6 @@
 # Upstream Delta
 
-**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11 changes only browser-shell presentation and ordinary native builds remain behaviorally unchanged
+**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11/V12 change only browser-shell presentation and ordinary native builds remain behaviorally unchanged
 **Upstream base:** Chocolate Doom `chocolate-doom-3.1.1` at `410d96855b5df5410ff591a90efeafa889119224`
 
 P00 governance files do not alter engine behavior, native build behavior, or future Wasm behavior.
@@ -81,6 +81,16 @@ moves the existing editor form into the minimap grid region during edit mode so
 the separate control deck remains unobstructed. The detached native HUD remains
 320x32 and the accepted mobile-controls package, profile schema, persistence
 key, and input routing are unchanged.
+
+## P6-060 physical 4:3 presentation repair
+
+P6-060 changes no C, CMake, native, Wasm interface, simulation, renderer,
+projection, or shared-SFHS source. V12 removes V11's canvas-attribute observer
+and never rewrites SDL/Emscripten backing dimensions. SDL initializes the
+natural 320x200 surface; after `callMain` begins, CSS alone transforms that
+complete surface into the portrait 4:3 display rectangle. Full-frame screenshot
+analysis now rejects incomplete vertical occupancy and a synthetic reproduction
+of V11's 286-of-432-row Samsung failure. The V11 editor layout is unchanged.
 
 ## P2-050 multi-file Wasm boundary
 

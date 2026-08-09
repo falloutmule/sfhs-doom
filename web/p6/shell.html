@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-V11">
-  <title>SFHS Doom - Android V11 4:3 Portrait</title>
+  <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-V12">
+  <title>SFHS Doom - Android V12 Physical 4:3 Repair</title>
   <style>
     :root { color-scheme:dark; --edge:#5a7a93; --ink:#edf6ff; --vvh:100dvh; --world-height:75vw; --hud-height:10vw; --control-deck-height:320px; }
     * { box-sizing:border-box; }
@@ -15,7 +15,8 @@
     #sfhs-shell { width:100%; height:100%; min-height:0; padding:0 0 env(safe-area-inset-bottom); display:grid; grid-template-rows:var(--world-height) minmax(72px,1fr) var(--control-deck-height) var(--hud-height); background:#05080c; }
     .lower-region { min-width:0; min-height:0; border-top:1px solid var(--edge); }
     #game-region { position:relative; width:100%; height:var(--world-height); min-width:0; min-height:0; overflow:hidden; background:#000; }
-    #canvas { position:absolute; left:0; top:0; display:block; width:320px; height:200px; aspect-ratio:4/3; transform-origin:top left; transform:scale(var(--world-scale-x,1),var(--world-scale-y,1)); image-rendering:pixelated; outline:none; border:0; margin:0; touch-action:none; }
+    #canvas { position:absolute; left:0; top:0; display:block; width:320px; height:200px; transform-origin:top left; image-rendering:pixelated; outline:none; border:0; margin:0; touch-action:none; }
+    body[data-sfhs-p6-presentation="active"] #canvas { transform:scale(var(--world-scale-x,1),var(--world-scale-y,1)); }
     #setup-overlay { position:absolute; z-index:4; inset:0; display:grid; place-content:center; justify-items:center; gap:8px; padding:12px; background:linear-gradient(rgb(0 0 0 / .24),rgb(0 0 0 / .72)); }
     #setup-overlay[hidden] { display:none; }
     #start-doom { min-height:42px; padding:7px 13px; background:#67201e; border-color:#d0735f; font-weight:700; }
@@ -67,7 +68,8 @@
       :root { --world-height:100%; --hud-height:min(32px,9vh); }
       #sfhs-shell { grid-template-columns:minmax(0,74fr) minmax(150px,26fr); grid-template-rows:minmax(0,1fr) var(--hud-height); padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
       #game-region { grid-column:1; grid-row:1; width:100%; height:100%; display:grid; place-items:center; container-type:size; }
-      #canvas { left:50%; top:50%; width:320px; height:200px; transform-origin:center; transform:translate(-50%,-50%) scale(var(--world-scale-x,1),var(--world-scale-y,1)); }
+      #canvas { left:50%; top:50%; transform-origin:center; }
+      body[data-sfhs-p6-presentation="active"] #canvas { transform:translate(-50%,-50%) scale(var(--world-scale-x,1),var(--world-scale-y,1)); }
       #minimap-region { grid-column:2; grid-row:1; border-left:1px solid var(--edge); border-top:0; align-self:start; height:42%; }
       #control-deck { grid-column:2; grid-row:1; margin-top:42%; border-left:1px solid var(--edge); border-top:1px solid var(--edge); }
       #doom-status-region { grid-column:1; grid-row:2; border-top:1px solid var(--edge); display:grid; place-items:center; }
@@ -83,8 +85,8 @@
   </style>
 </head>
 <body>
-  <div id="sfhs-fullscreen-root" data-sfhs-fullscreen-app-root="v11">
-    <main id="sfhs-shell" aria-label="SFHS Doom Android V11 portrait handheld">
+  <div id="sfhs-fullscreen-root" data-sfhs-fullscreen-app-root="v12">
+    <main id="sfhs-shell" aria-label="SFHS Doom Android V12 portrait handheld">
       <section id="game-region" aria-label="Doom full native world view">
         <canvas id="canvas" width="320" height="200" tabindex="0" aria-label="Chocolate Doom world canvas"></canvas>
         <div id="setup-overlay">
@@ -111,7 +113,7 @@
       <button id="diagnostics-toggle" type="button">Diagnostics</button>
       <pre id="utility-status"></pre>
     </section>
-    <aside id="diagnostic-panel" aria-label="Read-only V11 diagnostic"><header><strong>V11 native HUD</strong><button id="diagnostics-close" type="button">Close</button></header><pre id="diagnostic-output"></pre></aside>
+    <aside id="diagnostic-panel" aria-label="Read-only V12 diagnostic"><header><strong>V12 native HUD + presentation</strong><button id="diagnostics-close" type="button">Close</button></header><pre id="diagnostic-output"></pre></aside>
     <!-- SFHS_MOBILE_CONTROLS_BUNDLE -->
     <script>
     (() => {
@@ -131,7 +133,7 @@
       const appRoot=document.getElementById('sfhs-fullscreen-root');
       const controller=window.SFHSMobileControls.createMobileControls({controls:declarations,persistence:{key:'sfhsDoom.mobileControls.v2'},settings:{relativeSensitivity:1}});
       controller.mount(document.getElementById('sfhs-mobile-controls-root'));
-      const state={buildProfile:'P6-ANDROID-PORTRAIT-V11',diagnosticBuild:'P6-4X3-EDITOR-REPAIR-V11',sourceCommit:'local-v11-4x3-editor',artifact:'sfhs-doom-android-sfhs-controls-v11.html',mainStarted:false,mainInvocations:0,worldBackingRestores:0,minimapUpdates:0,hudDraws:0,hudClears:0,hudRafCallbacks:0,hudLoopSuspended:false,audioContextState:null,errors:[],lastEngineDiagnostic:null,oracle:false,fullscreen:{supported:typeof appRoot.requestFullscreen==='function',requested:false,active:false,rejected:false,error:null,changes:0}};
+      const state={buildProfile:'P6-ANDROID-PORTRAIT-V12',diagnosticBuild:'P6-PHYSICAL-4X3-PRESENTATION-V12',sourceCommit:'local-v12-physical-4x3',artifact:'sfhs-doom-android-sfhs-controls-v12.html',mainStarted:false,mainInvocations:0,presentationUpdates:0,minimapUpdates:0,hudDraws:0,hudClears:0,hudRafCallbacks:0,hudLoopSuspended:false,audioContextState:null,errors:[],lastEngineDiagnostic:null,oracle:false,fullscreen:{supported:typeof appRoot.requestFullscreen==='function',requested:false,active:false,rejected:false,error:null,changes:0}};
       window.SFHS_P6_STATE=state;
       const actions={forward:0,backward:1,left:2,right:3,primary:4,interact:5,modifier:6,menu:7,map:8,previous:9,next:10};
       let lookRemainder=0;
@@ -142,8 +144,9 @@
       const gameState=()=>{try{const fn=window.Module&&window.Module._sfhs_mobile_state_snapshot,heap=window.Module&&window.Module.HEAP32;if(typeof fn!=='function'||!heap)return null;const pointer=fn();if(!pointer)return null;const base=pointer>>2;return{active:heap[base+1],x:heap[base+4],y:heap[base+5],angle:heap[base+6],health:heap[base+7],armor:heap[base+8],weapon:heap[base+10],ammo:heap[base+11],keys:heap[base+12]};}catch(_){return null;}};
       const inputState=()=>{try{const heap=window.Module&&window.Module.HEAP32,input=window.Module&&window.Module._sfhs_mobile_input_debug_snapshot,game=window.Module&&window.Module._sfhs_mobile_game_input_debug_snapshot;if(!heap||typeof input!=='function'||typeof game!=='function')return null;const ib=input()>>2,gb=game()>>2;return{heldMask:heap[ib+10],posted:{keydown:heap[ib+6],keyup:heap[ib+7],mouse:heap[ib+8]},flushes:heap[ib+15],lookUnits:heap[ib+16],consumer:{keydown:heap[gb+1],keyup:heap[gb+2],mouse:heap[gb+3],forwardTics:heap[gb+10],angleTics:heap[gb+11]}};}catch(_){return null;}};
       const hudSnapshot=()=>{try{const fn=window.Module&&window.Module._sfhs_mobile_hud_snapshot,heap=window.Module&&window.Module.HEAP32;if(typeof fn!=='function'||!heap)return null;const pointer=fn();if(!pointer)return null;const at=pointer>>2;return{version:heap[at],enabled:heap[at+1],active:heap[at+2],width:heap[at+3],height:heap[at+4],rgbaPitch:heap[at+5],updateCount:heap[at+6],checksum:heap[at+7]>>>0,nonblankCount:heap[at+8],effectiveWorldWidth:heap[at+9],effectiveWorldHeight:heap[at+10],effectiveScreenblocks:heap[at+11],internalStatusActive:heap[at+12],paletteUpdates:heap[at+13]};}catch(_){return null;}};
+      const presentationSnapshot=()=>{const canvas=document.getElementById('canvas'),region=document.getElementById('game-region'),canvasRect=canvas.getBoundingClientRect(),regionRect=region.getBoundingClientRect(),css=getComputedStyle(canvas);let sdl=null;try{const fn=window.Module&&window.Module._sfhs_mobile_present_debug_snapshot,heap=window.Module&&window.Module.HEAP32;if(typeof fn==='function'&&heap){const at=fn()>>2;sdl={outputWidth:heap[at+9],outputHeight:heap[at+10],presents:heap[at+3],rendererFlags:heap[at+8],forceSoftware:heap[at+11],smoothScaling:heap[at+12]};}}catch(_){}return{version:1,updateCount:state.presentationUpdates,canvasAttributeWidth:canvas.width,canvasAttributeHeight:canvas.height,canvasClientWidth:canvas.clientWidth,canvasClientHeight:canvas.clientHeight,canvasRectWidth:canvasRect.width,canvasRectHeight:canvasRect.height,gameRegionWidth:regionRect.width,gameRegionHeight:regionRect.height,computedWidth:css.width,computedHeight:css.height,transform:css.transform,sdl};};
       function flushForDoomTic(){const snapshot=controller.flush();adapter.flushes+=1;const move=snapshot.controls.move,look=snapshot.controls.look,primary=snapshot.controls.primary,interact=snapshot.controls.interact,modifier=snapshot.controls.modifier;adapter.lastMove={x:move.x,y:move.y};adapter.lastLookNormalized=look.delta;const threshold=.30;setHeld(actions.forward,move.y>threshold);setHeld(actions.backward,move.y< -threshold);setHeld(actions.left,move.x< -threshold);setHeld(actions.right,move.x>threshold);setHeld(actions.primary,primary.pressed);setHeld(actions.interact,interact.pressed);setHeld(actions.modifier,modifier.pressed);adapter.lastHeld={primary:primary.pressed,interact:interact.pressed,modifier:modifier.pressed};const combined=look.delta*lookCountsPerWidth+lookRemainder,whole=Math.trunc(combined);lookRemainder=combined-whole;adapter.lastLookCount=whole;if(whole!==0){adapter.lastNonzeroLookNormalized=look.delta;adapter.lastNonzeroLookCount=whole;native('sfhs_mobile_input_post_look',whole);}for(const[id,action]of[['menu',actions.menu],['map',actions.map],['weapon-previous',actions.previous],['weapon-next',actions.next]]){const count=snapshot.controls[id].count;adapter.lastPulseCounts[id]=count;adapter.totalPulseCounts[id]+=count;if(count>0)pulse(action,count);}}
-      window.SFHSDoomMobileControls=Object.freeze({identity:packageIdentity,lookCountsPerWidth,controller,flushForDoomTic,snapshot:()=>({packageIdentity,adapter:{...adapter,lastMove:{...adapter.lastMove},lastPulseCounts:{...adapter.lastPulseCounts},totalPulseCounts:{...adapter.totalPulseCounts},lastHeld:{...adapter.lastHeld}},controller:controller.read(),input:inputState(),game:gameState(),hud:hudSnapshot()})});
+      window.SFHSDoomMobileControls=Object.freeze({identity:packageIdentity,lookCountsPerWidth,controller,flushForDoomTic,snapshot:()=>({packageIdentity,adapter:{...adapter,lastMove:{...adapter.lastMove},lastPulseCounts:{...adapter.lastPulseCounts},totalPulseCounts:{...adapter.totalPulseCounts},lastHeld:{...adapter.lastHeld}},controller:controller.read(),input:inputState(),game:gameState(),hud:hudSnapshot(),presentation:presentationSnapshot()})});
 
       const utility=document.getElementById('utility-panel'),settingsToggle=document.getElementById('settings-toggle');
       const closeUtilities=()=>{utility.classList.remove('is-open');settingsToggle.setAttribute('aria-expanded','false');};
@@ -176,10 +179,8 @@
       fullscreenAction.addEventListener('click',requestAppFullscreen);
 
       const worldCanvas=document.getElementById('canvas'),gameRegion=document.getElementById('game-region');
-      function restoreWorldBacking(){if(worldCanvas.width!==320||worldCanvas.height!==200){worldCanvas.width=320;worldCanvas.height=200;state.worldBackingRestores+=1;}}
-      new MutationObserver(restoreWorldBacking).observe(worldCanvas,{attributes:true,attributeFilter:['width','height']});
       function syncWorldScale(){const box=gameRegion.getBoundingClientRect(),portrait=matchMedia('(orientation:portrait)').matches;let width=box.width,height=box.height;if(!portrait){if(width*5>height*8)width=height*8/5;else height=width*5/8;}worldCanvas.style.setProperty('--world-scale-x',String(width/320));worldCanvas.style.setProperty('--world-scale-y',String(height/200));}
-      function syncViewport(){const visualHeight=window.visualViewport?window.visualViewport.height:window.innerHeight,height=Math.min(window.innerHeight,visualHeight);appRoot.style.setProperty('--vvh',`${Math.round(height)}px`);syncWorldScale();}
+      function syncViewport(){const visualHeight=window.visualViewport?window.visualViewport.height:window.innerHeight,height=Math.min(window.innerHeight,visualHeight);appRoot.style.setProperty('--vvh',`${Math.round(height)}px`);syncWorldScale();state.presentationUpdates+=1;}
       window.addEventListener('resize',syncViewport,{passive:true});
       if(window.visualViewport)window.visualViewport.addEventListener('resize',syncViewport,{passive:true});
       syncViewport();
@@ -189,8 +190,8 @@
       window.SFHS_P3_MODULE_CONFIG={canvas:document.getElementById('canvas'),arguments:args,noInitialRun:true,ENV:oracle?{SFHS_ORACLE_OUTPUT:'/oracle-output'}:undefined,print:value=>console.log(String(value)),printErr:value=>{state.lastEngineDiagnostic=String(value);if(state.lastEngineDiagnostic.startsWith('emscripten_set_main_loop_timing: Cannot set timing mode'))console.warn(state.lastEngineDiagnostic);else console.error(state.lastEngineDiagnostic);},onAbort:value=>state.errors.push('abort:'+String(value)),onRuntimeInitialized:()=>{document.body.dataset.sfhsP6Runtime='ready';document.getElementById('start-doom').hidden=false;document.getElementById('setup-status').textContent='Ready - tap Start Fullscreen';}};
       window.SFHS_P3_MODULE=window.SFHS_P3_MODULE_CONFIG;
       const start=document.getElementById('start-doom'),renderer=document.getElementById('renderer-mode'),setup=document.getElementById('setup-overlay');
-      start.addEventListener('click',()=>{if(state.mainStarted)return;requestAppFullscreen();const configure=window.Module&&window.Module._sfhs_mobile_present_configure_renderer;if(typeof configure!=='function'){state.errors.push('required runtime export unavailable');return;}if(configure(renderer.value==='compatibility'?1:0)<0){state.errors.push('renderer configuration rejected');return;}state.mainStarted=true;state.mainInvocations+=1;document.body.dataset.sfhsP6Main='started';setup.hidden=true;settingsToggle.hidden=false;const run=window.Module.callMain(window.Module.arguments);if(run&&typeof run.catch==='function')run.catch(error=>state.errors.push(String(error)));document.getElementById('canvas').focus();});
-      window.SFHS_WASM_TEST=Object.freeze({mobileControlsSnapshot:()=>controller.read(),flushMobileControls:()=>{flushForDoomTic();return window.SFHSDoomMobileControls.snapshot();},setMobileControlsProfile:value=>controller.importProfile(value),mobileControlsProfile:()=>controller.exportProfile(),controlRect:id=>document.querySelector('[data-sfhs-control-id="'+id+'"]').getBoundingClientRect(),adapterSnapshot:()=>window.SFHSDoomMobileControls.snapshot(),nativeHudSnapshot:hudSnapshot,fullscreenState:()=>structuredClone(state.fullscreen),readOracleState:()=>{try{return window.Module.FS.readFile('/oracle-output/state.jsonl',{encoding:'utf8'});}catch(_){return '';}}});
+      start.addEventListener('click',()=>{if(state.mainStarted)return;requestAppFullscreen();const configure=window.Module&&window.Module._sfhs_mobile_present_configure_renderer;if(typeof configure!=='function'){state.errors.push('required runtime export unavailable');return;}if(configure(renderer.value==='compatibility'?1:0)<0){state.errors.push('renderer configuration rejected');return;}state.mainStarted=true;state.mainInvocations+=1;document.body.dataset.sfhsP6Main='started';setup.hidden=true;settingsToggle.hidden=false;const run=window.Module.callMain(window.Module.arguments);document.body.dataset.sfhsP6Presentation='active';state.presentationUpdates+=1;if(run&&typeof run.catch==='function')run.catch(error=>state.errors.push(String(error)));document.getElementById('canvas').focus();});
+      window.SFHS_WASM_TEST=Object.freeze({mobileControlsSnapshot:()=>controller.read(),flushMobileControls:()=>{flushForDoomTic();return window.SFHSDoomMobileControls.snapshot();},setMobileControlsProfile:value=>controller.importProfile(value),mobileControlsProfile:()=>controller.exportProfile(),controlRect:id=>document.querySelector('[data-sfhs-control-id="'+id+'"]').getBoundingClientRect(),adapterSnapshot:()=>window.SFHSDoomMobileControls.snapshot(),nativeHudSnapshot:hudSnapshot,presentationSnapshot,fullscreenState:()=>structuredClone(state.fullscreen),readOracleState:()=>{try{return window.Module.FS.readFile('/oracle-output/state.jsonl',{encoding:'utf8'});}catch(_){return '';}}});
     })();
     </script>
     <script>var Module = window.SFHS_P3_MODULE_CONFIG;</script>

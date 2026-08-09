@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-physical-4x3-repair-v12",
+  "phase": "P06",
+  "task": "DOOM-P6-060",
+  "source": {
+    "commit": "3d939853968cd42322b5de0b19d7dfd5dd215500",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-09T15:34:49Z",
+    "id": "P6-PHYSICAL-4X3-PRESENTATION-V12",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-sfhs-controls-v12.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P06-build/product/package.stdout.txt",
+        "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-android-sfhs-controls-v12.html",
+      "size_bytes": 48344370,
+      "sha256": "6b593fb3268b6fb1ca4cf5aa512c1f01e7c93ac51924964694e5ad712d7a7c24",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P06-P6-060-local-final"],
+    "result": "PASS",
+    "checks": [
+      "V12 static single-file validator PASS",
+      "V12 focused full-frame browser gate 10 passed",
+      "protected V11/V10/V9 and applicable P6 browser gates 23 passed",
+      "applicable Python controls contracts 11 passed",
+      "packaging/offline/audio/manifest contracts 28 passed",
+      "native demo/Wasm comparison contracts 9 passed",
+      "native Debug build and link PASS; CTest has no registered tests",
+      "V8, V9, V10, and V11 protected bytes and hashes unchanged",
+      "no browser page/console errors, failed requests, or HTTP requests"
+    ]
+  },
+  "notes": [
+    "Oracle artifact is ignored evidence at test-results/P06/P6-060/sfhs-doom-v12-oracle.html: 48369612 bytes, SHA-256 7f0498df9e38b3e146f359a84c1691c39e8d13ff13055da000623227ea04620b.",
+    "V11 physically failed on Samsung; V12 physical Samsung acceptance remains pending.",
+    "Pages publication is authorized only after the local V12 gate and exact local commit are complete."
+  ]
+}

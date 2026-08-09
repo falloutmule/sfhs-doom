@@ -1,9 +1,9 @@
 # TASK RESULT
 
-**Task:** DOOM-P6-060 - Repair physical 4:3 presentation ownership  
-**Status:** PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING  
-**Base:** `3d939853968cd42322b5de0b19d7dfd5dd215500`  
-**Result commit:** `SELF`  
+**Task:** DOOM-P6-060 - Repair physical 4:3 presentation ownership
+**Status:** PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING
+**Base:** `3d939853968cd42322b5de0b19d7dfd5dd215500`
+**Result commit:** `SELF`
 **Branch:** `repair/p6-v12-physical-4x3`
 
 ## Result

@@ -1,12 +1,12 @@
 # DOOM-P6-060 — Repair physical 4:3 presentation ownership
 
-**Intelligence:** CODEX  
-**Phase:** P06  
-**Status:** PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING  
-**Depends on:** DOOM-P6-059 and the published, physically failed V11 baseline  
-**Branch:** `repair/p6-v12-physical-4x3`  
-**Base:** `3d939853968cd42322b5de0b19d7dfd5dd215500`  
-**Parallel:** No; one source-modifying writer  
+**Intelligence:** CODEX
+**Phase:** P06
+**Status:** PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING
+**Depends on:** DOOM-P6-059 and the published, physically failed V11 baseline
+**Branch:** `repair/p6-v12-physical-4x3`
+**Base:** `3d939853968cd42322b5de0b19d7dfd5dd215500`
+**Parallel:** No; one source-modifying writer
 **Remote authorization:** After the complete local V12 gate passes, publish only the exact V12 candidate through the existing main/Pages path.
 
 **Result:** `docs/results/P06/DOOM-P6-060.md`

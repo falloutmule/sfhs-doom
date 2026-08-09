@@ -1,62 +1,66 @@
 # SFHS Doom Current State
 
 **Date:** 2026-08-08
-**Phase:** P06 - Android portrait shell, controls, minimap, and detached native HUD
-**Current task:** DOOM-P6-058
+**Phase:** P06 - Android portrait presentation and shared controls
+**Current task:** DOOM-P6-059
 **Current result commit:** SELF
-**Branch:** `feature/p6-native-hud-fullscreen`
-**Base:** `8d45af9e51573dd048f86f95b68a8f65670efae9`
+**Branch:** `repair/p6-v11-4x3-editor`
+**Base:** `1fdd2b0778e883e8f8dd99dd89b8821dccd8a9e7`
 
 ## Verified reality
 
-- `origin/main` and the task base are the published V9 commit
-  `8d45af9e51573dd048f86f95b68a8f65670efae9`.
-- Chocolate Doom remains pinned to `chocolate-doom-3.1.1` at
-  `410d96855b5df5410ff591a90efeafa889119224`.
+- `origin/main` and the task base are the published V10 commit
+  `1fdd2b0778e883e8f8dd99dd89b8821dccd8a9e7`.
 - V8 remains exactly 48,328,131 bytes with SHA-256
   `b806eb9274ae46954ecdc54968735ca1ca94f3f062e3559c54c59b0e7f6ad912`.
 - V9 remains exactly 48,328,267 bytes with SHA-256
   `be885e63be73232d30bb0f897a319baa380231ea56e3eaebea64b29c71c05111`.
-- V10 is the new sibling candidate at
-  `dist/sfhs-doom-android-sfhs-controls-v10.html`: 48,341,427 bytes,
-  SHA-256 `73a29b3ef179239744785a9b3e9b995fab77b82ab6c33452ae143d57a0b9e8f7`.
-- No commercial game data, external runtime asset, service worker, shared SFHS
-  core change, or remote write is part of V10.
+- V10 remains exactly 48,341,427 bytes with SHA-256
+  `73a29b3ef179239744785a9b3e9b995fab77b82ab6c33452ae143d57a0b9e8f7`.
+- V11 is the new sibling at
+  `dist/sfhs-doom-android-sfhs-controls-v11.html`: 48,343,387 bytes,
+  SHA-256 `fac2b1f0637f25bab7a5f41b42115ff955c8e1bef11234876c0871232301b973`.
 
-## V10 product boundary
+## V11 product boundary
 
-V10 uses the full logical 320x200 Doom framebuffer as the portrait world and
-scales it to the complete viewport width at 8:5. The original Doom status code
-renders its WAD-owned graphics and animated widgets into a private indexed
-scratch surface; the active PLAYPAL palette converts rows 168-199 into a
-read-only 320x32 RGBA snapshot for a separate bottom canvas. The internal bar
-and its automap reservation remain disabled only in the compile-time-gated
-Emscripten Android profile.
+V11 makes exactly two product changes over V10. Portrait visually stretches
+the unchanged 320x200 engine canvas to classic aspect-correct 4:3: 360x270 at
+360 CSS pixels and 400x300 at 400 CSS pixels. A bounded attribute observer
+restores SDL's canvas attributes to 320x200 while CSS transforms only the
+presentation; no framebuffer, projection, FOV, screenblocks, simulation,
+automap, menu, save, demo, or native source changed. Landscape retains an 8:5
+fit and now avoids the inherited auto-size canvas collapse.
 
-The Start Fullscreen gesture requests fullscreen on the root containing the
-world, controls, settings, and diagnostics, then starts Doom immediately in the
-same handler. Rejection and unsupported paths continue normally. The minimap,
-shared `@sfhs/mobile-controls` runtime, persistence key, editor, import/export,
-and compact V9 control floors remain intact.
+Edit mode hides and suspends the minimap, places a compact editor form inside
+that same grid region, and leaves the separate 320-pixel control deck exposed.
+Save and Cancel restore the minimap. Drag, resize, settings, reset,
+import/export, persistence schema/key, and
+`@sfhs/mobile-controls@b02336c4` remain unchanged.
 
 ## Verification state
 
-The local product/oracle builds, V10 validator, 6-test focused V10 browser gate,
-15-test applicable P6 regression gate, 30 Python `unittest` contracts, and a
-native Debug build with `SFHS_MOBILE_DETACHED_HUD=OFF` pass. Native CTest reports
-that this project defines no CTest tests; the executable reports Chocolate Doom
-3.1.1. Direct `file://`, automatic and compatibility renderers, audio activation,
-fullscreen success/rejection/unsupported paths, 320x200 world, 320x32 HUD,
-automap no-duplicate behavior, controls, visibility lifecycle, and zero browser
-errors/external requests are covered by the focused gate.
+The exact product and oracle builds pass. The V11 static validator passes. The
+focused V11 browser gate passes 7/7; protected V10 passes its unchanged 6/6
+gate; applicable historical P6 regressions pass 15/15; applicable Python
+contracts pass 48/48; and the native Debug build completes with the detached
+HUD flag OFF. CTest has no registered tests and the executable reports
+Chocolate Doom 3.1.1. Evidence proves active 320x200 canvas backing and native
+view, 400x300/360x270 CSS geometry, the authentic 320x32 HUD, zero editor/deck
+intersection, live controls, audio, automap, automatic/compatibility renderers,
+direct `file://`, no scroll, and empty page/network failure arrays.
 
 ## Acceptance state
 
-`PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING`. `adb devices -l` reported no attached
-device, so no physical Android claim is made. No PR, push, merge, workflow run,
-Pages mutation, publication, deployment, or release occurred.
+`PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING`. User-provided Samsung V10 evidence
+accepted fullscreen, edge-to-edge rendering, detached HUD, minimap, gameplay,
+and general controls, but rejected the obscured V10 editor. V11 repairs that
+defect and introduces the 4:3 experiment; neither change has yet been operated
+on Samsung Chrome. `adb devices -l` found no attached device during this task.
+No push, PR, merge, workflow dispatch, Pages mutation, publication, deployment,
+or release occurred.
 
 ## Next action
 
-Run the V10 physical Samsung Chrome acceptance card, then use the prepared exact
-V10 workflow in a separately authorized PR/merge and deployment sequence.
+Review and operate the local V11 candidate on the intended Samsung in Chrome,
+including the compact editor and 4:3 world, before any separately authorized
+remote publication work.

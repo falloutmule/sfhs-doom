@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-4x3-editor-repair-v11",
+  "phase": "P06",
+  "task": "DOOM-P6-059",
+  "source": {
+    "commit": "1fdd2b0778e883e8f8dd99dd89b8821dccd8a9e7",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-09T01:58:46Z",
+    "id": "P6-4X3-EDITOR-REPAIR-V11",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-sfhs-controls-v11.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P06-build/product/package.stdout.txt",
+        "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-android-sfhs-controls-v11.html",
+      "size_bytes": 48343387,
+      "sha256": "fac2b1f0637f25bab7a5f41b42115ff955c8e1bef11234876c0871232301b973",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P06-P6-059-local-final"],
+    "result": "PASS",
+    "checks": [
+      "V11 static single-file validator PASS",
+      "V11 focused browser gate 7 passed",
+      "protected V10 focused browser gate 6 passed",
+      "applicable historical P6 browser regression gate 15 passed",
+      "applicable Python contract selection 48 passed",
+      "native Debug build and link PASS; CTest has no registered tests",
+      "V8, V9, and V10 protected bytes and hashes unchanged",
+      "no browser page/console errors, failed requests, or HTTP requests"
+    ]
+  },
+  "notes": [
+    "Oracle artifact is ignored evidence at test-results/P06/P6-059/sfhs-doom-v11-oracle.html: 48368629 bytes, SHA-256 e3abd6092c6f35739c1595c4805d7b991c19c1b12e6bc956eab4eb3359d2096b.",
+    "No Android device was attached; physical Samsung acceptance remains pending.",
+    "No remote write, workflow dispatch, publication, or deployment occurred."
+  ]
+}

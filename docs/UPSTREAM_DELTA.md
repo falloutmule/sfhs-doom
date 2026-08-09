@@ -1,6 +1,6 @@
 # Upstream Delta
 
-**Current engine delta:** compile-time-gated P01 oracle observer plus a V10 Emscripten-only detached-HUD presentation path; ordinary native builds remain behaviorally unchanged
+**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11 changes only browser-shell presentation and ordinary native builds remain behaviorally unchanged
 **Upstream base:** Chocolate Doom `chocolate-doom-3.1.1` at `410d96855b5df5410ff591a90efeafa889119224`
 
 P00 governance files do not alter engine behavior, native build behavior, or future Wasm behavior.
@@ -71,6 +71,16 @@ gamma-adjusted PLAYPAL colors. Native builds do not compile this module or
 define the flag; a clean Debug native link with the flag explicitly OFF passes.
 No simulation, tic, RNG, save, demo, compatibility, or configuration-format
 path changes.
+
+## P6-059 4:3 presentation and editor-layout delta
+
+P6-059 changes no C, CMake, native, Wasm interface, simulation, renderer, or
+shared-SFHS source. The V11 shell keeps SDL's main canvas backing at 320x200 and
+uses a CSS-only non-square-pixel transform to present portrait at 4:3. It also
+moves the existing editor form into the minimap grid region during edit mode so
+the separate control deck remains unobstructed. The detached native HUD remains
+320x32 and the accepted mobile-controls package, profile schema, persistence
+key, and input routing are unchanged.
 
 ## P2-050 multi-file Wasm boundary
 

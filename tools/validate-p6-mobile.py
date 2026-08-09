@@ -11,11 +11,18 @@ def main(path: Path) -> int:
     if text.count("<!doctype html>") != 1:
         failures.append("not exactly one HTML document")
     for token in (
-        "P6-ANDROID-PORTRAIT-V10",
+        "P6-ANDROID-PORTRAIT-V11",
         'id="sfhs-fullscreen-root"',
-        'data-sfhs-fullscreen-app-root="v10"',
+        'data-sfhs-fullscreen-app-root="v11"',
         'id="canvas" width="320" height="200"',
         'id="doom-status-canvas" width="320" height="32"',
+        "--world-height:75vw",
+        "aspect-ratio:4/3",
+        '--control-deck-height:320px',
+        'id="minimap-region"',
+        'id="edit-panel"',
+        'minimapRegion.dataset.editing',
+        "document.body.dataset.sfhsP6Editing",
         "requestFullscreen",
         "sfhs_mobile_hud_snapshot",
         "sfhs_mobile_hud_pixels",
@@ -29,7 +36,8 @@ def main(path: Path) -> int:
         if token not in text:
             failures.append(f"missing {token}")
     for stale in ('id="info-strip"', 'id="hud-health"', 'id="hud-armor"',
-                  'id="hud-ammo"', 'id="hud-weapon"', 'id="hud-keys"'):
+                  'id="hud-ammo"', 'id="hud-weapon"', 'id="hud-keys"',
+                  "P6-ANDROID-PORTRAIT-V10"):
         if stale in text:
             failures.append(f"stale HTML HUD token {stale}")
     if re.search(r"(?:src|href)=[\"'][^\"']*chocolate-doom\.wasm", text, re.I):

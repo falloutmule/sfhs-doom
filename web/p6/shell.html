@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-V10">
-  <title>SFHS Doom - Android V10 Native HUD Fullscreen</title>
+  <meta name="sfhs-build-profile" content="P6-ANDROID-PORTRAIT-V11">
+  <title>SFHS Doom - Android V11 4:3 Portrait</title>
   <style>
-    :root { color-scheme:dark; --edge:#5a7a93; --ink:#edf6ff; --vvh:100dvh; --world-height:62.5vw; --hud-height:10vw; }
+    :root { color-scheme:dark; --edge:#5a7a93; --ink:#edf6ff; --vvh:100dvh; --world-height:75vw; --hud-height:10vw; --control-deck-height:320px; }
     * { box-sizing:border-box; }
     html,body { width:100%; height:100%; margin:0; overflow:hidden; background:#000; color:var(--ink); font:12px/1.15 ui-monospace,Consolas,monospace; }
     button,input,select { font:inherit; }
     button,select { color:inherit; border:1px solid #6f8ca1; background:#182631; border-radius:3px; touch-action:manipulation; }
     #sfhs-fullscreen-root { position:relative; width:100%; height:min(var(--vvh),100dvh); min-height:0; overflow:hidden; background:#05080c; }
-    #sfhs-shell { width:100%; height:100%; min-height:0; padding:0 0 env(safe-area-inset-bottom); display:grid; grid-template-rows:var(--world-height) minmax(0,2fr) minmax(0,3fr) var(--hud-height); background:#05080c; }
+    #sfhs-shell { width:100%; height:100%; min-height:0; padding:0 0 env(safe-area-inset-bottom); display:grid; grid-template-rows:var(--world-height) minmax(72px,1fr) var(--control-deck-height) var(--hud-height); background:#05080c; }
     .lower-region { min-width:0; min-height:0; border-top:1px solid var(--edge); }
     #game-region { position:relative; width:100%; height:var(--world-height); min-width:0; min-height:0; overflow:hidden; background:#000; }
-    #canvas { display:block; width:100%; height:100%; aspect-ratio:8/5; image-rendering:pixelated; outline:none; border:0; margin:0; touch-action:none; }
+    #canvas { position:absolute; left:0; top:0; display:block; width:320px; height:200px; aspect-ratio:4/3; transform-origin:top left; transform:scale(var(--world-scale-x,1),var(--world-scale-y,1)); image-rendering:pixelated; outline:none; border:0; margin:0; touch-action:none; }
     #setup-overlay { position:absolute; z-index:4; inset:0; display:grid; place-content:center; justify-items:center; gap:8px; padding:12px; background:linear-gradient(rgb(0 0 0 / .24),rgb(0 0 0 / .72)); }
     #setup-overlay[hidden] { display:none; }
     #start-doom { min-height:42px; padding:7px 13px; background:#67201e; border-color:#d0735f; font-weight:700; }
@@ -27,6 +27,7 @@
     #minimap-placeholder { position:absolute; color:#71899a; pointer-events:none; }
     #settings-toggle { position:absolute; z-index:5; top:6px; right:max(6px,env(safe-area-inset-right)); min-width:38px; min-height:34px; padding:4px 8px; background:rgb(12 28 38 / .92); }
     #settings-toggle[hidden] { display:none; }
+    #minimap-region[data-editing="true"] #minimap-canvas,#minimap-region[data-editing="true"] #minimap-placeholder,#minimap-region[data-editing="true"] #settings-toggle { visibility:hidden; }
     #control-deck { position:relative; isolation:isolate; overflow:hidden; background:linear-gradient(#17232d,#0d151c); }
     #doom-status-region { min-width:0; min-height:0; overflow:hidden; background:#000; }
     #doom-status-canvas { display:block; width:100%; height:auto; aspect-ratio:10/1; border:0; margin:0; image-rendering:pixelated; visibility:hidden; }
@@ -42,20 +43,22 @@
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="primary"] { background:rgb(137 77 35 / .85); font-size:13px; }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="interact"] { background:rgb(99 58 30 / .78); }
     #sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="menu"],#sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id="map"],#sfhs-mobile-controls-root .sfhs-mobile-control[data-sfhs-control-id^="weapon"] { border-radius:4px; background:rgb(28 44 56 / .84); border-color:#7599b2; }
-    #utility-panel,#edit-panel,#diagnostic-panel { position:absolute; z-index:1100; left:50%; width:min(390px,calc(100vw - 16px)); transform:translateX(-50%); display:none; gap:6px; padding:8px; overflow:auto; background:#081119f5; border:1px solid #86aac2; border-radius:5px; top:calc(var(--world-height) + 8px); bottom:calc(var(--hud-height) + env(safe-area-inset-bottom) + 8px); }
-    #utility-panel.is-open,#edit-panel.is-open,#diagnostic-panel.is-open { display:grid; }
+    #utility-panel,#diagnostic-panel { position:absolute; z-index:1100; left:50%; width:min(390px,calc(100vw - 16px)); transform:translateX(-50%); display:none; gap:6px; padding:8px; overflow:auto; background:#081119f5; border:1px solid #86aac2; border-radius:5px; top:calc(var(--world-height) + 8px); bottom:calc(var(--hud-height) + env(safe-area-inset-bottom) + 8px); }
+    #utility-panel.is-open,#diagnostic-panel.is-open { display:grid; }
     #utility-panel { align-content:start; grid-template-columns:1fr 1fr; }
     #utility-panel header { grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; }
     #utility-panel button { min-height:36px; padding:5px; }
     #utility-panel .wide { grid-column:1/-1; }
     #utility-status { grid-column:1/-1; margin:0; color:#a9becd; font-size:10px; white-space:pre-wrap; }
-    #edit-panel { grid-template-columns:1fr 1fr; align-content:start; }
+    #edit-panel { position:absolute; z-index:6; inset:4px; display:none; grid-template-columns:repeat(6,minmax(0,1fr)); align-content:start; gap:4px; padding:6px; overflow:auto; background:#081119; border:1px solid #86aac2; border-radius:5px; }
+    #edit-panel.is-open { display:grid; }
     #edit-panel h2,#edit-panel p { grid-column:1/-1; margin:0; }
-    #edit-panel p { color:#a9becd; font-size:10px; }
-    #edit-panel label { display:grid; gap:3px; color:#c5d8e4; }
+    #edit-panel h2 { font-size:12px; line-height:1; }
+    #edit-panel p { color:#a9becd; font-size:9px; line-height:1.1; }
+    #edit-panel label { grid-column:span 2; display:grid; gap:2px; color:#c5d8e4; font-size:9px; line-height:1; }
     #edit-panel input[type="range"] { width:100%; }
-    #edit-panel button { min-height:32px; padding:4px; }
-    #edit-panel .wide { grid-column:1/-1; }
+    #edit-panel button { grid-column:span 2; min-height:28px; padding:3px; }
+    #edit-panel .editor-close { grid-column:span 3; }
     #diagnostic-panel { grid-template-rows:auto minmax(120px,1fr); }
     #diagnostic-panel header { display:flex; align-items:center; justify-content:space-between; }
     #diagnostic-output { margin:0; min-height:120px; overflow:auto; white-space:pre-wrap; color:#d8efff; font:10px/1.2 ui-monospace,Consolas,monospace; }
@@ -64,21 +67,24 @@
       :root { --world-height:100%; --hud-height:min(32px,9vh); }
       #sfhs-shell { grid-template-columns:minmax(0,74fr) minmax(150px,26fr); grid-template-rows:minmax(0,1fr) var(--hud-height); padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
       #game-region { grid-column:1; grid-row:1; width:100%; height:100%; display:grid; place-items:center; container-type:size; }
-      #canvas { inline-size:min(100cqw,160cqh); block-size:min(62.5cqw,100cqh); width:auto; height:auto; }
+      #canvas { left:50%; top:50%; width:320px; height:200px; transform-origin:center; transform:translate(-50%,-50%) scale(var(--world-scale-x,1),var(--world-scale-y,1)); }
       #minimap-region { grid-column:2; grid-row:1; border-left:1px solid var(--edge); border-top:0; align-self:start; height:42%; }
       #control-deck { grid-column:2; grid-row:1; margin-top:42%; border-left:1px solid var(--edge); border-top:1px solid var(--edge); }
       #doom-status-region { grid-column:1; grid-row:2; border-top:1px solid var(--edge); display:grid; place-items:center; }
       #doom-status-canvas { width:min(100%,320px); height:100%; }
       #minimap-canvas { max-width:100%; height:auto; aspect-ratio:1; }
-      #utility-panel,#edit-panel,#diagnostic-panel { left:auto; right:max(8px,env(safe-area-inset-right)); top:8px; bottom:calc(var(--hud-height) + 8px); width:min(390px,calc(26vw - 16px)); transform:none; }
-      #utility-panel,#edit-panel { grid-template-columns:1fr; }
-      #utility-panel header,#utility-panel .wide,#edit-panel h2,#edit-panel p,#edit-panel .wide { grid-column:1; }
+      #canvas { aspect-ratio:8/5; }
+      #utility-panel,#diagnostic-panel { left:auto; right:max(8px,env(safe-area-inset-right)); top:8px; bottom:calc(var(--hud-height) + 8px); width:min(390px,calc(26vw - 16px)); transform:none; }
+      #utility-panel { grid-template-columns:1fr; }
+      #utility-panel header,#utility-panel .wide { grid-column:1; }
+      #edit-panel { grid-template-columns:1fr; }
+      #edit-panel h2,#edit-panel p,#edit-panel label,#edit-panel button,#edit-panel .editor-close { grid-column:1; }
     }
   </style>
 </head>
 <body>
-  <div id="sfhs-fullscreen-root" data-sfhs-fullscreen-app-root="v10">
-    <main id="sfhs-shell" aria-label="SFHS Doom Android V10 portrait handheld">
+  <div id="sfhs-fullscreen-root" data-sfhs-fullscreen-app-root="v11">
+    <main id="sfhs-shell" aria-label="SFHS Doom Android V11 portrait handheld">
       <section id="game-region" aria-label="Doom full native world view">
         <canvas id="canvas" width="320" height="200" tabindex="0" aria-label="Chocolate Doom world canvas"></canvas>
         <div id="setup-overlay">
@@ -90,6 +96,7 @@
       <section id="minimap-region" class="lower-region" aria-label="Explored minimap">
         <canvas id="minimap-canvas" width="320" height="120"></canvas><span id="minimap-placeholder">MINIMAP</span>
         <button id="settings-toggle" type="button" aria-expanded="false" aria-label="Open settings" hidden>⚙</button>
+        <form id="edit-panel" aria-label="Control editor"><h2>Control editor</h2><p>Drag controls or their resize handles below. Gameplay input is released.</p><label>Opacity <input id="control-opacity" type="range" min="0.1" max="1" step="0.01"></label><label>LOOK sensitivity <input id="look-sensitivity" type="range" min="0.25" max="4" step="0.05"></label><label>MOVE dead zone <input id="move-dead-zone" type="range" min="0" max="0.5" step="0.01"></label><button id="profile-reset" type="button">Reset</button><button id="profile-export" type="button">Export JSON</button><button id="profile-import" type="button">Import JSON</button><button id="edit-cancel" class="editor-close" type="button">Cancel</button><input id="profile-file" type="file" accept="application/json,.json"><button id="edit-save" class="editor-close" type="button">Save layout</button></form>
       </section>
       <section id="control-deck" class="lower-region" aria-label="Touch control deck"></section>
       <section id="doom-status-region" class="lower-region" aria-label="Authentic Doom status bar">
@@ -104,8 +111,7 @@
       <button id="diagnostics-toggle" type="button">Diagnostics</button>
       <pre id="utility-status"></pre>
     </section>
-    <form id="edit-panel" aria-label="Control editor"><h2>Control editor</h2><p>Shared SFHS controls. Drag a control or use its resize handle; gameplay input is released while editing.</p><label>Opacity <input id="control-opacity" type="range" min="0.1" max="1" step="0.01"></label><label>LOOK sensitivity <input id="look-sensitivity" type="range" min="0.25" max="4" step="0.05"></label><label class="wide">MOVE dead zone <input id="move-dead-zone" type="range" min="0" max="0.5" step="0.01"></label><button id="profile-reset" type="button">Reset</button><button id="profile-export" type="button">Export JSON</button><button id="profile-import" type="button">Import JSON</button><button id="edit-cancel" type="button">Cancel</button><input id="profile-file" type="file" accept="application/json,.json"><button id="edit-save" class="wide" type="button">Save layout</button></form>
-    <aside id="diagnostic-panel" aria-label="Read-only V10 diagnostic"><header><strong>V10 native HUD</strong><button id="diagnostics-close" type="button">Close</button></header><pre id="diagnostic-output"></pre></aside>
+    <aside id="diagnostic-panel" aria-label="Read-only V11 diagnostic"><header><strong>V11 native HUD</strong><button id="diagnostics-close" type="button">Close</button></header><pre id="diagnostic-output"></pre></aside>
     <!-- SFHS_MOBILE_CONTROLS_BUNDLE -->
     <script>
     (() => {
@@ -125,7 +131,7 @@
       const appRoot=document.getElementById('sfhs-fullscreen-root');
       const controller=window.SFHSMobileControls.createMobileControls({controls:declarations,persistence:{key:'sfhsDoom.mobileControls.v2'},settings:{relativeSensitivity:1}});
       controller.mount(document.getElementById('sfhs-mobile-controls-root'));
-      const state={buildProfile:'P6-ANDROID-PORTRAIT-V10',diagnosticBuild:'P6-NATIVE-HUD-FULLSCREEN-V10',sourceCommit:'local-v10-native-hud-fullscreen',artifact:'sfhs-doom-android-sfhs-controls-v10.html',mainStarted:false,mainInvocations:0,minimapUpdates:0,hudDraws:0,hudClears:0,hudRafCallbacks:0,hudLoopSuspended:false,audioContextState:null,errors:[],lastEngineDiagnostic:null,oracle:false,fullscreen:{supported:typeof appRoot.requestFullscreen==='function',requested:false,active:false,rejected:false,error:null,changes:0}};
+      const state={buildProfile:'P6-ANDROID-PORTRAIT-V11',diagnosticBuild:'P6-4X3-EDITOR-REPAIR-V11',sourceCommit:'local-v11-4x3-editor',artifact:'sfhs-doom-android-sfhs-controls-v11.html',mainStarted:false,mainInvocations:0,worldBackingRestores:0,minimapUpdates:0,hudDraws:0,hudClears:0,hudRafCallbacks:0,hudLoopSuspended:false,audioContextState:null,errors:[],lastEngineDiagnostic:null,oracle:false,fullscreen:{supported:typeof appRoot.requestFullscreen==='function',requested:false,active:false,rejected:false,error:null,changes:0}};
       window.SFHS_P6_STATE=state;
       const actions={forward:0,backward:1,left:2,right:3,primary:4,interact:5,modifier:6,menu:7,map:8,previous:9,next:10};
       let lookRemainder=0;
@@ -143,11 +149,12 @@
       const closeUtilities=()=>{utility.classList.remove('is-open');settingsToggle.setAttribute('aria-expanded','false');};
       settingsToggle.addEventListener('click',()=>{const open=!utility.classList.contains('is-open');utility.classList.toggle('is-open',open);settingsToggle.setAttribute('aria-expanded',String(open));});
       document.getElementById('settings-close').addEventListener('click',closeUtilities);
-      const panel=document.getElementById('edit-panel');
+      const panel=document.getElementById('edit-panel'),minimapRegion=document.getElementById('minimap-region');
       const settings=()=>controller.exportProfile().settings;
       function syncSettings(){const value=settings();document.getElementById('control-opacity').value=value.opacity;document.getElementById('look-sensitivity').value=value.relativeSensitivity;document.getElementById('move-dead-zone').value=value.stickDeadZone;}
-      function closeEditor(cancel){if(cancel)controller.cancelEdit();else controller.commitEdit();panel.classList.remove('is-open');}
-      document.getElementById('edit-toggle').addEventListener('click',()=>{controller.releaseAll('edit');controller.beginEdit();syncSettings();closeUtilities();panel.classList.add('is-open');});
+      function setEditorPresentation(editing){panel.classList.toggle('is-open',editing);minimapRegion.dataset.editing=String(editing);document.body.dataset.sfhsP6Editing=String(editing);}
+      function closeEditor(cancel){if(cancel)controller.cancelEdit();else controller.commitEdit();setEditorPresentation(false);}
+      document.getElementById('edit-toggle').addEventListener('click',()=>{controller.releaseAll('edit');controller.beginEdit();syncSettings();closeUtilities();setEditorPresentation(true);});
       document.getElementById('control-opacity').addEventListener('input',event=>controller.updateConfig({opacity:Number(event.target.value)}));
       document.getElementById('look-sensitivity').addEventListener('input',event=>controller.updateConfig({relativeSensitivity:Number(event.target.value)}));
       document.getElementById('move-dead-zone').addEventListener('input',event=>controller.updateConfig({stickDeadZone:Number(event.target.value)}));
@@ -168,7 +175,11 @@
       document.addEventListener('fullscreenchange',syncFullscreen);
       fullscreenAction.addEventListener('click',requestAppFullscreen);
 
-      function syncViewport(){const visualHeight=window.visualViewport?window.visualViewport.height:window.innerHeight,height=Math.min(window.innerHeight,visualHeight);appRoot.style.setProperty('--vvh',`${Math.round(height)}px`);}
+      const worldCanvas=document.getElementById('canvas'),gameRegion=document.getElementById('game-region');
+      function restoreWorldBacking(){if(worldCanvas.width!==320||worldCanvas.height!==200){worldCanvas.width=320;worldCanvas.height=200;state.worldBackingRestores+=1;}}
+      new MutationObserver(restoreWorldBacking).observe(worldCanvas,{attributes:true,attributeFilter:['width','height']});
+      function syncWorldScale(){const box=gameRegion.getBoundingClientRect(),portrait=matchMedia('(orientation:portrait)').matches;let width=box.width,height=box.height;if(!portrait){if(width*5>height*8)width=height*8/5;else height=width*5/8;}worldCanvas.style.setProperty('--world-scale-x',String(width/320));worldCanvas.style.setProperty('--world-scale-y',String(height/200));}
+      function syncViewport(){const visualHeight=window.visualViewport?window.visualViewport.height:window.innerHeight,height=Math.min(window.innerHeight,visualHeight);appRoot.style.setProperty('--vvh',`${Math.round(height)}px`);syncWorldScale();}
       window.addEventListener('resize',syncViewport,{passive:true});
       if(window.visualViewport)window.visualViewport.addEventListener('resize',syncViewport,{passive:true});
       syncViewport();
@@ -188,7 +199,7 @@
       const minimap=document.getElementById('minimap-canvas'),minimapContext=minimap.getContext('2d'),placeholder=document.getElementById('minimap-placeholder');
       const statusCanvas=document.getElementById('doom-status-canvas'),statusContext=statusCanvas.getContext('2d',{alpha:true});statusContext.imageSmoothingEnabled=false;
       const image=statusContext.createImageData(320,32);let minimapTimer=null,hudFrame=null,lastHudUpdate=-1,lastHudActive=false;
-      function updateMinimap(){if(document.hidden||!window.Module||!window.Module.HEAP32||typeof window.Module._sfhs_mobile_state_snapshot!=='function')return;const pointer=window.Module._sfhs_mobile_state_snapshot();if(!pointer)return;const heap=window.Module.HEAP32,base=pointer>>2,values=[];for(let i=0;i<14;i+=1)values.push(heap[base+i]);if(values[0]!==1||!values[1])return;const lines=window.Module._sfhs_mobile_state_lines(),count=Math.min(values[13],4096),playerX=values[4]/65536,playerY=values[5]/65536,points=[];for(let i=0;i<count;i+=1){const at=(lines>>2)+i*5;points.push([heap[at]/65536,heap[at+1]/65536,heap[at+2]/65536,heap[at+3]/65536]);}let lowX=playerX-64,highX=playerX+64,lowY=playerY-64,highY=playerY+64;for(const line of points){lowX=Math.min(lowX,line[0],line[2]);highX=Math.max(highX,line[0],line[2]);lowY=Math.min(lowY,line[1],line[3]);highY=Math.max(highY,line[1],line[3]);}const scale=Math.min((minimap.width-12)/(highX-lowX||1),(minimap.height-12)/(highY-lowY||1)),x=value=>6+(value-lowX)*scale,y=value=>minimap.height-6-(value-lowY)*scale;minimapContext.fillStyle='#0b151d';minimapContext.fillRect(0,0,minimap.width,minimap.height);minimapContext.strokeStyle='#89abc2';minimapContext.beginPath();for(const line of points){minimapContext.moveTo(x(line[0]),y(line[1]));minimapContext.lineTo(x(line[2]),y(line[3]));}minimapContext.stroke();minimapContext.fillStyle='#f4c27e';minimapContext.beginPath();minimapContext.arc(x(playerX),y(playerY),3,0,Math.PI*2);minimapContext.fill();window.SFHS_P6_STATE.minimapUpdates+=1;placeholder.hidden=true;}
+      function updateMinimap(){if(document.hidden||document.body.dataset.sfhsP6Editing==='true'||!window.Module||!window.Module.HEAP32||typeof window.Module._sfhs_mobile_state_snapshot!=='function')return;const pointer=window.Module._sfhs_mobile_state_snapshot();if(!pointer)return;const heap=window.Module.HEAP32,base=pointer>>2,values=[];for(let i=0;i<14;i+=1)values.push(heap[base+i]);if(values[0]!==1||!values[1])return;const lines=window.Module._sfhs_mobile_state_lines(),count=Math.min(values[13],4096),playerX=values[4]/65536,playerY=values[5]/65536,points=[];for(let i=0;i<count;i+=1){const at=(lines>>2)+i*5;points.push([heap[at]/65536,heap[at+1]/65536,heap[at+2]/65536,heap[at+3]/65536]);}let lowX=playerX-64,highX=playerX+64,lowY=playerY-64,highY=playerY+64;for(const line of points){lowX=Math.min(lowX,line[0],line[2]);highX=Math.max(highX,line[0],line[2]);lowY=Math.min(lowY,line[1],line[3]);highY=Math.max(highY,line[1],line[3]);}const scale=Math.min((minimap.width-12)/(highX-lowX||1),(minimap.height-12)/(highY-lowY||1)),x=value=>6+(value-lowX)*scale,y=value=>minimap.height-6-(value-lowY)*scale;minimapContext.fillStyle='#0b151d';minimapContext.fillRect(0,0,minimap.width,minimap.height);minimapContext.strokeStyle='#89abc2';minimapContext.beginPath();for(const line of points){minimapContext.moveTo(x(line[0]),y(line[1]));minimapContext.lineTo(x(line[2]),y(line[3]));}minimapContext.stroke();minimapContext.fillStyle='#f4c27e';minimapContext.beginPath();minimapContext.arc(x(playerX),y(playerY),3,0,Math.PI*2);minimapContext.fill();window.SFHS_P6_STATE.minimapUpdates+=1;placeholder.hidden=true;}
       function readHud(){return window.SFHS_WASM_TEST&&window.SFHS_WASM_TEST.nativeHudSnapshot();}
       function drawHud(){hudFrame=null;window.SFHS_P6_STATE.hudRafCallbacks+=1;if(document.hidden){window.SFHS_P6_STATE.hudLoopSuspended=true;return;}window.SFHS_P6_STATE.hudLoopSuspended=false;const snapshot=readHud();if(snapshot&&snapshot.active&&snapshot.width===320&&snapshot.height===32&&window.Module&&window.Module.HEAPU8){if(snapshot.updateCount!==lastHudUpdate){const pointer=window.Module._sfhs_mobile_hud_pixels();image.data.set(window.Module.HEAPU8.subarray(pointer,pointer+snapshot.rgbaPitch*snapshot.height));statusContext.putImageData(image,0,0);statusCanvas.dataset.active='true';window.SFHS_P6_STATE.hudDraws+=1;lastHudUpdate=snapshot.updateCount;lastHudActive=true;}}else if(lastHudActive){statusContext.clearRect(0,0,320,32);statusCanvas.dataset.active='false';window.SFHS_P6_STATE.hudClears+=1;lastHudActive=false;lastHudUpdate=snapshot?snapshot.updateCount:-1;}hudFrame=requestAnimationFrame(drawHud);}
       function sync(){if(minimapTimer!==null)clearInterval(minimapTimer);minimapTimer=document.hidden?null:setInterval(updateMinimap,100);if(document.hidden){if(hudFrame!==null)cancelAnimationFrame(hudFrame);hudFrame=null;window.SFHS_P6_STATE.hudLoopSuspended=true;}else if(hudFrame===null){hudFrame=requestAnimationFrame(drawHud);}}

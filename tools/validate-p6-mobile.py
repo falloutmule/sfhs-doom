@@ -11,9 +11,9 @@ def main(path: Path) -> int:
     if text.count("<!doctype html>") != 1:
         failures.append("not exactly one HTML document")
     for token in (
-        "P6-ANDROID-PORTRAIT-V12",
+        "P6-ANDROID-PORTRAIT-V13",
         'id="sfhs-fullscreen-root"',
-        'data-sfhs-fullscreen-app-root="v12"',
+        'data-sfhs-fullscreen-app-root="v13"',
         'id="canvas" width="320" height="200"',
         'id="doom-status-canvas" width="320" height="32"',
         "--world-height:75vw",
@@ -22,6 +22,13 @@ def main(path: Path) -> int:
         "canvasAttributeWidth",
         "gameRegionHeight",
         "outputHeight",
+        "lookTapFire",
+        "maxDurationMs:300",
+        "slopCssPx:12",
+        "maxQueue:4",
+        "minPressBuildTics:1",
+        "nativeBuildTicCount",
+        "drainLookTapFire",
         '--control-deck-height:320px',
         'id="minimap-region"',
         'id="edit-panel"',
@@ -41,7 +48,7 @@ def main(path: Path) -> int:
             failures.append(f"missing {token}")
     for stale in ('id="info-strip"', 'id="hud-health"', 'id="hud-armor"',
                   'id="hud-ammo"', 'id="hud-weapon"', 'id="hud-keys"',
-                  "P6-ANDROID-PORTRAIT-V11", "MutationObserver(restoreWorldBacking)",
+                  "P6-ANDROID-PORTRAIT-V12", "MutationObserver(restoreWorldBacking)",
                   "worldCanvas.width!==320||worldCanvas.height!==200"):
         if stale in text:
             failures.append(f"stale HTML HUD token {stale}")

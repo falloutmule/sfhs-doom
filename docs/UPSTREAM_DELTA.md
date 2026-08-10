@@ -1,6 +1,6 @@
 # Upstream Delta
 
-**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11/V12 change only browser-shell presentation and ordinary native builds remain behaviorally unchanged
+**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11-V13 change only the browser shell and ordinary native builds remain behaviorally unchanged
 **Upstream base:** Chocolate Doom `chocolate-doom-3.1.1` at `410d96855b5df5410ff591a90efeafa889119224`
 
 P00 governance files do not alter engine behavior, native build behavior, or future Wasm behavior.
@@ -91,6 +91,16 @@ natural 320x200 surface; after `callMain` begins, CSS alone transforms that
 complete surface into the portrait 4:3 display rectangle. Full-frame screenshot
 analysis now rejects incomplete vertical occupancy and a synthetic reproduction
 of V11's 286-of-432-row Samsung failure. The V11 editor layout is unchanged.
+
+## P6-061 LOOK tap-to-fire browser adapter
+
+P6-061 changes no C, CMake, native, renderer, simulation, demo/save, or shared
+SFHS source. The V13 shell observes the existing LOOK element and converts a
+bounded short, low-travel release into the ordinary configured FIRE key path.
+It uses the existing read-only Emscripten command-build counter only to ensure
+the press spans one actually built Doom command tic before release. Drag input
+continues through the unchanged full-width shared LOOK route, dedicated FIRE
+takes precedence, and lifecycle cancellation releases pending browser input.
 
 ## P2-050 multi-file Wasm boundary
 

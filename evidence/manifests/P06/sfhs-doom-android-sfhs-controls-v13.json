@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-look-tap-fire-v13",
+  "phase": "P06",
+  "task": "DOOM-P6-061",
+  "source": {
+    "commit": "181fa3a190afb8bc9d18e2216690686e0531c027",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-10T22:57:13Z",
+    "id": "P6-LOOK-TAP-FIRE-V13",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-sfhs-controls-v13.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P06-build/product/package.stdout.txt",
+        "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-android-sfhs-controls-v13.html",
+      "size_bytes": 48351620,
+      "sha256": "97236f045b87b9f1fd65f9bcc9cc5d22ee0f348aaef8421b53987f6dc33abff9",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P06-P6-061-local-final"],
+    "result": "PASS",
+    "checks": [
+      "V13 static single-file validator PASS",
+      "V13 focused LOOK tap-fire browser gate 9 passed",
+      "protected V12/V11/V10/V9/V8 and applicable P6 browser gates 33 passed",
+      "applicable Python controls contracts 12 passed",
+      "packaging/offline/audio/manifest contracts 28 passed",
+      "native demo/Wasm comparison contracts 9 passed",
+      "native Debug build and link PASS; CTest has no registered tests",
+      "V8 through V12 protected bytes and hashes unchanged",
+      "focused evidence has no browser page errors, failed requests, or HTTP requests"
+    ]
+  },
+  "notes": [
+    "Oracle artifact is ignored evidence at test-results/P06/P6-061/sfhs-doom-v13-oracle.html: 48376862 bytes, SHA-256 574947e88ceba108d0447754701c1c92589ce790b7fa710ca1d32cbe7c1516d6.",
+    "V13 physical Samsung tap, drag, editor, and audio acceptance remains pending.",
+    "Pages publication is authorized only after the local V13 gate and exact local commit are complete."
+  ]
+}

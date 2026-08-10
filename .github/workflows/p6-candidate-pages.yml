@@ -1,4 +1,4 @@
-name: Verify and deploy P6 V12 physical 4:3 repair candidate
+name: Verify and deploy P6 V13 LOOK tap-fire candidate
 
 on:
   pull_request:
@@ -11,12 +11,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: p6-v12-candidate-${{ github.workflow }}-${{ github.ref }}
+  group: p6-v13-candidate-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   verify:
-    name: Minimal V12 candidate gate
+    name: Minimal V13 candidate gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,29 +28,30 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: browser-tests/package-lock.json
-      - name: Verify exact V12 candidate and protected V11/V10/V9/V8 baselines
+      - name: Verify exact V13 candidate and protected V12/V11/V10/V9/V8 baselines
         shell: bash
         run: |
           set -euo pipefail
-          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v12.html | tr -d ' ')" = '48344370'
+          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v13.html | tr -d ' ')" = '48351620'
+          printf '%s  %s\n' '97236f045b87b9f1fd65f9bcc9cc5d22ee0f348aaef8421b53987f6dc33abff9' 'dist/sfhs-doom-android-sfhs-controls-v13.html' | sha256sum --check --strict
           printf '%s  %s\n' '6b593fb3268b6fb1ca4cf5aa512c1f01e7c93ac51924964694e5ad712d7a7c24' 'dist/sfhs-doom-android-sfhs-controls-v12.html' | sha256sum --check --strict
           printf '%s  %s\n' 'fac2b1f0637f25bab7a5f41b42115ff955c8e1bef11234876c0871232301b973' 'dist/sfhs-doom-android-sfhs-controls-v11.html' | sha256sum --check --strict
           printf '%s  %s\n' '73a29b3ef179239744785a9b3e9b995fab77b82ab6c33452ae143d57a0b9e8f7' 'dist/sfhs-doom-android-sfhs-controls-v10.html' | sha256sum --check --strict
           printf '%s  %s\n' 'be885e63be73232d30bb0f897a319baa380231ea56e3eaebea64b29c71c05111' 'dist/sfhs-doom-android-sfhs-controls-v9.html' | sha256sum --check --strict
           printf '%s  %s\n' 'b806eb9274ae46954ecdc54968735ca1ca94f3f062e3559c54c59b0e7f6ad912' 'dist/sfhs-doom-android-sfhs-controls-v8.html' | sha256sum --check --strict
       - name: Validate the current single-file candidate
-        run: python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v12.html
+        run: python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v13.html
       - name: Install focused browser test dependencies
         working-directory: browser-tests
         run: |
           npm ci
           npx playwright install --with-deps chromium
-      - name: Run V12-focused browser gate
+      - name: Run V13-focused browser gate
         working-directory: browser-tests
-        run: npx playwright test tests/p6-v12-physical-4x3.spec.mjs --workers=1
+        run: npx playwright test tests/p6-v13-look-tap-fire.spec.mjs --workers=1
 
   deploy-pages:
-    name: Publish exact V12 candidate to GitHub Pages
+    name: Publish exact V13 candidate to GitHub Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
@@ -67,15 +68,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Stage only exact V12 bytes
+      - name: Stage only exact V13 bytes
         shell: bash
         run: |
           set -euo pipefail
-          expected='6b593fb3268b6fb1ca4cf5aa512c1f01e7c93ac51924964694e5ad712d7a7c24'
-          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v12.html | tr -d ' ')" = '48344370'
-          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v12.html' | sha256sum --check --strict
+          expected='97236f045b87b9f1fd65f9bcc9cc5d22ee0f348aaef8421b53987f6dc33abff9'
+          test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v13.html | tr -d ' ')" = '48351620'
+          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v13.html' | sha256sum --check --strict
           mkdir -p _pages
-          cp dist/sfhs-doom-android-sfhs-controls-v12.html _pages/index.html
+          cp dist/sfhs-doom-android-sfhs-controls-v13.html _pages/index.html
           : > _pages/.nojekyll
           printf '%s  %s\n' "$expected" '_pages/index.html' | sha256sum --check --strict
       - uses: actions/upload-pages-artifact@v3

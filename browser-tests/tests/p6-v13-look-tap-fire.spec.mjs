@@ -56,6 +56,7 @@ async function start(page, renderer = 'auto') {
   await page.getByRole('button', { name: 'Start Fullscreen' }).click();
   await expect(page.locator('body')).toHaveAttribute('data-sfhs-p6-main', 'started', { timeout: 15000 });
   await expect.poll(() => page.evaluate(() => window.SFHSDoomMobileControls.snapshot().game?.active), { timeout: 20000 }).toBe(1);
+  await expect.poll(() => page.evaluate(() => window.Module?.SDL2?.audioContext?.state || null), { timeout: 15000 }).toBe('running');
 }
 
 async function box(page, selector) {

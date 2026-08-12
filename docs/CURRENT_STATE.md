@@ -102,10 +102,12 @@ The inspection schema is read-only and ephemeral. Selected bytes are not
 uploaded, persisted, mounted, added to a recipe, or launched. P7-C owns those
 later operations. P7-B browser tests pass 9/9; the combined P7-B/P7-A/V16 lane
 passes 22/22; applicable protected Python contracts pass 58/58; and deterministic
-packaging reproduces exact Forge V2 bytes. Pages remains exact Forge V1 because
-P7-B remote publication was not authorized.
+packaging reproduces exact Forge V2 bytes. PR #16 merged as
+`362202f3138712017c48bde2c155745171f0e719`; candidate run `31598136244` and
+main/Pages run `31598331118` passed. A fresh live `/forge/` download is exactly
+25,852,127 bytes with the committed Forge V2 SHA-256.
 
 ## Next action
 
-Authorize Forge V2 candidate publication if desired, then perform Samsung local
-WAD/ZIP inspection and built-in player checks before P7-C recipe work.
+Perform Samsung local WAD/ZIP inspection and built-in player checks before P7-C
+recipe work.

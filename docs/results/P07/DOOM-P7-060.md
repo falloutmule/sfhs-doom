@@ -42,6 +42,9 @@ mobile-control persistence, or protected artifact source changed.
 - Deterministic full-capsule rebuild: exact byte match.
 - Workflow YAML, task/phase docs, manifest, static hygiene, and diff check: PASS.
 - Forge V1 and V8–V16 protected hashes: unchanged.
+- PR #16 candidate run `31598136244`: PASS.
+- Main/Pages run `31598331118`: PASS.
+- Live `/forge/` download: exact byte count and SHA-256 match.
 
 ## Acceptance mapping
 
@@ -95,11 +98,10 @@ official WSL packager and normalization step, and browser proof used `npx.cmd`.
 
 P7-B does not launch imported content, build recipes, persist a library, inspect
 recursive archives, support ZIP64/encrypted/multi-disk archives, or claim phone
-performance. Remote publication was not authorized, so Pages remains exact
-Forge V1. Physical Samsung acceptance remains pending.
+performance. Forge V2 is published, but physical Samsung acceptance remains
+pending.
 
 ## Next task
 
-Authorize candidate publication if desired, then verify selection, long SHA
-wrapping, WAD/ZIP inspection, scrolling, responsiveness, and built-in Play on
-Samsung before starting P7-C.
+Verify selection, long SHA wrapping, WAD/ZIP inspection, scrolling,
+responsiveness, and built-in Play on Samsung before starting P7-C.

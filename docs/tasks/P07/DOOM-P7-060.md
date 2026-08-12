@@ -7,7 +7,7 @@
 **Branch:** `codex/p7b-local-wad-inspection`
 **Allowed files/directories:** `web/p7/**`, `tools/build-forge-capsule.sh`, `tools/package-forge-capsule.py`, `tools/validate-forge-capsule.py`, `tests/test_p7_forge_contract.py`, `browser-tests/tests/p7b-local-analyzer.spec.mjs`, `.github/workflows/p6-candidate-pages.yml`, `dist/sfhs-doom-forge-v2.html`, `docs/phases/P07/PHASE_PLAN.md`, `docs/tasks/P07/DOOM-P7-060.md`, `docs/results/P07/DOOM-P7-060.md`, `docs/reports/P07_LOCAL_ANALYZER.md`, `docs/CURRENT_STATE.md`, `evidence/manifests/P07/**`, `test-results/P07/P7-B/**`
 **Parallel:** No
-**Remote authorization:** NONE
+**Remote authorization:** GRANTED AFTER LOCAL HANDOFF (2026-08-12)
 
 ### Goal
 
@@ -70,3 +70,10 @@ unbounded memory behavior, or authority beyond a focused local commit.
 ### Commit
 
 One focused local implementation commit begins with `DOOM-P7-060`.
+
+### Publication
+
+PR #16 merged the exact candidate as `362202f3138712017c48bde2c155745171f0e719`.
+The main candidate and Pages jobs passed, and a fresh `/forge/` download matched
+the committed Forge V2 byte count and SHA-256 exactly. Samsung acceptance remains
+separate and pending.

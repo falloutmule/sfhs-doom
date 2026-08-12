@@ -68,16 +68,18 @@ the official WSL packaging environment plus its normalization step and
 - Artifact: 25,852,127 bytes
 - SHA-256: `927d744c11c219dfbaffd8486f84cec77093cb626a35d389ad37d14aaf01326e`
 - Harness: P7-B 9/9; combined focused 22/22; protected Python 58/58
+- PR: #16 merged as `362202f3138712017c48bde2c155745171f0e719`
+- Candidate run: `31598136244` PASS
+- Main/Pages run: `31598331118` PASS
+- Live `/forge/`: exact 25,852,127-byte and SHA-256 match
 
 ## REMAINING BLOCKERS
 
-Remote publication is not authorized. Physical Samsung P7-B acceptance is
-pending and is not claimed from Playwright.
+Physical Samsung P7-B acceptance is pending and is not claimed from Playwright.
 
 ## NEXT ACTIONABLE STEP
 
-Authorize publication if desired, then perform the defined Samsung inspection
-and responsiveness checklist.
+Perform the defined Samsung inspection and responsiveness checklist.
 
 ## EVIDENCE
 
@@ -86,7 +88,6 @@ Raw proof is under `test-results/P07/P7-B/`; the committed identity record is
 
 ## GITHUB PAGES URL
 
-- Current P7-A: https://falloutmule.github.io/sfhs-doom/forge/
-- P7-B: local candidate only until publication is authorized.
+- Published P7-B: https://falloutmule.github.io/sfhs-doom/forge/
 
 **Result:** PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING

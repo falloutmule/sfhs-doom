@@ -50,7 +50,7 @@
     }
   ],
   "verification": {
-    "run_ids": ["P07-P7-B-local-final"],
+    "run_ids": ["P07-P7-B-local-final", "31598136244", "31598331118"],
     "result": "PASS",
     "checks": [
       "official Forge V2 full and thin static validation PASS",
@@ -59,13 +59,16 @@
       "P7 Forge and protected package Python contracts 58 passed",
       "same-environment Forge V2 deterministic rebuild is byte-identical",
       "Forge V1 and V8 through V16 protected bytes and hashes unchanged",
-      "focused evidence has no fatal page error, failed request, or HTTP request"
+      "focused evidence has no fatal page error, failed request, or HTTP request",
+      "PR 16 candidate gate and main Pages deployment PASS",
+      "fresh live /forge/ download exactly matches local bytes and SHA-256"
     ]
   },
   "notes": [
     "The analyzer is inspection-only: selected bytes are not stored, mounted, launched, or persisted.",
     "Synthetic WAD/ZIP fixtures are generated in the browser test and are not committed as binary artifacts.",
     "Only open Freedoom and the existing permissive project PWAD fixture were used.",
-    "Remote publication and physical Samsung P7-B verification remain pending."
+    "PR 16 merged as 362202f3138712017c48bde2c155745171f0e719.",
+    "Forge V2 is published; physical Samsung P7-B verification remains pending."
   ]
 }

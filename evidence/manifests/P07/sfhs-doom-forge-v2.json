@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "forge-v2-local-wad-zip-inspector",
+  "phase": "P07",
+  "task": "DOOM-P7-060",
+  "source": {
+    "commit": "457df6c3a698c624b132536ab6862fac91c54c53",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": [
+      {
+        "path": "vendor-cache/freedoom/0.13.0/data/freedoom2.wad",
+        "size_bytes": 28787748,
+        "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      {
+        "path": "tests/fixtures/open-pwads/order-a.wad",
+        "size_bytes": 81,
+        "sha256": "217ca8dd04bc202e2fe1e61f3f9cdca08e0a43c51dfec3018552d942692b2b48"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-12T12:29:24Z",
+    "id": "P7-FORGE-V2",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-forge-capsule.sh", "--capsule-version", "2", "--output", "dist/sfhs-doom-forge-v2.html", "--thin-output", "test-results/P07/P7-B/sfhs-doom-forge-v2-thin.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P07-forge-v2/product/package-full.stdout.txt",
+        "stderr_path": "build/runtime/P07-forge-v2/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-forge-v2.html",
+      "size_bytes": 25852127,
+      "sha256": "927d744c11c219dfbaffd8486f84cec77093cb626a35d389ad37d14aaf01326e",
+      "kind": "single-file-html-capsule"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P07-P7-B-local-final"],
+    "result": "PASS",
+    "checks": [
+      "official Forge V2 full and thin static validation PASS",
+      "P7-B local analyzer browser tests 9 passed",
+      "combined P7-B/P7-A/V16 browser tests 22 passed",
+      "P7 Forge and protected package Python contracts 58 passed",
+      "same-environment Forge V2 deterministic rebuild is byte-identical",
+      "Forge V1 and V8 through V16 protected bytes and hashes unchanged",
+      "focused evidence has no fatal page error, failed request, or HTTP request"
+    ]
+  },
+  "notes": [
+    "The analyzer is inspection-only: selected bytes are not stored, mounted, launched, or persisted.",
+    "Synthetic WAD/ZIP fixtures are generated in the browser test and are not committed as binary artifacts.",
+    "Only open Freedoom and the existing permissive project PWAD fixture were used.",
+    "Remote publication and physical Samsung P7-B verification remain pending."
+  ]
+}

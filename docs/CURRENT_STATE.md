@@ -1,11 +1,11 @@
 # SFHS Doom Current State
 
 **Date:** 2026-08-12
-**Phase:** P07-A - Forge-capable runtime
-**Current task:** DOOM-P7-090 handoff/physical acceptance
-**Current result commit:** Publication merge `251d020c977369c379dfb180aed94bbbbab0083a`
-**Branch:** `main`
-**Base:** V16 repair `8e2c4be70ca16f7c0909cd67224b63679cfb2cad`
+**Phase:** P07-B - Local analyzer
+**Current task:** DOOM-P7-060
+**Current result commit:** SELF
+**Branch:** `codex/p7b-local-wad-inspection`
+**Base:** P7-A publication `457df6c3a698c624b132536ab6862fac91c54c53`
 
 ## Verified artifacts
 
@@ -27,6 +27,10 @@
   `e9a8b904d9fe91c09c15e6303757a4e2fd8d4eb05f8c1ce1f79c6c94ac8b71db`.
 - V16: 48,372,561 bytes,
   `bc52a371427575c0c17ee8061c6d4db3d8a7120da116072f9b604f8b08863de2`.
+- Forge V1: 25,819,800 bytes,
+  `9b4018515b416f6643058d85a04d7c49212f2ca664f50a9a1b3cc2d422d84754`.
+- Forge V2 local candidate: 25,852,127 bytes,
+  `927d744c11c219dfbaffd8486f84cec77093cb626a35d389ad37d14aaf01326e`.
 
 ## V16 repair
 
@@ -87,7 +91,21 @@ Forge contract tests pass 6/6. PR #14 and main workflow `31592468583` passed;
 fresh live downloads match exact local V16 and Forge bytes. Physical Samsung
 acceptance remains pending.
 
+## P7-B local analyzer state
+
+Forge V2 adds local WAD/ZIP selection and worker-owned inspection. It computes
+exact SHA-256 identities, parses WAD directories/maps/feature signals, safely
+parses stored or deflated ZIP entries with traversal/count/size/ratio/CRC and
+nested/executable guards, and presents an accessible phone inspection card.
+
+The inspection schema is read-only and ephemeral. Selected bytes are not
+uploaded, persisted, mounted, added to a recipe, or launched. P7-C owns those
+later operations. P7-B browser tests pass 9/9; the combined P7-B/P7-A/V16 lane
+passes 22/22; applicable protected Python contracts pass 58/58; and deterministic
+packaging reproduces exact Forge V2 bytes. Pages remains exact Forge V1 because
+P7-B remote publication was not authorized.
+
 ## Next action
 
-On Samsung, confirm repaired WPN−/WPN+ at the root and the Forge `/forge/`
-mount/Play flow, controls, audio, rotation, and no-scroll behavior.
+Authorize Forge V2 candidate publication if desired, then perform Samsung local
+WAD/ZIP inspection and built-in player checks before P7-C recipe work.

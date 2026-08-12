@@ -1,7 +1,7 @@
-# SFHS Doom — Frozen Phase P07-A Plan
+# SFHS Doom — Phase P07 Forge Plan
 
 **Phase:** P07 — WAD Forge and Doom Capsules
-**Status:** FROZEN
+**Status:** P7-B LOCAL PASS
 **Planning authority:** User-approved Forge specification and P7-A execution plan
 **Accepted assumptions/ADRs:** `docs/FORGE_SPEC.md`; accepted V16 player baseline
 **Remote boundary:** Push, PR, merge, and Pages publication are authorized only after every local P7-A gate passes.
@@ -20,11 +20,17 @@ Content-independent SINGLE_FILE Wasm; deterministic capsule manifest and gzip
 chunks; full and thin payload routes; streaming SHA-256 verification and MEMFS
 mount; V16 parity; exact tests, evidence, and dual-route Pages publication.
 
-### Out of scope
+### Out of scope for P7-A
 
 WAD/ZIP analysis, recipe authoring, libraries, archive browsing, successor
 export, private capsules, recursive Forge, shared-control changes, and native
 simulation/rendering changes.
+
+### P7-B scope
+
+P7-B adds local-only WAD/ZIP selection, worker-based hashing and safe parsing,
+metadata and compatibility signals, and a phone-ready inspection card. It does
+not persist, mount, launch, build a recipe from, or export selected content.
 
 ## Source of truth
 
@@ -43,6 +49,7 @@ shell/build/packer/validator/tests, and the Pages workflow in that order.
 | DOOM-P7-030 | CODEX | P7-020 | Forge shell/tests/evidence | NONE | Exact payload mounts; every corruption prevents launch. |
 | DOOM-P7-040 | CODEX | P7-030 | Forge shell/tests/evidence | NONE | Complete V16 player launches once with parity. |
 | DOOM-P7-050 | CODEX | P7-040 | tests/docs/manifests/workflow/artifact | P7-A branch, PR, main, and Pages operations after green local gates | Exact V16 root and Forge preview deploy and match live hashes. |
+| DOOM-P7-060 | CODEX | P7-050 | P7 analyzer/shell/build/tests/docs | NONE | Local WAD/ZIP inspection is safe, accurate, responsive, and phone-ready. |
 | DOOM-P7-090 | SOL-GATE | P7-050 | read-only repository/evidence | NONE | Independent review records a bounded verdict. |
 
 ## Exact verification
@@ -65,7 +72,9 @@ negative fixtures are ignored under `test-results/P07/P7-A/`.
 
 V16 remains byte-protected and is published exactly at the Pages root. Forge V1
 is published exactly at `/forge/`. P7-A implementation, local verification, CI,
-and byte-exact publication are complete; physical Samsung acceptance is pending.
+and byte-exact publication are complete. P7-B local analyzer implementation and
+automated gates pass on `codex/p7b-local-wad-inspection`; publication authority
+and physical Samsung acceptance remain pending.
 
 ## Blockers and stop conditions
 

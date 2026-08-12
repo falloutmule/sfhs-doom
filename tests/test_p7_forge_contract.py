@@ -19,6 +19,7 @@ class ForgeSourceContractTests(unittest.TestCase):
         cls.shell = (ROOT / "web" / "p7" / "forge-shell.html").read_text(encoding="utf-8")
         cls.build = (ROOT / "tools" / "build-forge-capsule.sh").read_text(encoding="utf-8")
         cls.packer = (ROOT / "tools" / "package-forge-capsule.py").read_text(encoding="utf-8")
+        cls.analyzer = (ROOT / "web" / "p7" / "forge-analyzer-worker.js").read_text(encoding="utf-8")
 
     def test_engine_profile_is_content_independent(self):
         self.assertNotIn("--embed-file $wad", self.build)
@@ -33,6 +34,17 @@ class ForgeSourceContractTests(unittest.TestCase):
             "mountExternal", "IncrementalSha256", "forge.mountStage!=='ready'",
             "mainInvocations", "DecompressionStream('gzip')",
         ):
+            self.assertIn(token, self.shell)
+
+    def test_p7b_analyzer_is_bounded_and_worker_owned(self):
+        for token in (
+            "sfhs.doom-inspection@1", "128*1024*1024", "zipEntries:512",
+            "expandedBytes:256*1024*1024", "zip-traversal", "wad-directory-bounds",
+            "wad-overlap", "zip-encrypted", "zip-ratio", "crypto.subtle.digest",
+            "launchable:false", "storedBytes:0",
+        ):
+            self.assertIn(token, self.analyzer)
+        for token in ("new Worker(url)", "forge-inspect-file", "inspection-card", "analyzerSnapshot"):
             self.assertIn(token, self.shell)
 
     def test_packer_is_deterministic_and_chunked(self):
@@ -53,18 +65,25 @@ class ForgeSourceContractTests(unittest.TestCase):
 
 
 class ForgeArtifactContractTests(unittest.TestCase):
-    def test_full_artifact(self):
+    def test_v1_full_artifact_is_still_valid(self):
         path = ROOT / "dist" / "sfhs-doom-forge-v1.html"
         if not path.exists():
             self.skipTest("Forge artifact not built")
-        result = validator.validate(path, "full")
+        result = validator.validate(path, "full", 1)
         self.assertEqual(result["chunks"], 56)
 
-    def test_thin_artifact(self):
-        path = ROOT / "test-results" / "P07" / "P7-A" / "sfhs-doom-forge-v1-thin.html"
+    def test_v2_full_artifact(self):
+        path = ROOT / "dist" / "sfhs-doom-forge-v2.html"
+        if not path.exists():
+            self.skipTest("Forge V2 artifact not built")
+        result = validator.validate(path, "full", 2)
+        self.assertEqual(result["chunks"], 56)
+
+    def test_v2_thin_artifact(self):
+        path = ROOT / "test-results" / "P07" / "P7-B" / "sfhs-doom-forge-v2-thin.html"
         if not path.exists():
             self.skipTest("thin Forge artifact not built")
-        result = validator.validate(path, "thin")
+        result = validator.validate(path, "thin", 2)
         self.assertEqual(result["chunks"], 0)
 
 

@@ -9,16 +9,20 @@ source tools/wasm-env.sh >/dev/null
 output=''
 thin_output=''
 oracle=0
+capsule_version=2
 while (($#)); do
   case "$1" in
     --output) output="$2"; shift 2 ;;
     --thin-output) thin_output="$2"; shift 2 ;;
     --oracle) oracle=1; shift ;;
-    *) echo 'usage: tools/build-forge-capsule.sh --output PATH [--thin-output PATH] [--oracle]' >&2; exit 2 ;;
+    --capsule-version) capsule_version="$2"; shift 2 ;;
+    *) echo 'usage: tools/build-forge-capsule.sh --capsule-version 2 --output PATH [--thin-output PATH] [--oracle]' >&2; exit 2 ;;
   esac
 done
 [[ -n "$output" ]] || { echo 'Forge build requires --output' >&2; exit 2; }
+[[ "$capsule_version" == '2' ]] || { echo 'current Forge source supports capsule version 2 only' >&2; exit 2; }
 [[ "$output" != "$root/dist/sfhs-doom-freedoom2.html" ]] || { echo 'Forge build refuses protected P3 output' >&2; exit 2; }
+[[ "$output" != "$root/dist/sfhs-doom-forge-v1.html" && "$output" != 'dist/sfhs-doom-forge-v1.html' ]] || { echo 'Forge build refuses protected V1 output' >&2; exit 2; }
 
 wad="$root/vendor-cache/freedoom/0.13.0/data/freedoom2.wad"
 [[ -f "$wad" ]] || { echo "missing open Freedoom input: $wad" >&2; exit 1; }
@@ -26,10 +30,10 @@ sfhs_root="$(cd -- "$root/../.worktrees/sfhs-mobile-controls-v1" && pwd -P)"
 esbuild="${SFHS_MOBILE_CONTROLS_ESBUILD:-$sfhs_root/node_modules/.bin/esbuild}"
 [[ -x "$esbuild" ]] || { echo "missing frozen SFHS esbuild: $esbuild" >&2; exit 1; }
 
-build_root="$root/build/wasm/p7-forge"
+build_root="$root/build/wasm/p7-forge-v$capsule_version"
 if ((oracle)); then build="$build_root/oracle"; name=oracle; else build="$build_root/product"; name=product; fi
 case "$build" in "$build_root/product"|"$build_root/oracle") rm -rf -- "$build" ;; *) exit 2 ;; esac
-run="$root/build/runtime/P07-forge/$name"
+run="$root/build/runtime/P07-forge-v$capsule_version/$name"
 controls_bundle="$run/sfhs-mobile-controls-v1.iife.js"
 controls_shell="$run/forge-shell-with-controls.html"
 mkdir -p "$run"
@@ -60,13 +64,13 @@ js="$build/src/chocolate-doom.js"
 grep -q -- '--embed-file' "$run/configure.argv.txt" && { echo 'FORGE_BUILD_FAIL embedded file flag present' >&2; exit 1; }
 if grep -R --binary-files=without-match -q -- 'chocolate-doom.wasm' "$build/src"; then echo 'FORGE_BUILD_FAIL external Wasm reference' >&2; exit 1; fi
 
-python3 tools/package-forge-capsule.py --shell "$controls_shell" --engine-js "$js" --wad "$wad" --mode full --output "$output" >"$run/package-full.stdout.txt"
+python3 tools/package-forge-capsule.py --shell "$controls_shell" --engine-js "$js" --analyzer-worker web/p7/forge-analyzer-worker.js --wad "$wad" --mode full --capsule-version "$capsule_version" --output "$output" >"$run/package-full.stdout.txt"
 LC_ALL=C sed -i 's/[[:blank:]]\+$//' "$output"
 sha256sum "$output" >"$run/artifact-full-sha256.txt"
 if [[ -n "$thin_output" ]]; then
-  python3 tools/package-forge-capsule.py --shell "$controls_shell" --engine-js "$js" --wad "$wad" --mode thin --output "$thin_output" >"$run/package-thin.stdout.txt"
+  python3 tools/package-forge-capsule.py --shell "$controls_shell" --engine-js "$js" --analyzer-worker web/p7/forge-analyzer-worker.js --wad "$wad" --mode thin --capsule-version "$capsule_version" --output "$thin_output" >"$run/package-thin.stdout.txt"
   LC_ALL=C sed -i 's/[[:blank:]]\+$//' "$thin_output"
   sha256sum "$thin_output" >"$run/artifact-thin-sha256.txt"
 fi
-printf '%s\n' 'SINGLE_FILE=1' 'embedded_engine_payload=0' 'payload_compression=gzip-9-mtime-0' 'payload_chunk_size=196608' "oracle=$oracle" >"$run/profile.txt"
+printf '%s\n' "capsule_version=$capsule_version" 'SINGLE_FILE=1' 'embedded_engine_payload=0' 'payload_compression=gzip-9-mtime-0' 'payload_chunk_size=196608' 'local_analyzer_worker=embedded' "oracle=$oracle" >"$run/profile.txt"
 echo "P7_FORGE_SINGLE_FILE=PASS output=$output"

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="sfhs-build-profile" content="P7-FORGE-V1">
-  <title>SFHS Doom Forge V1</title>
+  <meta name="sfhs-build-profile" content="P7-FORGE-V2">
+  <title>SFHS Doom Forge V2 — Local Inspector</title>
   <style>
     :root { color-scheme:dark; --edge:#5a7a93; --ink:#edf6ff; --vvh:100dvh; --world-height:75vw; --minimap-height:174px; --minimap-width:100%; --hud-width:100%; --hud-height:10vw; --control-deck-min-height:280px; }
     * { box-sizing:border-box; }
@@ -17,9 +17,11 @@
     #game-region { position:relative; width:100%; height:var(--world-height); min-width:0; min-height:0; overflow:hidden; background:#000; }
     #canvas { position:absolute; left:0; top:0; display:block; width:320px; height:200px; transform-origin:top left; image-rendering:pixelated; outline:none; border:0; margin:0; touch-action:none; }
     body[data-sfhs-p6-presentation="active"] #canvas { transform:scale(var(--world-scale-x,1),var(--world-scale-y,1)); }
-    #setup-overlay { position:absolute; z-index:4; inset:0; display:grid; place-content:center; justify-items:center; gap:8px; padding:12px; background:linear-gradient(rgb(0 0 0 / .24),rgb(0 0 0 / .72)); }
+    #setup-overlay { position:fixed; z-index:1050; inset:0; display:grid; place-items:center; overflow:hidden; padding:max(7px,env(safe-area-inset-top)) max(7px,env(safe-area-inset-right)) max(7px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left)); background:linear-gradient(#020609,#071019); }
     #setup-overlay[hidden] { display:none; }
-    #start-doom { min-height:42px; padding:7px 13px; background:#67201e; border-color:#d0735f; font-weight:700; }
+    #forge-start-card { width:min(400px,100%); max-height:100%; display:grid; justify-items:stretch; gap:6px; padding:5px; overflow:auto; overscroll-behavior:contain; touch-action:pan-y; scrollbar-gutter:stable; }
+    #forge-start-card > strong { text-align:center; }
+    #start-doom { min-height:44px; padding:7px 13px; background:#67201e; border-color:#d0735f; font-weight:700; }
     #renderer-selector { display:grid; gap:3px; color:#d7e8f4; font-size:10px; }
     #renderer-selector select { min-height:31px; padding:3px 8px; }
     #setup-status { max-width:300px; margin:0; color:#d7e8f4; font-size:10px; text-align:center; text-shadow:0 1px #000; pointer-events:none; }
@@ -27,6 +29,26 @@
     #forge-base-picker { display:grid; gap:4px; justify-items:center; color:#d7e8f4; font-size:10px; }
     #forge-base-picker[hidden] { display:none; }
     #forge-base-file { width:min(310px,88vw); min-height:44px; padding:7px; border:1px solid #6f8ca1; border-radius:3px; background:#182631; }
+    #forge-inspect-picker { min-height:44px; display:grid; place-items:center; padding:7px; border:1px solid #6f8ca1; border-radius:3px; background:#182631; color:var(--ink); cursor:pointer; touch-action:manipulation; }
+    #forge-inspect-file { display:none; }
+    #inspection-card { display:grid; gap:5px; padding:7px; border:1px solid #86aac2; border-radius:5px; background:#07131cf2; text-align:left; }
+    #inspection-card[hidden] { display:none; }
+    #inspection-card header { display:flex; align-items:center; justify-content:space-between; gap:6px; }
+    #inspection-clear { min-width:64px; min-height:44px; }
+    #inspection-compatibility { margin:0; padding:5px; border:1px solid #738fa3; border-radius:3px; font-weight:700; }
+    #inspection-compatibility[data-status="likely-compatible"] { border-color:#55a878; color:#baf5cf; }
+    #inspection-compatibility[data-status="manual-recipe-required"] { border-color:#d6a54c; color:#ffe1a3; }
+    #inspection-compatibility[data-status="unsupported-by-engine"],#inspection-compatibility[data-status="error"] { border-color:#d56b63; color:#ffc0ba; }
+    #inspection-fields { display:grid; grid-template-columns:auto minmax(0,1fr); gap:3px 7px; margin:0; }
+    #inspection-fields dt { color:#94afc1; }
+    #inspection-fields dd { min-width:0; margin:0; overflow-wrap:anywhere; }
+    #inspection-more { border:1px solid #385164; border-radius:3px; }
+    #inspection-more summary { min-height:44px; display:flex; align-items:center; padding:5px; cursor:pointer; }
+    #inspection-details { max-height:96px; margin:0; padding:5px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; color:#bfd2df; font:9px/1.25 ui-monospace,Consolas,monospace; }
+    #inspection-privacy { margin:0; color:#9fc5ad; font-size:9px; }
+    #forge-start-actions { position:sticky; bottom:0; display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:4px 0; background:#05080ce8; }
+    #forge-start-actions button { min-height:44px; }
+    body:not([data-sfhs-p7-main="started"]) #minimap-region,body:not([data-sfhs-p7-main="started"]) #control-deck,body:not([data-sfhs-p7-main="started"]) #doom-status-region,body:not([data-sfhs-p7-main="started"]) #sfhs-mobile-controls-root { visibility:hidden; }
     #minimap-region { position:relative; display:grid; place-items:center; overflow:hidden; background:#0b151d; }
     #minimap-canvas { display:block; width:100%; height:100%; max-width:100%; max-height:100%; image-rendering:pixelated; touch-action:none; }
     #minimap-placeholder { position:absolute; color:#71899a; pointer-events:none; }
@@ -107,21 +129,30 @@
   </style>
 </head>
 <body>
-  <div id="sfhs-fullscreen-root" data-sfhs-fullscreen-app-root="forge-v1">
-    <main id="sfhs-shell" aria-label="SFHS Doom Forge V1 handheld player">
+  <div id="sfhs-fullscreen-root" data-sfhs-fullscreen-app-root="forge-v2">
+    <main id="sfhs-shell" aria-label="SFHS Doom Forge V2 handheld player and local inspector">
       <section id="game-region" aria-label="Doom full native world view">
         <canvas id="canvas" width="320" height="200" tabindex="0" aria-label="Chocolate Doom world canvas"></canvas>
-        <div id="setup-overlay">
+        <div id="setup-overlay"><section id="forge-start-card" aria-label="Forge start and local inspection">
           <label id="renderer-selector">Renderer <select id="renderer-mode" aria-label="Renderer mode"><option value="auto">Auto</option><option value="compatibility">Compatibility</option></select></label>
           <strong>SFHS Doom Forge</strong>
           <pre id="forge-summary">Reading capsule manifest…</pre>
           <label id="forge-base-picker" hidden>Select exact Freedoom Phase 2 base
             <input id="forge-base-file" type="file" accept=".wad,application/octet-stream">
           </label>
-          <button id="start-doom" type="button" hidden>Play</button>
-          <button id="forge-diagnostics-toggle" type="button">Diagnostics</button>
+          <label id="forge-inspect-picker">Inspect local WAD or ZIP
+            <input id="forge-inspect-file" type="file" accept=".wad,.zip,application/zip,application/octet-stream">
+          </label>
+          <section id="inspection-card" aria-label="Local content inspection" aria-live="polite" hidden>
+            <header><strong id="inspection-title">Local inspection</strong><button id="inspection-clear" type="button">Clear</button></header>
+            <p id="inspection-compatibility"></p>
+            <dl id="inspection-fields"></dl>
+            <details id="inspection-more"><summary>Inspection details</summary><pre id="inspection-details"></pre></details>
+            <p id="inspection-privacy">Local only — selected bytes are not uploaded, stored, mounted, or launched.</p>
+          </section>
+          <div id="forge-start-actions"><button id="start-doom" type="button" hidden>Play built-in Freedoom</button><button id="forge-diagnostics-toggle" type="button">Diagnostics</button></div>
           <pre id="setup-status" aria-live="polite">Preparing content-independent engine…</pre>
-        </div>
+        </section></div>
       </section>
       <section id="minimap-region" class="lower-region" aria-label="Explored minimap">
         <canvas id="minimap-canvas" width="320" height="120"></canvas><span id="minimap-placeholder">MINIMAP</span>
@@ -143,11 +174,12 @@
       <details><summary>Touch controls</summary><div class="settings-section"><button id="edit-toggle" class="wide" type="button">Edit controls</button><label>Opacity <output id="control-opacity-value"></output><input id="menu-control-opacity" type="range" min="0.1" max="1" step="0.01"></label><label>LOOK sensitivity <output id="look-sensitivity-value"></output><input id="menu-look-sensitivity" type="range" min="0.25" max="4" step="0.05"></label><label>MOVE dead zone <output id="move-dead-zone-value"></output><input id="menu-move-dead-zone" type="range" min="0" max="0.5" step="0.01"></label></div></details>
       <details id="look-tap-section" open><summary>LOOK tap fire</summary><div class="settings-section"><label><span>Tap LOOK to fire <output id="look-tap-enabled-value"></output></span><input id="look-tap-enabled" type="checkbox"></label><label>Tap time <output id="look-tap-duration-value"></output><input id="look-tap-duration" type="range" min="150" max="450" step="10"></label><label>Movement tolerance <output id="look-tap-tolerance-value"></output><input id="look-tap-tolerance" type="range" min="6" max="24" step="1"></label><button id="look-tap-reset" class="wide" type="button">Restore tap defaults</button></div></details>
       <details><summary>Control profile</summary><div class="settings-section"><button id="menu-profile-reset" type="button">Reset controls</button><button id="menu-profile-export" type="button">Export JSON</button><button id="menu-profile-import" class="wide" type="button">Import JSON</button></div></details>
-      <details><summary>Advanced</summary><div class="settings-section"><button id="diagnostics-toggle" class="wide" type="button">Diagnostics</button><p class="wide">Build: <span id="build-identity">P7-FORGE-RUNTIME-V1</span></p></div></details>
+      <details><summary>Advanced</summary><div class="settings-section"><button id="diagnostics-toggle" class="wide" type="button">Diagnostics</button><p class="wide">Build: <span id="build-identity">P7-FORGE-RUNTIME-V2</span></p></div></details>
       <pre id="utility-status" aria-live="polite"></pre>
     </section>
-    <aside id="diagnostic-panel" aria-label="Read-only Forge V1 diagnostic"><header><strong>Forge V1 runtime</strong><button id="diagnostics-close" type="button">Close</button></header><pre id="diagnostic-output"></pre></aside>
+    <aside id="diagnostic-panel" aria-label="Read-only Forge V2 diagnostic"><header><strong>Forge V2 runtime</strong><button id="diagnostics-close" type="button">Close</button></header><pre id="diagnostic-output"></pre></aside>
     <div id="panel-edit-toolbar" role="toolbar" aria-label="Panel resize actions"><button id="panel-edit-save" type="button">Save</button><button id="panel-edit-cancel" type="button">Cancel</button><button id="panel-edit-reset" type="button">Defaults</button></div>
+    <!-- SFHS_FORGE_ANALYZER_WORKER -->
     <!-- SFHS_FORGE_CAPSULE_PAYLOAD -->
     <!-- SFHS_MOBILE_CONTROLS_BUNDLE -->
     <script>
@@ -169,7 +201,8 @@
       const controller=window.SFHSMobileControls.createMobileControls({controls:declarations,persistence:{key:'sfhsDoom.mobileControls.v2'},settings:{relativeSensitivity:1}});
       controller.mount(document.getElementById('sfhs-mobile-controls-root'));
       const forge={schema:'sfhs.doom-capsule@1',manifestStatus:'pending',storageKind:null,mountStage:'waiting-runtime',payloadId:null,decodedBytes:0,decodedSha256:null,encodedBytes:0,encodedSha256:null,chunksExpected:0,chunksRead:0,recipeId:null,args:[],mountStartedAt:null,mountFinishedAt:null,mountDurationMs:null,error:null};
-      const state={buildProfile:'P7-FORGE-V1',diagnosticBuild:'P7-FORGE-RUNTIME-V1',sourceCommit:'local-p7a-forge-runtime',artifact:'sfhs-doom-forge-v1.html',mainStarted:false,mainInvocations:0,presentationUpdates:0,minimapUpdates:0,hudDraws:0,hudClears:0,hudRafCallbacks:0,hudLoopSuspended:false,audioContextState:null,weaponCycleConfig:'pending',forge,errors:[],lastEngineDiagnostic:null,oracle:false,fullscreen:{supported:typeof appRoot.requestFullscreen==='function',requested:false,active:false,rejected:false,error:null,changes:0}};
+      const analyzer={schema:'sfhs.doom-inspection@1',lifecycle:'idle',requestId:0,selectedName:null,selectedBytes:0,result:null,error:null,workerAvailable:false,startedAt:null,finishedAt:null,durationMs:null,storedBytes:0,launchable:false};
+      const state={buildProfile:'P7-FORGE-V2',diagnosticBuild:'P7-FORGE-RUNTIME-V2',sourceCommit:'local-p7b-local-analyzer',artifact:'sfhs-doom-forge-v2.html',mainStarted:false,mainInvocations:0,presentationUpdates:0,minimapUpdates:0,hudDraws:0,hudClears:0,hudRafCallbacks:0,hudLoopSuspended:false,audioContextState:null,weaponCycleConfig:'pending',forge,analyzer,errors:[],lastEngineDiagnostic:null,oracle:false,fullscreen:{supported:typeof appRoot.requestFullscreen==='function',requested:false,active:false,rejected:false,error:null,changes:0}};
       window.SFHS_P6_STATE=state;
       window.SFHS_FORGE_STATE=state;
       const uiStorageKey='sfhsDoom.mobileUi.v1',uiSchema='sfhs.doom-mobile-ui@1';
@@ -250,9 +283,9 @@
       document.getElementById('look-tap-tolerance').addEventListener('input',event=>document.getElementById('look-tap-tolerance-value').value=`${event.target.value} px`);document.getElementById('look-tap-tolerance').addEventListener('change',event=>commitLookSettings({slopCssPx:Number(event.target.value)},'Movement tolerance saved.'));
       document.getElementById('look-tap-reset').addEventListener('click',()=>commitLookSettings(uiDefaults().lookTapFire,'LOOK tap defaults restored.'));
       const diagnostic=document.getElementById('diagnostic-panel'),diagnosticOutput=document.getElementById('diagnostic-output');
-      const showDiagnostic=()=>{clearLookTapFire('diagnostics-open');controller.releaseAll('diagnostics-open');closeUtilities();document.body.dataset.sfhsSettingsOpen='true';diagnosticOutput.textContent=JSON.stringify(window.SFHSDoomMobileControls.snapshot(),null,2);diagnostic.classList.add('is-open');document.getElementById('diagnostics-close').focus();};
+      const showDiagnostic=()=>{clearLookTapFire('diagnostics-open');controller.releaseAll('diagnostics-open');closeUtilities();document.body.dataset.sfhsSettingsOpen='true';diagnosticOutput.textContent=JSON.stringify({build:{profile:state.buildProfile,diagnostic:state.diagnosticBuild,artifact:state.artifact},forge:forgeSnapshot(),analyzer:analyzerSnapshot(),controls:window.SFHSDoomMobileControls.snapshot()},null,2);diagnostic.classList.add('is-open');document.getElementById('diagnostics-close').focus();};
       for(const id of['diagnostics-toggle','forge-diagnostics-toggle'])document.getElementById(id).addEventListener('click',showDiagnostic);document.getElementById('diagnostics-close').addEventListener('click',()=>{diagnostic.classList.remove('is-open');document.body.dataset.sfhsSettingsOpen='false';(state.mainStarted?settingsToggle:document.getElementById('forge-diagnostics-toggle')).focus();});
-      document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(panelEdit.lifecycle==='editing')cancelPanelEdit('escape');else if(controller.read().lifecycle==='editing')closeEditor(true);else if(diagnostic.classList.contains('is-open')){diagnostic.classList.remove('is-open');document.body.dataset.sfhsSettingsOpen='false';settingsToggle.focus();}else if(utility.classList.contains('is-open'))closeUtilities(true);});
+      document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(panelEdit.lifecycle==='editing')cancelPanelEdit('escape');else if(controller.read().lifecycle==='editing')closeEditor(true);else if(diagnostic.classList.contains('is-open')){diagnostic.classList.remove('is-open');document.body.dataset.sfhsSettingsOpen='false';(state.mainStarted?settingsToggle:document.getElementById('forge-diagnostics-toggle')).focus();}else if(utility.classList.contains('is-open'))closeUtilities(true);});
       window.addEventListener('blur',event=>{if(event.target===window&&panelEdit.lifecycle==='editing')cancelPanelEdit('blur');},true);window.addEventListener('pagehide',()=>{if(panelEdit.lifecycle==='editing')cancelPanelEdit('pagehide');},true);document.addEventListener('visibilitychange',()=>{if(document.hidden&&panelEdit.lifecycle==='editing')cancelPanelEdit('visibility-hidden');},true);
 
       const fullscreenAction=document.getElementById('fullscreen-action');
@@ -284,7 +317,7 @@
         if(!exactObjectKeys(value,['schema','capsule','payloads','bases','recipes','credits','verification'])||value.schema!==forge.schema)throw new Error('manifest-schema');
         if(!isRecord(value.capsule)||!Array.isArray(value.payloads)||value.payloads.length!==1||!Array.isArray(value.bases)||value.bases.length!==1||!Array.isArray(value.recipes)||value.recipes.length!==1||!Array.isArray(value.credits)||!isRecord(value.verification))throw new Error('manifest-structure');
         const capsule=value.capsule,payload=value.payloads[0],base=value.bases[0],recipe=value.recipes[0],credit=value.credits[0],verification=value.verification;
-        if(!exactObjectKeys(capsule,['id','name','version','buildProfile','mode'])||capsule.id!=='sfhs-doom-forge-v1'||capsule.name!=='SFHS Doom Forge V1'||capsule.version!==1||capsule.buildProfile!=='P7-FORGE-V1'||!['full','thin'].includes(capsule.mode))throw new Error('capsule-contract');
+        if(!exactObjectKeys(capsule,['id','name','version','buildProfile','mode'])||capsule.id!=='sfhs-doom-forge-v2'||capsule.name!=='SFHS Doom Forge V2'||capsule.version!==2||capsule.buildProfile!=='P7-FORGE-V2'||!['full','thin'].includes(capsule.mode))throw new Error('capsule-contract');
         if(!exactObjectKeys(payload,['id','role','filename','mediaType','decoded','compression','encoding','encoded','chunkSize','chunkCount','permission','license','storage'])||!exactObjectKeys(payload.decoded,['bytes','sha256'])||!exactObjectKeys(payload.encoded,['bytes','sha256'])||!exactObjectKeys(payload.storage,['kind']))throw new Error('payload-structure');
         if(typeof payload.id!=='string'||payload.role!=='iwad'||payload.filename!=='freedoom2.wad'||payload.mediaType!=='application/x-doom-wad'||!Number.isSafeInteger(payload.decoded.bytes)||payload.decoded.bytes<=0||!/^[a-f0-9]{64}$/.test(payload.decoded.sha256)||!Number.isSafeInteger(payload.encoded.bytes)||payload.encoded.bytes<=0||!/^[a-f0-9]{64}$/.test(payload.encoded.sha256)||!Number.isSafeInteger(payload.chunkSize)||!Number.isSafeInteger(payload.chunkCount)||typeof payload.permission!=='string'||typeof payload.license!=='string')throw new Error('payload-values');
         if(!['embedded-chunks','external-file'].includes(payload.storage.kind))throw new Error('storage-kind');
@@ -298,8 +331,21 @@
       }
       const query=new URLSearchParams(location.search),oracle=query.get('oracle')==='1',audio=query.get('audio')!=='0';state.oracle=oracle;
       const start=document.getElementById('start-doom'),renderer=document.getElementById('renderer-mode'),setup=document.getElementById('setup-overlay'),setupStatus=document.getElementById('setup-status'),forgeSummary=document.getElementById('forge-summary'),basePicker=document.getElementById('forge-base-picker'),baseFile=document.getElementById('forge-base-file');
+      const inspectFileInput=document.getElementById('forge-inspect-file'),inspectionCard=document.getElementById('inspection-card'),inspectionTitle=document.getElementById('inspection-title'),inspectionCompatibility=document.getElementById('inspection-compatibility'),inspectionFields=document.getElementById('inspection-fields'),inspectionDetails=document.getElementById('inspection-details');
       const mobileExtraConfig='/sfhs-doom-mobile-extra.cfg',mobileExtraConfigText='key_prevweapon 51\nkey_nextweapon 52\n';
       let manifest=null,runtimeReady=false,mounting=false;
+      let analyzerWorker=null;
+      const analyzerSnapshot=()=>structuredClone({schema:analyzer.schema,lifecycle:analyzer.lifecycle,requestId:analyzer.requestId,selectedName:analyzer.selectedName,selectedBytes:analyzer.selectedBytes,result:analyzer.result,error:analyzer.error,workerAvailable:analyzer.workerAvailable,durationMs:analyzer.durationMs,storedBytes:0,launchable:false,mainInvocations:state.mainInvocations,mountStage:forge.mountStage});
+      function appendInspectionField(label,value){const term=document.createElement('dt'),description=document.createElement('dd');term.textContent=label;description.textContent=String(value);inspectionFields.append(term,description);}
+      function clearInspectionView(){inspectionCard.hidden=true;inspectionTitle.textContent='Local inspection';inspectionCompatibility.textContent='';inspectionCompatibility.dataset.status='';inspectionFields.replaceChildren();inspectionDetails.textContent='';}
+      function renderInspectionError(error){inspectionCard.hidden=false;inspectionTitle.textContent=analyzer.selectedName||'Local inspection';inspectionCompatibility.dataset.status='error';inspectionCompatibility.textContent='Inspection rejected';inspectionFields.replaceChildren();appendInspectionField('Stage',error.stage);if(error.sha256)appendInspectionField('SHA-256',error.sha256);appendInspectionField('Reason',error.message);appendInspectionField('Stored','0 bytes');inspectionDetails.textContent=`Code: ${error.code}\nSelected bytes were not mounted, stored, or launched.`;document.getElementById('forge-start-card').scrollTop=0;}
+      function renderInspectionResult(result){const compatibility=result.compatibility,wad=result.wads[0]||null,archive=result.archive;inspectionCard.hidden=false;inspectionTitle.textContent=result.source.name;inspectionCompatibility.dataset.status=compatibility.status;inspectionCompatibility.textContent=compatibility.label;inspectionFields.replaceChildren();appendInspectionField('Type',result.source.type);appendInspectionField('Size',`${result.source.bytes.toLocaleString()} bytes`);appendInspectionField('SHA-256',result.source.sha256);appendInspectionField('Permission',result.permission.label);appendInspectionField('Target',compatibility.targetGame);appendInspectionField('Base',compatibility.recommendedBase);appendInspectionField('Loading',compatibility.recommendedLoading);if(wad){appendInspectionField('WAD',`${wad.kind} • ${wad.lumpCount} lumps`);appendInspectionField('Maps',wad.maps.total?`${[...wad.maps.episode,...wad.maps.doom2].join(', ')}`:'None detected');}if(archive)appendInspectionField('ZIP',`${archive.entryCount} entries • ${archive.expandedBytes.toLocaleString()} expanded bytes`);appendInspectionField('Analysis',`${result.durationMs.toFixed(2)} ms in worker`);const lines=[`Privacy: ${result.privacy}`,`Permission: ${result.permission.label}`,`Permission evidence: ${result.permission.evidence}`,`Confidence: ${compatibility.confidence}`,...compatibility.evidence.map(value=>`Evidence: ${value}`)];for(const item of result.wads){lines.push(`WAD: ${item.name}`);lines.push(`  SHA-256: ${item.sha256}`);lines.push(`  maps: ${[...item.maps.episode,...item.maps.doom2].join(', ')||'none'}`);lines.push(`  embedded DEHACKED: ${item.embeddedDehacked}`);lines.push(`  advanced signals: ${item.advancedSignals.join(', ')||'none'}`);lines.push(`  duplicate lump names: ${item.duplicateCount}`);}if(archive){lines.push(`Archive ratio: ${archive.expansionRatio}:1`);lines.push(`Files: ${archive.entries.map(item=>item.path).join(', ')||'none'}`);lines.push(`Documentation: ${archive.documents.join(', ')||'none'}`);lines.push(`Ignored: ${archive.ignored.map(item=>`${item.path} (${item.reason})`).join(', ')||'none'}`);}inspectionDetails.textContent=lines.join('\n');document.getElementById('forge-start-card').scrollTop=0;}
+      function terminateAnalyzer(){if(analyzerWorker){analyzerWorker.terminate();analyzerWorker=null;}analyzer.workerAvailable=false;}
+      function createAnalyzer(){terminateAnalyzer();const source=document.getElementById('sfhs-forge-analyzer-worker-source');if(!source)throw new Error('analyzer-worker-source-missing');const url=URL.createObjectURL(new Blob([source.textContent],{type:'text/javascript'}));try{analyzerWorker=new Worker(url);analyzer.workerAvailable=true;}finally{URL.revokeObjectURL(url);}analyzerWorker.addEventListener('error',event=>{const error={schema:'sfhs.doom-inspection-error@1',code:'worker-error',stage:'worker',message:String(event.message||'Analyzer worker failed.'),storedBytes:0,launchable:false};analyzer.lifecycle='failed';analyzer.error=error;analyzer.finishedAt=performance.now();analyzer.durationMs=Math.round((analyzer.finishedAt-analyzer.startedAt)*100)/100;renderInspectionError(error);setupStatus.textContent='Local inspection failed; built-in content is unchanged.';});analyzerWorker.addEventListener('message',event=>{const message=event.data;if(!message||message.id!==analyzer.requestId)return;analyzer.finishedAt=performance.now();analyzer.durationMs=Math.round((analyzer.finishedAt-analyzer.startedAt)*100)/100;if(message.ok){analyzer.lifecycle='ready';analyzer.result=message.result;analyzer.error=null;renderInspectionResult(message.result);setupStatus.textContent=forge.mountStage==='ready'?'Inspection complete — built-in Freedoom remains ready.':'Inspection complete; preparing built-in Freedoom…';}else{analyzer.lifecycle='failed';analyzer.result=null;analyzer.error=message.error;renderInspectionError(message.error);setupStatus.textContent='Local inspection rejected; built-in content is unchanged.';}});}
+      async function inspectLocalFile(file){clearLookTapFire('local-inspection');controller.releaseAll('local-inspection');analyzer.requestId+=1;const requestId=analyzer.requestId;analyzer.lifecycle='reading';analyzer.selectedName=file&&file.name?String(file.name):null;analyzer.selectedBytes=file&&Number.isSafeInteger(file.size)?file.size:0;analyzer.result=null;analyzer.error=null;analyzer.startedAt=performance.now();analyzer.finishedAt=null;analyzer.durationMs=null;clearInspectionView();inspectionCard.hidden=false;inspectionTitle.textContent=analyzer.selectedName||'Local inspection';inspectionCompatibility.dataset.status='';inspectionCompatibility.textContent='Reading locally…';setupStatus.textContent='Reading selected file locally — nothing is uploaded.';try{if(!(file instanceof File))throw new Error('No file selected.');if(file.size>128*1024*1024)throw new Error('File exceeds the 128 MiB inspection limit.');createAnalyzer();const bytes=await file.arrayBuffer();if(requestId!==analyzer.requestId)return;analyzer.lifecycle='analyzing';inspectionCompatibility.textContent='Hashing and inspecting in worker…';analyzerWorker.postMessage({id:requestId,name:file.name,size:file.size,bytes},[bytes]);}catch(error){const record={schema:'sfhs.doom-inspection-error@1',code:'read-failed',stage:'read',message:String(error&&error.message||error),storedBytes:0,launchable:false};analyzer.lifecycle='failed';analyzer.error=record;analyzer.finishedAt=performance.now();analyzer.durationMs=Math.round((analyzer.finishedAt-analyzer.startedAt)*100)/100;renderInspectionError(record);setupStatus.textContent='Local inspection rejected; built-in content is unchanged.';}}
+      inspectFileInput.addEventListener('change',()=>{const file=inspectFileInput.files&&inspectFileInput.files[0];if(file)inspectLocalFile(file);inspectFileInput.value='';});
+      document.getElementById('inspection-clear').addEventListener('click',()=>{analyzer.requestId+=1;terminateAnalyzer();analyzer.lifecycle='idle';analyzer.selectedName=null;analyzer.selectedBytes=0;analyzer.result=null;analyzer.error=null;analyzer.startedAt=null;analyzer.finishedAt=null;analyzer.durationMs=null;clearInspectionView();setupStatus.textContent=forge.mountStage==='ready'?'Verified — tap Play built-in Freedoom':'Preparing content-independent engine…';document.getElementById('forge-inspect-picker').focus();});
+      window.addEventListener('pagehide',terminateAnalyzer,{once:true});
       try{manifest=readCapsuleManifest();const payload=manifest.payloads[0];forge.manifestStatus='valid';forge.storageKind=payload.storage.kind;forge.payloadId=payload.id;forge.chunksExpected=payload.chunkCount;forge.recipeId=manifest.recipes[0].id;forgeSummary.textContent=`${manifest.capsule.name}\n${payload.filename} • ${(payload.decoded.bytes/1048576).toFixed(2)} MiB • ${payload.storage.kind}`;if(payload.storage.kind==='external-file')basePicker.hidden=false;}catch(error){forge.manifestStatus='invalid';forge.mountStage='failed';forge.error=String(error);state.errors.push('forge-manifest:'+String(error));forgeSummary.textContent='Capsule manifest rejected';setupStatus.textContent=`Cannot prepare capsule: ${String(error)}`;}
       function removePartial(path){if(path.stream!==null)try{window.Module.FS.close(path.stream);}catch(_){}try{window.Module.FS.unlink(path.temp);}catch(_){}try{window.Module.FS.unlink(path.final);}catch(_){}}
       function failMount(error,paths){if(paths)removePartial(paths);mounting=false;forge.mountStage='failed';forge.error=String(error);forge.mountFinishedAt=performance.now();forge.mountDurationMs=forge.mountStartedAt===null?null:Math.round((forge.mountFinishedAt-forge.mountStartedAt)*100)/100;start.hidden=true;setupStatus.textContent=`Payload rejected: ${String(error)}`;state.errors.push('forge-mount:'+String(error));}
@@ -338,7 +384,7 @@
       window.SFHS_P3_MODULE=window.SFHS_P3_MODULE_CONFIG;
       start.addEventListener('click',()=>{if(state.mainStarted||forge.mountStage!=='ready')return;requestAppFullscreen();const configure=window.Module&&window.Module._sfhs_mobile_present_configure_renderer;if(typeof configure!=='function'){state.errors.push('required runtime export unavailable');return;}if(configure(renderer.value==='compatibility'?1:0)<0){state.errors.push('renderer configuration rejected');return;}state.mainStarted=true;state.mainInvocations+=1;document.body.dataset.sfhsP6Main='started';document.body.dataset.sfhsP7Main='started';setup.hidden=true;settingsToggle.hidden=false;const run=window.Module.callMain(window.Module.arguments);document.body.dataset.sfhsP6Presentation='active';document.body.dataset.sfhsP7Presentation='active';state.presentationUpdates+=1;if(run&&typeof run.catch==='function')run.catch(error=>state.errors.push(String(error)));document.getElementById('canvas').focus();});
       const forgeSnapshot=()=>structuredClone({schema:forge.schema,manifestStatus:forge.manifestStatus,storageKind:forge.storageKind,mountStage:forge.mountStage,payloadId:forge.payloadId,decodedBytes:forge.decodedBytes,decodedSha256:forge.decodedSha256,encodedBytes:forge.encodedBytes,encodedSha256:forge.encodedSha256,chunksExpected:forge.chunksExpected,chunksRead:forge.chunksRead,recipeId:forge.recipeId,args:forge.args,mountDurationMs:forge.mountDurationMs,error:forge.error,mainInvocations:state.mainInvocations});
-      window.SFHS_WASM_TEST=Object.freeze({mobileControlsSnapshot:()=>controller.read(),flushMobileControls:()=>{flushForDoomTic();return window.SFHSDoomMobileControls.snapshot();},setMobileControlsProfile:value=>controller.importProfile(value),mobileControlsProfile:()=>controller.exportProfile(),controlRect:id=>document.querySelector('[data-sfhs-control-id="'+id+'"]').getBoundingClientRect(),adapterSnapshot:()=>window.SFHSDoomMobileControls.snapshot(),mobileUiSnapshot:()=>uiPreferenceSnapshot(),nativeHudSnapshot:hudSnapshot,presentationSnapshot,fullscreenState:()=>structuredClone(state.fullscreen),forgeSnapshot,sha256Hex:bytes=>new IncrementalSha256().update(bytes).hex(),readOracleState:()=>{try{return window.Module.FS.readFile('/oracle-output/state.jsonl',{encoding:'utf8'});}catch(_){return '';}}});
+      window.SFHS_WASM_TEST=Object.freeze({mobileControlsSnapshot:()=>controller.read(),flushMobileControls:()=>{flushForDoomTic();return window.SFHSDoomMobileControls.snapshot();},setMobileControlsProfile:value=>controller.importProfile(value),mobileControlsProfile:()=>controller.exportProfile(),controlRect:id=>document.querySelector('[data-sfhs-control-id="'+id+'"]').getBoundingClientRect(),adapterSnapshot:()=>window.SFHSDoomMobileControls.snapshot(),mobileUiSnapshot:()=>uiPreferenceSnapshot(),nativeHudSnapshot:hudSnapshot,presentationSnapshot,fullscreenState:()=>structuredClone(state.fullscreen),forgeSnapshot,analyzerSnapshot,sha256Hex:bytes=>new IncrementalSha256().update(bytes).hex(),readOracleState:()=>{try{return window.Module.FS.readFile('/oracle-output/state.jsonl',{encoding:'utf8'});}catch(_){return '';}}});
     })();
     </script>
     <script>var Module = window.SFHS_P3_MODULE_CONFIG;</script>

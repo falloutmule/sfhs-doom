@@ -1,55 +1,81 @@
-# SFHS Doom — Phase P07 Plan
+# SFHS Doom — Frozen Phase P07-A Plan
 
-**Phase:** P07 — WAD Forge and Doom Capsules  
-**Current tranche:** P7-A — Forge-capable runtime  
-**Status:** FROZEN FOR EXECUTION  
-**Branch:** `feature/p7a-forge-runtime`  
-**Base:** V16 repair `8e2c4be70ca16f7c0909cd67224b63679cfb2cad`
+**Phase:** P07 — WAD Forge and Doom Capsules
+**Status:** FROZEN
+**Planning authority:** User-approved Forge specification and P7-A execution plan
+**Accepted assumptions/ADRs:** `docs/FORGE_SPEC.md`; accepted V16 player baseline
+**Remote boundary:** Push, PR, merge, and Pages publication are authorized only after every local P7-A gate passes.
 
-## Authority and product boundary
+## Goal
 
-[`docs/FORGE_SPEC.md`](../../FORGE_SPEC.md) is the canonical complete Forge
-specification. P7-A implements only the separable runtime and verified payload
-mounting foundation. It does not present placeholder Library, Browse, Build, or
-Verify product surfaces.
+Deliver a Forge-capable runtime that separates the verified Doom engine from
+game data, validates and mounts one declared Freedoom payload, and launches the
+complete V16 player exactly once.
 
-The committed V8–V16 artifacts are protected. The V16 player remains the
-behavioral baseline: native 320×200 world, native 320×32 detached HUD, minimap,
-controls, panel preferences, LOOK tap options, weapon-cycle repair, audio,
-fullscreen, lifecycle, renderers, saves, demos, and one `callMain`.
+## Scope and non-goals
 
-## P7-A task graph
+### In scope
 
-`DOOM-P7-001 -> DOOM-P7-010 -> DOOM-P7-020 -> DOOM-P7-030 -> DOOM-P7-040 -> DOOM-P7-050`.
+Content-independent SINGLE_FILE Wasm; deterministic capsule manifest and gzip
+chunks; full and thin payload routes; streaming SHA-256 verification and MEMFS
+mount; V16 parity; exact tests, evidence, and dual-route Pages publication.
 
-| Task | Work | Acceptance |
-|---|---|---|
-| DOOM-P7-001 | Adopt Forge authority and freeze P7-A | Canonical spec, phase plan, cards, failure audit, and boundaries are committed. |
-| DOOM-P7-010 | Build content-independent engine | Same product runtime builds without an embedded IWAD and does not start before a verified mount. |
-| DOOM-P7-020 | Deterministic manifest/payload packer | Full and thin capsules have canonical manifests; full chunks deterministic gzip bytes. |
-| DOOM-P7-030 | Verify and mount payload | Full chunks and a thin local file stream into MEMFS with exact byte/hash verification; every failure prevents start. |
-| DOOM-P7-040 | Preserve V16 player parity | Verified payload launches exactly once into the complete V16 player; P7-A boot UI stays bounded and honest. |
-| DOOM-P7-050 | Gate and publish | Exact artifacts and regressions pass, V16 becomes root Pages, Forge becomes `/forge/`, and both live hashes match. |
+### Out of scope
 
-## Failure audit
+WAD/ZIP analysis, recipe authoring, libraries, archive browsing, successor
+export, private capsules, recursive Forge, shared-control changes, and native
+simulation/rendering changes.
 
-P7-A explicitly covers: oversized artifact/memory pressure; corrupt, truncated,
-missing, reordered, or duplicate chunks; bad schema/manifest/decoded hash;
-unsupported gzip; interrupted thin-file reads; premature or repeated launch;
-wrong base selection; partial MEMFS writes; direct-file restrictions; external
-requests; renderer/input/HUD/audio regressions; stale identities; protected-byte
-mutation; and deployment drift. A failed mount removes partial files, exposes a
-recoverable error, and leaves main invocation count at zero.
+## Source of truth
 
-## Exact artifacts
+Read `AGENTS.md`, `docs/FORGE_SPEC.md`, `docs/PROJECT_SPEC.md`,
+`docs/CURRENT_STATE.md`, the P7 cards/results, the V16 result, P6 shell, Forge
+shell/build/packer/validator/tests, and the Pages workflow in that order.
 
-- Full committed capsule: `dist/sfhs-doom-forge-v1.html`.
-- Thin run-local capsule: `test-results/P07/P7-A/sfhs-doom-forge-v1-thin.html`.
-- Product root after publication: exact V16.
-- Preview route after publication: exact full Forge capsule at `/forge/`.
+## Task graph
 
-## Exit state
+| Task | Intelligence | Dependency | Allowed paths | Remote authorization | Done when |
+|---|---|---|---|---|---|
+| DOOM-P7-000 | CODEX | V16 | P7 plans/cards/results | NONE | P7-A execution boundary is frozen. |
+| DOOM-P7-001 | CODEX | P7-000 | Forge/project/current-state docs | NONE | Supplied Forge authority is adopted exactly. |
+| DOOM-P7-010 | CODEX | P7-001 | `web/p7`, Forge build tools | NONE | Engine package has no embedded IWAD and cannot start early. |
+| DOOM-P7-020 | CODEX | P7-010 | Forge packer/schema/tests/artifact | NONE | Full/thin manifests and deterministic chunks validate. |
+| DOOM-P7-030 | CODEX | P7-020 | Forge shell/tests/evidence | NONE | Exact payload mounts; every corruption prevents launch. |
+| DOOM-P7-040 | CODEX | P7-030 | Forge shell/tests/evidence | NONE | Complete V16 player launches once with parity. |
+| DOOM-P7-050 | CODEX | P7-040 | tests/docs/manifests/workflow/artifact | P7-A branch, PR, main, and Pages operations after green local gates | Exact V16 root and Forge preview deploy and match live hashes. |
+| DOOM-P7-090 | SOL-GATE | P7-050 | read-only repository/evidence | NONE | Independent review records a bounded verdict. |
 
-Automated P7-A success is `PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING`. Samsung must
-confirm mount time, player parity, WPN-/WPN+, controls, audio, orientation, and
-no browser scrolling. Automated evidence cannot claim physical acceptance.
+## Exact verification
+
+```text
+python tools/validate-forge-capsule.py dist/sfhs-doom-forge-v1.html --mode full
+python -m unittest tests.test_p7_forge_contract -v
+Playwright P7-A full/thin/corruption and protected P6 regression lanes
+exact V8–V16 and Forge byte/hash checks
+git diff --check and workflow YAML parse
+```
+
+## Evidence and result locations
+
+Committed results live in `docs/results/P07/` and the artifact manifest under
+`evidence/manifests/P07/`. Raw builds, logs, screenshots, thin capsules, and
+negative fixtures are ignored under `test-results/P07/P7-A/`.
+
+## Current state
+
+V16 is the locally accepted repaired player and remains byte-protected. Pages
+is exact V15 until P7-A publication. P7-A implementation and local verification
+are active on `feature/p7a-forge-runtime`.
+
+## Blockers and stop conditions
+
+Stop for native/shared-source changes, commercial content, protected artifact
+mutation, unverified mount before launch, unexpected network, non-deterministic
+packaging, failed required CI, live hash drift, or authority beyond the exact
+P7-A remote boundary.
+
+## Exit gate
+
+Full and thin routes mount exact content and launch V16 once; corruption never
+launches; protected regressions pass; exact root/preview Pages bytes match; and
+status is `PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING` until Samsung verification.

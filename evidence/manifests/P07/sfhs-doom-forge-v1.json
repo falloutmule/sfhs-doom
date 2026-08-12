@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "forge-v1-freedoom-phase2-full",
+  "phase": "P07",
+  "task": "DOOM-P7-050",
+  "source": {
+    "commit": "75008a483ef450d3307d7c425c0a12722735f92d",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": [
+      {
+        "path": "vendor-cache/freedoom/0.13.0/data/freedoom2.wad",
+        "size_bytes": 28787748,
+        "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      }
+    ]
+  },
+  "build": {
+    "utc": "2026-08-12T11:20:00Z",
+    "id": "P7-FORGE-V1",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-forge-capsule.sh", "--output", "dist/sfhs-doom-forge-v1.html", "--thin-output", "test-results/P07/P7-A/sfhs-doom-forge-v1-thin.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P07-forge/product/package-full.stdout.txt",
+        "stderr_path": "build/runtime/P07-forge/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-forge-v1.html",
+      "size_bytes": 25819800,
+      "sha256": "9b4018515b416f6643058d85a04d7c49212f2ca664f50a9a1b3cc2d422d84754",
+      "kind": "single-file-html-capsule"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P07-P7-A-local-final"],
+    "result": "PASS",
+    "checks": [
+      "Forge full and thin static validation PASS",
+      "Forge contract unit tests 6 passed",
+      "Forge full/thin/adversarial browser tests 11 passed",
+      "same-environment deterministic rebuild is byte-identical",
+      "native Debug detached-HUD-off build PASS",
+      "V8 through V16 protected bytes and hashes unchanged",
+      "focused evidence has no fatal page error, failed request, or HTTP request"
+    ]
+  },
+  "notes": [
+    "Thin proof capsule is ignored evidence and contains no payload chunks.",
+    "Only open Freedoom content is packaged; no commercial Doom data is tracked or embedded.",
+    "Physical Samsung Forge verification remains pending."
+  ]
+}

@@ -1,32 +1,50 @@
-# DOOM-P7-001 — Adopt Forge authority
+## DOOM-P7-001 — Adopt Forge authority
 
-**Status:** PASS  
-**Phase:** P07-A  
-**Branch:** `feature/p7a-forge-runtime`  
-**Base:** `8e2c4be70ca16f7c0909cd67224b63679cfb2cad`
+**Intelligence:** CODEX
+**Phase:** P07
+**Status:** PASS
+**Depends on:** DOOM-P7-000
+**Branch:** `feature/p7a-forge-runtime`
+**Allowed files/directories:** `docs/FORGE_SPEC.md`, `docs/PROJECT_SPEC.md`, `docs/CURRENT_STATE.md`, `docs/phases/P07/**`, `docs/tasks/P07/**`, `docs/results/P07/**`, `test-results/P07/P7-A/**`
+**Parallel:** No
+**Remote authorization:** NONE
 
-## Goal
+### Goal
 
-Check in the supplied complete Forge specification, replace the obsolete
-unexecuted audio phase with P7-A through P7-J, freeze the first-tranche task
-graph, and record that V16 publication is intentionally combined with the Forge
-preview publication.
+Adopt the supplied complete Forge specification and supersede the unexecuted P7 audio roadmap.
 
-## Allowed paths
+### Context
 
-- `docs/FORGE_SPEC.md`
-- `docs/PROJECT_SPEC.md`
-- `docs/phases/P07/**`
-- `docs/tasks/P07/**`
-- `docs/results/P07/**`
-- `docs/CURRENT_STATE.md`
-- ignored `test-results/P07/P7-A/**`
+P6 already established accepted self-contained audio. The attached Forge specification defines P7-A through P7-J.
 
-No source, generated artifact, native file, shared-control file, or protected
-V8–V16 artifact may change in this card.
+### Constraints
 
-## Acceptance
+No source, workflow, generated artifact, native/shared file, or protected V8–V16 artifact changes.
 
-The attached specification is byte-identical in the repository; governance is
-internally consistent; all task IDs are unambiguous; `git diff --check` passes;
-and protected artifact hashes remain exact.
+### Work
+
+1. Check in the supplied specification byte-for-byte.
+2. Replace the obsolete P7 summary.
+3. Freeze P7-A cards and publication boundary.
+
+### Exact verification
+
+```text
+Compare attachment/repository SHA-256; git diff --check; verify V8–V16 hashes.
+```
+
+### Acceptance
+
+Authority is exact and governance is internally consistent.
+
+### Evidence output
+
+- `docs/results/P07/DOOM-P7-001.md`
+
+### Stop/block conditions
+
+Stop for a spec hash mismatch or protected-byte mutation.
+
+### Commit
+
+One local commit only: `DOOM-P7-001 adopt Forge product authority`.

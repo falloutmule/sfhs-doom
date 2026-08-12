@@ -1,4 +1,4 @@
-name: Verify and deploy P6 V16 weapon cycle repair candidate
+name: Verify and deploy V16 player plus P7-A Forge preview
 
 on:
   pull_request:
@@ -11,12 +11,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: p6-v16-candidate-${{ github.workflow }}-${{ github.ref }}
+  group: p7a-forge-candidate-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   verify:
-    name: Minimal V16 candidate gate
+    name: V16 and Forge V1 candidate gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,10 +28,12 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: browser-tests/package-lock.json
-      - name: Verify exact V16 candidate and protected V15/V14/V13/V12/V11/V10/V9/V8 baselines
+      - name: Verify exact Forge V1, V16, and protected V15 through V8
         shell: bash
         run: |
           set -euo pipefail
+          test "$(wc -c < dist/sfhs-doom-forge-v1.html | tr -d ' ')" = '25819800'
+          printf '%s  %s\n' '9b4018515b416f6643058d85a04d7c49212f2ca664f50a9a1b3cc2d422d84754' 'dist/sfhs-doom-forge-v1.html' | sha256sum --check --strict
           test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v16.html | tr -d ' ')" = '48372561'
           printf '%s  %s\n' 'bc52a371427575c0c17ee8061c6d4db3d8a7120da116072f9b604f8b08863de2' 'dist/sfhs-doom-android-sfhs-controls-v16.html' | sha256sum --check --strict
           printf '%s  %s\n' 'e9a8b904d9fe91c09c15e6303757a4e2fd8d4eb05f8c1ce1f79c6c94ac8b71db' 'dist/sfhs-doom-android-sfhs-controls-v15.html' | sha256sum --check --strict
@@ -43,18 +45,21 @@ jobs:
           printf '%s  %s\n' 'be885e63be73232d30bb0f897a319baa380231ea56e3eaebea64b29c71c05111' 'dist/sfhs-doom-android-sfhs-controls-v9.html' | sha256sum --check --strict
           printf '%s  %s\n' 'b806eb9274ae46954ecdc54968735ca1ca94f3f062e3559c54c59b0e7f6ad912' 'dist/sfhs-doom-android-sfhs-controls-v8.html' | sha256sum --check --strict
       - name: Validate the current single-file candidate
-        run: python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v16.html
+        run: |
+          python tools/validate-p6-mobile.py dist/sfhs-doom-android-sfhs-controls-v16.html
+          python tools/validate-forge-capsule.py dist/sfhs-doom-forge-v1.html --mode full
+          python -m unittest tests.test_p7_forge_contract -v
       - name: Install focused browser test dependencies
         working-directory: browser-tests
         run: |
           npm ci
           npx playwright install --with-deps chromium
-      - name: Run V16-focused browser gate
+      - name: Run Forge and V16-focused browser gates
         working-directory: browser-tests
-        run: npx playwright test tests/p6-v16-weapon-cycle-repair.spec.mjs --workers=1
+        run: npx playwright test p7a-forge-runtime p6-v16-weapon-cycle-repair --workers=1
 
   deploy-pages:
-    name: Publish exact V16 candidate to GitHub Pages
+    name: Publish exact V16 player and Forge V1 preview to GitHub Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
@@ -71,17 +76,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Stage only exact V16 bytes
+      - name: Stage only exact V16 and Forge V1 bytes
         shell: bash
         run: |
           set -euo pipefail
-          expected='bc52a371427575c0c17ee8061c6d4db3d8a7120da116072f9b604f8b08863de2'
+          player_expected='bc52a371427575c0c17ee8061c6d4db3d8a7120da116072f9b604f8b08863de2'
+          forge_expected='9b4018515b416f6643058d85a04d7c49212f2ca664f50a9a1b3cc2d422d84754'
           test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v16.html | tr -d ' ')" = '48372561'
-          printf '%s  %s\n' "$expected" 'dist/sfhs-doom-android-sfhs-controls-v16.html' | sha256sum --check --strict
-          mkdir -p _pages
+          test "$(wc -c < dist/sfhs-doom-forge-v1.html | tr -d ' ')" = '25819800'
+          printf '%s  %s\n' "$player_expected" 'dist/sfhs-doom-android-sfhs-controls-v16.html' | sha256sum --check --strict
+          printf '%s  %s\n' "$forge_expected" 'dist/sfhs-doom-forge-v1.html' | sha256sum --check --strict
+          mkdir -p _pages/forge
           cp dist/sfhs-doom-android-sfhs-controls-v16.html _pages/index.html
+          cp dist/sfhs-doom-forge-v1.html _pages/forge/index.html
           : > _pages/.nojekyll
-          printf '%s  %s\n' "$expected" '_pages/index.html' | sha256sum --check --strict
+          printf '%s  %s\n' "$player_expected" '_pages/index.html' | sha256sum --check --strict
+          printf '%s  %s\n' "$forge_expected" '_pages/forge/index.html' | sha256sum --check --strict
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _pages

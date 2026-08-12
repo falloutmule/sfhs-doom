@@ -2,8 +2,8 @@
 
 **Date:** 2026-08-12
 **Phase:** P07-A - Forge-capable runtime
-**Current task:** DOOM-P7-010
-**Current result commit:** IN_PROGRESS
+**Current task:** DOOM-P7-050
+**Current result commit:** LOCAL_GATE_COMPLETE
 **Branch:** `feature/p7a-forge-runtime`
 **Base:** V16 repair `8e2c4be70ca16f7c0909cd67224b63679cfb2cad`
 
@@ -78,7 +78,15 @@ manifest/payload packaging, verified local mounting, exactly one launch, and
 complete V16 player parity. Library, archive browser, analysis, recipe authoring,
 and successor export remain later tranches.
 
+The local Forge V1 candidate is complete at 25,819,800 bytes with SHA-256
+`9b4018515b416f6643058d85a04d7c49212f2ca664f50a9a1b3cc2d422d84754`.
+It builds a content-independent SINGLE_FILE engine, validates deterministic full
+or thin capsule data, mounts only exact declared content, and launches the
+complete V16 player exactly once. Focused Forge browser tests pass 11/11 and the
+Forge contract tests pass 6/6. Remote candidate publication is the remaining
+P7-A operation; physical Samsung acceptance remains pending.
+
 ## Next action
 
-Complete P7-A locally, then publish exact V16 at the root route and the exact
-Forge V1 capsule at `/forge/`. Confirm WPN-/WPN+ and Forge mounting on Samsung.
+Publish exact V16 at the root route and exact Forge V1 at `/forge/`, verify both
+live hashes, then confirm WPN-/WPN+ and Forge mounting on Samsung.

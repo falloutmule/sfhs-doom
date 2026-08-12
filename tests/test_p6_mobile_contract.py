@@ -53,6 +53,18 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("_sfhs_mobile_hud_snapshot", BUILD)
         self.assertIn("_sfhs_mobile_hud_pixels", BUILD)
 
+    def test_v16_supplies_standard_weapon_cycle_bindings_before_main(self):
+        self.assertIn("mobileExtraConfig='/sfhs-doom-mobile-extra.cfg'", SHELL)
+        self.assertIn("mobileExtraConfigText='key_prevweapon 51\\nkey_nextweapon 52\\n'", SHELL)
+        self.assertIn("'-extraconfig',mobileExtraConfig", SHELL)
+        self.assertIn("window.Module.FS.writeFile(mobileExtraConfig,mobileExtraConfigText)", SHELL)
+        self.assertIn("weaponCycleConfig:'pending'", SHELL)
+        self.assertIn("state.weaponCycleConfig='ready'", SHELL)
+        self.assertIn("weaponCycleConfig:state.weaponCycleConfig", SHELL)
+        self.assertIn("['weapon-previous',actions.previous]", SHELL)
+        self.assertIn("['weapon-next',actions.next]", SHELL)
+        self.assertNotIn("G_NextWeapon", SHELL)
+
     def test_v15_detached_hud_contract_is_read_only_and_fixed_size(self):
         self.assertIn("#define SFHS_MOBILE_HUD_WIDTH 320", HUD_HEADER)
         self.assertIn("#define SFHS_MOBILE_HUD_HEIGHT 32", HUD_HEADER)

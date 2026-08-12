@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-weapon-cycle-repair-v16",
+  "phase": "P06",
+  "task": "DOOM-P6-064",
+  "source": {
+    "commit": "0112ccd69d9bf0bf1dd9a90afb833fec6a819808",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-12T10:33:43Z",
+    "id": "P6-WEAPON-CYCLE-REPAIR-V16",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-sfhs-controls-v16.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P06-build/product/package.stdout.txt",
+        "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-android-sfhs-controls-v16.html",
+      "size_bytes": 48372561,
+      "sha256": "bc52a371427575c0c17ee8061c6d4db3d8a7120da116072f9b604f8b08863de2",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P06-P6-064-local-final"],
+    "result": "PASS",
+    "checks": [
+      "V16 static single-file validator PASS",
+      "V16 focused real weapon-state browser gate 2 passed",
+      "combined V16/V15/V13/shared controls browser sweep 22 passed",
+      "MOVE-axis browser regression passed",
+      "applicable Python contracts 53 passed",
+      "V8 through V15 protected bytes and hashes unchanged",
+      "focused evidence has no fatal page error, failed request, or HTTP request"
+    ]
+  },
+  "notes": [
+    "Oracle artifact is ignored evidence at test-results/P06/P6-064/sfhs-doom-v16-oracle.html: 48397803 bytes, SHA-256 40c69949f0a87c630f3dac15f726d9370ea0b18e1bb09fedb30a92899cb90c2a.",
+    "V16 changes only browser startup config and no native or shared-SFHS source.",
+    "V16 physical Samsung WPN-/WPN+ verification remains pending.",
+    "No remote publication is authorized by DOOM-P6-064."
+  ]
+}

@@ -1,6 +1,6 @@
 # Upstream Delta
 
-**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11-V15 change only the browser shell and ordinary native builds remain behaviorally unchanged
+**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11-V16 change only the browser shell and ordinary native builds remain behaviorally unchanged
 **Upstream base:** Chocolate Doom `chocolate-doom-3.1.1` at `410d96855b5df5410ff591a90efeafa889119224`
 
 P00 governance files do not alter engine behavior, native build behavior, or future Wasm behavior.
@@ -126,6 +126,16 @@ The compact sectioned settings surface and panel editor are presentation-only.
 LOOK tap option commits release tracked/queued tap state through the existing
 browser adapter; the native action, authoritative command-tic hold, queue size,
 dedicated FIRE priority, and drag routing remain unchanged.
+
+## P6-064 mobile weapon-cycle repair
+
+P6-064 changes no C, CMake, native, renderer, simulation, weapon selection,
+demo/save, Wasm interface, HUD, or shared-SFHS source. V16 writes a private
+ephemeral extra-config into Emscripten's runtime filesystem before `callMain`
+and passes its path through Chocolate Doom's standard `-extraconfig` option.
+The file binds previous/next weapon to standard scancodes 51/52. Existing config
+translation, `D_PostEvent`, `G_Responder`, and `G_NextWeapon` behavior remains
+authoritative.
 
 ## P2-050 multi-file Wasm boundary
 

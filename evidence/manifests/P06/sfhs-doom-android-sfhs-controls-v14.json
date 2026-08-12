@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-centered-landscape-controls-v14",
+  "phase": "P06",
+  "task": "DOOM-P6-062",
+  "source": {
+    "commit": "b3fd3eae5b110935f221b8ad40f4ff7c99896168",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-12T01:07:00Z",
+    "id": "P6-CENTERED-LANDSCAPE-CONTROLS-V14",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-sfhs-controls-v14.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P06-build/product/package.stdout.txt",
+        "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-android-sfhs-controls-v14.html",
+      "size_bytes": 48352772,
+      "sha256": "d3c72c6cd7fd26e96be2e4db324a03151194deea478b28776f486896519e2905",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P06-P6-062-local-final"],
+    "result": "PASS",
+    "checks": [
+      "V14 static single-file validator PASS",
+      "V14 focused centered-landscape and editor browser gate 4 passed",
+      "protected V13/V12 and applicable controls/input browser gates 25 passed",
+      "applicable Python contracts 50 passed",
+      "Chromium loopback audio and boot gates 3 passed",
+      "native Debug build and link PASS; CTest has no registered tests",
+      "V8 through V13 protected bytes and hashes unchanged",
+      "focused evidence has no browser page errors, failed requests, or HTTP requests"
+    ]
+  },
+  "notes": [
+    "Oracle artifact is ignored evidence at test-results/P06/P6-062/sfhs-doom-v14-oracle.html: 48378014 bytes, SHA-256 de3368a193c1aa7fb8079579cac673d985f6e3a4ce9c3e7aff8fb9612928fa61.",
+    "V14 physical Samsung landscape centering, control adjustment, and audio acceptance remains pending.",
+    "Firefox was not installed locally; the known stale Phase-3 movement oracle is not a V14 gate.",
+    "No remote publication is authorized by DOOM-P6-062."
+  ]
+}

@@ -1,7 +1,7 @@
 # Compatibility Matrix
 
-**Document status:** V13 desktop browser automation and native compile compatibility verified; V13 physical Android acceptance pending
-**Date:** 2026-08-10
+**Document status:** V14 desktop browser automation and native compile compatibility verified; V14 physical Android acceptance pending
+**Date:** 2026-08-11
 
 Every runtime row remains `UNTESTED` until the named artifact, environment, and evidence are available.
 
@@ -22,10 +22,13 @@ Every runtime row remains `UNTESTED` until the named artifact, environment, and 
 | Native V12 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | V12 changes no native source; fresh full build/link and version check | VERIFIED | `docs/results/P06/DOOM-P6-060.md` |
 | V13 Android candidate on desktop Chromium | Playwright 1.61.1; Chromium 149; direct `file://`; 360x800, 400x844, 576x1280, and 800x360 | V12 full-frame 4:3 presentation plus bounded LOOK tap-to-FIRE, drag-only LOOK, lifecycle release, queue/precedence, Pointer and Touch Event routes | VERIFIED | `docs/results/P06/DOOM-P6-061.md`; `test-results/P06/P6-061/` |
 | Native V13 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | V13 changes no native source; fresh full build/link and version check | VERIFIED | `docs/results/P06/DOOM-P6-061.md` |
+| V14 Android candidate on desktop Chromium | Playwright 1.61.1; Chromium 149; direct `file://`; 800x360, 915x412, and 400x844 | Full-safe-viewport centered landscape world/HUD, unobstructed orientation-specific editor, Save/Cancel/persistence/rotation isolation, automatic/compatibility renderers, portrait and LOOK-tap regression | VERIFIED | `docs/results/P06/DOOM-P6-062.md`; `test-results/P06/P6-062/` |
+| Native V14 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | V14 changes no native source; fresh full build/link and version check | VERIFIED | `docs/results/P06/DOOM-P6-062.md` |
 | V10 on Samsung Android Chrome | Exact model/version not recorded | User-reported fullscreen, world, HUD, minimap, gameplay, general controls, and editor usability | PARTIAL | PASS for presentation/gameplay/general controls; FAIL for editor settings obscuring controls, as recorded in DOOM-P6-059 input |
 | V11 on Samsung Android Chrome | Exact model/version not recorded; physical fullscreen width 576 | Physical 4:3 presentation and repaired editor acceptance | FAILED | 576x432 DOM region showed about 576x286 rendered pixels plus about 146 blank rows; diagnostic photos do not establish edit-mode acceptance |
 | V12 on Samsung Android Chrome | Exact model/version not recorded | Full-frame 4:3 presentation plus hands-on editor and speaker acceptance | UNTESTED | Local automation passes; physical test required after Pages publication |
 | V13 on Samsung Android Chrome | Exact model/version not recorded | LOOK tap FIRE, LOOK drag without shot, concurrent MOVE, dedicated FIRE, editor, and speaker acceptance | UNTESTED | Local automation passes; physical test required after exact Pages publication |
+| V14 on Samsung Android Chrome | Exact model/version not recorded | Centered landscape frame/HUD, adjustable landscape controls, Save/Cancel/rotation, LOOK tap/drag, and speaker acceptance | UNTESTED | Local automation passes; exact Pages publication requires separate authorization and physical test |
 | iOS Safari | Version/device not recorded | Best-effort compatibility target | UNTESTED | None |
 | Freedoom Phase 1 edition | Freedoom v0.13.0 `freedoom1.wad` | E1M1 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase1-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase1/` |
 | Freedoom Phase 2 edition | Freedoom v0.13.0 `freedoom2.wad` | MAP01 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase2-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase2/` |

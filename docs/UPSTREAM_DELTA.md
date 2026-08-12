@@ -1,6 +1,6 @@
 # Upstream Delta
 
-**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11-V13 change only the browser shell and ordinary native builds remain behaviorally unchanged
+**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11-V14 change only the browser shell and ordinary native builds remain behaviorally unchanged
 **Upstream base:** Chocolate Doom `chocolate-doom-3.1.1` at `410d96855b5df5410ff591a90efeafa889119224`
 
 P00 governance files do not alter engine behavior, native build behavior, or future Wasm behavior.
@@ -101,6 +101,16 @@ It uses the existing read-only Emscripten command-build counter only to ensure
 the press spans one actually built Doom command tic before release. Drag input
 continues through the unchanged full-width shared LOOK route, dedicated FIRE
 takes precedence, and lifecycle cancellation releases pending browser input.
+
+## P6-062 centered landscape and editable controls
+
+P6-062 changes no C, CMake, native, renderer, simulation, demo/save, Wasm
+interface, or shared-SFHS source. The V14 shell centers the complete existing
+8:5 landscape canvas and detached HUD on the full safe viewport, moves the
+minimap/editor-settings dock to the left, and keeps the shared control workspace
+exposed on the right. The accepted shared runtime continues to own
+orientation-specific drag/resize, Save/Cancel, validation, and persistence;
+portrait profiles and V13 LOOK-tap input are unchanged.
 
 ## P2-050 multi-file Wasm boundary
 

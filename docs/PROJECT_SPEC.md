@@ -1609,23 +1609,36 @@ The exact implementation details of later cards may be refined by Sol after earl
 
 ---
 
-## Phase P7 — Sound effects and OPL music
+## Phase P7 — WAD Forge and Doom Capsules
 
-**Goal:** Deliver complete self-contained audio with correct browser lifecycle behavior.
+**Authority:** [`docs/FORGE_SPEC.md`](FORGE_SPEC.md) is the complete product and
+technical specification for P7. If this summary conflicts with that document,
+the Forge specification controls.
 
-**Exit gate:** SFX and music work after one gesture, volumes persist, pause/resume is clean, and no external sound asset is required.
+**Goal:** Separate the verified Doom player runtime from game data, verify and
+mount declared binary payloads locally, and progressively deliver a phone-first
+Forge that can inspect, organize, launch, and export self-contained capsules.
 
-| Task | Intelligence | Work | Done when |
-|---|---|---|---|
-| DOOM-P7-010 | LUNA-M | Centralize audio unlock directly in Start action and report browser audio state. | First intentional gesture enables the backend or produces an exact recoverable error. |
-| DOOM-P7-020 | LUNA-H | Complete engine SFX path through SDL/browser audio. | Representative weapon, monster, pickup, door, and UI sounds play. |
-| DOOM-P7-030 | LUNA-H | Enable and validate software OPL music path. | Bundled Freedoom music plays with no soundfont/network dependency. |
-| DOOM-P7-040 | LUNA-M | Wire master/music/SFX settings to engine/browser state. | Mute and volume persist without clicks or duplicate contexts. |
-| DOOM-P7-050 | LUNA-H | Repair suspend, background, focus-loss, and resume behavior. | No doubled music, runaway buffer, permanent silence, or crash. |
-| DOOM-P7-060 | LUNA-M | Add audio instrumentation and automated smoke signals. | Tests can distinguish locked, running, suspended, muted, and failed states. |
-| DOOM-P7-070 | LUNA-L | Record backend architecture, known platform differences, and exact evidence. | Audio ADR and report are complete. |
-| DOOM-P7-080 | HUMAN | Listen on desktop and Samsung for distortion, latency, and resume failure. | Human audio verdict recorded. |
-| DOOM-P7-090 | SOL-GATE | Review self-contained audio and lifecycle evidence. | PASS only if “complete” does not depend on an external service or manual workaround. |
+The former unexecuted P7 audio roadmap is superseded. P6 established and
+accepted the self-contained SFX/music, trusted-gesture unlock, and lifecycle
+behavior; Forge must preserve those accepted paths as regressions.
+
+**Exit gate:** P7-J completes the physical Samsung workflow and production
+transition defined by the Forge specification. P7-A is a bounded first tranche
+and does not imply completion of library, archive, analysis, or export features.
+
+| Tranche | Work | Done when |
+|---|---|---|
+| P7-A | Forge-capable runtime | Content-independent engine, removable Freedoom payload, manifest-driven verified mount, V16 player parity, and exactly one launch. |
+| P7-B | Local analyzer | Local WAD/ZIP inspection identifies payload structure and compatibility without upload. |
+| P7-C | Recipe builder and launcher | Base, PWAD, merge, and DeHackEd recipes produce exact engine arguments and safe test play. |
+| P7-D | Successor exporter | Player, Forge, thin, and private capsules round-trip locally and open by `file://`. |
+| P7-E | Local library and collections | Local persistence, deduplication, recipes, collections, independent saves, and recovery controls work. |
+| P7-F | Online archive browser | Explicit-consent `/idgames` discovery and cancelable download work with an offline export path. |
+| P7-G | Rights and provenance | Permission, privacy, source, license, and combined-credit records are accurate and conservative. |
+| P7-H | Capsule verifier and integrity | Corruption, missing bases, undeclared network, and producer-neutral boot failures are detected. |
+| P7-I | Recursive Forge and integration | A Forge capsule produces a verified Forge successor and passes the complete phone workflow. |
+| P7-J | Production transition | Independent review, exact identity, public documentation, Pages route transition, and release decision complete. |
 
 ---
 

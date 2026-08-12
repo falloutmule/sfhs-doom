@@ -1,11 +1,11 @@
 # SFHS Doom Current State
 
 **Date:** 2026-08-12
-**Phase:** P06 - Android portrait presentation and shared controls
-**Current task:** DOOM-P6-064
-**Current result commit:** SELF
-**Branch:** `repair/p6-v16-weapon-cycle`
-**Base:** `0112ccd69d9bf0bf1dd9a90afb833fec6a819808`
+**Phase:** P07-A - Forge-capable runtime
+**Current task:** DOOM-P7-010
+**Current result commit:** IN_PROGRESS
+**Branch:** `feature/p7a-forge-runtime`
+**Base:** V16 repair `8e2c4be70ca16f7c0909cd67224b63679cfb2cad`
 
 ## Verified artifacts
 
@@ -68,7 +68,17 @@ confirmed weapon-cycle defect is repaired in V16 but still needs one physical
 WPN-/WPN+ check. No remote publication was authorized for P6-064, so public
 Pages remains exact V15.
 
+## P7-A Forge state
+
+The supplied complete Forge specification is now the authoritative P7 plan.
+The former unexecuted audio phase is superseded because P6 already established
+and physically accepted the audio path; that behavior is protected as a Forge
+regression. P7-A is bounded to a content-independent engine, deterministic
+manifest/payload packaging, verified local mounting, exactly one launch, and
+complete V16 player parity. Library, archive browser, analysis, recipe authoring,
+and successor export remain later tranches.
+
 ## Next action
 
-After explicit publication authorization, publish exact V16 and confirm on the
-Samsung that WPN- changes pistol to fist and WPN+ changes fist back to pistol.
+Complete P7-A locally, then publish exact V16 at the root route and the exact
+Forge V1 capsule at `/forge/`. Confirm WPN-/WPN+ and Forge mounting on Samsung.

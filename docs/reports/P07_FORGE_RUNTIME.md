@@ -62,6 +62,11 @@ candidate or protected bytes.
 
 ## Acceptance
 
-Local result: PASS. Final publication state remains
-`PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING` until the exact Pages preview is checked
-on Samsung. Automated browser evidence is not physical acceptance.
+Local and publication result: PASS. PR #14 merged as
+`251d020c977369c379dfb180aed94bbbbab0083a`; main workflow `31592468583`
+passed and deployed. Fresh downloads of the root and `/forge/` routes match the
+exact V16 and Forge hashes respectively.
+
+Final state remains `PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING` until the Forge
+preview and repaired WPN−/WPN+ controls are checked on Samsung. Automated
+browser evidence is not physical acceptance.

@@ -63,9 +63,9 @@ negative fixtures are ignored under `test-results/P07/P7-A/`.
 
 ## Current state
 
-V16 is the locally accepted repaired player and remains byte-protected. Pages
-is exact V15 until P7-A publication. P7-A implementation and local verification
-are active on `feature/p7a-forge-runtime`.
+V16 remains byte-protected and is published exactly at the Pages root. Forge V1
+is published exactly at `/forge/`. P7-A implementation, local verification, CI,
+and byte-exact publication are complete; physical Samsung acceptance is pending.
 
 ## Blockers and stop conditions
 

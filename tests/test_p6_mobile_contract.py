@@ -23,7 +23,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertNotIn("processLook(event)", SHELL)
         self.assertNotIn("lookState.accumulator", SHELL)
 
-    def test_v14_retains_doom_specific_resize_ranges_and_relative_look_rail(self):
+    def test_v15_retains_doom_specific_resize_ranges_and_relative_look_rail(self):
         for control in ("move", "look", "primary", "interact", "modifier", "menu", "map", "weapon-previous", "weapon-next"):
             self.assertIn(f"id:'{control}'", SHELL)
         self.assertIn('data-sfhs-control-id="look"', SHELL)
@@ -42,7 +42,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("setHeld(actions.forward,move.y>threshold)", SHELL)
         self.assertIn("setHeld(actions.backward,move.y< -threshold)", SHELL)
 
-    def test_v14_keeps_mobile_launch_contract_and_single_file_bundle(self):
+    def test_v15_keeps_mobile_launch_contract_and_single_file_bundle(self):
         self.assertIn("'-nograbmouse'", SHELL)
         self.assertNotIn("'-nomouse'", SHELL)
         self.assertIn("inject-mobile-controls-bundle.py", BUILD)
@@ -53,7 +53,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("_sfhs_mobile_hud_snapshot", BUILD)
         self.assertIn("_sfhs_mobile_hud_pixels", BUILD)
 
-    def test_v14_detached_hud_contract_is_read_only_and_fixed_size(self):
+    def test_v15_detached_hud_contract_is_read_only_and_fixed_size(self):
         self.assertIn("#define SFHS_MOBILE_HUD_WIDTH 320", HUD_HEADER)
         self.assertIn("#define SFHS_MOBILE_HUD_HEIGHT 32", HUD_HEADER)
         self.assertIn("const sfhs_mobile_hud_snapshot_t *sfhs_mobile_hud_snapshot", HUD_HEADER)
@@ -63,7 +63,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn('id="sfhs-fullscreen-root"', SHELL)
         self.assertNotIn('id="info-strip"', SHELL)
 
-    def test_v14_gives_sdl_backing_ownership_and_keeps_compact_editor_region(self):
+    def test_v15_gives_sdl_backing_ownership_and_keeps_compact_editor_region(self):
         self.assertIn("--world-height:75vw", SHELL)
         self.assertIn("#game-region { position:relative; width:100%; height:var(--world-height)", SHELL)
         self.assertIn("#canvas { position:absolute; left:0; top:0; display:block; width:320px; height:200px", SHELL)
@@ -77,7 +77,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("gameRegionHeight", SHELL)
         self.assertNotIn("MutationObserver(restoreWorldBacking)", SHELL)
         self.assertNotIn("worldCanvas.width!==320||worldCanvas.height!==200", SHELL)
-        self.assertIn('--control-deck-height:320px', SHELL)
+        self.assertIn('--control-deck-min-height:280px', SHELL)
         minimap_start = SHELL.index('<section id="minimap-region"')
         minimap_end = SHELL.index('</section>', minimap_start)
         editor_at = SHELL.index('<form id="edit-panel"')
@@ -89,7 +89,7 @@ class P6MobileContractTests(unittest.TestCase):
         for control in ("profile-reset", "profile-export", "profile-import", "edit-cancel", "edit-save"):
             self.assertIn(f'id="{control}"', SHELL)
 
-    def test_v14_centers_landscape_and_separates_editor_from_controls(self):
+    def test_v15_centers_landscape_and_separates_editor_from_controls(self):
         self.assertIn("#game-region { position:absolute; z-index:0; left:env(safe-area-inset-left); right:env(safe-area-inset-right)", SHELL)
         self.assertIn("#canvas { left:50%; top:50%; transform-origin:center; }", SHELL)
         self.assertIn("translate(-50%,-50%) scale(var(--world-scale-x,1),var(--world-scale-y,1))", SHELL)
@@ -100,7 +100,7 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("hudCenterOffsetX", SHELL)
         self.assertIn("[data-editing=\"true\"] .sfhs-mobile-control-resize { right:2px; bottom:2px; transform:none; }", SHELL)
 
-    def test_v14_look_tap_fire_is_product_owned_bounded_and_tic_drained(self):
+    def test_v15_look_tap_fire_is_product_owned_bounded_and_tic_drained(self):
         self.assertIn("maxDurationMs:300", SHELL)
         self.assertIn("slopCssPx:12", SHELL)
         self.assertIn("maxQueue:4", SHELL)
@@ -115,6 +115,30 @@ class P6MobileContractTests(unittest.TestCase):
         self.assertIn("clearLookTapFire('profile-reset')", SHELL)
         self.assertIn("if(event.target===window)clearLookTapFire('blur')", SHELL)
         self.assertNotIn("lookTapFire", (ROOT / "vendor/sfhs-mobile-controls-v1/src/runtime.ts").read_text(encoding="utf-8"))
+
+    def test_v15_mobile_ui_preferences_are_separate_validated_and_read_only(self):
+        self.assertIn("sfhsDoom.mobileUi.v1", SHELL)
+        self.assertIn("sfhs.doom-mobile-ui@1", SHELL)
+        self.assertIn("validateUiPreferences", SHELL)
+        self.assertIn("uiPreferenceSnapshot", SHELL)
+        self.assertIn("mobileUiSnapshot:()=>uiPreferenceSnapshot()", SHELL)
+        self.assertIn("persistUiPreferences", SHELL)
+        self.assertIn("panelEdit.lifecycle", SHELL)
+        self.assertIn('id="minimap-resize-handle"', SHELL)
+        self.assertIn('id="hud-resize-handle"', SHELL)
+        self.assertIn('id="panel-edit-toolbar"', SHELL)
+        self.assertIn('id="look-tap-enabled"', SHELL)
+        self.assertIn('id="look-tap-duration"', SHELL)
+        self.assertIn('id="look-tap-tolerance"', SHELL)
+        self.assertNotIn("sfhsDoom.mobileUi.v1", (ROOT / "vendor/sfhs-mobile-controls-v1/src/runtime.ts").read_text(encoding="utf-8"))
+
+    def test_v15_settings_are_sectioned_and_editors_are_mutually_exclusive(self):
+        for section in ("Play", "Display layout", "Touch controls", "LOOK tap fire", "Control profile", "Advanced"):
+            self.assertIn(f"<summary>{section}</summary>", SHELL)
+        self.assertIn("if(panelEdit.lifecycle==='editing')cancelPanelEdit('control-edit-entry')", SHELL)
+        self.assertIn("if(controller.read().lifecycle==='editing')closeEditor(true)", SHELL)
+        self.assertIn("touch-action:pan-y", SHELL)
+        self.assertIn("overflow:hidden", SHELL)
 
     def test_native_bridge_posts_only_standard_doom_events(self):
         self.assertIn("D_PostEvent(&event);", INPUT)

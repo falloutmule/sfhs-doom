@@ -1,6 +1,6 @@
 # Upstream Delta
 
-**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11-V14 change only the browser shell and ordinary native builds remain behaviorally unchanged
+**Current engine delta:** compile-time-gated P01 oracle observer plus the V10 Emscripten-only detached-HUD presentation path; V11-V15 change only the browser shell and ordinary native builds remain behaviorally unchanged
 **Upstream base:** Chocolate Doom `chocolate-doom-3.1.1` at `410d96855b5df5410ff591a90efeafa889119224`
 
 P00 governance files do not alter engine behavior, native build behavior, or future Wasm behavior.
@@ -111,6 +111,21 @@ minimap/editor-settings dock to the left, and keeps the shared control workspace
 exposed on the right. The accepted shared runtime continues to own
 orientation-specific drag/resize, Save/Cancel, validation, and persistence;
 portrait profiles and V13 LOOK-tap input are unchanged.
+
+## P6-063 resizable panels, LOOK options, and settings cleanup
+
+P6-063 changes no C, CMake, native, renderer, simulation, projection, demo/save,
+Wasm interface, HUD extraction, or shared-SFHS source. The V15 shell adds a
+separate Doom-owned editor for the real minimap canvas and CSS-only presentation
+width of the authentic 320x32 detached HUD. It adds a validated independent
+`sfhsDoom.mobileUi.v1` preference record for orientation-specific panel
+fractions and bounded LOOK tap enabled/duration/tolerance values. The shared
+mobile-control key, schema, runtime, layouts, and input route are unchanged.
+
+The compact sectioned settings surface and panel editor are presentation-only.
+LOOK tap option commits release tracked/queued tap state through the existing
+browser adapter; the native action, authoritative command-tic hold, queue size,
+dedicated FIRE priority, and drag routing remain unchanged.
 
 ## P2-050 multi-file Wasm boundary
 

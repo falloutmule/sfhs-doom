@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "edition": "freedoom-phase2-android-resizable-panels-options-v15",
+  "phase": "P06",
+  "task": "DOOM-P6-063",
+  "source": {
+    "commit": "00e6bd0841ce31e5de7351003014a82c76d41641",
+    "upstream_tag": "chocolate-doom-3.1.1",
+    "upstream_sha": "410d96855b5df5410ff591a90efeafa889119224",
+    "dirty": true,
+    "toolchains": [
+      {"name": "Emscripten", "version": "6.0.5", "source": "tools/emsdk-lock.json"},
+      {"name": "esbuild", "version": "0.28.1", "source": ".worktrees/sfhs-mobile-controls-v1/package-lock.json"},
+      {"name": "Playwright", "version": "1.61.1", "source": "browser-tests/package-lock.json"}
+    ],
+    "inputs": []
+  },
+  "build": {
+    "utc": "2026-08-12T02:54:54Z",
+    "id": "P6-RESIZABLE-PANELS-OPTIONS-V15",
+    "commands": [
+      {
+        "argv": ["bash", "tools/build-single-file.sh", "--profile", "android", "--output", "dist/sfhs-doom-android-sfhs-controls-v15.html"],
+        "cwd": ".",
+        "exit_code": 0,
+        "stdout_path": "build/runtime/P06-build/product/package.stdout.txt",
+        "stderr_path": "build/runtime/P06-build/product/build.stderr.txt"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-android-sfhs-controls-v15.html",
+      "size_bytes": 48372203,
+      "sha256": "e9a8b904d9fe91c09c15e6303757a4e2fd8d4eb05f8c1ce1f79c6c94ac8b71db",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "run_ids": ["P06-P6-063-local-final"],
+    "result": "PASS",
+    "checks": [
+      "V15 static single-file validator PASS",
+      "V15 focused resizable-panel, LOOK-option, and settings browser gate 8 passed",
+      "protected V14/V13/V12/V10/V9 and applicable controls/input browser gates 48 passed",
+      "applicable Python contracts 52 passed",
+      "Chromium loopback audio and boot gates 3 passed; direct-file trusted audio/menu passed",
+      "native Debug detached-HUD-OFF build 163 targets; CTest has no registered tests",
+      "V8 through V14 protected bytes and hashes unchanged",
+      "focused evidence has no browser page errors, failed requests, or HTTP requests"
+    ]
+  },
+  "notes": [
+    "Oracle artifact is ignored evidence at test-results/P06/P6-063/sfhs-doom-v15-oracle.html: 48397445 bytes, SHA-256 b3f5d2dc1d4ac3d1f7cb9d915c3608adf5aa9ec108c1c727109a58c36c4dcefb.",
+    "V15 physical Samsung panel-resize, LOOK-option, settings, and audio acceptance remains pending.",
+    "Firefox was not installed locally; the historical project-doc validator failures are not V15 gates.",
+    "Native demo/Wasm comparison contracts pass; V15 changes no native or shared-SFHS source."
+  ]
+}

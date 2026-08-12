@@ -1,6 +1,6 @@
 # Compatibility Matrix
 
-**Document status:** V14 desktop browser automation and native compile compatibility verified; V14 physical Android acceptance pending
+**Document status:** V15 desktop browser automation and native compile compatibility verified; V15 physical Android acceptance pending
 **Date:** 2026-08-11
 
 Every runtime row remains `UNTESTED` until the named artifact, environment, and evidence are available.
@@ -24,11 +24,14 @@ Every runtime row remains `UNTESTED` until the named artifact, environment, and 
 | Native V13 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | V13 changes no native source; fresh full build/link and version check | VERIFIED | `docs/results/P06/DOOM-P6-061.md` |
 | V14 Android candidate on desktop Chromium | Playwright 1.61.1; Chromium 149; direct `file://`; 800x360, 915x412, and 400x844 | Full-safe-viewport centered landscape world/HUD, unobstructed orientation-specific editor, Save/Cancel/persistence/rotation isolation, automatic/compatibility renderers, portrait and LOOK-tap regression | VERIFIED | `docs/results/P06/DOOM-P6-062.md`; `test-results/P06/P6-062/` |
 | Native V14 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | V14 changes no native source; fresh full build/link and version check | VERIFIED | `docs/results/P06/DOOM-P6-062.md` |
+| V15 Android candidate on desktop Chromium | Playwright 1.61.1; Chromium 149; direct `file://`; 360x800, 400x844, 800x360, and 915x412 | Real-canvas minimap resizing, CSS-only authentic HUD resizing, independent orientation persistence, bounded LOOK tap options, compact settings, automatic/compatibility renderers, controls/audio/hygiene | VERIFIED | `docs/results/P06/DOOM-P6-063.md`; `test-results/P06/P6-063/` |
+| Native V15 compatibility build | Chocolate Doom 3.1.1; Ubuntu 24.04 WSL2; Debug; `SFHS_MOBILE_DETACHED_HUD=OFF` | V15 changes no native source; fresh full 163-target build/link and version check | VERIFIED | `docs/results/P06/DOOM-P6-063.md` |
 | V10 on Samsung Android Chrome | Exact model/version not recorded | User-reported fullscreen, world, HUD, minimap, gameplay, general controls, and editor usability | PARTIAL | PASS for presentation/gameplay/general controls; FAIL for editor settings obscuring controls, as recorded in DOOM-P6-059 input |
 | V11 on Samsung Android Chrome | Exact model/version not recorded; physical fullscreen width 576 | Physical 4:3 presentation and repaired editor acceptance | FAILED | 576x432 DOM region showed about 576x286 rendered pixels plus about 146 blank rows; diagnostic photos do not establish edit-mode acceptance |
 | V12 on Samsung Android Chrome | Exact model/version not recorded | Full-frame 4:3 presentation plus hands-on editor and speaker acceptance | UNTESTED | Local automation passes; physical test required after Pages publication |
 | V13 on Samsung Android Chrome | Exact model/version not recorded | LOOK tap FIRE, LOOK drag without shot, concurrent MOVE, dedicated FIRE, editor, and speaker acceptance | UNTESTED | Local automation passes; physical test required after exact Pages publication |
 | V14 on Samsung Android Chrome | Exact model/version not recorded | Centered landscape frame/HUD, adjustable landscape controls, Save/Cancel/rotation, LOOK tap/drag, and speaker acceptance | UNTESTED | Local automation passes; exact Pages publication requires separate authorization and physical test |
+| V15 on Samsung Android Chrome | Exact model/version not recorded | Minimap/HUD resize reach and persistence, authentic HUD quality, independent rotation layouts, LOOK tap options, compact settings, controls, audio, and no-scroll acceptance | UNTESTED | Exact candidate publication authorized; local automation passes; physical test required |
 | iOS Safari | Version/device not recorded | Best-effort compatibility target | UNTESTED | None |
 | Freedoom Phase 1 edition | Freedoom v0.13.0 `freedoom1.wad` | E1M1 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase1-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase1/` |
 | Freedoom Phase 2 edition | Freedoom v0.13.0 `freedoom2.wad` | MAP01 skill 3 native gameplay entry with isolated config/save/home and dummy-audio automation; separate real mixer setup | VERIFIED | `evidence/screenshots/P01/P1-050/phase2-gameplay.png`; `evidence/task-runs/P01-DOOM-P1-050/phase2/` |

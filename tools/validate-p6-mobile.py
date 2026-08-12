@@ -11,9 +11,9 @@ def main(path: Path) -> int:
     if text.count("<!doctype html>") != 1:
         failures.append("not exactly one HTML document")
     for token in (
-        "P6-ANDROID-PORTRAIT-V14",
+        "P6-ANDROID-PORTRAIT-V15",
         'id="sfhs-fullscreen-root"',
-        'data-sfhs-fullscreen-app-root="v14"',
+        'data-sfhs-fullscreen-app-root="v15"',
         'id="canvas" width="320" height="200"',
         'id="doom-status-canvas" width="320" height="32"',
         "--world-height:75vw",
@@ -25,13 +25,22 @@ def main(path: Path) -> int:
         "hudCenterOffsetX",
         "outputHeight",
         "lookTapFire",
-        "maxDurationMs:300",
-        "slopCssPx:12",
+        "sfhsDoom.mobileUi.v1",
+        "sfhs.doom-mobile-ui@1",
+        "validateUiPreferences",
+        "uiPreferenceSnapshot",
+        "panelEdit",
+        'id="minimap-resize-handle"',
+        'id="hud-resize-handle"',
+        'id="panel-edit-toolbar"',
+        'id="look-tap-enabled"',
+        'id="look-tap-duration"',
+        'id="look-tap-tolerance"',
         "maxQueue:4",
         "minPressBuildTics:1",
         "nativeBuildTicCount",
         "drainLookTapFire",
-        '--control-deck-height:320px',
+        '--control-deck-min-height:280px',
         'id="minimap-region"',
         'id="edit-panel"',
         'minimapRegion.dataset.editing',
@@ -50,7 +59,7 @@ def main(path: Path) -> int:
             failures.append(f"missing {token}")
     for stale in ('id="info-strip"', 'id="hud-health"', 'id="hud-armor"',
                   'id="hud-ammo"', 'id="hud-weapon"', 'id="hud-keys"',
-                  "P6-ANDROID-PORTRAIT-V13", "MutationObserver(restoreWorldBacking)",
+                  "P6-ANDROID-PORTRAIT-V14", "P6-ANDROID-PORTRAIT-V13", "MutationObserver(restoreWorldBacking)",
                   "worldCanvas.width!==320||worldCanvas.height!==200"):
         if stale in text:
             failures.append(f"stale HTML HUD token {stale}")

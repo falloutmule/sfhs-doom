@@ -54,12 +54,15 @@
       "same-environment deterministic rebuild is byte-identical",
       "native Debug detached-HUD-off build PASS",
       "V8 through V16 protected bytes and hashes unchanged",
-      "focused evidence has no fatal page error, failed request, or HTTP request"
+      "focused evidence has no fatal page error, failed request, or HTTP request",
+      "main workflow 31592468583 and Pages deployment PASS",
+      "live /forge/ bytes and SHA-256 exactly match the local artifact"
     ]
   },
   "notes": [
     "Thin proof capsule is ignored evidence and contains no payload chunks.",
     "Only open Freedoom content is packaged; no commercial Doom data is tracked or embedded.",
+    "Exact V16 is published at the Pages root and exact Forge V1 at /forge/.",
     "Physical Samsung Forge verification remains pending."
   ]
 }

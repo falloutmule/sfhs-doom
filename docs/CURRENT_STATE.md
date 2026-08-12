@@ -2,9 +2,9 @@
 
 **Date:** 2026-08-12
 **Phase:** P07-A - Forge-capable runtime
-**Current task:** DOOM-P7-050
-**Current result commit:** LOCAL_GATE_COMPLETE
-**Branch:** `feature/p7a-forge-runtime`
+**Current task:** DOOM-P7-090 handoff/physical acceptance
+**Current result commit:** Publication merge `251d020c977369c379dfb180aed94bbbbab0083a`
+**Branch:** `main`
 **Base:** V16 repair `8e2c4be70ca16f7c0909cd67224b63679cfb2cad`
 
 ## Verified artifacts
@@ -62,11 +62,11 @@ the approved established-toolchain retry passed and produced the exact artifact.
 
 ## Acceptance and publication state
 
-`PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING` for V16. The user reported V15's defined
-physical presentation/options checklist PASS on 2026-08-12; the independently
-confirmed weapon-cycle defect is repaired in V16 but still needs one physical
-WPN-/WPN+ check. No remote publication was authorized for P6-064, so public
-Pages remains exact V15.
+`PASS_WITH_PHYSICAL_ACCEPTANCE_PENDING` for the published V16/Forge pair. The
+user reported V15's defined physical presentation/options checklist PASS on
+2026-08-12. The independently confirmed weapon-cycle defect is repaired in V16
+and passes native-state browser proof but still needs one physical WPN−/WPN+
+check. Public Pages now serves exact V16 at the root and Forge V1 at `/forge/`.
 
 ## P7-A Forge state
 
@@ -83,10 +83,11 @@ The local Forge V1 candidate is complete at 25,819,800 bytes with SHA-256
 It builds a content-independent SINGLE_FILE engine, validates deterministic full
 or thin capsule data, mounts only exact declared content, and launches the
 complete V16 player exactly once. Focused Forge browser tests pass 11/11 and the
-Forge contract tests pass 6/6. Remote candidate publication is the remaining
-P7-A operation; physical Samsung acceptance remains pending.
+Forge contract tests pass 6/6. PR #14 and main workflow `31592468583` passed;
+fresh live downloads match exact local V16 and Forge bytes. Physical Samsung
+acceptance remains pending.
 
 ## Next action
 
-Publish exact V16 at the root route and exact Forge V1 at `/forge/`, verify both
-live hashes, then confirm WPN-/WPN+ and Forge mounting on Samsung.
+On Samsung, confirm repaired WPN−/WPN+ at the root and the Forge `/forge/`
+mount/Play flow, controls, audio, rotation, and no-scroll behavior.

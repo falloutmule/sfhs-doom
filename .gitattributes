@@ -1,0 +1,3 @@
+# Preserve exact new release bytes; historical artifacts keep their existing rules.
+/dist/sfhs-doom-forge-v3.html binary
+/web/forge/archive-catalog.json text eol=lf

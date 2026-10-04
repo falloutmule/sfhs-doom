@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./tests',testMatch:/forge-(core|ingest|archive|complete|storage|template|ui)\.spec\.mjs/,timeout:120000,expect:{timeout:20000},workers:1,fullyParallel:false,outputDir:'../test-results/P07/forge-complete/playwright',use:{headless:true,launchOptions:process.platform==='win32'?{executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'}:{},trace:'retain-on-failure'}});

@@ -1,11 +1,32 @@
 # SFHS Doom Current State
 
-**Date:** 2026-08-12
-**Phase:** P07-B - Local analyzer
-**Current task:** DOOM-P7-060
+**Date:** 2026-10-04 UTC
+**Phase:** P07 - Forge workstation local integration
+**Current task:** DOOM-P7-100
 **Current result commit:** SELF
-**Branch:** `codex/p7b-local-wad-inspection`
-**Base:** P7-A publication `457df6c3a698c624b132536ab6862fac91c54c53`
+**Branch:** `codex/forge-complete-product`
+**Base:** `d0953a12d45aa745ed18c245e45fc89f84416a39`
+
+The user's complete-product handoff supersedes the earlier staged scope. The
+new local artifact is `dist/sfhs-doom-forge-v3.html`, built from `web/forge/`
+and the preserved Forge V2/V16 engine/player inputs. It supports local import,
+recipes, libraries, independent saves, both Freedoom bases, collections,
+thin/private/player/Forge exports and recursive successors. Its archive catalog
+is embedded and offline by default; selected online requests require consent.
+
+The exact final artifact, verification results and operational limits are in
+[`reports/P07_FORGE_COMPLETE.md`](reports/P07_FORGE_COMPLETE.md) and
+[`../evidence/manifests/P07/sfhs-doom-forge-v3.json`](../evidence/manifests/P07/sfhs-doom-forge-v3.json).
+Use [`FORGE_WORKSTATION.md`](FORGE_WORKSTATION.md) for the operating guide.
+Physical Samsung acceptance remains pending. Official archive mirror CORS
+requires the specified normal-download/local-import fallback in the measured
+environment. No V3 remote write or publication is authorized or performed.
+Remote main and the published Forge V2 remain at the verified handoff baseline.
+
+## Protected published lineage and historical evidence
+
+The following earlier records are retained as history. They do not describe the
+current local V3 scope or confer physical acceptance on it.
 
 ## Verified artifacts
 

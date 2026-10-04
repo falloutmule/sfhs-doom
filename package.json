@@ -1,0 +1,10 @@
+{
+  "name": "sfhs-doom-forge",
+  "private": true,
+  "scripts": {
+    "build": "python tools/build-forge-workstation.py",
+    "build:check": "python tools/build-forge-workstation.py --check",
+    "validate:forge": "python tools/validate-forge-workstation.py",
+    "test:forge": "cd browser-tests && npx playwright test --config=forge.config.mjs"
+  }
+}

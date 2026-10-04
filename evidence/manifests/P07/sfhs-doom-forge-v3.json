@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "manifest_type": "artifact",
+  "project": "sfhs-doom",
+  "phase": "P07",
+  "task": "DOOM-P7-100",
+  "source": {
+    "commit": "SELF",
+    "base": "d0953a12d45aa745ed18c245e45fc89f84416a39",
+    "branch": "codex/forge-complete-product",
+    "inputs": [
+      {
+        "path": "web/forge/archive-catalog.json",
+        "bytes": 15114177,
+        "sha256": "2b796eb28670f3dd3c4b778e29d9eb5a974a4ef6a53ea0f85db40d1891bcb7fc",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/forge-app.js",
+        "bytes": 37568,
+        "sha256": "f03d5d82e8f3932f21e2c03692bb687a3644c321ce71d33c1032714baf344ea0",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/forge-archive.js",
+        "bytes": 15692,
+        "sha256": "119e65db71035e3689e3bc78d2f975d7d1223472b486d57e156c3124a077b595",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/forge-core.js",
+        "bytes": 37786,
+        "sha256": "d4c84035b936239d8c7ad18e01edf2f2b358cc38a8e872415d302f96a7392273",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/forge-import-worker.js",
+        "bytes": 44365,
+        "sha256": "b9446a0bfbb551fd46098981eff4a3f4e5567b85996235d8e23dd926a1bb1493",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/forge-tools.js",
+        "bytes": 36650,
+        "sha256": "f75c4f14bbf00c80b2324740b92abeab8b67a09e39901043b52d1b98869e10b3",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/forge.css",
+        "bytes": 3851,
+        "sha256": "e3d2d3c8b9eeddb7a29fa4668ab0020fe4fb732ab2c86657f329b51edbf06b22",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/launcher.html",
+        "bytes": 8543,
+        "sha256": "c86f42d48f011631aae90ebb33bd200410c508ce7cdfe744a455ff6e56e682ed",
+        "normalization": "UTF-8 with LF newlines"
+      },
+      {
+        "path": "web/forge/player-bridge.js",
+        "bytes": 7280,
+        "sha256": "abb8c9f9a46d67a58545995de20aa00bf4676c571195223e0cab037074263397",
+        "normalization": "UTF-8 with LF newlines"
+      }
+    ]
+  },
+  "build": {
+    "id": "FORGE-COMPLETE-4",
+    "commands": [
+      "npm.cmd run build",
+      "npm.cmd run build:check",
+      "npm.cmd run validate:forge"
+    ],
+    "engine_sha256": "aa05a7a57ef54d2a5b5cc043e30b62ddc65b2146f2d6b4444e8887648596b2b9",
+    "controls_sha256": "2d8453442bd1ffce8f0a432c9c7c4ddf6a0ba29c6a3ce13ac668669c6579133f"
+  },
+  "artifacts": [
+    {
+      "path": "dist/sfhs-doom-forge-v3.html",
+      "size_bytes": 46612505,
+      "sha256": "f73ec894d15ef6fa39282fb406f510a5e5ee09e2d87c89d0dad264905a4a0a33",
+      "kind": "single-file-html"
+    }
+  ],
+  "verification": {
+    "result": "PASS_LOCAL_PHYSICAL_ACCEPTANCE_PENDING",
+    "browser_tests": 55,
+    "protected_browser_tests": 22,
+    "node_archive_tests": 11,
+    "python_archive_tests": 14,
+    "protected_python_tests": 24,
+    "protected_artifacts": 11,
+    "unexpected_gameplay_http_requests": 0,
+    "publication": "local-only",
+    "physical_samsung": "pending"
+  },
+  "payloads": [
+    {
+      "filename": "freedoom2.wad",
+      "sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+      "bytes": 28787748
+    },
+    {
+      "filename": "freedoom1.wad",
+      "sha256": "7323bcc168c5a45ff10749b339960e98314740a734c30d4b9f3337001f9e703d",
+      "bytes": 28795076
+    }
+  ],
+  "notes": [
+    "Reuses the protected Forge V2 engine and V16 player.",
+    "Live archive CORS requires the specified normal-download/local-import fallback.",
+    "No new push, PR, merge, Pages change, deployment or release."
+  ]
+}

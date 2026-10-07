@@ -1,4 +1,4 @@
-name: Verify and deploy V16 player plus P7-B Forge inspector
+name: Verify and deploy V16 player plus Forge V3
 
 on:
   pull_request:
@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   verify:
-    name: V16 and Forge V2 analyzer candidate gate
+    name: V16 and Forge V3 public test gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -57,12 +57,21 @@ jobs:
         run: |
           npm ci
           npx playwright install --with-deps chromium
+      - name: Verify Forge V3 capsule and archive contracts
+        run: |
+          printf '%s  %s\n' 'f73ec894d15ef6fa39282fb406f510a5e5ee09e2d87c89d0dad264905a4a0a33' 'dist/sfhs-doom-forge-v3.html' | sha256sum --check --strict
+          python tools/validate-forge-workstation.py dist/sfhs-doom-forge-v3.html
+          node --test tests/forge-archive.test.cjs
+          python -m unittest discover -s tests -p test_forge_archive.py
       - name: Run P7-B, P7-A, and V16-focused browser gates
         working-directory: browser-tests
         run: npx playwright test p7b-local-analyzer p7a-forge-runtime p6-v16-weapon-cycle-repair --workers=1
+      - name: Verify Forge V3 native player and phone layouts
+        working-directory: browser-tests
+        run: npx playwright test --config=forge.config.mjs --grep 'preserved player runs offline|launcher workflows stay inside' --workers=1
 
   deploy-pages:
-    name: Publish exact V16 player and Forge V2 inspector to GitHub Pages
+    name: Publish exact V16 player and Forge V3 to GitHub Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
@@ -79,19 +88,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Stage only exact V16 and Forge V2 bytes
+      - name: Stage exact V16 and Forge V3 with previous Forge rollback
         shell: bash
         run: |
           set -euo pipefail
           player_expected='bc52a371427575c0c17ee8061c6d4db3d8a7120da116072f9b604f8b08863de2'
-          forge_expected='927d744c11c219dfbaffd8486f84cec77093cb626a35d389ad37d14aaf01326e'
+          forge_expected='f73ec894d15ef6fa39282fb406f510a5e5ee09e2d87c89d0dad264905a4a0a33'
           test "$(wc -c < dist/sfhs-doom-android-sfhs-controls-v16.html | tr -d ' ')" = '48372561'
-          test "$(wc -c < dist/sfhs-doom-forge-v2.html | tr -d ' ')" = '25852127'
+          test "$(wc -c < dist/sfhs-doom-forge-v3.html | tr -d ' ')" = '46612505'
           printf '%s  %s\n' "$player_expected" 'dist/sfhs-doom-android-sfhs-controls-v16.html' | sha256sum --check --strict
-          printf '%s  %s\n' "$forge_expected" 'dist/sfhs-doom-forge-v2.html' | sha256sum --check --strict
-          mkdir -p _pages/forge
+          printf '%s  %s\n' "$forge_expected" 'dist/sfhs-doom-forge-v3.html' | sha256sum --check --strict
+          mkdir -p _pages/forge/releases/v2
           cp dist/sfhs-doom-android-sfhs-controls-v16.html _pages/index.html
-          cp dist/sfhs-doom-forge-v2.html _pages/forge/index.html
+          cp dist/sfhs-doom-forge-v3.html _pages/forge/index.html
+          cp dist/sfhs-doom-forge-v2.html _pages/forge/releases/v2/index.html
+          node -e "require('fs').writeFileSync('_pages/forge/release.json',JSON.stringify({buildId:'FORGE-COMPLETE-4',commit:process.env.GITHUB_SHA,bytes:46612505,artifactSha256:'f73ec894d15ef6fa39282fb406f510a5e5ee09e2d87c89d0dad264905a4a0a33',physicalAcceptance:'pending',rollbackPath:'releases/v2/index.html'}))"
           : > _pages/.nojekyll
           printf '%s  %s\n' "$player_expected" '_pages/index.html' | sha256sum --check --strict
           printf '%s  %s\n' "$forge_expected" '_pages/forge/index.html' | sha256sum --check --strict

@@ -1,7 +1,7 @@
 # SFHS Doom Current State
 
-**Date:** 2026-10-04 UTC
-**Phase:** P07 - Forge workstation local integration
+**Date:** 2026-10-07 UTC
+**Phase:** P07 - Forge workstation public test release
 **Current task:** DOOM-P7-100
 **Current result commit:** SELF
 **Branch:** `codex/forge-complete-product`
@@ -20,8 +20,11 @@ The exact final artifact, verification results and operational limits are in
 Use [`FORGE_WORKSTATION.md`](FORGE_WORKSTATION.md) for the operating guide.
 Physical Samsung acceptance remains pending. Official archive mirror CORS
 requires the specified normal-download/local-import fallback in the measured
-environment. No V3 remote write or publication is authorized or performed.
-Remote main and the published Forge V2 remain at the verified handoff baseline.
+environment. The user explicitly authorized Forge publication on 2026-10-07.
+The Pages workflow publishes exact Forge V3 at `/forge/` after verification,
+preserves the V16 player at the root, and retains Forge V2 at
+`/forge/releases/v2/`. `/forge/release.json` identifies the deployed commit
+and SHA-256. This public test release does not establish physical acceptance.
 
 ## Protected published lineage and historical evidence
 
